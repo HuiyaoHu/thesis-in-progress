@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Cube Land With Buttons</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			#buttons {
+				position: absolute;
+                top: 10px; 
+                right: 10px;
+			}
+            #help {
+                color: black; 
+                position: absolute; 
+                bottom: 10px; 
+                right: 10px;
+            }
+			.button {
+                display: block;
+				border: 1px solid black;
+                padding: 0px;
+                margin: 5px;
+                width: 40px;
+                height: 40px;
+                text-align: center;
+                line-height: 40px;
+                font-size: 15px;
+                cursor: pointer;
+			}
+            .button.pressed{
+				border: 2px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="help"> 
+			Hold shift to delete.
+		</div> 
+		<div id="buttons"> 
+			<div class="button" id="button0" style="background-color:red;">0</div>
+			<div class="button" id="button1" style="background-color:lawngreen;">0</div>
+			<div class="button pressed" id="button2" style="background-color:blue;">0</div>
+		</div>
+		<script type="module">
+
+			// ------------------------------------------------
+			// Import statements
+			// ------------------------------------------------
+
+			import * as THREE from 'https://unpkg.com/three@0.119.1/build/three.module.js';
+			import { OrbitControls } from 'https://unpkg.com/three@0.119.1/examples/jsm/controls/OrbitControls.js';
+
+			// ------------------------------------------------
+			// Main code
+			// ------------------------------------------------
+
+			var camera, scene, renderer, ground,
+			dir_light, dir_light_helper, dir_lightShadowHeper, hemi_light, hemi_light_helper, 
+			raycaster, mouse, box_trans, box_trans_del;;
+
+			// box and canvas
+			var box_size = 88;
+			var box_size_half = box_size / 2;
+			var box_geom = new THREE.BoxBufferGeometry( box_size, box_size, box_size );
+			var box_geom_del = new THREE.BoxBufferGeometry( box_size * 1.1, box_size * 1.1, box_size * 1.1 );
+
+			// ground
+			var num_cells = Math.round(1000 / box_size)
+			var ground_size = num_cells * box_size;
+
+			//materials
+			var box_mat_red = new THREE.MeshLambertMaterial( {
+				color: 'red',
+            });
+            var box_mat_green = new THREE.MeshLambertMaterial( {
+				color: 'lawngreen',
+            });
+            var box_mat_blue = new THREE.MeshLambertMaterial( {
+				color: 'blue',
+            });
+            var box_mat = box_mat_blue;
+			var box_mat_trans = new THREE.MeshLambertMaterial( {
+				color: 'white',
+				opacity: 0.3,
+    			transparent: true,
+			});
+
+			// mouse
+			var mouse = new THREE.Vector2();
+			var mouse_down = new THREE.Vector2();
+
+			// box settings
+			var boxes = {};
+			var box_pos = null;
+            var del_box = false;
+            var box_counters = [0, 0, 0];
+
+            // box type, relates to the buttons
+            var box_type = 2;
+
+            // button ids
+            var button_ids = ['button0', 'button1', 'button2']
+
+            // execute
+			init();
+			animate();
+
+			// ------------------------------------------------
+			// Initialization function
+			// ------------------------------------------------
+
+			function init() {
+
+				// CAMERA AND SCENE
+
+				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.set( 500, 500, 500 );
+				camera.up.set( 0, 0, 1 );
+				scene = new THREE.Scene();
+
+				// SCENE GRID
+
+				var gridGround = new THREE.GridHelper( ground_size, num_cells, 0x3f3f3f, 0x3f3f3f );
+				gridGround.rotation.x = Math.PI / 2;
+				scene.add( gridGround );
+				var axesHelper = new THREE.AxesHelper( 600 );
+				scene.add( axesHelper )
+
+				// GROUND
+
+				var ground_geo = new THREE.PlaneBufferGeometry( ground_size, ground_size );
+				var ground_mat = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+				// var ground_mat = new THREE.MeshStandardMaterial( { color: 'white' } )
+				ground_mat.color.setHSL( 0.095, 1, 0.75 );
+				ground = new THREE.Mesh( ground_geo, ground_mat );
+				ground.receiveShadow = true;
+				scene.add( ground );
+
+				// WIREFRAME BOX
+
+				box_trans = new THREE.Mesh( box_geom, box_mat_trans );
+				box_trans.castShadow = false;
+				box_trans.receiveShadow = false;
+				box_trans.visible = false;
+				scene.add(box_trans);
+				box_trans_del = new THREE.Mesh( box_geom_del, box_mat_trans );
+				box_trans_del.castShadow = false;
+				box_trans_del.receiveShadow = false;
+				box_trans_del.visible = false;
+				scene.add(box_trans_del);
+
+				// SCENE BACKGROUND AND FOG
+
+				scene.background = new THREE.Color().setHSL( 0.6, 0, 1 );
+				scene.fog = new THREE.Fog( scene.background, 1, 7000 );
+
+				// HEMISPHERE LIGHT
+
+				hemi_light = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+				hemi_light.color.setHSL( 0.6, 1, 0.6 );
+				hemi_light.groundColor.setHSL( 0.095, 1, 0.75 );
+				hemi_light.position.set( 0, 0, 300 );
+				hemi_light.up.set( 0, 0, 0 );
+				scene.add( hemi_light );
+
+				// HEMISPHERE LIGHT HELPER
+
+				hemi_light_helper = new THREE.HemisphereLightHelper( hemi_light, 100 );
+				scene.add( hemi_light_helper );
+
+				// DIRECTIONAL LIGHT
+
+				dir_light = new THREE.DirectionalLight( 0xffffff, 1 );
+				dir_light.color.setHSL( 0.1, 1, 0.95 );
+				dir_light.position.set( -0.9, -0.8, 1.1 );
+				dir_light.position.multiplyScalar( 1000 );
+				scene.add( dir_light );
+
+				// DIRECTIONAL LIGHT HELPER
+
+				dir_light_helper = new THREE.DirectionalLightHelper( dir_light, 100 );
+				scene.add( dir_light_helper );
+
+				// DIRECTIONAL LIGHT SHADOWS
+
+				dir_light.castShadow = true;
+				dir_light.shadow.mapSize.width = 2048;
+				dir_light.shadow.mapSize.height = 2048;
+				dir_light.shadow.camera.near = 1;
+				dir_light.shadow.camera.far = 3000;
+				dir_light.shadow.camera.left = -500;
+				dir_light.shadow.camera.bottom = -500;
+				dir_light.shadow.camera.top = 500;
+				dir_light.shadow.camera.right = 500;
+
+				// DIRECTIONAL LIGHT SHADOWS HELPER
+
+				dir_lightShadowHeper = new THREE.CameraHelper( dir_light.shadow.camera );
+				scene.add( dir_lightShadowHeper );
+
+				// RENDERER
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.shadowMap.enabled = true;
+				renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+				document.body.appendChild( renderer.domElement );
+				
+				// ORBIT CONTROL
+
+				var controls = new OrbitControls( camera, renderer.domElement );
+
+				// RAYCASTER
+
+				raycaster = new THREE.Raycaster();
+
+				// EVENT LISTENERS
+
+				window.addEventListener( 'resize', onWindowResize, false );
+				document.addEventListener('mousedown', onMouseDown, false);
+				document.addEventListener('mouseup', onMouseUp, false);
+                document.addEventListener( 'mousemove', onMouseMove, false );
+                document.getElementById("button0").addEventListener("click", onClickButton0);
+                document.getElementById("button1").addEventListener("click", onClickButton1);
+                document.getElementById("button2").addEventListener("click", onClickButton2);
+			}
+
+			// ------------------------------------------------
+			// Event handeling functions
+			// ------------------------------------------------
+
+			// Resize browser window
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+
+			// Handle mouse click events, save the screen position when mouse down
+			function onMouseDown(event) {
+				mouse_down.x = event.clientX;
+				mouse_down.y = event.clientY
+			}
+
+			// Handle mouse click events, 
+			// Either create a box or delete box
+			function onMouseUp(event) {
+				if ((mouse_down.x !== event.clientX) || (mouse_down.y !== event.clientY)) {
+					// we are dragging, so no nothing
+					return;
+				}
+				if (box_pos != null) {
+                    // calc the coords of the box, to be used for the key
+					var coords = new THREE.Vector3(box_pos.x / box_size_half, box_pos.y  / box_size_half, box_pos.z / box_size_half);
+					// create a key that is a string that looks something like this: 1_2_3
+					var key = coords.x + '_' + coords.y + '_' + coords.z;
+					if (del_box && key in boxes) {
+                        deleteBox(boxes[key]);                    
+						// delete other floating boxes not connected to ground
+						var clusters = findClusters();
+						for (var cluster of clusters) {
+							if (!clusterOnGround(cluster)) {
+								deleteCluster(cluster);
+							}
+						}
+					} else if (!del_box) {
+						// add a new box
+						addBox(coords, key);
+					}
+				}
+			}
+
+			// Handle mouse move events
+			// Store the xy location of the mouse position on the screen, as values between 0 and 1
+			// And set the del_box flag and temp box visibility
+			function onMouseMove( event ) {
+				event.preventDefault(); // ??? not too sure what this does
+				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+				if (event.shiftKey) {
+					del_box = true;
+					box_trans.visible = false;
+				} else {
+					del_box = false;
+					box_trans_del.visible = false;
+				}
+            }
+            
+            function onClickButton0() {
+                box_mat = box_mat_red;
+                document.getElementById(button_ids[box_type]).classList.remove("pressed");
+                box_type = 0;
+                document.getElementById(button_ids[box_type]).classList.add("pressed");
+            }
+            function onClickButton1() {
+                box_mat = box_mat_green;
+                document.getElementById(button_ids[box_type]).classList.remove("pressed");
+                box_type = 1;
+                document.getElementById(button_ids[box_type]).classList.add("pressed");
+            }
+            function onClickButton2() {
+                box_mat = box_mat_blue;
+                document.getElementById(button_ids[box_type]).classList.remove("pressed");
+                box_type = 2;
+                document.getElementById(button_ids[box_type]).classList.add("pressed");
+            }
+
+			// ------------------------------------------------
+			// Animation loop
+			// ------------------------------------------------
+
+			// animation loop
+			function animate() {
+				requestAnimationFrame( animate );
+				render();
+			}
+
+			// render
+			function render() {
+				// get the objects in the scene to check for intersections
+				// the boxes and the ground
+				var isect_objs = Object.values(boxes); 
+				isect_objs.push(ground);
+				// create a ray from the camera and intersect it with objects in the scene
+				raycaster.setFromCamera( mouse, camera );
+				var intersects = raycaster.intersectObjects( isect_objs );
+
+				if ( intersects.length > 0 ) {
+					// get the first object that the ray intersects
+					var isect0 = intersects[ 0 ];
+					if (isect0.object.name == 'box') {
+						// if this is a box, then get the centre of the box
+						var box_cen = isect0.object.position;
+						box_pos = new THREE.Vector3(box_cen.x, box_cen.y, box_cen.z);
+						if (!del_box) {
+							// if we are adding a new box, then we offset centre based on the face that was intersected
+							if (isect0.faceIndex == 0 || isect0.faceIndex == 1) {
+								box_pos.x += box_size;
+							} else if (isect0.faceIndex == 2 || isect0.faceIndex == 3) {
+								box_pos.x -= box_size;
+							}  else if (isect0.faceIndex == 4 || isect0.faceIndex == 5) {
+								box_pos.y += box_size;
+							}  else if (isect0.faceIndex == 6 || isect0.faceIndex == 7) {
+								box_pos.y -= box_size;
+							}  else if (isect0.faceIndex == 8 || isect0.faceIndex == 9) {
+								box_pos.z += box_size;
+							}  else if (isect0.faceIndex == 10 || isect0.faceIndex == 11) {
+								box_pos.z -= box_size;
+							}
+						}
+						if (del_box) {
+							// show 'delete' glass box
+							box_trans_del.position.set(box_pos.x, box_pos.y, box_pos.z);
+							box_trans_del.visible = true;
+							box_trans.visible = false;
+						} else {
+							// show 'add' glass box
+							box_trans.position.set(box_pos.x, box_pos.y, box_pos.z);
+							box_trans_del.visible = false;
+							box_trans.visible = true;
+						}
+					} else {
+						// if this is the ground, then get the center from intersection of ground mesh
+						if (!del_box) {
+							box_pos = new THREE.Vector3();
+							if (num_cells % 2 == 1) { // odd number of cells
+								box_pos.x = Math.round(isect0.point.x / box_size) * box_size;
+								box_pos.y = Math.round(isect0.point.y / box_size) * box_size;
+							} else { // even number of cells
+								box_pos.x = Math.round((box_size_half + isect0.point.x) / box_size) * box_size - box_size_half;
+								box_pos.y = Math.round((box_size_half + isect0.point.y) / box_size) * box_size - box_size_half;
+							}
+							// show 'add' glass box
+							box_pos.z = box_size_half;
+							box_trans.position.set(box_pos.x, box_pos.y, box_pos.z);
+							box_trans_del.visible = false;
+							box_trans.visible = true;
+						}
+					}
+				} else {
+					// the ray intersects with nothing
+					// hide the glass boxes
+					box_trans.visible = false;
+                    box_trans_del.visible = false;
+                    box_pos = null;
+				}
+				// render the scene
+				renderer.render( scene, camera );
+			}
+
+			// ------------------------------------------------
+			// Helper functions
+			// -----------------------------------------------
+
+			// Find all clusters of connected boxes
+			function findClusters() {
+				var keys = Object.keys(boxes);
+				var clusters = [];
+				for (var key of keys) {
+					var found = false;
+					for (var cluster of clusters) {
+						if (key in cluster) {
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						var new_cluster = {};
+						addToCluster(boxes[key], new_cluster);
+						clusters.push(new_cluster);
+					}
+				}
+				return clusters;
+			}
+
+			// Find a single cluster of connected boxes, starting from one box
+			// This is a recirsive function
+			function addToCluster(box, cluster) {
+				if (!(box.box_key in cluster)) {
+					cluster[box.box_key] = box;
+					for (var neighbour of getNeighbours(box)) {
+						addToCluster(neighbour, cluster);
+					}
+				}
+			}
+
+			// Return true if cluster touches ground
+			function clusterOnGround(cluster) {
+				for (var box of Object.values(cluster)) {
+					if (box.box_coords.z == 1) { return true; }
+				}
+				return false;
+			}
+
+			// Delete all boxes in a cluster
+			function deleteCluster(cluster) {
+				for (var box of Object.values(cluster)) {
+					deleteBox( box );
+				}
+			}
+
+			// Get all the neighbours of a box
+			// 6 neighbours
+			// up, down, north, south, east, west
+			function getNeighbours(box) {
+				var coords = box.box_coords;
+				var u = boxes[coords.x + '_' + coords.y + '_' + (coords.z + 2)];
+				var d = boxes[coords.x + '_' + coords.y + '_' + (coords.z - 2)];
+				var n = boxes[coords.x + '_' + (coords.y + 2) + '_' + coords.z];
+				var s = boxes[coords.x + '_' + (coords.y - 2) + '_' + coords.z];
+				var e = boxes[(coords.x + 2) + '_' + coords.y + '_' + coords.z]; 
+				var w = boxes[(coords.x - 2) + '_' + coords.y + '_' + coords.z];
+				var neighbours = [];
+				for (var neighbour of [u, d, n, s, e, w]) {
+					if (neighbour != undefined) { neighbours.push(neighbour); }
+				}
+				return neighbours;
+            }
+            
+            // Add a box
+			function addBox(coords, key) {
+                // create the box
+                var box = new THREE.Mesh( box_geom, box_mat );
+                box.castShadow = true;
+                box.receiveShadow = true;
+                box.position.set(box_pos.x, box_pos.y, box_pos.z);
+                // set box properties
+                box.name = "box"
+                box.box_type = box_type;
+                box.box_coords = coords;
+                box.box_key = key;
+                // add the box
+                scene.add( box );
+                boxes[key] = box;
+                // increase the count
+                box_counters[box_type] += 1; 
+                // update the counter on the web page
+                document.getElementById(button_ids[box_type]).innerHTML = box_counters[box_type];
+            }
+
+            // Delete a box
+			function deleteBox(box) {
+                // decrease the count
+                box_counters[box.box_type] -= 1; 
+                // update the counter on the web page
+                document.getElementById(button_ids[box.box_type]).innerHTML = box_counters[box.box_type];
+                // delete the box
+                delete boxes[ box.box_key ];
+                scene.remove( box );
+            }
+            
+		</script>
+	</body>
+</html>
