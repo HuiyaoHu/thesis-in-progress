@@ -65,8 +65,6 @@
 		var box_size = 88;
 		var box_size_half = box_size / 2;
 		var box_geom = new THREE.BoxBufferGeometry( box_size, box_size, box_size );
-		var rect1_geom = new THREE.BoxBufferGeometry( box_size * 2, box_size, box_size );
-		var rect2_geom = new THREE.BoxBufferGeometry( box_size, box_size * 2, box_size );
 		var box_geom_del = new THREE.BoxBufferGeometry( box_size * 1.1, box_size * 1.1, box_size * 1.1 );
 
 		// ground
@@ -129,8 +127,6 @@
 
 			var gridGround = new THREE.GridHelper( ground_size, num_cells, 0x3f3f3f, 0x3f3f3f );
 			gridGround.rotation.x = Math.PI / 2;
-			gridGround.position.x = box_size_half;
-			gridGround.position.y = box_size_half;
 			scene.add( gridGround );
 			// var axesHelper = new THREE.AxesHelper( 600 );
 			// scene.add( axesHelper )
@@ -244,11 +240,7 @@
 
 		// Resize browser window
 		function onWindowResize() {
-			// camera.aspect = window.innerWidth / window.innerHeight;
-			camera.left = -window.innerWidth
-			camera.right = window.innerWidth
-			camera.top =  window.innerHeight
-			camera.bottom =  -window.innerHeight
+			camera.aspect = window.innerWidth / window.innerHeight;
 			camera.updateProjectionMatrix();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 		}
@@ -268,7 +260,7 @@
 			}
 			if (box_pos != null) {
 				// calc the coords of the box, to be used for the key
-				var coords = new THREE.Vector3(box_pos.x / box_size_half, box_pos.y  / box_size_half, box_pos.z / box_size_half);
+				var coords = new THREE.Vector3(box_pos.x / box_size_half-box_size_half, box_pos.y  / box_size_half-box_size_half, box_pos.z / box_size_half);
 				// create a key that is a string that looks something like this: 1_2_3
 				var key = coords.x + '_' + coords.y + '_' + coords.z;
 				if (del_box && key in boxes) {
@@ -348,35 +340,31 @@
 				if (isect0.object.name == 'box') {
 					// if this is a box, then get the centre of the box
 					var box_cen = isect0.object.position;
-					box_pos = new THREE.Vector3(box_cen.x, box_cen.y, box_cen.z);
+					box_pos = new THREE.Vector3(box_cen.x-box_size_half, box_cen.y-box_size_half, box_cen.z);
 					if (!del_box) {
-						box_trans_del.position.set(box_pos.x, box_pos.y, box_pos.z);
-						box_trans_del.visible = true;
-						box_trans.visible = false;
-
-						// // if we are adding a new box, then we offset centre based on the face that was intersected
-						// if (isect0.faceIndex == 0 || isect0.faceIndex == 1) {
-						// 	box_pos.x += box_size;
-						// } else if (isect0.faceIndex == 2 || isect0.faceIndex == 3) {
-						// 	box_pos.x -= box_size;
-						// }  else if (isect0.faceIndex == 4 || isect0.faceIndex == 5) {
-						// 	box_pos.y += box_size;
-						// }  else if (isect0.faceIndex == 6 || isect0.faceIndex == 7) {
-						// 	box_pos.y -= box_size;
-						// }  else if (isect0.faceIndex == 8 || isect0.faceIndex == 9) {
-						// 	box_pos.z += box_size;
-						// }  else if (isect0.faceIndex == 10 || isect0.faceIndex == 11) {
-						// 	box_pos.z -= box_size;
-						// }
+						// if we are adding a new box, then we offset centre based on the face that was intersected
+						if (isect0.faceIndex == 0 || isect0.faceIndex == 1) {
+							box_pos.x += box_size;
+						} else if (isect0.faceIndex == 2 || isect0.faceIndex == 3) {
+							box_pos.x -= box_size;
+						}  else if (isect0.faceIndex == 4 || isect0.faceIndex == 5) {
+							box_pos.y += box_size;
+						}  else if (isect0.faceIndex == 6 || isect0.faceIndex == 7) {
+							box_pos.y -= box_size;
+						}  else if (isect0.faceIndex == 8 || isect0.faceIndex == 9) {
+							box_pos.z += box_size;
+						}  else if (isect0.faceIndex == 10 || isect0.faceIndex == 11) {
+							box_pos.z -= box_size;
+						}
 					}
 					if (del_box) {
 						// show 'delete' glass box
-						box_trans_del.position.set(box_pos.x, box_pos.y, box_pos.z);
+						box_trans_del.position.set(box_pos.x-box_size_half, box_pos.y-box_size_half, box_pos.z);
 						box_trans_del.visible = true;
 						box_trans.visible = false;
 					} else {
 						// show 'add' glass box
-						box_trans.position.set(box_pos.x, box_pos.y, box_pos.z);
+						box_trans.position.set(box_pos.x-box_size_half, box_pos.y-box_size_half, box_pos.z);
 						box_trans_del.visible = false;
 						box_trans.visible = true;
 					}
@@ -393,7 +381,7 @@
 						}
 						// show 'add' glass box
 						box_pos.z = box_size_half;
-						box_trans.position.set(box_pos.x, box_pos.y, box_pos.z);
+						box_trans.position.set(box_pos.x-box_size_half, box_pos.y-box_size_half, box_pos.z);
 						box_trans_del.visible = false;
 						box_trans.visible = true;
 					}
@@ -484,8 +472,7 @@
 			var box = new THREE.Mesh( box_geom, box_mat );
 			box.castShadow = true;
 			box.receiveShadow = true;
-			box.position.set(box_pos.x, box_pos.y, box_pos.z);
-			console.log('!!!!!!!', box.position)
+			box.position.set(box_pos.x-box_size_half, box_pos.y-box_size_half, box_pos.z);
 			// set box properties
 			box.name = "box"
 			box.box_type = box_type;
