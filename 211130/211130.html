@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>211131</title>
+		<title>211130</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
@@ -72,6 +72,8 @@
 		var wall_geom = new THREE.BoxBufferGeometry( wall_width, wall_thickness, wall_height );
 		var wall_geom_trans = new THREE.BoxBufferGeometry( wall_width * 1, wall_thickness* 2, wall_height * 1 );
 		var wall_geom_del = new THREE.BoxBufferGeometry( wall_width * 1.1, wall_thickness* 3, wall_height * 1.1 );
+
+		// wall_geom.rotation.x += Math.PI / 2;
 
 		// camera 
 		var camera_zoom = 60
@@ -183,7 +185,7 @@
 
 			// HEMISPHERE LIGHT
 
-			hemi_light = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 ); //  skyColor, groundColor, intensity
+			hemi_light = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
 			hemi_light.color.setHSL( 0.6, 1, 0.6 );
 			hemi_light.groundColor.setHSL( 0.095, 1, 0.75 );
 			hemi_light.position.set( 0, 0, 300 );
@@ -191,6 +193,7 @@
 			scene.add( hemi_light );
 
 			// HEMISPHERE LIGHT HELPER
+
 			// hemi_light_helper = new THREE.HemisphereLightHelper( hemi_light, 100 );
 			// scene.add( hemi_light_helper );
 
@@ -368,76 +371,34 @@
 						wall_rotation = isect0.object.rotation.z;
 						if (!del_wall) {
 							// if we are adding a new wall, then we offset centre based on the face that was intersected
-							// wall_pos.z += wall_height; 
-							// console.log('__wall_rotation_',wall_rotation)
-							// console.log('__face_',isect0.face)
-							// console.log('__distance_',isect0.distance)
-							// console.log('__object_',isect0.object)
-							// console.log('__uv_',isect0.uv)
-							console.log('___',isect0.faceIndex)
-							if (isect0.faceIndex == 0 || isect0.faceIndex == 1) { // right top || right bottom
+							// wall_pos.z += wall_height; // 
+							console.log('___',isect0.point)
+							if (isect0.faceIndex == 0 || isect0.faceIndex == 1) { // right
 								if (wall_rotation !== 0) {
 									wall_pos.y += wall_width;
 								} else {
 									wall_pos.x += wall_width;
 								}
-							} 
-							else if (isect0.faceIndex == 3 || isect0.faceIndex == 2) { // left top || left bottom
+							} else if (isect0.faceIndex == 2 || isect0.faceIndex == 3) { // left
 								if (wall_rotation !== 0) {
 									wall_pos.y -= wall_width;
 								} else {
 									wall_pos.x -= wall_width;
 								}
-							} 
-							else if (isect0.faceIndex == 6) { // front left
-								if (wall_rotation !== 0) {
-									wall_rotation = 0;
-									wall_pos.x += wall_width_half;
-									wall_pos.y -= wall_width_half;
-								} else {
-									wall_rotation = Math.PI / 2;
-									wall_pos.x -= wall_width_half;
-									wall_pos.y -= wall_width_half;
-								}
-							}  
-							else if (isect0.faceIndex == 7) { // front right
-								if (wall_rotation !== 0) {
-									wall_rotation = 0;
-									wall_pos.x += wall_width_half;
-									wall_pos.y += wall_width_half;
-								} else {
-									wall_rotation = Math.PI / 2;
-									wall_pos.x += wall_width_half;
-									wall_pos.y -= wall_width_half;
-								}
-							}  
-							else if (isect0.faceIndex == 5) { // back left
-								if (wall_rotation !== 0) {
-									wall_rotation = 0;
-									wall_pos.x -= wall_width_half;
-									wall_pos.y += wall_width_half;
-								} else {
-									wall_rotation = Math.PI / 2;
-									wall_pos.x += wall_width_half;
-									wall_pos.y += wall_width_half;
-								}
-							} 
-							else if (isect0.faceIndex == 4) { // back right
-								if (wall_rotation !== 0) {
-									wall_rotation = 0;
-									wall_pos.x -= wall_width_half;
-									wall_pos.y -= wall_width_half;
-								} else {
-									wall_rotation = Math.PI / 2;
-									wall_pos.x -= wall_width_half;
-									wall_pos.y += wall_width_half;
-								}
-							} 
-							else if (isect0.faceIndex == 8 || isect0.faceIndex == 9) { // top left || right
+
+							}  else if (isect0.faceIndex == 4 || isect0.faceIndex == 5) { // back
+								wall_pos.z += wall_height;
+								// check if intersection point is left or right
+
+								// wall_pos.y += wall_width;
+							}  else if (isect0.faceIndex == 6 || isect0.faceIndex == 7) { // front
 								wall_pos.z += wall_height; 
-							}  
-							else if (isect0.faceIndex == 11 || isect0.faceIndex == 12) { // bottom left || right
-								wall_pos.z -= wall_height; 
+								// wall_pos.y -= wall_width;
+							}  else if (isect0.faceIndex == 8 || isect0.faceIndex == 9) { // top
+								wall_pos.z += wall_height; 
+							}  else if (isect0.faceIndex == 10 || isect0.faceIndex == 11) { // bottom
+								wall_pos.z += wall_height; 
+								// wall_pos.z -= wall_height;
 							}
 						}
 						if (del_wall) {
@@ -478,7 +439,6 @@
 									wall_pos.copy(ptY)
 									wall_rotation = Math.PI / 2
 								}
-								// console.log('___', ptX, ptY, distX, distY, wall_pos)
 								// wall_pos.x = Math.round((wall_width_half + isect0.point.x) / wall_width) * wall_width - wall_width_half;
 								// wall_pos.y = Math.round((wall_width_half + isect0.point.y) / wall_width) * wall_width - wall_width_half;
 								

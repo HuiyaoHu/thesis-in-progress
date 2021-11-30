@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>211131</title>
+		<title>211129</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
@@ -73,6 +73,8 @@
 		var wall_geom_trans = new THREE.BoxBufferGeometry( wall_width * 1, wall_thickness* 2, wall_height * 1 );
 		var wall_geom_del = new THREE.BoxBufferGeometry( wall_width * 1.1, wall_thickness* 3, wall_height * 1.1 );
 
+		// wall_geom.rotation.x += Math.PI / 2;
+
 		// camera 
 		var camera_zoom = 60
 		var camera_shift = 3
@@ -109,7 +111,6 @@
 
 		// wall settings
 		var walls = {};
-		var wall_rotation = 0;
 		var wall_pos = null;
 		var del_wall = false;
 		var wall_counters = [0, 0, 0];
@@ -143,7 +144,7 @@
 
 			var gridGround = new THREE.GridHelper( ground_size, num_cells, 0xD8D8D8, 0xD8D8D8 );
 			gridGround.rotation.x = Math.PI / 2;
-			gridGround.position.x = 0;
+			gridGround.position.x = wall_width;
 			gridGround.position.y = wall_width/2;
 			// gridGround.position.z = -0.5;
 			scene.add( gridGround );
@@ -183,7 +184,7 @@
 
 			// HEMISPHERE LIGHT
 
-			hemi_light = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 ); //  skyColor, groundColor, intensity
+			hemi_light = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
 			hemi_light.color.setHSL( 0.6, 1, 0.6 );
 			hemi_light.groundColor.setHSL( 0.095, 1, 0.75 );
 			hemi_light.position.set( 0, 0, 300 );
@@ -191,6 +192,7 @@
 			scene.add( hemi_light );
 
 			// HEMISPHERE LIGHT HELPER
+
 			// hemi_light_helper = new THREE.HemisphereLightHelper( hemi_light, 100 );
 			// scene.add( hemi_light_helper );
 
@@ -361,95 +363,33 @@
 					// get the first object that the ray intersects
 					var isect0 = intersects[ 0 ];
 					if (isect0.object.name == 'wall') {
-
 						// if this is a wall, then get the centre of the wall
 						var wall_cen = isect0.object.position;
 						wall_pos = new THREE.Vector3(wall_cen.x, wall_cen.y, wall_cen.z);
-						wall_rotation = isect0.object.rotation.z;
 						if (!del_wall) {
 							// if we are adding a new wall, then we offset centre based on the face that was intersected
-							// wall_pos.z += wall_height; 
-							// console.log('__wall_rotation_',wall_rotation)
-							// console.log('__face_',isect0.face)
-							// console.log('__distance_',isect0.distance)
-							// console.log('__object_',isect0.object)
-							// console.log('__uv_',isect0.uv)
-							console.log('___',isect0.faceIndex)
-							if (isect0.faceIndex == 0 || isect0.faceIndex == 1) { // right top || right bottom
-								if (wall_rotation !== 0) {
-									wall_pos.y += wall_width;
-								} else {
-									wall_pos.x += wall_width;
-								}
-							} 
-							else if (isect0.faceIndex == 3 || isect0.faceIndex == 2) { // left top || left bottom
-								if (wall_rotation !== 0) {
-									wall_pos.y -= wall_width;
-								} else {
-									wall_pos.x -= wall_width;
-								}
-							} 
-							else if (isect0.faceIndex == 6) { // front left
-								if (wall_rotation !== 0) {
-									wall_rotation = 0;
-									wall_pos.x += wall_width_half;
-									wall_pos.y -= wall_width_half;
-								} else {
-									wall_rotation = Math.PI / 2;
-									wall_pos.x -= wall_width_half;
-									wall_pos.y -= wall_width_half;
-								}
-							}  
-							else if (isect0.faceIndex == 7) { // front right
-								if (wall_rotation !== 0) {
-									wall_rotation = 0;
-									wall_pos.x += wall_width_half;
-									wall_pos.y += wall_width_half;
-								} else {
-									wall_rotation = Math.PI / 2;
-									wall_pos.x += wall_width_half;
-									wall_pos.y -= wall_width_half;
-								}
-							}  
-							else if (isect0.faceIndex == 5) { // back left
-								if (wall_rotation !== 0) {
-									wall_rotation = 0;
-									wall_pos.x -= wall_width_half;
-									wall_pos.y += wall_width_half;
-								} else {
-									wall_rotation = Math.PI / 2;
-									wall_pos.x += wall_width_half;
-									wall_pos.y += wall_width_half;
-								}
-							} 
-							else if (isect0.faceIndex == 4) { // back right
-								if (wall_rotation !== 0) {
-									wall_rotation = 0;
-									wall_pos.x -= wall_width_half;
-									wall_pos.y -= wall_width_half;
-								} else {
-									wall_rotation = Math.PI / 2;
-									wall_pos.x -= wall_width_half;
-									wall_pos.y += wall_width_half;
-								}
-							} 
-							else if (isect0.faceIndex == 8 || isect0.faceIndex == 9) { // top left || right
+							if (isect0.faceIndex == 0 || isect0.faceIndex == 1) { // right
+								wall_pos.x += wall_width;
+							} else if (isect0.faceIndex == 2 || isect0.faceIndex == 3) { // left
+								wall_pos.x -= wall_width;
+							}  else if (isect0.faceIndex == 4 || isect0.faceIndex == 5) { // back
+								wall_pos.y += wall_width;
+							}  else if (isect0.faceIndex == 6 || isect0.faceIndex == 7) { // front
+								wall_pos.y -= wall_width;
+							}  else if (isect0.faceIndex == 8 || isect0.faceIndex == 9) { // top
 								wall_pos.z += wall_height; 
-							}  
-							else if (isect0.faceIndex == 11 || isect0.faceIndex == 12) { // bottom left || right
-								wall_pos.z -= wall_height; 
+							}  else if (isect0.faceIndex == 10 || isect0.faceIndex == 11) { // bottom
+								wall_pos.z -= wall_height;
 							}
 						}
 						if (del_wall) {
 							// show 'delete' glass wall
 							wall_trans_del.position.set(wall_pos.x, wall_pos.y, wall_pos.z);
-							wall_trans_del.rotation.z = wall_rotation;
 							wall_trans_del.visible = true;
 							wall_trans.visible = false;
 						} else {
 							// show 'add' glass wall
 							wall_trans.position.set(wall_pos.x, wall_pos.y, wall_pos.z);
-							wall_trans.rotation.z = wall_rotation;
 							wall_trans_del.visible = false;
 							wall_trans.visible = true;
 						}
@@ -457,36 +397,16 @@
 						// if this is the ground, then get the center from intersection of ground mesh
 						if (!del_wall) {
 							wall_pos = new THREE.Vector3();
-							wall_rotation = 0
 							if (num_cells % 2 == 1) { // odd number of cells
 								wall_pos.x = Math.round(isect0.point.x / wall_width) * wall_width;
 								wall_pos.y = Math.round(isect0.point.y / wall_width) * wall_width;
 							} else { // even number of cells
-								const ptX = new THREE.Vector3(
-									Math.round((wall_width_half + isect0.point.x) / wall_width) * wall_width - wall_width_half,
-									Math.round((wall_width_half + isect0.point.y) / wall_width) * wall_width - wall_width_half,
-									0)
-								const ptY = new THREE.Vector3(
-									Math.round(isect0.point.x / wall_width) * wall_width,
-									Math.round(isect0.point.y / wall_width) * wall_width,
-									0)
-								const distX = ptX.distanceTo(isect0.point)
-								const distY = ptY.distanceTo(isect0.point)
-								if (distX <= distY) {
-									wall_pos.copy(ptX)
-								} else {
-									wall_pos.copy(ptY)
-									wall_rotation = Math.PI / 2
-								}
-								// console.log('___', ptX, ptY, distX, distY, wall_pos)
-								// wall_pos.x = Math.round((wall_width_half + isect0.point.x) / wall_width) * wall_width - wall_width_half;
-								// wall_pos.y = Math.round((wall_width_half + isect0.point.y) / wall_width) * wall_width - wall_width_half;
-								
+								wall_pos.x = Math.round((wall_width_half + isect0.point.x) / wall_width) * wall_width - wall_width_half;
+								wall_pos.y = Math.round((wall_width_half + isect0.point.y) / wall_width) * wall_width - wall_width_half;
 							}
 							// show 'add' glass wall
 							wall_pos.z = wall_height_half;
 							wall_trans.position.set(wall_pos.x, wall_pos.y, wall_pos.z);
-							wall_trans.rotation.z = wall_rotation
 							wall_trans_del.visible = false;
 							wall_trans.visible = true;
 						}
@@ -574,7 +494,6 @@
             // Add a wall
 			function addBox(coords, key) {
                 // create the wall
-				if  (walls[key]) {return;} // prevent overlap
                 var wall = new THREE.Mesh( wall_geom, wall_mat );
                 wall.castShadow = true;
                 wall.receiveShadow = true;
@@ -587,7 +506,6 @@
                 // add the wall
                 scene.add( wall );
                 walls[key] = wall;
-				wall.rotation.z = wall_rotation;
                 // increase the count
                 wall_counters[wall_type] += 1; 
                 // update the counter on the web page
