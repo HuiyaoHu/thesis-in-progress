@@ -641,26 +641,26 @@
 			document.getElementById(button_ids[wall_type]).innerHTML = wall_counters[wall_type];
 			
 
-			// // get wall corner points
-			// const corner_ver_shift_value = new THREE.Vector3(0, 0, wall_height_half);
-			// var corner_hor_shift_value = 0;
-			// if (wall_rotation == 0) {
-			// 	var corner_shift_value = new THREE.Vector3(wall_width_half, 0, 0);
-			// }
-			// else {
-			// 	var corner_shift_value = new THREE.Vector3(0, wall_width_half*(-1), 0);
-			// }
-			// var wall_left_corner = wall.position.clone().sub(corner_shift_value).sub(corner_ver_shift_value) ;
-			// var wall_right_corner = wall.position.clone().add(corner_shift_value).sub(corner_ver_shift_value);
-			// wall_pos_list.push(wall_left_corner, wall_right_corner);
+			// get wall corner points
+			const corner_ver_shift_value = new THREE.Vector3(0, 0, wall_height_half);
+			var corner_hor_shift_value = 0;
+			if (wall_rotation == 0) {
+				var corner_shift_value = new THREE.Vector3(wall_width_half, 0, 0);
+			}
+			else {
+				var corner_shift_value = new THREE.Vector3(0, wall_width_half*(-1), 0);
+			}
+			var wall_left_corner = wall.position.clone().sub(corner_shift_value).sub(corner_ver_shift_value) ;
+			var wall_right_corner = wall.position.clone().add(corner_shift_value).sub(corner_ver_shift_value);
+			wall_pos_list.push(wall_left_corner, wall_right_corner);
 
-			// // Visualise Points
-			// var geom = new THREE.BufferGeometry().setFromPoints([wall_left_corner, wall_right_corner]);
-			// var matPoints = new THREE.PointsMaterial({size: 10, color: "pink"});
-			// var points = new THREE.Points(geom, matPoints);
-			// scene.add(points);
+			// Visualise Points
+			var geom = new THREE.BufferGeometry().setFromPoints([wall_left_corner, wall_right_corner]);
+			var matPoints = new THREE.PointsMaterial({size: 10, color: "pink"});
+			var points = new THREE.Points(geom, matPoints);
+			scene.add(points);
 	
-			// console.log('____', wall_pos_list)
+			console.log('____', wall_pos_list)
 		}
 
 		// Delete a wall
