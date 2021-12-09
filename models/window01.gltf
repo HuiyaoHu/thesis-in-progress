@@ -1,0 +1,996 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "THREE.GLTFExporter"
+  },
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        4
+      ]
+    }
+  ],
+  "scene": 0,
+  "nodes": [
+    {
+      "name": "WindowFrame",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "WindowFrame",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "741182d8-ecc9-4f2c-9d08-78a03908a2b6",
+          "url": "",
+          "layerIndex": 1,
+          "materialIndex": 2,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isClosed": true,
+            "hasCachedTextureCoordinates": false,
+            "hasPrincipalCurvatures": false,
+            "partitionCount": 0,
+            "objectType": {
+              "name": "ObjectType_Mesh",
+              "value": 32
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": false,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Mesh"
+      },
+      "mesh": 0
+    },
+    {
+      "name": "WindowSeal",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "WindowSeal",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "8b6038e1-fdcf-4f99-8f80-d90f31374dfe",
+          "url": "",
+          "layerIndex": 1,
+          "materialIndex": 1,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isClosed": false,
+            "hasCachedTextureCoordinates": false,
+            "hasPrincipalCurvatures": false,
+            "partitionCount": 0,
+            "objectType": {
+              "name": "ObjectType_Mesh",
+              "value": 32
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Mesh"
+      },
+      "mesh": 1
+    },
+    {
+      "name": "Glass",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "Glass",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "8c5d8a58-9239-4b98-9f61-b5f548190e5a",
+          "url": "",
+          "layerIndex": 1,
+          "materialIndex": 0,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isClosed": false,
+            "hasCachedTextureCoordinates": false,
+            "hasPrincipalCurvatures": false,
+            "partitionCount": 0,
+            "objectType": {
+              "name": "ObjectType_Mesh",
+              "value": 32
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Mesh"
+      },
+      "mesh": 2
+    },
+    {
+      "name": "SIP",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "SIP",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "59f870ab-c766-4d8f-a912-84d4055d8a90",
+          "url": "",
+          "layerIndex": 2,
+          "materialIndex": -1,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromLayer",
+            "value": 0
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isSolid": true,
+            "isManifold": true,
+            "isSurface": false,
+            "objectType": {
+              "name": "ObjectType_Brep",
+              "value": 16
+            },
+            "isDeformable": false,
+            "hasBrepForm": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Brep"
+      },
+      "mesh": 3
+    },
+    {
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -1.5,
+        -3.049999952316284,
+        -9,
+        1
+      ],
+      "extras": {
+        "layers": [
+          {
+            "name": "stairs",
+            "fullPath": "stairs",
+            "id": "59c6b4dd-2653-47f3-9a71-869854c88caf",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": -1,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          {
+            "name": "windows",
+            "fullPath": "windows",
+            "id": "c876dbed-e59b-4193-aed4-952682794720",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": -1,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          {
+            "name": "wall",
+            "fullPath": "wall",
+            "id": "6cf7b3cd-a5bb-4350-92a9-100ba6055f1d",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": 3,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          }
+        ],
+        "groups": [],
+        "settings": {
+          "modelUrl": "",
+          "modelBasePoint": [
+            0,
+            0,
+            0
+          ],
+          "earthAnchorPoint": {},
+          "modelAbsoluteTolerance": 0.01,
+          "modelAngleToleranceRadians": 0.017453292519943295,
+          "modelAngleToleranceDegrees": 1,
+          "modelRelativeTolerance": 0.01,
+          "pageAbsoluteTolerance": 0.01,
+          "pageAngleToleranceRadians": 0.017453292519943295,
+          "pageAngleToleranceDegrees": 1,
+          "pageRelativeTolerance": 0.01,
+          "modelUnitSystem": {
+            "name": "UnitSystem_Meters",
+            "value": 4
+          },
+          "pageUnitSystem": {
+            "name": "UnitSystem_Millimeters",
+            "value": 2
+          }
+        },
+        "objectType": "File3dm",
+        "materials": [
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "48B42F9A-E3FF-46AE-8E43-C5B3A11E584D",
+            "type": "MeshStandardMaterial",
+            "name": "hidden_material",
+            "color": 16777215,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "908ACB90-5C35-4100-9897-751C73CE0925",
+            "type": "MeshStandardMaterial",
+            "name": "Plastic",
+            "color": 16777215,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "11CACDB6-BFBE-4158-8881-2B4A805180D2",
+            "type": "MeshStandardMaterial",
+            "name": "DoorGlass_material",
+            "color": 65535,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "opacity": 0.05058366060256958,
+            "transparent": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          }
+        ],
+        "warnings": [
+          {
+            "message": "THREE.3DMLoader: Conversion not implemented for ObjectType_Detail",
+            "type": "not implemented",
+            "guid": "51f3ccb4-aa1c-43b1-aea3-351bee9924f1"
+          },
+          {
+            "message": "THREE.3DMLoader: ObjectType_Detail has no associated mesh geometry.",
+            "type": "missing mesh",
+            "guid": "51f3ccb4-aa1c-43b1-aea3-351bee9924f1"
+          }
+        ]
+      },
+      "children": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 1536,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1536,
+      "byteLength": 1536,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3072,
+      "byteLength": 432,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3504,
+      "byteLength": 1728,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5232,
+      "byteLength": 1728,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 6960,
+      "byteLength": 432,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 7392,
+      "byteLength": 288,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 7680,
+      "byteLength": 288,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 7968,
+      "byteLength": 72,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 8040,
+      "byteLength": 576,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 8616,
+      "byteLength": 576,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 9192,
+      "byteLength": 384,
+      "target": 34962,
+      "byteStride": 8
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 9576,
+      "byteLength": 192,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 9768,
+      "uri": "data:application/octet-stream;base64,AAAAPgAAQEBmZv5AAAAAPjMzQ0BmZv5A7O4uPgAAQEAAAABB7O4uPjMzQ0AAAABBQ0REPwAAQEAAAABBQ0REPzMzQ0AAAABB/v9PPwAAQEAAAABB/v9PPzMzQ0AAAABB//8LQAAAQEAAAABB//8LQDMzQ0AAAABB7u4OQAAAQEAAAABB7u4OQDMzQ0AAAABBEBE1QAAAQEAAAABBEBE1QDMzQ0AAAABB/v83QAAAQEBmZv5A/v83QDMzQ0BmZv5AAAAAPgEAQEAzMx9BAAAAPjUzQ0AzMx9B7O4uPgEAQEBmZh5B7O4uPjUzQ0BmZh5BQ0REPwEAQEBmZh5BQ0REPzUzQ0BmZh5B/v9PPwEAQEBmZh5B/v9PPzUzQ0BmZh5B//8LQAEAQEBmZh5B//8LQDUzQ0BmZh5B7u4OQAEAQEBmZh5B7u4OQDUzQ0BmZh5BEBE1QAEAQEBmZh5BEBE1QDUzQ0BmZh5B/v83QAEAQEAzMx9B/v83QDUzQ0AzMx9B/v83QAAAQEBmZv5AEBE1QAAAQEAAAABB7u4OQAAAQEAAAABB//8LQAAAQEAAAABB/v9PPwAAQEAAAABBQ0REPwAAQEAAAABB7O4uPgAAQEAAAABBAAAAPgAAQEBmZv5AAAAAPjMzQ0BmZv5A7O4uPjMzQ0AAAABBQ0REPzMzQ0AAAABB/v9PPzMzQ0AAAABB//8LQDMzQ0AAAABB7u4OQDMzQ0AAAABBEBE1QDMzQ0AAAABB/v83QDMzQ0BmZv5AAAAAPjMzQ0BmZv5AAAAAPgAAQEBmZv5A7O4uPjMzQ0AAAABBAAAAPjMzQ0BmZv5AAAAAPjUzQ0AzMx9B7O4uPgAAQEAAAABB7O4uPjMzQ0AAAABB7O4uPjUzQ0BmZh5BAAAAPgAAQEBmZv5A7O4uPgAAQEAAAABB7O4uPgEAQEBmZh5BAAAAPgEAQEAzMx9BQ0REPzMzQ0AAAABBQ0REPwAAQEAAAABB/v9PPzMzQ0AAAABBQ0REPzMzQ0AAAABBQ0REPzUzQ0BmZh5B/v9PPwAAQEAAAABB/v9PPzMzQ0AAAABB/v9PPzUzQ0BmZh5BQ0REPwAAQEAAAABB/v9PPwAAQEAAAABB/v9PPwEAQEBmZh5BQ0REPwEAQEBmZh5B//8LQDMzQ0AAAABB//8LQAAAQEAAAABB7u4OQDMzQ0AAAABB//8LQDMzQ0AAAABB//8LQDUzQ0BmZh5B7u4OQAAAQEAAAABB7u4OQDMzQ0AAAABB7u4OQDUzQ0BmZh5B//8LQAAAQEAAAABB7u4OQAAAQEAAAABB7u4OQAEAQEBmZh5B//8LQAEAQEBmZh5BEBE1QDMzQ0AAAABBEBE1QAAAQEAAAABB/v83QDMzQ0BmZv5AEBE1QDMzQ0AAAABBEBE1QDUzQ0BmZh5B/v83QAAAQEBmZv5A/v83QDMzQ0BmZv5A/v83QDUzQ0AzMx9BEBE1QAAAQEAAAABB/v83QAAAQEBmZv5A/v83QAEAQEAzMx9BEBE1QAEAQEBmZh5BAAAAPjUzQ0AzMx9BAAAAPgEAQEAzMx9B/v83QAEAQEAzMx9B/v83QDUzQ0AzMx9B7O4uPgEAQEBmZh5B7O4uPjUzQ0BmZh5BQ0REPzUzQ0BmZh5BQ0REPwEAQEBmZh5B/v9PPwEAQEBmZh5B/v9PPzUzQ0BmZh5B//8LQDUzQ0BmZh5B//8LQAEAQEBmZh5B7u4OQAEAQEBmZh5B7u4OQDUzQ0BmZh5BEBE1QDUzQ0BmZh5BEBE1QAEAQEBmZh5BAAAAPgEAQEAzMx9B7O4uPgEAQEBmZh5BQ0REPwEAQEBmZh5B/v9PPwEAQEBmZh5B//8LQAEAQEBmZh5B7u4OQAEAQEBmZh5BEBE1QAEAQEBmZh5B/v83QAEAQEAzMx9B/v83QDUzQ0AzMx9BEBE1QDUzQ0BmZh5B7u4OQDUzQ0BmZh5B//8LQDUzQ0BmZh5B/v9PPzUzQ0BmZh5BQ0REPzUzQ0BmZh5B7O4uPjUzQ0BmZh5BAAAAPjUzQ0AzMx9BAAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL+sDUo0AAAAAAAAgL+sDUo0AAAAAAAAgL+sDUo0AAAAAAAAgL+sDUo0AAAAAAAAgL+sDUo0AAAAAAAAgL+sDUo0AAAAAAAAgL+sDUo0AAAAAAAAgL+sDUo0AAAAAAAAgD/u0BO0AAAAAAAAgD/u0BO0AAAAAAAAgD/u0BO0AAAAAAAAgD/u0BO0AAAAAAAAgD/u0BO0AAAAAAAAgD/u0BO0AAAAAAAAgD/u0BO0AAAAAAAAgD/u0BO0AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAAAAgL/q0BM0AAAAAAAAgL/q0BM0AAAAAAAAgL/q0BM0AAAAAAAAgL/q0BM0AAAAAAAAgL/q0BM0AAAAAAAAgL/q0BM0AAAAAAAAgL/q0BM0AAAAAAAAgL/q0BM0AAAAAAAAgD+uDUq0AAAAAAAAgD+uDUq0AAAAAAAAgD+uDUq0AAAAAAAAgD+uDUq0AAAAAAAAgD+uDUq0AAAAAAAAgD+uDUq0AAAAAAAAgD+uDUq0AAAAAAAAgD+uDUq0AAABAA8ADwAOAAAAAwACAAQABAAFAAMABwAGAAgACAAJAAcACwAKAAwADAANAAsAIAAhACIAIgAjACAAIwAkACcAJQAmACcAJQAnACQAJwAgACMAKAApACoAKgArACgAKwAsAC8ALQAuAC8ALQAvACwALwAoACsAMAAxABAAEAARADAAMgAzADQANAATADIANQA2ADcANwASADUAOAA5ADoAOgA7ADgAPAA9ABQAFAAVADwAPgA/AEAAQAAXAD4AQQBCAEMAQwAWAEEARABFAEYARgBHAEQASABJABgAGAAZAEgASgBLAEwATAAbAEoATQBOAE8ATwAaAE0AUABRAFIAUgBTAFAAVABVABwAHAAdAFQAVgBXAFgAWAAfAFYAWQBaAFsAWwAeAFkAXABdAF4AXgBfAFwAYABhAGIAYgBjAGAAZABlAGYAZgBnAGQAaABpAGoAagBrAGgAbABtAG4AbgBvAGwAcABxAHIAcgBzAHAAcwB0AHAAdAB1AHcAdQB2AHcAdwBwAHQAeAB5AHoAegB7AHgAewB8AHgAfAB9AH8AfQB+AH8AfwB4AHwA7O4uPsP1QEAAAABB67RBPsP1QEDsUQBB67RBPnE9QkDsUQBB7O4uPnE9QkAAAABB7O4uPsT1QEBmZh5B67RBPsT1QEB7FB5B67RBPnI9QkB7FB5B7O4uPnI9QkBmZh5BQ0REP8T1QEBmZh5BxZI/P8T1QEB7FB5BxZI/P3I9QkB7FB5BQ0REP3I9QkBmZh5BQ0REP8P1QEAAAABBxZI/P8P1QEDsUQBBxZI/P3E9QkDsUQBBQ0REP3E9QkAAAABB/v9PP8P1QEAAAABBfLFUP8P1QEDsUQBBfLFUP3E9QkDsUQBB/v9PP3E9QkAAAABB/v9PP8T1QEBmZh5BfLFUP8T1QEB7FB5BfLFUP3I9QkB7FB5B/v9PP3I9QkBmZh5B//8LQMT1QEBmZh5Bn9MKQMT1QEB7FB5Bn9MKQHI9QkB7FB5B//8LQHI9QkBmZh5B//8LQMP1QEAAAABBn9MKQMP1QEDsUQBBn9MKQHE9QkDsUQBB//8LQHE9QkAAAABB7u4OQMP1QEAAAABBTRsQQMP1QEDsUQBBTRsQQHE9QkDsUQBB7u4OQHE9QkAAAABB7u4OQMT1QEBmZh5BTRsQQMT1QEB7FB5BTRsQQHI9QkB7FB5B7u4OQHI9QkBmZh5BEBE1QMT1QEBmZh5BsOQzQMT1QEB7FB5BsOQzQHI9QkB7FB5BEBE1QHI9QkBmZh5BEBE1QMP1QEAAAABBsOQzQMP1QEDsUQBBsOQzQHE9QkDsUQBBEBE1QHE9QkAAAABB67RBPsP1QEDsUQBB67RBPsT1QEB7FB5B67RBPnE9QkDsUQBB67RBPnI9QkB7FB5B7O4uPsT1QEBmZh5B67RBPsT1QEB7FB5B67RBPsT1QEB7FB5B67RBPnI9QkB7FB5BxZI/P8T1QEB7FB5B67RBPnI9QkB7FB5B7O4uPnI9QkBmZh5BxZI/P3I9QkB7FB5BQ0REP8T1QEBmZh5BxZI/P8T1QEB7FB5BxZI/P8T1QEB7FB5BxZI/P3I9QkB7FB5BxZI/P8P1QEDsUQBBxZI/P3I9QkB7FB5BQ0REP3I9QkBmZh5BxZI/P3E9QkDsUQBBQ0REP8P1QEAAAABBxZI/P8P1QEDsUQBB67RBPsP1QEDsUQBB7O4uPsP1QEAAAABBxZI/P8P1QEDsUQBBxZI/P3E9QkDsUQBB67RBPnE9QkDsUQBB67RBPsP1QEDsUQBBxZI/P3E9QkDsUQBBQ0REP3E9QkAAAABB7O4uPnE9QkAAAABB67RBPnE9QkDsUQBBfLFUP8P1QEDsUQBBfLFUP8T1QEB7FB5BfLFUP3E9QkDsUQBBfLFUP3I9QkB7FB5B/v9PP8T1QEBmZh5BfLFUP8T1QEB7FB5BfLFUP8T1QEB7FB5BfLFUP3I9QkB7FB5Bn9MKQMT1QEB7FB5BfLFUP3I9QkB7FB5B/v9PP3I9QkBmZh5Bn9MKQHI9QkB7FB5B//8LQMT1QEBmZh5Bn9MKQMT1QEB7FB5Bn9MKQMT1QEB7FB5Bn9MKQHI9QkB7FB5Bn9MKQMP1QEDsUQBBn9MKQHI9QkB7FB5B//8LQHI9QkBmZh5Bn9MKQHE9QkDsUQBB//8LQMP1QEAAAABBn9MKQMP1QEDsUQBBfLFUP8P1QEDsUQBB/v9PP8P1QEAAAABBn9MKQMP1QEDsUQBBn9MKQHE9QkDsUQBBfLFUP3E9QkDsUQBBfLFUP8P1QEDsUQBBn9MKQHE9QkDsUQBB//8LQHE9QkAAAABB/v9PP3E9QkAAAABBfLFUP3E9QkDsUQBBTRsQQMP1QEDsUQBBTRsQQMT1QEB7FB5BTRsQQHE9QkDsUQBBTRsQQHI9QkB7FB5B7u4OQMT1QEBmZh5BTRsQQMT1QEB7FB5BTRsQQMT1QEB7FB5BTRsQQHI9QkB7FB5BsOQzQMT1QEB7FB5BTRsQQHI9QkB7FB5B7u4OQHI9QkBmZh5BsOQzQHI9QkB7FB5BEBE1QMT1QEBmZh5BsOQzQMT1QEB7FB5BsOQzQMT1QEB7FB5BsOQzQHI9QkB7FB5BsOQzQMP1QEDsUQBBsOQzQHI9QkB7FB5BEBE1QHI9QkBmZh5BsOQzQHE9QkDsUQBBEBE1QMP1QEAAAABBsOQzQMP1QEDsUQBBTRsQQMP1QEDsUQBB7u4OQMP1QEAAAABBsOQzQMP1QEDsUQBBsOQzQHE9QkDsUQBBTRsQQHE9QkDsUQBBTRsQQMP1QEDsUQBBsOQzQHE9QkDsUQBBEBE1QHE9QkAAAABB7u4OQHE9QkAAAABBTRsQQHE9QkDsUQBBAAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL/jVTs0AAAAAAAAgL/jVTs0AAAAAEzvLrQAAIC/AAAAAAAAgD+2iCK0AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL+kNjQ0AAAAAAAAgL+kNjQ0AAAAAEzvLrQAAIC/AAAAAAAAgD/0pym0AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL92+Sk0AAAAAAAAgL92+Sk0AAAAAEzvLrQAAIC/AAAAAAAAgD8j5TO0AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgL/jVTs0AAAAAAAAgL/jVTs0AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAAAAgD+2iCK0AAAAAAAAgD+2iCK0AAAAAAAAgD+2iCK0AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgL8j5TM0AAAAAAAAgL8j5TM0AAAAAAAAgL8j5TM0AAAAAAAAgL8j5TM0AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAAAAgD90+Sm0AAAAAAAAgD90+Sm0AAAAAAAAgD90+Sm0AAAAAAAAgD90+Sm0AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgL+kNjQ0AAAAAAAAgL+kNjQ0AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/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AAAAPgAAQEA0Mx9BAAA4QAAAQEA0Mx9BAAA4QAAAQEBmZv5AAABAQAAAQEAAAPBAAABAQAAAQEAAAChBAABAQGZmRkAAAPBAAABAQGZmRkAAAChBAABAQGZmRkAAAPBAAABAQGZmRkAAAChBAAAAAGZmRkAAAPBAAAAAAGZmRkAAAChBAAAAPmZmRkA0Mx9BAAAAPmZmRkBmZv5AAAA4QGZmRkA0Mx9BAAA4QGZmRkBmZv5AAAAAAGZmRkAAAPBAAAAAAGZmRkAAAChBAAAAAAAAQEAAAPBAAAAAAAAAQEAAAChBAAAAAAAAQEAAAPBAAAAAAGZmRkAAAPBAAABAQAAAQEAAAPBAAABAQGZmRkAAAPBAAAAAAAAAQEAAAChBAAAAAGZmRkAAAChBAABAQAAAQEAAAChBAABAQGZmRkAAAChBAAAAPmZmRkA0Mx9BAAAAPgAAQEA0Mx9BAAAAPmZmRkBmZv5AAAAAPgAAQEBmZv5AAAA4QGZmRkA0Mx9BAAA4QAAAQEA0Mx9BAAAAPmZmRkA0Mx9BAAAAPgAAQEA0Mx9BAAA4QGZmRkBmZv5AAAA4QAAAQEBmZv5AAAA4QGZmRkA0Mx9BAAA4QAAAQEA0Mx9BAAAAPmZmRkBmZv5AAAAAPgAAQEBmZv5AAAA4QGZmRkBmZv5AAAA4QAAAQEBmZv5AAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAgJAAAgL8AAAAAAACgpAAAgL8AAAAAAACgpAAAgL8AAAAAAAAgJAAAgL8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAABwJAAAgD8AAAAAAAAAAAAAgD8AAAAAAABwJAAAgD8AAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAgAAAAIAAAIC/AAAAgAAAAIAAAIC/AAAAgAAAAIAAAIC/AAAAgAAAAIAAAIC/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAgAAAAIAAAIC/AAAAgAAAAIAAAIC/AAAAgAAAAIAAAIC/AAAAgAAAAIAAAIC/AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/iYgIPgAAAD+JiAg+AKB/PyLCIT8AAAA/IsIhPwCgfz/ezR0+zSQTP97NHT4iOmg/zHAcPyI6aD/McBw/zSQTP6uqqj0AAAAAq6qqPQAAAD/NzMk9AAAAAM3MyT0AAAA/iYgIPgAAAACJiAg+AED/PiLCIT8AAAAAIsIhPwBA/z7NcBw/RHTQPs1wHD9nJpk94s0dPkR00D7izR0+ZyaZPYmIiD0AAAAAiYiIPQAAAD+rqqc9AAAAAKuqpz0AAAA/iQgHPgAAAADv7u49AAAAAIkIBz4AAAA/7+7uPQAAAD/v7us9AAAAAM3MzD0AAAAA7+7rPQAAAD/NzMw9AAAAP4mIAj0AAAAAiYiIPAAAAACJiAI9q6qqPomIiDyrqqo+iYiFPQAAAADNzEw9AAAAAImIhT2oquo+zcxMPaiq6j4REXk8AAAAAAAAAAAAAAAAERF5PKuqqj4AAAAAq6qqPs3MRj0AAAAAiYgIPQAAAADNzEY9qKrqPomICD2oquo+BQAAAAQABwAEAAAAAAACAAcABQAGAAMAAwABAAUAAAAFAAEABgAHAAIAAgADAAYACQAIAAoACgALAAkAEwASAA0ADQAMABMADgATAAwADwANABIAEgAQAA8AEAARAA4AEwAOABEADgAPABAAFQAUABYAFgAXABUAGQAbABoAGgAYABkAHQAcAB4AHgAfAB0AIQAjACIAIgAgACEAJQAnACYAJgAkACUAKQArACoAKgAoACkALQAvAC4ALgAsAC0A"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 128,
+      "max": [
+        2.874999523162842,
+        3.0500004291534424,
+        9.949999809265137
+      ],
+      "min": [
+        0.125,
+        3,
+        7.949999809265137
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 128,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5123,
+      "count": 216,
+      "max": [
+        127
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 144,
+      "max": [
+        2.8291664123535156,
+        3.0350003242492676,
+        9.899999618530273
+      ],
+      "min": [
+        0.1708332896232605,
+        3.015000104904175,
+        8
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 144,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5123,
+      "count": 216,
+      "max": [
+        143
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 24,
+      "max": [
+        2.810832977294922,
+        3.0300002098083496,
+        9.880000114440918
+      ],
+      "min": [
+        0.18916670978069305,
+        3.0199999809265137,
+        8.020000457763672
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 24,
+      "max": [
+        0,
+        1,
+        1.6292068494294654e-7
+      ],
+      "min": [
+        0,
+        -1,
+        -1.6292068494294654e-7
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5123,
+      "count": 36,
+      "max": [
+        23
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        3,
+        3.0999999046325684,
+        10.5
+      ],
+      "min": [
+        0,
+        3,
+        7.5
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 10,
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 11,
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        0.6318684816360474,
+        0.99853515625
+      ],
+      "min": [
+        0,
+        0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 12,
+      "componentType": 5123,
+      "count": 96,
+      "max": [
+        47
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "hidden_material"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "Plastic"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0,
+          1,
+          1,
+          0.05058366060256958
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "name": "DoorGlass_material"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0.8,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "default"
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 3,
+            "NORMAL": 4
+          },
+          "indices": 5,
+          "material": 1
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 6,
+            "NORMAL": 7
+          },
+          "indices": 8,
+          "material": 2
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 9,
+            "NORMAL": 10,
+            "TEXCOORD_0": 11
+          },
+          "indices": 12,
+          "material": 3
+        }
+      ]
+    }
+  ]
+}
