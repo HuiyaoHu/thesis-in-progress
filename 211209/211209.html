@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>211207</title>
+		<title>211209</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
@@ -21,7 +21,7 @@
                 display: block;
                 padding: 0px 20px;
                 margin: 2px;
-                width: 80px;
+                width: 100px;
                 height: 40px;
                 text-align: center;
                 line-height: 40px;
@@ -41,7 +41,8 @@
 	<div id="buttons"> 
 		<div class="button pressed" id="button0" style="background-color:burlywood;">Floor</div>
 		<div class="button" id="button1" style="background-color:burlywood;">Wall</div>
-		<div class="button" id="button2" style="background-color:burlywood;">Window</div>
+		<div class="button" id="button2" style="background-color:burlywood;">Window01</div>
+		<div class="button" id="button3" style="background-color:burlywood;">Door01</div>
 	</div>
 	<script type="module">
 
@@ -59,70 +60,16 @@
 
 		var camera, scene, renderer, ground,
 			dir_light1, dir_light1_helper, dir_light2, dir_light2_helper, dir_light1ShadowHeper, hemi_light, hemi_light_helper, 
-			raycaster, mouse, wall_trans, wall_trans_del, floor_trans, floor_trans_del, window_trans, window_trans_del;
+			raycaster, mouse, wall_trans, wall_trans_del, floor_trans, floor_trans_del, Window01_trans, Window01_trans_del, Door01_trans, Door01_trans_del;
 
 		// gltf loader
 		var loader = new GLTFLoader();
 
-		// wall
-		var wall_width = 3;
-		var wall_thickness = 0.15;
-		var wall_height = 4;
 		
-		var wall_width_half = wall_width / 2;
-		var wall_height_half = wall_height / 2;
-
-		var wall_geom = new THREE.BoxBufferGeometry( wall_width, wall_thickness, wall_height );
-		var wall_geom_trans = new THREE.BoxBufferGeometry( wall_width * 1, wall_thickness* 2, wall_height * 1 );
-		var wall_geom_del = new THREE.BoxBufferGeometry( wall_width * 1.1, wall_thickness* 3, wall_height * 1.1 );
-
-
-		// floor
-		var floor_width = 3;
-		var floor_length = 3;
-		var floor_thickness = 0.15;
-		
-		var floor_width_half = floor_width/2;
-
-		var floor_geom = new THREE.BoxBufferGeometry( floor_width, floor_length, floor_thickness );
-		var floor_geom_trans = new THREE.BoxBufferGeometry( floor_width * 1, floor_length* 1, floor_thickness * 1 );
-		var floor_geom_del = new THREE.BoxBufferGeometry( floor_width * 1.1, floor_length* 1.1, floor_thickness * 1.1 );
-
-		// window
-		var window_width = 3;
-		var window_thickness = 0.5;
-		var window_height = 4;
-		
-		var window_width_half = window_width / 2;
-		var window_height_half = window_height / 2;
-
-		var window_geom = new THREE.BoxBufferGeometry( window_width, window_thickness, window_height );
-		var window_geom_trans = new THREE.BoxBufferGeometry( window_width * 1, window_thickness* 2, window_height * 1 );
-		var window_geom_del = new THREE.BoxBufferGeometry( window_width * 1.1, window_thickness* 3, window_height * 1.1 );
-		
-		// Load a glTF resource
-		loader.load(
-			// resource URL
-			'models/window01.glb',
-			// called when the resource is loaded
-			function ( gltf ) {
-				scene.add( gltf.scene );
-			},
-			// called when loading has errors
-			function ( error ) {	
-				console.log( 'An error happened' );
-			}
-		);
-
-		// camera 
-		var camera_zoom = 60
-		var camera_shift = 3
-
-		// ground
-		var num_cells = 6;
-		var ground_size = num_cells * wall_width;
-
 		//materials
+		// https://htmlcolorcodes.com/
+		// https://www.w3schools.com/colors/colors_names.asp
+
 		var wall_mat = new THREE.MeshLambertMaterial( {
 			color: 'burlywood',
 		});
@@ -151,19 +98,165 @@
 			transparent: true,
 		});
 
-		var window_mat = new THREE.MeshLambertMaterial( {
-			color: 'blue',
-		});
-		var window_mat_trans = new THREE.MeshLambertMaterial( {
+
+		var Window01_mat_trans = new THREE.MeshLambertMaterial( {
 			color: 'burlywood',
 			opacity: 0.2,
 			transparent: true,
 		});
-		var window_mat_trans_del = new THREE.MeshLambertMaterial( {
+		var Window01_mat_trans_del = new THREE.MeshLambertMaterial( {
 			color: 'white',
 			opacity: 0.6,
 			transparent: true,
 		});
+
+		var Door01_mat_trans = new THREE.MeshLambertMaterial( {
+		color: 'burlywood',
+		opacity: 0.2,
+		transparent: true,
+		});
+		var Door01_mat_trans_del = new THREE.MeshLambertMaterial( {
+			color: 'white',
+			opacity: 0.6,
+			transparent: true,
+		});
+		
+
+		var glass = new THREE.MeshLambertMaterial( {
+			color: 'turquoise',
+			opacity: 0.2,
+			transparent: true,
+		});
+		var obs = new THREE.MeshLambertMaterial( {
+			color: 'burlywood',
+		});		
+		var aluminium = new THREE.MeshLambertMaterial( {
+			color: 'gainsboro',
+		});
+		var rubber = new THREE.MeshLambertMaterial( {
+			color: 'black',
+		});
+		var timber = new THREE.MeshLambertMaterial( {
+			color: 'sienna',
+		});
+		var brass = new THREE.MeshLambertMaterial( {
+			color: 'gainsboro', //darkgoldenrod
+		});
+
+
+		// floor
+		var floor_width = 3;
+		var floor_length = 3;
+		var floor_thickness = 0.45;
+		
+		var floor_width_half = floor_width/2;
+
+		var floor_geom = new THREE.BoxBufferGeometry( floor_width, floor_length, floor_thickness );
+		var floor_geom_trans = new THREE.BoxBufferGeometry( floor_width * 1, floor_length* 1, floor_thickness * 1 );
+		var floor_geom_del = new THREE.BoxBufferGeometry( floor_width * 1.1, floor_length* 1.1, floor_thickness * 1.1 );
+
+		
+		// wall
+		var wall_width = 3;
+		var wall_thickness = 0.10;
+		var wall_height = 3;
+		
+		var wall_width_half = wall_width / 2;
+		var wall_height_half = wall_height / 2;
+
+		var wall_geom = new THREE.BoxBufferGeometry( wall_width, wall_thickness, wall_height );
+		var wall_geom_trans = new THREE.BoxBufferGeometry( wall_width * 1, wall_thickness* 2, wall_height * 1 );
+		var wall_geom_del = new THREE.BoxBufferGeometry( wall_width * 1.1, wall_thickness* 3, wall_height * 1.1 );
+
+
+		// Window01
+		var Window01_width = 3;
+		var Window01_thickness = 0.5;
+		var Window01_height = 3;
+		
+		var Window01_width_half = Window01_width / 2;
+		var Window01_height_half = Window01_height / 2;
+
+		var Window01_geom = new THREE.BoxBufferGeometry( Window01_width, Window01_thickness, Window01_height );
+		var Window01_geom_trans = new THREE.BoxBufferGeometry( Window01_width * 1, Window01_thickness* 1, Window01_height * 1 );
+		var Window01_geom_del = new THREE.BoxBufferGeometry( Window01_width * 1.1, Window01_thickness* 1.1, Window01_height * 1.1 );
+
+		var  Window01_geom = null
+		// Load a glTF resource
+		loader.load(
+			// resource URL
+			'models/Window01.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+				Window01_geom = gltf.scene;
+				Window01_geom.getObjectByName("Glass").material = glass;
+				Window01_geom.getObjectByName("WindowFrame").material = aluminium;
+				Window01_geom.getObjectByName("WindowSeal").material = rubber;
+				Window01_geom.getObjectByName("SIP").material = obs;
+				console.log('~~~~~~~~~~', Window01_geom)
+				// Window01_geom.rotation.x += Math.PI /2;
+				// Window01_geom.matrixAutoUpdate  = true;
+				// Window01_geom.getObjectByName("Window01R001").children.material = new THREE.MeshLambertMaterial( {color: 'burlywood'});
+				// Window01_geom.getObjectByName("mesh_36").material = new THREE.MeshLambertMaterial( {color: 'burlywood'});
+				// console.log(Window01_geom.getObjectByName("mesh_36").material)
+				// console.log(Window01_geom.getObjectByProperty(uuid,  "E01E399B-7EDF-4712-8FD5-574EEE30DF2B" ) )
+				// console.log(Window01_geom.getObjectByName("Window01R001").children.material)
+			},
+			// called when loading has errors
+			function ( error ) {	
+				console.log( 'An error happened' );
+			}
+		);
+		// Window01_geom.getObjectById("LowpolyBlood_Bake_Blood_0.001").material.color.set( _some_color_ )
+		// var Window01_geom = gltf.scene.children[4];
+
+
+		// Door01
+		var Door01_width = 3;
+		var Door01_thickness = 0.5;
+		var Door01_height = 3;
+		
+		var Door01_width_half = Door01_width / 2;
+		var Door01_height_half = Door01_height / 2;
+
+		var Door01_geom = new THREE.BoxBufferGeometry( Door01_width, Door01_thickness, Door01_height );
+		var Door01_geom_trans = new THREE.BoxBufferGeometry( Door01_width * 1, Door01_thickness* 1, Door01_height * 1 );
+		var Door01_geom_del = new THREE.BoxBufferGeometry( Door01_width * 1.1, Door01_thickness* 1.1, Door01_height * 1.1 );
+
+		var  Door01_geom = null
+		// Load a glTF resource
+		loader.load(
+			// resource URL
+			'models/Door01.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+				Door01_geom = gltf.scene;
+				Door01_geom.getObjectByName("Door").material = timber;
+				Door01_geom.getObjectByName("DoorFrame").material = aluminium;
+				Door01_geom.getObjectByName("DoorHandle1").material = brass;
+				Door01_geom.getObjectByName("DoorHandle2").material = brass;
+				Door01_geom.getObjectByName("SIP").material = obs;
+				// Door01_geom.rotation.x += Math.PI /2;
+				// Door01_geom.matrixAutoUpdate  = true;
+				// Door01_geom.getObjectByName("Door01R001").children.material = new THREE.MeshLambertMaterial( {color: 'burlywood'});
+				// Door01_geom.getObjectByName("mesh_36").material = new THREE.MeshLambertMaterial( {color: 'burlywood'});
+				console.log(Door01_geom.getObjectByName("DoorHandle1").material)
+				// console.log(Door01_geom.getObjectByProperty(uuid,  "E01E399B-7EDF-4712-8FD5-574EEE30DF2B" ) )
+				// console.log(Door01_geom.getObjectByName("Door01R001").children.material)
+			},
+			// called when loading has errors
+			function ( error ) {	
+				console.log( 'An error happened' );
+			}
+		);
+
+		// camera 
+		var camera_zoom = 60
+		var camera_shift = 3
+
+		// ground
+		var num_cells = 6;
+		var ground_size = num_cells * wall_width;
 
 
 		// mouse
@@ -174,7 +267,7 @@
 		var walls = {};
 		var wall_rotation = 0;
 		var wall_pos = null;
-		var del_item = false;
+		var del_wall = false;
 		var wall_counters = [0, 0, 0];
 		var wall_pos_list = [];
 		
@@ -184,19 +277,28 @@
 		var del_floor = false;
 		var floor_counters = [0, 0, 0];
 
-		// window settings
-		var windows = {};
-		var window_rotation = 0;
-		var window_pos = null;
-		var del_item = false;
-		var window_counters = [0, 0, 0];
-		var window_pos_list = [];
+		// Window01 settings
+		var Window01s = {};
+		var Window01_rotation = 0;
+		var Window01_pos = null;
+		var del_Window01 = false;
+		var Window01_counters = [0, 0, 0];
+		var Window01_pos_list = [];
 
+		// Door01 settings
+		var Door01s = {};
+		var Door01_rotation = 0;
+		var Door01_pos = null;
+		var del_Door01 = false;
+		var Door01_counters = [0, 0, 0];
+		var Door01_pos_list = [];
+
+		
 		// wall / floor type, relates to the buttons
 		var button_index = 0;
 
 		// button ids
-		var button_ids = ['button0', 'button1', 'button2'];
+		var button_ids = ['button0', 'button1', 'button2', 'button3'];
 		
 
 		// execute
@@ -212,7 +314,7 @@
 
 			// CAMERA AND SCENE
 
-			// camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 ); //FOV, aspect ratio, near, far of clipping plane
+			// camera = new THREE.PerspectiveCamera( 70, Window01.innerWidth / Window01.innerHeight, 1, 10000 ); //FOV, aspect ratio, near, far of clipping plane
 			camera = new THREE.OrthographicCamera( -window.innerWidth/camera_zoom+camera_shift, window.innerWidth/camera_zoom+camera_shift,  window.innerHeight/camera_zoom,  -window.innerHeight/camera_zoom, -10000, 10000 ) //( left, right, top, bottom, near, far )
 			camera.position.set( 0, 0, 500 );
 			camera.up.set( 0, 0, 1 ); //orientation of the camera. if camera. up. set(0,0,1) , it would mean that z-axis is going vertically up in the screen and x and y axes align accordingly.
@@ -270,16 +372,27 @@
 			floor_trans_del.visible = false;
 			scene.add(floor_trans_del);
 
-			window_trans = new THREE.Mesh( window_geom_trans, window_mat_trans );
-			window_trans.castShadow = false;
-			window_trans.receiveShadow = false;
-			window_trans.visible = false;
-			scene.add(window_trans);
-			window_trans_del = new THREE.Mesh( window_geom_del, window_mat_trans_del );
-			window_trans_del.castShadow = false;
-			window_trans_del.receiveShadow = false;
-			window_trans_del.visible = false;
-			scene.add(window_trans_del);
+			Window01_trans = new THREE.Mesh( Window01_geom_trans, Window01_mat_trans );
+			Window01_trans.castShadow = false;
+			Window01_trans.receiveShadow = false;
+			Window01_trans.visible = false;
+			scene.add(Window01_trans);
+			Window01_trans_del = new THREE.Mesh( Window01_geom_del, Window01_mat_trans_del );
+			Window01_trans_del.castShadow = false;
+			Window01_trans_del.receiveShadow = false;
+			Window01_trans_del.visible = false;
+			scene.add(Window01_trans_del);
+
+			Door01_trans = new THREE.Mesh( Door01_geom_trans, Door01_mat_trans );
+			Door01_trans.castShadow = false;
+			Door01_trans.receiveShadow = false;
+			Door01_trans.visible = false;
+			scene.add(Door01_trans);
+			Door01_trans_del = new THREE.Mesh( Door01_geom_del, Door01_mat_trans_del );
+			Door01_trans_del.castShadow = false;
+			Door01_trans_del.receiveShadow = false;
+			Door01_trans_del.visible = false;
+			scene.add(Door01_trans_del);
 
 
 			// SCENE BACKGROUND AND FOG
@@ -365,6 +478,7 @@
 			document.getElementById("button0").addEventListener("click", onClickbutton0);
 			document.getElementById("button1").addEventListener("click", onClickbutton1);
 			document.getElementById("button2").addEventListener("click", onClickbutton2);
+			document.getElementById("button3").addEventListener("click", onClickbutton3);
 
 		}
 
@@ -396,18 +510,6 @@
 				// we are dragging, so no nothing
 				return;
 			}
-			if (wall_pos != null) {
-				// calc the coords of the wall, to be used for the key
-				var coords = new THREE.Vector3(wall_pos.x / wall_width_half, wall_pos.y  / wall_width_half, wall_pos.z / wall_height_half);
-				// create a key that is a string that looks something like this: 1_2_3
-				var key = coords.x + '_' + coords.y + '_' + coords.z;
-				if (del_item && key in walls) {
-					deleteWall(walls[key]);                    
-				} else if (!del_item) {
-						// add a new wall
-						addWall(coords, key);
-				}
-			}
 
 			if (floor_pos != null) {
 				// calc the coords of the floor, to be used for the key
@@ -422,16 +524,48 @@
 				}
 			}
 
-			if (window_pos != null) {
-				// calc the coords of the window, to be used for the key
-				var coords = new THREE.Vector3(window_pos.x / window_width_half, window_pos.y  / window_width_half, window_pos.z / window_height_half);
+			if (wall_pos != null) {
+				// calc the coords of the wall, to be used for the key
+				var coords = new THREE.Vector3(wall_pos.x / wall_width_half, wall_pos.y  / wall_width_half, wall_pos.z / wall_height_half);
 				// create a key that is a string that looks something like this: 1_2_3
 				var key = coords.x + '_' + coords.y + '_' + coords.z;
-				if (del_item && key in windows) {
-					deleteBox(windows[key]);  
-				} else if (!del_item) {
-					// add a new window
-					addwindow(coords, key);
+				if (del_wall && key in walls) {
+					deleteWall(walls[key]);                    
+				} else if (!del_wall) {
+						// add a new wall
+						addWall(coords, key);
+						deleteDoor01(Door01s[key]);
+						deleteWindow01(Window01s[key]);
+				}
+			}
+
+			if (Window01_pos != null) {
+				// calc the coords of the Window01, to be used for the key
+				var coords = new THREE.Vector3(Window01_pos.x / Window01_width_half, Window01_pos.y  / Window01_width_half, Window01_pos.z / Window01_height_half);
+				// create a key that is a string that looks something like this: 1_2_3
+				var key = coords.x + '_' + coords.y + '_' + coords.z;
+				if (del_Window01 && key in Window01s) {
+					deleteWindow01(Window01s[key]);  
+				} else if (!del_Window01) {
+					// add a new Window01
+					addWindow01(coords, key);
+					deleteWall(walls[key]);
+					deleteDoor01(Door01s[key]);
+				}
+			}
+
+			if (Door01_pos != null) {
+				// calc the coords of the Door01, to be used for the key
+				var coords = new THREE.Vector3(Door01_pos.x / Door01_width_half, Door01_pos.y  / Door01_width_half, Door01_pos.z / Door01_height_half);
+				// create a key that is a string that looks something like this: 1_2_3
+				var key = coords.x + '_' + coords.y + '_' + coords.z;
+				if (del_Door01 && key in Door01s) {
+					deleteDoor01(Door01s[key]);  
+				} else if (!del_Door01) {
+					// add a new Door01
+					addDoor01(coords, key);
+					deleteWall(walls[key]);
+					deleteWindow01(Window01s[key]);
 				}
 			}
 		}
@@ -444,14 +578,6 @@
 			mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 			mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 			if (event.shiftKey) {
-				del_item = true;
-				wall_trans.visible = false;
-			} else {
-				del_item = false;
-				wall_trans_del.visible = false;
-			}
-
-			if (event.shiftKey) {
 				del_floor = true;
 				floor_trans.visible = false;
 			} else {
@@ -460,13 +586,28 @@
 			}
 
 			if (event.shiftKey) {
-				del_item = true;
-				window_trans.visible = false;
+				del_wall = true;
+				wall_trans.visible = false;
 			} else {
-				del_item = false;
-				window_trans_del.visible = false;
+				del_wall = false;
+				wall_trans_del.visible = false;
 			}
 
+			if (event.shiftKey) {
+				del_Window01 = true;
+				Window01_trans.visible = false;
+			} else {
+				del_Window01 = false;
+				Window01_trans_del.visible = false;
+			}
+			
+			if (event.shiftKey) {
+				del_Door01 = true;
+				Door01_trans.visible = false;
+			} else {
+				del_Door01 = false;
+				Door01_trans_del.visible = false;
+			}
 		}
 		
 
@@ -483,6 +624,12 @@
 		function onClickbutton2() {
 			document.getElementById(button_ids[button_index]).classList.remove("pressed");
 			button_index = 2;
+			document.getElementById(button_ids[button_index]).classList.add("pressed");
+		};
+
+		function onClickbutton3() {
+			document.getElementById(button_ids[button_index]).classList.remove("pressed");
+			button_index = 3;
 			document.getElementById(button_ids[button_index]).classList.add("pressed");
 		};
 
@@ -573,6 +720,8 @@
 				// get the objects in the scene to check for intersections
 				// the walls and the ground
 				var isect_objs = Object.values(walls); 
+				isect_objs = isect_objs.concat(Object.values(Window01s));
+				isect_objs = isect_objs.concat(Object.values(Door01s));
 				isect_objs.push(ground);
 				// create a ray from the camera and intersect it with objects in the scene
 				raycaster.setFromCamera( mouse, camera );
@@ -587,7 +736,7 @@
 						wall_pos = new THREE.Vector3(wall_cen.x, wall_cen.y, wall_cen.z);
 						wall_rotation = isect0.object.rotation.z;
 
-						if (!del_item) { // if we are adding a new wall, then we offset centre based on the face that was intersected
+						if (!del_wall) { // if we are adding a new wall, then we offset centre based on the face that was intersected
 							// wall_pos.z += wall_height; 
 							// console.log('__wall_rotation_',wall_rotation)
 							// console.log('__face_',isect0.face)
@@ -660,7 +809,7 @@
 								wall_pos.z -= wall_height; 
 							}
 						}
-						if (del_item) {
+						if (del_wall) {
 							// show 'delete' glass wall
 							wall_trans_del.position.set(wall_pos.x, wall_pos.y, wall_pos.z);
 							wall_trans_del.rotation.z = wall_rotation;
@@ -676,7 +825,7 @@
 					} 
 					
 					else { // if this is the ground, then get the center from intersection of ground mesh
-						if (!del_item) {
+						if (!del_wall) {
 							wall_pos = new THREE.Vector3();
 							wall_rotation = 0
 							if (num_cells % 2 == 1) { // odd number of cells
@@ -717,7 +866,37 @@
 							wall_trans.visible = true;
 						}
 					}
-				} else { // the ray intersects with nothing, hide the glass walls
+				} 
+				// else if (isect0.object.name == 'Window01') { 
+				// 	if (!del_wall) {
+				// 		// show 'add' glass wall
+				// 		var wall_cen = isect0.object.position;
+				// 		wall_pos = new THREE.Vector3(wall_cen.x, wall_cen.y, wall_cen.z);
+				// 		wall_rotation = isect0.object.rotation.z;
+
+				// 		// wall_pos.z = wall_height_half;
+				// 		wall_trans.position.copy(wall_pos);
+				// 		wall_trans.rotation.z = wall_rotation
+				// 		wall_trans_del.visible = false;
+				// 		wall_trans.visible = true;
+				// 	}
+				// }		
+				// else if (isect0.object.name == 'Door01') { 
+				// 	if (!del_wall) {
+				// 		// show 'add' glass wall
+				// 		var wall_cen = isect0.object.position;
+				// 		wall_pos = new THREE.Vector3(wall_cen.x, wall_cen.y, wall_cen.z);
+				// 		wall_rotation = isect0.object.rotation.z;
+
+				// 		// wall_pos.z = wall_height_half;
+				// 		wall_trans.position.copy(wall_pos);
+				// 		wall_trans.rotation.z = wall_rotation
+				// 		wall_trans_del.visible = false;
+				// 		wall_trans.visible = true;
+				// 	}
+				// }				
+		
+				else { // the ray intersects with nothing, hide the glass walls
 					wall_trans.visible = false;
 					wall_trans_del.visible = false;
 					wall_pos = null;
@@ -736,8 +915,138 @@
 
 			if (button_index == 2){
 				// get the objects in the scene to check for intersections
-				// the windows and the ground
-				var isect_objs = Object.values(windows, walls); 
+				// the Window01s and the ground
+				var isect_objs = Object.values(Window01s); 
+				isect_objs = isect_objs.concat(Object.values(walls));
+				isect_objs = isect_objs.concat(Object.values(Door01s));
+				isect_objs.push(ground);
+				// create a ray from the camera and intersect it with objects in the scene
+				raycaster.setFromCamera( mouse, camera );
+				var intersects = raycaster.intersectObjects( isect_objs, true ); // true indicates checking children of isect_objs
+				
+				if ( intersects.length > 0 ) { 
+					// get the first object that the ray intersects
+					var isect0 = intersects[ 0 ];
+					if (isect0.object && isect0.object.parent && isect0.object.parent.parent &&
+					isect0.object.parent.parent.name == 'Window01') { // if this is a Window01, then get the centre and rotation of the Window01
+						var isectObj = isect0.object.parent.parent
+						var Window01_cen = isectObj.position;
+						Window01_pos = new THREE.Vector3(Window01_cen.x, Window01_cen.y, Window01_cen.z);
+						Window01_rotation = isectObj.rotation.z;
+						if (!del_Window01) { // if we are adding a new Window01, then we offset centre based on the face that was intersected
+							// // Window01_pos.z += Window01_height; 
+							// // console.log('__Window01_rotation_',Window01_rotation)
+							// // console.log('__face_',isect0.face)
+							// // console.log('__distance_',isect0.distance)
+							// console.log('__object_',isectObj)
+							// // console.log('__uv_',isect0.uv)
+							// // console.log('___',isect0.faceIndex)
+							// if (isect0.faceIndex == 0 || isect0.faceIndex == 1) { // right top || right bottom
+							// 	if (Window01_rotation !== 0) {
+							// 		Window01_pos.y += Window01_width;
+							// 	} else {
+							// 		Window01_pos.x += Window01_width;
+							// 	}
+							// } 
+							// else if (isect0.faceIndex == 3 || isect0.faceIndex == 2) { // left top || left bottom
+							// 	if (Window01_rotation !== 0) {
+							// 		Window01_pos.y -= Window01_width;
+							// 	} else {
+							// 		Window01_pos.x -= Window01_width;
+							// 	}
+							// } 
+							// else if (isect0.faceIndex == 6) { // front left
+							// 	if (Window01_rotation !== 0) {
+							// 		Window01_rotation = 0;
+							// 		Window01_pos.x += Window01_width_half;
+							// 		Window01_pos.y -= Window01_width_half;
+							// 	} else {
+							// 		Window01_rotation = Math.PI / 2;
+							// 		Window01_pos.x -= Window01_width_half;
+							// 		Window01_pos.y -= Window01_width_half;
+							// 	}
+							// }  
+							// else if (isect0.faceIndex == 7) { // front right
+							// 	if (Window01_rotation !== 0) {
+							// 		Window01_rotation = 0;
+							// 		Window01_pos.x += Window01_width_half;
+							// 		Window01_pos.y += Window01_width_half;
+							// 	} else {
+							// 		Window01_rotation = Math.PI / 2;
+							// 		Window01_pos.x += Window01_width_half;
+							// 		Window01_pos.y -= Window01_width_half;
+							// 	}
+							// }  
+							// else if (isect0.faceIndex == 5) { // back left
+							// 	if (Window01_rotation !== 0) {
+							// 		Window01_rotation = 0;
+							// 		Window01_pos.x -= Window01_width_half;
+							// 		Window01_pos.y += Window01_width_half;
+							// 	} else {
+							// 		Window01_rotation = Math.PI / 2;
+							// 		Window01_pos.x += Window01_width_half;
+							// 		Window01_pos.y += Window01_width_half;
+							// 	}
+							// } 
+							// else if (isect0.faceIndex == 4) { // back right
+							// 	if (Window01_rotation !== 0) {
+							// 		Window01_rotation = 0;
+							// 		Window01_pos.x -= Window01_width_half;
+							// 		Window01_pos.y -= Window01_width_half;
+							// 	} else {
+							// 		Window01_rotation = Math.PI / 2;
+							// 		Window01_pos.x -= Window01_width_half;
+							// 		Window01_pos.y += Window01_width_half;
+							// 	}
+							// } 
+							// else if (isect0.faceIndex == 8 || isect0.faceIndex == 9) { // top left || right
+							// 	Window01_pos.z += Window01_height; 
+							// }  
+							// else if (isect0.faceIndex == 11 || isect0.faceIndex == 12) { // bottom left || right
+							// 	Window01_pos.z -= Window01_height; 
+							// }
+						}
+						if (del_Window01) {
+							// show 'delete' glass Window01
+							Window01_trans_del.position.set(Window01_pos.x, Window01_pos.y, Window01_pos.z);
+							Window01_trans_del.rotation.z = Window01_rotation;
+							Window01_trans_del.visible = true;
+							Window01_trans.visible = false;
+						} else {
+							// show 'add' glass Window01
+							Window01_trans.position.set(Window01_pos.x, Window01_pos.y, Window01_pos.z);
+							Window01_trans.rotation.z = Window01_rotation;
+							Window01_trans_del.visible = false;
+							Window01_trans.visible = true;
+						}
+					} 
+					
+					else if (isect0.object.name == 'wall') { 
+						if (!del_Window01) {
+							// show 'add' glass Window01
+							var Window01_cen = isect0.object.position;
+							Window01_pos = new THREE.Vector3(Window01_cen.x, Window01_cen.y, Window01_cen.z);
+							Window01_rotation = isect0.object.rotation.z;
+
+							// Window01_pos.z = Window01_height_half;
+							Window01_trans.position.copy(Window01_pos);
+							Window01_trans.rotation.z = Window01_rotation
+							Window01_trans_del.visible = false;
+							Window01_trans.visible = true;
+						}
+					}
+				} else { // the ray intersects with nothing, hide the glass Window01s
+					Window01_trans.visible = false;
+					Window01_trans_del.visible = false;
+					Window01_pos = null;
+				}
+			}	
+
+			if (button_index == 3){
+				// get the objects in the scene to check for intersections
+				// the Door01s and the ground
+				var isect_objs = Object.values(Door01s); 
+				isect_objs = isect_objs.concat(Object.values(walls));
 				isect_objs.push(ground);
 				// create a ray from the camera and intersect it with objects in the scene
 				raycaster.setFromCamera( mouse, camera );
@@ -747,148 +1056,154 @@
 				if ( intersects.length > 0 ) { 
 					// get the first object that the ray intersects
 					var isect0 = intersects[ 0 ];
-					if (isect0.object.name == 'window') { // if this is a window, then get the centre and rotation of the window
-						var window_cen = isect0.object.position;
-						window_pos = new THREE.Vector3(window_cen.x, window_cen.y, window_cen.z);
-						window_rotation = isect0.object.rotation.z;
+					if (isect0.object.name == 'Door01') { // if this is a Door01, then get the centre and rotation of the Door01
+						var Door01_cen = isect0.object.position;
+						Door01_pos = new THREE.Vector3(Door01_cen.x, Door01_cen.y, Door01_cen.z);
+						Door01_rotation = isect0.object.rotation.z;
 
-						if (!del_item) { // if we are adding a new window, then we offset centre based on the face that was intersected
-							// window_pos.z += window_height; 
-							// console.log('__window_rotation_',window_rotation)
+						if (!del_Door01) { // if we are adding a new Door01, then we offset centre based on the face that was intersected
+							// Door01_pos.z += Door01_height; 
+							// console.log('__Door01_rotation_',Door01_rotation)
 							// console.log('__face_',isect0.face)
 							// console.log('__distance_',isect0.distance)
 							console.log('__object_',isect0.object)
 							// console.log('__uv_',isect0.uv)
 							// console.log('___',isect0.faceIndex)
 							if (isect0.faceIndex == 0 || isect0.faceIndex == 1) { // right top || right bottom
-								if (window_rotation !== 0) {
-									window_pos.y += window_width;
+								if (Door01_rotation !== 0) {
+									Door01_pos.y += Door01_width;
 								} else {
-									window_pos.x += window_width;
+									Door01_pos.x += Door01_width;
 								}
 							} 
 							else if (isect0.faceIndex == 3 || isect0.faceIndex == 2) { // left top || left bottom
-								if (window_rotation !== 0) {
-									window_pos.y -= window_width;
+								if (Door01_rotation !== 0) {
+									Door01_pos.y -= Door01_width;
 								} else {
-									window_pos.x -= window_width;
+									Door01_pos.x -= Door01_width;
 								}
 							} 
 							else if (isect0.faceIndex == 6) { // front left
-								if (window_rotation !== 0) {
-									window_rotation = 0;
-									window_pos.x += window_width_half;
-									window_pos.y -= window_width_half;
+								if (Door01_rotation !== 0) {
+									Door01_rotation = 0;
+									Door01_pos.x += Door01_width_half;
+									Door01_pos.y -= Door01_width_half;
 								} else {
-									window_rotation = Math.PI / 2;
-									window_pos.x -= window_width_half;
-									window_pos.y -= window_width_half;
+									Door01_rotation = Math.PI / 2;
+									Door01_pos.x -= Door01_width_half;
+									Door01_pos.y -= Door01_width_half;
 								}
 							}  
 							else if (isect0.faceIndex == 7) { // front right
-								if (window_rotation !== 0) {
-									window_rotation = 0;
-									window_pos.x += window_width_half;
-									window_pos.y += window_width_half;
+								if (Door01_rotation !== 0) {
+									Door01_rotation = 0;
+									Door01_pos.x += Door01_width_half;
+									Door01_pos.y += Door01_width_half;
 								} else {
-									window_rotation = Math.PI / 2;
-									window_pos.x += window_width_half;
-									window_pos.y -= window_width_half;
+									Door01_rotation = Math.PI / 2;
+									Door01_pos.x += Door01_width_half;
+									Door01_pos.y -= Door01_width_half;
 								}
 							}  
 							else if (isect0.faceIndex == 5) { // back left
-								if (window_rotation !== 0) {
-									window_rotation = 0;
-									window_pos.x -= window_width_half;
-									window_pos.y += window_width_half;
+								if (Door01_rotation !== 0) {
+									Door01_rotation = 0;
+									Door01_pos.x -= Door01_width_half;
+									Door01_pos.y += Door01_width_half;
 								} else {
-									window_rotation = Math.PI / 2;
-									window_pos.x += window_width_half;
-									window_pos.y += window_width_half;
+									Door01_rotation = Math.PI / 2;
+									Door01_pos.x += Door01_width_half;
+									Door01_pos.y += Door01_width_half;
 								}
 							} 
 							else if (isect0.faceIndex == 4) { // back right
-								if (window_rotation !== 0) {
-									window_rotation = 0;
-									window_pos.x -= window_width_half;
-									window_pos.y -= window_width_half;
+								if (Door01_rotation !== 0) {
+									Door01_rotation = 0;
+									Door01_pos.x -= Door01_width_half;
+									Door01_pos.y -= Door01_width_half;
 								} else {
-									window_rotation = Math.PI / 2;
-									window_pos.x -= window_width_half;
-									window_pos.y += window_width_half;
+									Door01_rotation = Math.PI / 2;
+									Door01_pos.x -= Door01_width_half;
+									Door01_pos.y += Door01_width_half;
 								}
 							} 
 							else if (isect0.faceIndex == 8 || isect0.faceIndex == 9) { // top left || right
-								window_pos.z += window_height; 
+								Door01_pos.z += Door01_height; 
 							}  
 							else if (isect0.faceIndex == 11 || isect0.faceIndex == 12) { // bottom left || right
-								window_pos.z -= window_height; 
+								Door01_pos.z -= Door01_height; 
 							}
 						}
-						if (del_item) {
-							// show 'delete' glass window
-							window_trans_del.position.set(window_pos.x, window_pos.y, window_pos.z);
-							window_trans_del.rotation.z = window_rotation;
-							window_trans_del.visible = true;
-							window_trans.visible = false;
+						if (del_Door01) {
+							// show 'delete' glass Door01
+							Door01_trans_del.position.set(Door01_pos.x, Door01_pos.y, Door01_pos.z);
+							Door01_trans_del.rotation.z = Door01_rotation;
+							Door01_trans_del.visible = true;
+							Door01_trans.visible = false;
 						} else {
-							// show 'add' glass window
-							window_trans.position.set(window_pos.x, window_pos.y, window_pos.z);
-							window_trans.rotation.z = window_rotation;
-							window_trans_del.visible = false;
-							window_trans.visible = true;
+							// show 'add' glass Door01
+							Door01_trans.position.set(Door01_pos.x, Door01_pos.y, Door01_pos.z);
+							Door01_trans.rotation.z = Door01_rotation;
+							Door01_trans_del.visible = false;
+							Door01_trans.visible = true;
 						}
 					} 
 					
-					else { // if this is the ground, then get the center from intersection of ground mesh
-						if (!del_item) {
-							console.log('____', isect0.object.name)
-							window_pos = new THREE.Vector3();
-							window_rotation = 0
-							if (num_cells % 2 == 1) { // odd number of cells
-								var ptX = new THREE.Vector3( // window_pos if window is horizontal
-									Math.round(isect0.point.x / window_width) * window_width,
-									Math.round(isect0.point.y / window_width) * window_width,
-									0);
-								var ptY = new THREE.Vector3( // window_pos if window is vertical
-									Math.round((window_width_half + isect0.point.x) / window_width) * window_width - window_width_half,
-									Math.round((window_width_half + isect0.point.y) / window_width) * window_width - window_width_half,
-									0);
-							} 
-							else { // even number of cells
-								var ptX = new THREE.Vector3( // window_pos if window is horizontal
-									Math.round((window_width_half + isect0.point.x) / window_width) * window_width - window_width_half,
-									Math.round((window_width_half + isect0.point.y) / window_width) * window_width - window_width_half,
-									0);
-								var ptY = new THREE.Vector3( // window_pos if window is vertical
-									Math.round(isect0.point.x / window_width) * window_width,
-									Math.round(isect0.point.y / window_width) * window_width,
-									0);
-							}
-							var distX = ptX.distanceTo(isect0.point); // distance from horizontal window pos to mouse pointer
-							var distY = ptY.distanceTo(isect0.point); // distance from vertical window pos to mouse pointer
-							if (distX <= distY) {
-								window_pos.copy(ptX)
-							} else {
-								window_pos.copy(ptY)
-								window_rotation = Math.PI / 2
-							}
-							// console.log('___', isect0.point, ptX, ptY, distX, distY, window_pos)
+					else if (isect0.object.name == 'wall' ) { // if this is the ground, then get the center from intersection of ground mesh
+						if (!del_Door01) {
+							// console.log('____', isect0.object.name)
+							// Door01_pos = new THREE.Vector3();
+							// Door01_rotation = 0
+							// if (num_cells % 2 == 1) { // odd number of cells
+							// 	var ptX = new THREE.Vector3( // Door01_pos if Door01 is horizontal
+							// 		Math.round(isect0.point.x / Door01_width) * Door01_width,
+							// 		Math.round(isect0.point.y / Door01_width) * Door01_width,
+							// 		0);
+							// 	var ptY = new THREE.Vector3( // Door01_pos if Door01 is vertical
+							// 		Math.round((Door01_width_half + isect0.point.x) / Door01_width) * Door01_width - Door01_width_half,
+							// 		Math.round((Door01_width_half + isect0.point.y) / Door01_width) * Door01_width - Door01_width_half,
+							// 		0);
+							// } 
+							// else { // even number of cells
+							// 	var ptX = new THREE.Vector3( // Door01_pos if Door01 is horizontal
+							// 		Math.round((Door01_width_half + isect0.point.x) / Door01_width) * Door01_width - Door01_width_half,
+							// 		Math.round((Door01_width_half + isect0.point.y) / Door01_width) * Door01_width - Door01_width_half,
+							// 		0);
+							// 	var ptY = new THREE.Vector3( // Door01_pos if Door01 is vertical
+							// 		Math.round(isect0.point.x / Door01_width) * Door01_width,
+							// 		Math.round(isect0.point.y / Door01_width) * Door01_width,
+							// 		0);
+							// }
+							// var distX = ptX.distanceTo(isect0.point); // distance from horizontal Door01 pos to mouse pointer
+							// var distY = ptY.distanceTo(isect0.point); // distance from vertical Door01 pos to mouse pointer
+							// if (distX <= distY) {
+							// 	Door01_pos.copy(ptX)
+							// } else {
+							// 	Door01_pos.copy(ptY)
+							// 	Door01_rotation = Math.PI / 2
+							// }
+							// console.log('___', isect0.point, ptX, ptY, distX, distY, Door01_pos)
 
-							// show 'add' glass window
-							window_pos.z = window_height_half;
-							window_trans.position.set(window_pos.x, window_pos.y, window_pos.z);
-							window_trans.rotation.z = window_rotation
-							window_trans_del.visible = false;
-							window_trans.visible = true;
+							// show 'add' glass Door01
+							var Door01_cen = isect0.object.position;
+							Door01_pos = new THREE.Vector3(Door01_cen.x, Door01_cen.y, Door01_cen.z);
+							Door01_rotation = isect0.object.rotation.z;
+
+							// Door01_pos.z = Door01_height_half;
+							Door01_trans.position.copy(Door01_pos);
+							Door01_trans.rotation.z = Door01_rotation
+							Door01_trans_del.visible = false;
+							Door01_trans.visible = true;
 						}
 					}
-				} else { // the ray intersects with nothing, hide the glass windows
-					window_trans.visible = false;
-					window_trans_del.visible = false;
-					window_pos = null;
+
+				} else { // the ray intersects with nothing, hide the glass Door01s
+					Door01_trans.visible = false;
+					Door01_trans_del.visible = false;
+					Door01_pos = null;
 				}
 			}	
+
 
 			// render the scene
 			renderer.render( scene, camera );
@@ -946,6 +1261,7 @@
 
 		// Delete a wall
 		function deleteWall(wall) {
+			// if (!wall) { return; }
 			// decrease the count
 			wall_counters[wall.button_index] -= 1; 
 			// update the counter on the web page
@@ -963,6 +1279,7 @@
 			var floor = new THREE.Mesh( floor_geom, floor_mat );
 			floor.castShadow = true;
 			floor.receiveShadow = true;
+			floor_pos.z+=Window01_thickness/2
 			floor.position.set(floor_pos.x, floor_pos.y, floor_pos.z);
 			// set floor properties
 			floor.name = "floor"
@@ -989,42 +1306,84 @@
 			scene.remove( floor );
 		}
 
-			// switch a wall to be a window
-		// Add a window
-		function addwindow(coords, key) {
-			// create the window
-			if  (windows[key]) {return;} // prevent overlap
-			var window = new THREE.Mesh( window_geom, window_mat );
-			window.castShadow = true;
-			window.receiveShadow = true;
-			window.position.set(window_pos.x, window_pos.y, window_pos.z);
-			// set window properties
-			window.name = "window"
-			window.button_index = button_index;
-			window.window_coords = coords;
-			window.window_key = key;
-			// add the window
-			scene.add( window );
-			windows[key] = window;
-			window.rotation.z = window_rotation;
+			
+		// Add a Window01
+		function addWindow01(coords, key) {
+			// create the Window01
+			if  (Window01s[key]) {return;} // prevent overlap
+			var Window01 = Window01_geom.clone();
+			Window01.castShadow = true;
+			Window01.receiveShadow = true;
+			Window01.position.set(Window01_pos.x, Window01_pos.y, Window01_pos.z);
+			// set Window01 properties
+			Window01.name = "Window01"
+			Window01.button_index = button_index;
+			Window01.Window01_coords = coords;
+			Window01.Window01_key = key;
+			// add the Window01
+			scene.add( Window01 );
+			Window01s[key] = Window01;
+			Window01.rotation.z = Window01_rotation;
+			// Window01.rotation.y = Window01_rotation;
 			// increase the count
-			window_counters[button_index] += 1; 
+			Window01_counters[button_index] += 1; 
 			// update the counter on the web page
-			document.getElementById(button_ids[button_index]).innerHTML = "window: " + window_counters[button_index];
+			document.getElementById(button_ids[button_index]).innerHTML = "Window01: " + Window01_counters[button_index];
 		}
 
-		// Delete a window
-		function deleteBox(window) {
+		// Delete a Window01
+		function deleteWindow01(Window01) {
+			if (!Window01) { return; }
 			// decrease the count
-			window_counters[window.button_index] -= 1; 
+			Window01_counters[Window01.button_index] -= 1; 
 			// update the counter on the web page
-			document.getElementById(button_ids[window.button_index]).innerHTML = "window: " + window_counters[window.button_index];
-			// delete the window
-			delete windows[ window.window_key ];
-			scene.remove( window );
-			window_pos_list.pop(window.position);
-			// console.log('____', window_pos_list)
+			document.getElementById(button_ids[Window01.button_index]).innerHTML = "Window01: " + Window01_counters[Window01.button_index];
+			// delete the Window01
+			delete Window01s[ Window01.Window01_key ];
+			scene.remove( Window01 );
+			Window01_pos_list.pop(Window01.position);
+			// console.log('____', Window01_pos_list)
 		}
+
+		// Add a Door01
+		function addDoor01(coords, key) {
+			// create the Door01
+			if  (Door01s[key]) {return;} // prevent overlap
+			var Door01 = Door01_geom.clone();
+			Door01.castShadow = true;
+			Door01.receiveShadow = true;
+			Door01_pos.y-=0.03
+			Door01.position.set(Door01_pos.x, Door01_pos.y, Door01_pos.z);
+			// set Door01 properties
+			Door01.name = "Door01"
+			Door01.button_index = button_index;
+			Door01.Door01_coords = coords;
+			Door01.Door01_key = key;
+			// add the Door01
+			scene.add( Door01 );
+			Door01s[key] = Door01;
+			Door01.rotation.z = Door01_rotation;
+			// Door01.rotation.y = Door01_rotation;
+			// increase the count
+			Door01_counters[button_index] += 1; 
+			// update the counter on the web page
+			document.getElementById(button_ids[button_index]).innerHTML = "Door01: " + Door01_counters[button_index];
+		}
+
+		// Delete a Door01
+		function deleteDoor01(Door01) {
+			if (!Door01) { return; }
+			// decrease the count
+			Door01_counters[Door01.button_index] -= 1; 
+			// update the counter on the web page
+			document.getElementById(button_ids[Door01.button_index]).innerHTML = "Door01: " + Door01_counters[Door01.button_index];
+			// delete the Door01
+			delete Door01s[ Door01.Door01_key ];
+			scene.remove( Door01 );
+			Door01_pos_list.pop(Door01.position);
+			// console.log('____', Door01_pos_list)
+		}
+
 
 	</script>
 </html>

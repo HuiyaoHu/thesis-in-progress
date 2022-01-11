@@ -7,7 +7,7 @@
     {
       "name": "Scene",
       "nodes": [
-        5
+        4
       ]
     }
   ],
@@ -16,7 +16,6 @@
     {
       "name": "WindowFrame",
       "extras": {
-        "name": "WindowFrame",
         "attributes": {
           "mode": {
             "name": "ObjectMode_Normal",
@@ -106,7 +105,6 @@
     {
       "name": "WindowSeal",
       "extras": {
-        "name": "WindowSeal",
         "attributes": {
           "mode": {
             "name": "ObjectMode_Normal",
@@ -196,7 +194,6 @@
     {
       "name": "Glass",
       "extras": {
-        "name": "Glass",
         "attributes": {
           "mode": {
             "name": "ObjectMode_Normal",
@@ -286,7 +283,6 @@
     {
       "name": "SIP",
       "extras": {
-        "name": "SIP",
         "attributes": {
           "mode": {
             "name": "ObjectMode_Normal",
@@ -391,7 +387,6 @@
         -9,
         1
       ],
-      "name": "window01",
       "extras": {
         "layers": [
           {
@@ -612,12 +607,6 @@
         1,
         2,
         3
-      ]
-    },
-    {
-      "name": "window01.gltf ",
-      "children": [
-        4
       ]
     }
   ],
@@ -938,7 +927,7 @@
       },
       "alphaMode": "BLEND",
       "doubleSided": true,
-      "name": "DoorGlass_material "
+      "name": "DoorGlass_material"
     },
     {
       "pbrMetallicRoughness": {
@@ -946,7 +935,7 @@
         "roughnessFactor": 1
       },
       "doubleSided": true,
-      "name": "obs"
+      "name": "default"
     }
   ],
   "meshes": [
