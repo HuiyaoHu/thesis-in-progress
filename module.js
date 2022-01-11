@@ -92,7 +92,7 @@ var  Window01_geom = null
 // Load a glTF resource
 loader.load(
     // resource URL
-    'models/window01.gltf',
+    'models/Window01.gltf',
     // called when the resource is loaded
     function ( gltf ) {
         Window01_geom = gltf.scene;
