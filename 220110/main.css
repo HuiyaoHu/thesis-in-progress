@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: Monospace;
+    font-size: 13px;
+    line-height: 24px;
+    overscroll-behavior: none;
+}
+
+#help {
+    color: black; 
+    position: absolute; 
+    bottom: 10px; 
+    right: 10px;
+}
+
+#buttons {
+    /* Define an ID. Unlike class, ID can only be applied to one element. */
+    position: absolute;
+    top: 10px; /* position of all the buttons on the page */
+    right: 10px;
+}
+.button {
+    /* Defining a class. Type of property tag that can be used multiple times. */
+    display: block;
+    cursor: pointer;
+
+    font-size: 15px;
+    text-align: center;
+    line-height: 40px; /* vertical alignment */
+    padding: 0px 20px;
+
+    /* fix size of button */
+    width: 100px; 
+    height: 40px;
+    margin: 2px; /* space between buttons */
+}
+.button.pressed{
+    border: 2px solid black;
+}
