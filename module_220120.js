@@ -653,9 +653,12 @@ function render() {
     if ( button_index == 2 ) {
         raycaster.setFromCamera( mouse, camera );
         var sceneMeshes = getMeshesInGroups(); // get the mesh in the scene to check for intersections
+        // console.log('~~~sceneMeshes~~~', sceneMeshes) 
         sceneMeshes.push(ground);
         var intMeshes = raycaster.intersectObjects( sceneMeshes ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
         var intMesh0 = intMeshes[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+        // console.log('~~~intMesh0~~~', intMesh0) 
+
 
         if ( intMeshes.length > 0 ) { // if intersect with any mesh
 
@@ -679,8 +682,13 @@ function render() {
             } 
             
             else if (intMesh0.object.name == 'wall') { // if the first mesh that the cursor intersects has the name ' '
+                console.log('~~~intMesh0.object.name==wall~~~', intMesh0.object.name == 'wall') 
+
                 if (!del_Window01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var intMesh0_cen = intMesh0.object.position;
+                    console.log('~~~intMesh0_cen~~~', intMesh0_cen) 
+                    console.log('~~~Window01_pos~~~', Window01_pos)
+
                     Window01_pos = new THREE.Vector3(intMesh0_cen.x, intMesh0_cen.y, intMesh0_cen.z);
                     Window01_rotation = intMesh0.object.rotation.z;
 
@@ -831,21 +839,20 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     //    _ * FLOOR *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (floor_pos != null) { //If not dragging and raycaster.intersectObjects.object.values(floors).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
-        var key = floor_pos.x + '_' + floor_pos.y + '_' + floor_pos.z; // create a key that as a string, e.g. 1_-4_0
+        var key = keyGen(floor_pos);
         if (del_floor && key in floors) { // if shift is pressed and existing key is True, delete floor
             deleteFloor(floors[key]); 
         } else if (!del_floor && floors[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new floor to the scene and add its key to floors {}
             addFloor(key); 
         }
-        // addWallEnclosure(floor_pos);
-        checkAdjacentKeys(floor_pos);
+        addWallEnclosure(floor_pos);
     }
 
     // _____________________
     //    _ * WALL * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (wall_pos != null) {
-        var key = wall_pos.x + '_' + wall_pos.y + '_' + wall_pos.z;
+        var key = keyGen(wall_pos);
         if (del_wall && key in walls) {
             deleteWall(walls[key]); 
         } else if (!del_wall && walls[key]==undefined) {
@@ -862,10 +869,17 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     //    _ * WINDOW01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (Window01_pos != null) {
-        var key = Window01_pos.x + '_' + Window01_pos.y + '_' + Window01_pos.z;
+        console.log('~~~Window01_pos != null~~~', Window01_pos != null)
+      
+        var key = keyGen(Window01_pos);
+        console.log('~~~Window01_pos~~~', Window01_pos)
+        console.log('~~~key~~~', key)
+
         if (del_Window01 && key in Window01s) {
             deleteWindow01(Window01s[key]);  
         } else if (!del_Window01 && Window01s[key]==undefined) {
+            console.log('~~~Window01s[key]==undefined~~~', Window01s[key]==undefined) 
+
             addWindow01(key);
             if (key in walls) {
                 deleteWall(walls[key]);
@@ -879,7 +893,7 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     //    _ * DOOR01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (Door01_pos != null) {
-        var key = Door01_pos.x + '_' + Door01_pos.y + '_' + Door01_pos.z;
+        var key = keyGen(Door01_pos);
         if (del_Door01 && key in Door01s) {
             deleteDoor01(Door01s[key]);  
         } else if (!del_Door01 && Door01s[key]==undefined) {
@@ -1166,8 +1180,12 @@ function getMeshesInGroups() {
 
 
 
+// ====================================================
+// { Mouse Up } 
+// ====================================================
+
 // --------------------------------
-//    New functions
+//    keyGen, addWallEnclosure
 // --------------------------------
 
 function keyGen(mod_pos) { // mod_pos was generated through Scene Animation Loop 
@@ -1175,44 +1193,9 @@ function keyGen(mod_pos) { // mod_pos was generated through Scene Animation Loop
     return key
 }
 
-
 function addWallEnclosure(floor_pos) {
 
-    // add left wall
-    wall_rotation = Math.PI / 2;
-    wall_pos = new THREE.Vector3(floor_pos.x - floor_width_half, floor_pos.y, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-    var wall_key = keyGen(wall_pos);
-    addWall(wall_key);
-
-    // add right wall
-    wall_rotation = - Math.PI / 2;
-    wall_pos = new THREE.Vector3(floor_pos.x + floor_width_half, floor_pos.y, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-    var wall_key = keyGen(wall_pos);
-    addWall(wall_key);
-
-    // add front wall
-    wall_rotation = 0;
-    wall_pos = new THREE.Vector3(floor_pos.x, floor_pos.y + floor_width_half, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-    var wall_key = keyGen(wall_pos);
-    addWall(wall_key);
-
-    // add back wall
-    wall_rotation = - Math.PI;
-    wall_pos = new THREE.Vector3(floor_pos.x, floor_pos.y - floor_width_half, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-    var wall_key = keyGen(wall_pos);
-    addWall(wall_key);
-
-}
-
-function checkAdjacentKeys(floor_pos) {
-
-
-    // // check left floor
-    // var left_floor_pos = floor_pos.clone();
-    // left_floor_pos.x -= floor_width;
-    // var left_floor_key = keyGen(left_floor_pos);
-
-    // check left wall
+    // LEFT WALL
     wall_rotation = Math.PI / 2;
     wall_pos = new THREE.Vector3(floor_pos.x - floor_width_half, floor_pos.y, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var wall_key = keyGen(wall_pos);
@@ -1224,12 +1207,7 @@ function checkAdjacentKeys(floor_pos) {
     }
 
 
-    // // check right floor
-    // var right_floor_pos = floor_pos.clone();
-    // right_floor_pos.x += floor_width;
-    // var right_floor_key = keyGen(right_floor_pos);
-
-    // check right wall
+    // RIGHT WALL
     wall_rotation = - Math.PI / 2;
     wall_pos = new THREE.Vector3(floor_pos.x + floor_width_half, floor_pos.y, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var wall_key = keyGen(wall_pos);
@@ -1241,12 +1219,7 @@ function checkAdjacentKeys(floor_pos) {
     }
 
 
-    // // check front floor
-    // var front_floor_pos = floor_pos.clone();
-    // front_floor_pos.y += floor_width;
-    // var front_floor_key = keyGen(front_floor_pos);
-
-    // check front wall
+    // FRONT WALL
     wall_rotation = 0;
     wall_pos = new THREE.Vector3(floor_pos.x, floor_pos.y + floor_width_half, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var wall_key = keyGen(wall_pos);
@@ -1258,14 +1231,7 @@ function checkAdjacentKeys(floor_pos) {
     }
 
 
-
-
-    // // check back floor
-    // var back_floor_pos = floor_pos.clone();
-    // back_floor_pos.y -= floor_width;
-    // var back_floor_key = keyGen(back_floor_pos);
-
-    // check back wall
+    // BACK WALL
     wall_rotation = - Math.PI;
     wall_pos = new THREE.Vector3(floor_pos.x, floor_pos.y - floor_width_half, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var wall_key = keyGen(wall_pos);
@@ -1275,6 +1241,5 @@ function checkAdjacentKeys(floor_pos) {
     } else {
         deleteWall(walls [ wall_key ]);
     }
-
 
 }
