@@ -417,7 +417,7 @@ function render() {
     // _____________________
     //    _ * FLOOR *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if (button_index == 0){
+    if ( button_index == 0 ) {
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
         var sceneMeshes = Object.values(floors); // get the meshes in the scene to check for intersections
         sceneMeshes.push(ground);
@@ -427,8 +427,11 @@ function render() {
         if ( intMeshes.length > 0 ) { // if intersect with any meshes
 
             if (intMesh0.object.name == 'floor') { //if the first mesh that the cursor intersects has the name " "
-                var floor_cen = intMesh0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                floor_pos = new THREE.Vector3(floor_cen.x, floor_cen.y, floor_cen.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                // console.log('~~~floor~~~', intMesh0) 
+                // console.log('~~~floor.object.geometry~~~', intMesh0.object.geometry) 
+
+                var intMesh0_cen = intMesh0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                floor_pos = new THREE.Vector3(intMesh0_cen.x, intMesh0_cen.y, intMesh0_cen.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 
                 if (!del_floor) { // if shift button is not pressed, update trans pos and show geom_trans 
                     if (intMesh0.faceIndex == 0 || intMesh0.faceIndex == 1) { // right top || right bottom
@@ -483,7 +486,7 @@ function render() {
     // _____________________
     //    _ * WALL * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if (button_index == 1){
+    if ( button_index == 1 ) {
         raycaster.setFromCamera( mouse, camera );
         var sceneMeshes = getMeshesInGroups(); // get the mesh in the scene to check for intersections
         sceneMeshes.push(ground);
@@ -493,8 +496,8 @@ function render() {
         if ( intMeshes.length > 0 ) { // if intersect with any meshes
 
             if (intMesh0.object.name == 'wall') { // if the first mesh that the cursor intersects has the name ' '
-                var wall_cen = intMesh0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                wall_pos = new THREE.Vector3(wall_cen.x, wall_cen.y, wall_cen.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var intMesh0_cen = intMesh0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                wall_pos = new THREE.Vector3(intMesh0_cen.x, intMesh0_cen.y, intMesh0_cen.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 wall_rotation = intMesh0.object.rotation.z;
 
                 if (!del_wall) { // if shift button is not pressed, update trans pos and show geom_trans 
@@ -572,8 +575,8 @@ function render() {
             else if (intMesh0.object.parent.name == 'Window01') { // if the first mesh that the cursor intersects has the name ' '
                 if (!del_wall) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var intGrp = intMesh0.object.parent.parent; // Group { .., name: 'Window01', ..}
-                    var wall_cen = intGrp.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                    wall_pos = new THREE.Vector3(wall_cen.x, wall_cen.y, wall_cen.z);
+                    var intGrp_cen = intGrp.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    wall_pos = new THREE.Vector3(intGrp_cen.x, intGrp_cen.y, intGrp_cen.z);
                     wall_rotation = intGrp.rotation.z;
     
                     wall_trans.position.copy(wall_pos);
@@ -586,8 +589,8 @@ function render() {
             else if (intMesh0.object.parent.name == 'Door01') { // if the first mesh that the cursor intersects has the name ' '
                 if (!del_wall) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var intGrp = intMesh0.object.parent.parent; // Group { .., name: 'Window01', ..}
-                    var wall_cen = intGrp.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                    wall_pos = new THREE.Vector3(wall_cen.x, wall_cen.y, wall_cen.z);
+                    var intGrp_cen = intGrp.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    wall_pos = new THREE.Vector3(intGrp_cen.x, intGrp_cen.y, intGrp_cen.z);
                     wall_rotation = intGrp.rotation.z;
     
                     wall_trans.position.copy(wall_pos);
@@ -647,7 +650,7 @@ function render() {
     // _____________________
     //    _ * WINDOW01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if (button_index == 2){
+    if ( button_index == 2 ) {
         raycaster.setFromCamera( mouse, camera );
         var sceneMeshes = getMeshesInGroups(); // get the mesh in the scene to check for intersections
         sceneMeshes.push(ground);
@@ -660,8 +663,8 @@ function render() {
                 // console.log('~~~window~~~intMesh0.object~~~', intMesh0.object) // Mesh {.., name: 'Glass', ..}
                 // console.log('~~~window~~~intMesh0.object.parent~~~', intMesh0.object.parent) // Object3D {.., name: 'Window01', ..}
                 var intGrp = intMesh0.object.parent.parent; // Group { .., name: 'Window01', ..}
-                var Window01_cen = intGrp.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                Window01_pos = new THREE.Vector3(Window01_cen.x, Window01_cen.y, Window01_cen.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var intGrp_cen = intGrp.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                Window01_pos = new THREE.Vector3(intGrp_cen.x, intGrp_cen.y, intGrp_cen.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 Window01_rotation = intGrp.rotation.z;
 
                 if (!del_Window01) { 
@@ -677,8 +680,8 @@ function render() {
             
             else if (intMesh0.object.name == 'wall') { // if the first mesh that the cursor intersects has the name ' '
                 if (!del_Window01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    var Window01_cen = intMesh0.object.position;
-                    Window01_pos = new THREE.Vector3(Window01_cen.x, Window01_cen.y, Window01_cen.z);
+                    var intMesh0_cen = intMesh0.object.position;
+                    Window01_pos = new THREE.Vector3(intMesh0_cen.x, intMesh0_cen.y, intMesh0_cen.z);
                     Window01_rotation = intMesh0.object.rotation.z;
 
                     Window01_trans.position.copy(Window01_pos);
@@ -691,8 +694,8 @@ function render() {
             else if (intMesh0.object.parent.name == 'Door01') { 
                 if (!del_Window01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var intGrp = intMesh0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                    var Window01_cen = intGrp.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                    Window01_pos = new THREE.Vector3(Window01_cen.x, Window01_cen.y, Window01_cen.z);
+                    var intGrp_cen = intGrp.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    Window01_pos = new THREE.Vector3(intGrp_cen.x, intGrp_cen.y, intGrp_cen.z);
                     Window01_rotation = intGrp.rotation.z;
 
                     Window01_trans.position.copy(Window01_pos);
@@ -712,7 +715,7 @@ function render() {
     // _____________________
     //    _ * DOOR01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if (button_index == 3){
+    if ( button_index == 3 ) {
         raycaster.setFromCamera( mouse, camera );
         var sceneMeshes = getMeshesInGroups(); // get the mesh in the scene to check for intersections
         sceneMeshes.push(ground);
@@ -723,8 +726,8 @@ function render() {
 
             if (intMesh0.object.parent.name == 'Door01') { // if the first mesh that the cursor intersects has the name ' '
                 var intGrp = intMesh0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                var Door01_cen = intGrp.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                Door01_pos = new THREE.Vector3(Door01_cen.x, Door01_cen.y, Door01_cen.z);
+                var intGrp_cen = intGrp.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                Door01_pos = new THREE.Vector3(intGrp_cen.x, intGrp_cen.y, intGrp_cen.z);
                 Door01_rotation = intGrp.rotation.z;
 
                 if (!del_Door01) {
@@ -740,8 +743,8 @@ function render() {
             
             else if (intMesh0.object.name == 'wall' ) { // if the first mesh that the cursor intersects has the name ' '
                 if (!del_Door01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    var Door01_cen = intMesh0.object.position;
-                    Door01_pos = new THREE.Vector3(Door01_cen.x, Door01_cen.y, Door01_cen.z);
+                    var intMesh0_cen = intMesh0.object.position;
+                    Door01_pos = new THREE.Vector3(intMesh0_cen.x, intMesh0_cen.y, intMesh0_cen.z);
                     Door01_rotation = intMesh0.object.rotation.z;
 
                     Door01_trans.position.copy(Door01_pos);
@@ -754,8 +757,8 @@ function render() {
             else if (intMesh0.object.parent.name == 'Window01') { 
                 if (!del_Door01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var intGrp = intMesh0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                    var Door01_cen = intGrp.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                    Door01_pos = new THREE.Vector3(Door01_cen.x, Door01_cen.y, Door01_cen.z);
+                    var intGrp_cen = intGrp.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    Door01_pos = new THREE.Vector3(intGrp_cen.x, intGrp_cen.y, intGrp_cen.z);
                     Door01_rotation = intGrp.rotation.z;
 
                     Door01_trans.position.copy(Door01_pos);
@@ -834,6 +837,8 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
         } else if (!del_floor && floors[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new floor to the scene and add its key to floors {}
             addFloor(key); 
         }
+        // addWallEnclosure(floor_pos);
+        checkAdjacentKeys(floor_pos);
     }
 
     // _____________________
@@ -1159,3 +1164,117 @@ function getMeshesInGroups() {
     return sceneMeshes
 }
 
+
+
+// --------------------------------
+//    New functions
+// --------------------------------
+
+function keyGen(mod_pos) { // mod_pos was generated through Scene Animation Loop 
+    var key = mod_pos.x + '_' + mod_pos.y + '_' + mod_pos.z; // create a key that as a string, e.g. 1_-4_0
+    return key
+}
+
+
+function addWallEnclosure(floor_pos) {
+
+    // add left wall
+    wall_rotation = Math.PI / 2;
+    wall_pos = new THREE.Vector3(floor_pos.x - floor_width_half, floor_pos.y, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var wall_key = keyGen(wall_pos);
+    addWall(wall_key);
+
+    // add right wall
+    wall_rotation = - Math.PI / 2;
+    wall_pos = new THREE.Vector3(floor_pos.x + floor_width_half, floor_pos.y, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var wall_key = keyGen(wall_pos);
+    addWall(wall_key);
+
+    // add front wall
+    wall_rotation = 0;
+    wall_pos = new THREE.Vector3(floor_pos.x, floor_pos.y + floor_width_half, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var wall_key = keyGen(wall_pos);
+    addWall(wall_key);
+
+    // add back wall
+    wall_rotation = - Math.PI;
+    wall_pos = new THREE.Vector3(floor_pos.x, floor_pos.y - floor_width_half, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var wall_key = keyGen(wall_pos);
+    addWall(wall_key);
+
+}
+
+function checkAdjacentKeys(floor_pos) {
+
+
+    // // check left floor
+    // var left_floor_pos = floor_pos.clone();
+    // left_floor_pos.x -= floor_width;
+    // var left_floor_key = keyGen(left_floor_pos);
+
+    // check left wall
+    wall_rotation = Math.PI / 2;
+    wall_pos = new THREE.Vector3(floor_pos.x - floor_width_half, floor_pos.y, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var wall_key = keyGen(wall_pos);
+
+    if ( walls [wall_key] == undefined ) {
+        addWall(wall_key);
+    } else {
+        deleteWall(walls [ wall_key ]);
+    }
+
+
+    // // check right floor
+    // var right_floor_pos = floor_pos.clone();
+    // right_floor_pos.x += floor_width;
+    // var right_floor_key = keyGen(right_floor_pos);
+
+    // check right wall
+    wall_rotation = - Math.PI / 2;
+    wall_pos = new THREE.Vector3(floor_pos.x + floor_width_half, floor_pos.y, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var wall_key = keyGen(wall_pos);
+
+    if ( walls [wall_key] == undefined ) {
+        addWall(wall_key);
+    } else {
+        deleteWall(walls [ wall_key ]);
+    }
+
+
+    // // check front floor
+    // var front_floor_pos = floor_pos.clone();
+    // front_floor_pos.y += floor_width;
+    // var front_floor_key = keyGen(front_floor_pos);
+
+    // check front wall
+    wall_rotation = 0;
+    wall_pos = new THREE.Vector3(floor_pos.x, floor_pos.y + floor_width_half, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var wall_key = keyGen(wall_pos);
+
+    if ( walls [wall_key] == undefined ) {
+        addWall(wall_key);
+    } else {
+        deleteWall(walls [ wall_key ]);
+    }
+
+
+
+
+    // // check back floor
+    // var back_floor_pos = floor_pos.clone();
+    // back_floor_pos.y -= floor_width;
+    // var back_floor_key = keyGen(back_floor_pos);
+
+    // check back wall
+    wall_rotation = - Math.PI;
+    wall_pos = new THREE.Vector3(floor_pos.x, floor_pos.y - floor_width_half, floor_pos.z - floor_thickness/2 + wall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var wall_key = keyGen(wall_pos);
+
+    if ( walls [wall_key] == undefined ) {
+        addWall(wall_key);
+    } else {
+        deleteWall(walls [ wall_key ]);
+    }
+
+
+}
