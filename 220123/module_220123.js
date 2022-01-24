@@ -2,6 +2,7 @@
 import * as THREE from 'https://unpkg.com/three@0.119.1/build/three.module.js'; 
 import { OrbitControls } from 'https://unpkg.com/three@0.119.1/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/GLTFLoader.js';
+import { BufferGeometryUtils } from 'https://unpkg.com/three@0.119.1/examples/jsm/utils/BufferGeometryUtils.js';
 
 //////////////////// -------------MAIN CODES------------------------------------------------------ /////////////////// 
 
@@ -12,11 +13,15 @@ import { GLTFLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders
 // https://htmlcolorcodes.com/
 // https://www.w3schools.com/colors/colors_names.asp
 
-var floor_mat_trans = new THREE.MeshLambertMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
-var floor_mat_trans_del = new THREE.MeshLambertMaterial({color: 'white', opacity: 0.6, transparent: true});
+var matVolume = new THREE.MeshLambertMaterial({color: 'blue', opacity: 0.2, transparent: true});
+var matVolumeTrans = new THREE.MeshLambertMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
+var matVolumeDel = new THREE.MeshLambertMaterial({color: 'white', opacity: 0.6, transparent: true});
 
-var wall_mat_trans = new THREE.MeshLambertMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
-var wall_mat_trans_del = new THREE.MeshLambertMaterial({color: 'white', opacity: 0.6, transparent: true});
+var matFloorTrans = new THREE.MeshLambertMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
+var matFloorDel = new THREE.MeshLambertMaterial({color: 'white', opacity: 0.6, transparent: true});
+
+var matWallTrans = new THREE.MeshLambertMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
+var matWallDel = new THREE.MeshLambertMaterial({color: 'white', opacity: 0.6, transparent: true});
 
 var particleboard  = new THREE.MeshLambertMaterial({color: 0xD3C8AD}); //0xAB9F82, 0xD3C8AD, 0xE5DCC7 //floor
 var glass = new THREE.MeshLambertMaterial({color: 'turquoise', opacity: 0.2, transparent: true});
@@ -34,6 +39,27 @@ var brass = new THREE.MeshLambertMaterial({color: 'gainsboro'}); //darkgoldenrod
 var loader = new GLTFLoader();
 
 // _____________________
+//    _ * VOLUME *
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+// DIMENSIONS
+var volume_width = 3; var volume_width_half = volume_width/2;
+var volume_length = 3;
+var volume_height = 3;
+
+// GEOMETRIES
+var geomVolume = new THREE.BoxBufferGeometry( volume_width, volume_length, volume_height );
+var geomVolumeBase = new THREE.PlaneGeometry( volume_width, volume_width); // width, height
+var geomVolumeHover = new THREE.BoxBufferGeometry( volume_width, volume_length, volume_height );
+var geomVolumeDel = new THREE.BoxBufferGeometry( volume_width * 1.1, volume_length* 1.1, volume_height * 1.1 );
+
+// INITIALISATION 
+var volumes = {};
+var volume_pos = null;
+var del_volume = false;
+var volume_counters = 0;
+
+// _____________________
 //    _ * FLOOR *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
@@ -43,15 +69,15 @@ var floor_length = 3;
 var floor_thickness = 0.45;
 
 // GEOMETRIES
-var floor_geom = new THREE.BoxBufferGeometry( floor_width, floor_length, floor_thickness );
-var floor_geom_trans = new THREE.BoxBufferGeometry( floor_width * 1, floor_length* 1, floor_thickness * 1 );
-var floor_geom_del = new THREE.BoxBufferGeometry( floor_width * 1.1, floor_length* 1.1, floor_thickness * 1.1 );
+var geomFloor = new THREE.BoxBufferGeometry( floor_width, floor_length, floor_thickness );
+var geomFloorHover = new THREE.BoxBufferGeometry( floor_width * 1, floor_length* 1, floor_thickness * 1 );
+var geomFloorDel = new THREE.BoxBufferGeometry( floor_width * 1.1, floor_length* 1.1, floor_thickness * 1.1 );
 
 // INITIALISATION 
 var floors = {};
 var floor_pos = null;
 var del_floor = false;
-var floor_counters = [0, 0, 0];
+var floor_counters = 0;
 
 // _____________________
 //    _ * WALL *
@@ -63,9 +89,9 @@ var wall_height = 3; var wall_height_half = wall_height / 2;
 var wall_thickness = 0.10;
 
 // GEOMETRIES
-var wall_geom = new THREE.BoxBufferGeometry( wall_width, wall_thickness, wall_height );
-var wall_geom_trans = new THREE.BoxBufferGeometry( wall_width * 1, wall_thickness* 2, wall_height * 1 );
-var wall_geom_del = new THREE.BoxBufferGeometry( wall_width * 1.1, wall_thickness* 3, wall_height * 1.1 );
+var geomWall = new THREE.BoxBufferGeometry( wall_width, wall_thickness, wall_height );
+var geomWallHover = new THREE.BoxBufferGeometry( wall_width * 1, wall_thickness* 2, wall_height * 1 );
+var geomWallDel = new THREE.BoxBufferGeometry( wall_width * 1.1, wall_thickness* 3, wall_height * 1.1 );
 
 // INITIALISATION 
 var walls = {};
@@ -84,25 +110,25 @@ var Window01_height = 3; var Window01_height_half = Window01_height / 2;
 var Window01_thickness = 0.5;
 
 // GEOMETRIES
-var Window01_geom_trans = new THREE.BoxBufferGeometry( Window01_width * 1, Window01_thickness* 1, Window01_height * 1 );
-var Window01_geom_del = new THREE.BoxBufferGeometry( Window01_width * 1.1, Window01_thickness* 1.1, Window01_height * 1.1 );
+var geomWindow01Hover = new THREE.BoxBufferGeometry( Window01_width * 1, Window01_thickness* 1, Window01_height * 1 );
+var geomWindow01Del = new THREE.BoxBufferGeometry( Window01_width * 1.1, Window01_thickness* 1.1, Window01_height * 1.1 );
 
-var  Window01_geom = null
+var  geomWindow01 = null
 loader.load( // Load a glTF resource
     'models_220113/Window01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        Window01_geom = gltf.scene;
-        Window01_geom.getObjectByName("Glass").material = glass;
-        Window01_geom.getObjectByName("WindowFrame").material = aluminium;
-        Window01_geom.getObjectByName("WindowSeal").material = rubber;
-        Window01_geom.getObjectByName("SIP").material = obs;
-        // Window01_geom.rotation.x += Math.PI /2;
-        // Window01_geom.matrixAutoUpdate  = true;
-        // Window01_geom.getObjectByName("Window01R001").children.material = new THREE.MeshLambertMaterial( {color: 'burlywood'});
-        // Window01_geom.getObjectByName("mesh_36").material = new THREE.MeshLambertMaterial( {color: 'burlywood'});
-        // console.log(Window01_geom.getObjectByName("mesh_36").material)
-        // console.log(Window01_geom.getObjectByProperty(uuid,  "E01E399B-7EDF-4712-8FD5-574EEE30DF2B" ) )
-        // console.log(Window01_geom.getObjectByName("Window01R001").children.material)
+        geomWindow01 = gltf.scene;
+        geomWindow01.getObjectByName("Glass").material = glass;
+        geomWindow01.getObjectByName("WindowFrame").material = aluminium;
+        geomWindow01.getObjectByName("WindowSeal").material = rubber;
+        geomWindow01.getObjectByName("SIP").material = obs;
+        // geomWindow01.rotation.x += Math.PI /2;
+        // geomWindow01.matrixAutoUpdate  = true;
+        // geomWindow01.getObjectByName("Window01R001").children.material = new THREE.MeshLambertMaterial( {color: 'burlywood'});
+        // geomWindow01.getObjectByName("mesh_36").material = new THREE.MeshLambertMaterial( {color: 'burlywood'});
+        // console.log(geomWindow01.getObjectByName("mesh_36").material)
+        // console.log(geomWindow01.getObjectByProperty(uuid,  "E01E399B-7EDF-4712-8FD5-574EEE30DF2B" ) )
+        // console.log(geomWindow01.getObjectByName("Window01R001").children.material)
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -111,8 +137,8 @@ loader.load( // Load a glTF resource
         console.log( 'An error happened' );
     }
 );
-// Window01_geom.getObjectById("LowpolyBlood_Bake_Blood_0.001").material.color.set( _some_color_ )
-// var Window01_geom = gltf.scene.children[4];
+// geomWindow01.getObjectById("LowpolyBlood_Bake_Blood_0.001").material.color.set( _some_color_ )
+// var geomWindow01 = gltf.scene.children[4];
 
 // INITIALISATION 
 var Window01s = {};
@@ -131,19 +157,19 @@ var Door01_height = 3; var Door01_height_half = Door01_height / 2;
 var Door01_thickness = 0.5;
 
 // GEOMETRIES
-var Door01_geom_trans = new THREE.BoxBufferGeometry( Door01_width * 1, Door01_thickness* 1, Door01_height * 1 );
-var Door01_geom_del = new THREE.BoxBufferGeometry( Door01_width * 1.1, Door01_thickness* 1.1, Door01_height * 1.1 );
+var geomDoor01Hover = new THREE.BoxBufferGeometry( Door01_width * 1, Door01_thickness* 1, Door01_height * 1 );
+var geomDoor01Del = new THREE.BoxBufferGeometry( Door01_width * 1.1, Door01_thickness* 1.1, Door01_height * 1.1 );
 
-var  Door01_geom = null
+var  geomDoor01 = null
 loader.load( // Load a glTF resource
     'models_220113/Door01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        Door01_geom = gltf.scene;
-        Door01_geom.getObjectByName("Door").material = plywood;
-        Door01_geom.getObjectByName("DoorFrame").material = aluminium;
-        Door01_geom.getObjectByName("DoorHandle1").material = brass;
-        Door01_geom.getObjectByName("DoorHandle2").material = brass;
-        Door01_geom.getObjectByName("SIP").material = obs;
+        geomDoor01 = gltf.scene;
+        geomDoor01.getObjectByName("Door").material = plywood;
+        geomDoor01.getObjectByName("DoorFrame").material = aluminium;
+        geomDoor01.getObjectByName("DoorHandle1").material = brass;
+        geomDoor01.getObjectByName("DoorHandle2").material = brass;
+        geomDoor01.getObjectByName("SIP").material = obs;
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -164,13 +190,12 @@ var Door01_rotation = 0;
 // ====================================================
 // Buttons ★
 // ====================================================
-// ''''''  ids, index
+// ''''''  ids
 
 // IDS
-var button_ids = ['button0', 'button1', 'button2', 'button3'];
+var button_ids = ['buttonVolume', 'buttonFloor', 'buttonWall', 'buttonWindow01', 'buttonDoor01'];
+var button_id = 'buttonVolume';
 
-// INDEX
-var button_index = 0;
 
 
 // ====================================================
@@ -184,12 +209,16 @@ var camera_shift_x = 2
 var camera_shift_y = -1
 
 // GROUND
-var num_cells = 6;
+var num_cells = 7;
 var ground_size = num_cells * wall_width;
 
 // MOUSE
 var mouse = new THREE.Vector2();
 var mouse_down = new THREE.Vector2();	 
+
+// VOLUME
+var dictVolume = {}; // each key carries 2 value items: point coordinates and point meshes. i.e. (2) [Vector3, Points]
+console.log('~~~coordinatesList~~~', dictVolume);
 
 // GLOBAL VARIABLES
     // globally accessible variables that are defined in funciton
@@ -197,8 +226,9 @@ var camera, scene, renderer, ground, raycaster,
     hemi_light, dir_light1, dir_light2, 
     hemi_light_helper, dir_light1_helper, dir_light2_helper, dir_light1ShadowHeper,  
     
-    wall_trans, wall_trans_del, 
+    volume_trans, volume_trans_del, meshFloorZone, 
     floor_trans, floor_trans_del, 
+    wall_trans, wall_trans_del, 
     Window01_trans, Window01_trans_del, 
     Door01_trans, Door01_trans_del;
 
@@ -287,22 +317,76 @@ function creatingScene() {
     // function changeGridPos(newHeight) {
     //     gridGround.position.z = newHeight;
     // }
-    // document.getElementById("radiobutton1").addEventListener("click", changeGridPos(0));
-    // document.getElementById("radiobutton2").addEventListener("click", changeGridPos(10));
+    // document.getElementById("radiobuttonFloor").addEventListener("click", changeGridPos(0));
+    // document.getElementById("radiobuttonWall").addEventListener("click", changeGridPos(10));
+    
+    // _____________________
+    //    _ * VOLUME UNIT *
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-    /* autoGenWalls refer to image
-    * for floorPiece of floors:
-    *   for edge of floorPiece.edges:
-    *      check = true
-    *      for floorPiece2 of floors:
-    *          if floorPiece == floorPiece2: continue
-    *          for edge2 of floorPiece2.edges:
-    *              if edge == edge2:
-    *                  check = false
-    *      if check == true:
-    *          // put a wall on the edge
-    *     
+
+    // EVEN GRID
+    /*var coordinatesList = [
+        new THREE.Vector3(-volUnit_width, 0-volUnit_width_half, 0), // ubottom left, only y direction need to adjust for even
+        new THREE.Vector3(volUnit_width, 0-volUnit_width_half, 0), // bottom right
+        new THREE.Vector3(volUnit_width, volUnit_length+volUnit_width_half, 0), //top right
+        new THREE.Vector3(-volUnit_width, volUnit_length+volUnit_width_half, 0), // top left
+      ];
+
+    // Visualise Points
+    var geomPoints = new THREE.BufferGeometry().setFromPoints(coordinatesList);
+    var matPoints = new THREE.PointsMaterial({size: 1, color: "pink"});
+    var points = new THREE.Points(geom, matPoints);
+    scene.add(points);
+      
+      
+      // shape
+      var shape = new THREE.Shape(coordinatesList);
+
+    //   var geomShape = new THREE.ShapeBufferGeometry(new THREE.Shape(coordinatesList));
+    //   var matShape = new THREE.MeshBasicMaterial({color:"blue"});
+
+      const extrudeSettings = {
+        // steps: 2,
+        depth: 0,
+        bevelEnabled: false,
+        // bevelThickness: 0,
+        // bevelSize: 0,
+        // bevelOffset: 0,
+        // bevelSegments: 1
+    };
+    
+    const geometry = new THREE.ExtrudeBufferGeometry( shape, extrudeSettings );
+    var volUnit_mat_trans = new THREE.MeshLambertMaterial({color: 'burlywood', opacity: 0.1, transparent: true});
+    ground = new THREE.Mesh( geometry, volUnit_mat_trans ) ;
+    scene.add( ground );
     */
+
+    var coordinatesList1 = [
+        new THREE.Vector3(-4, -2, 0), // ubottom left, only y direction need to adjust for even
+        new THREE.Vector3(4, -2, 0), // bottom right
+        new THREE.Vector3(4, 8, 0), //top right
+        new THREE.Vector3(-4, 8, 0), // top left
+    ];
+
+
+    var volUnit_mat_trans = new THREE.MeshLambertMaterial({color: 'burlywood'});
+
+    // shape
+    var shape1 = new THREE.ShapeBufferGeometry(new THREE.Shape(coordinatesList1));
+
+    var coordinatesList2 = [
+        new THREE.Vector3(-4, 8, 0), // top left, only y direction need to adjust for even
+        new THREE.Vector3(4, 8, 0), // top right
+        new THREE.Vector3(4, -10, 0), // b right
+        new THREE.Vector3(-4, -10, 0), // b left
+    ];
+    
+    var shape2 = new THREE.ShapeBufferGeometry(new THREE.Shape(coordinatesList2));
+    shape1=BufferGeometryUtils.mergeBufferGeometries([shape1, shape2])
+    // ground = new THREE.Mesh( shape1, volUnit_mat_trans );
+
+    // scene.add( ground );
 
     // --------------------------------
     //    Light, Shadow
@@ -345,26 +429,41 @@ function creatingScene() {
     // --------------------------------
 
     // _____________________
+    //    _ * VOLUME *
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    document.getElementById("buttonVolume").addEventListener("click", onClickbuttonVolume );
+     
+    volume_trans = new THREE.Mesh( geomVolumeHover, matVolumeTrans );
+    volume_trans.visible = false;
+    scene.add(volume_trans);
+    volume_trans_del = new THREE.Mesh( geomVolumeDel, matVolumeDel );
+    volume_trans_del.visible = false;
+    scene.add(volume_trans_del);
+
+    // _____________________
     //    _ * FLOOR *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    document.getElementById("button0").addEventListener("click", onClickbutton0);
+    document.getElementById("buttonFloor").addEventListener("click",  onClickbuttonFloor);
 
-    floor_trans = new THREE.Mesh( floor_geom_trans, floor_mat_trans );
+    floor_trans = new THREE.Mesh( geomFloorHover, matFloorTrans );
+    floor_trans.visible = false;
     scene.add(floor_trans);
-    floor_trans_del = new THREE.Mesh( floor_geom_del, floor_mat_trans_del );
+    floor_trans_del = new THREE.Mesh( geomFloorDel, matFloorDel );
+    floor_trans_del.visible = false;
     scene.add(floor_trans_del);
+    
 
     // _____________________
     //    _ * WALL *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    document.getElementById("button1").addEventListener("click", onClickbutton1);
+    document.getElementById("buttonWall").addEventListener("click", onClickbuttonWall);
 
-    wall_trans = new THREE.Mesh( wall_geom_trans, wall_mat_trans );
+    wall_trans = new THREE.Mesh( geomWallHover, matWallTrans );
         // wall_trans.castShadow = false;
         // wall_trans.receiveShadow = false;
     wall_trans.visible = false;
     scene.add(wall_trans);
-    wall_trans_del = new THREE.Mesh( wall_geom_del, wall_mat_trans_del );
+    wall_trans_del = new THREE.Mesh( geomWallDel, matWallDel );
         // wall_trans_del.castShadow = false;
         // wall_trans_del.receiveShadow = false;
     wall_trans_del.visible = false;
@@ -373,28 +472,26 @@ function creatingScene() {
     // _____________________
     //    _ * WINDOW01 *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    document.getElementById("button2").addEventListener("click", onClickbutton2);
+    document.getElementById("buttonWindow01").addEventListener("click", onClickbuttonWindow01);
 
-    Window01_trans = new THREE.Mesh( Window01_geom_trans, wall_mat_trans );
+    Window01_trans = new THREE.Mesh( geomWindow01Hover, matWallTrans );
     Window01_trans.visible = false;
     scene.add(Window01_trans);
-    Window01_trans_del = new THREE.Mesh( Window01_geom_del, wall_mat_trans_del );
+    Window01_trans_del = new THREE.Mesh( geomWindow01Del, matWallDel );
     Window01_trans_del.visible = false;
     scene.add(Window01_trans_del);
 
     // _____________________
     //    _ * DOOR01 *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    document.getElementById("button3").addEventListener("click", onClickbutton3);
+    document.getElementById("buttonDoor01").addEventListener("click", onClickbuttonDoor01);
 
-    Door01_trans = new THREE.Mesh( Door01_geom_trans, wall_mat_trans );
+    Door01_trans = new THREE.Mesh( geomDoor01Hover, matWallTrans );
     Door01_trans.visible = false;
     scene.add(Door01_trans);
-    Door01_trans_del = new THREE.Mesh( Door01_geom_del, wall_mat_trans_del );
+    Door01_trans_del = new THREE.Mesh( geomDoor01Del, matWallDel );
     Door01_trans_del.visible = false;
     scene.add(Door01_trans_del);
-
-
 
 
 
@@ -415,41 +512,91 @@ function animate() {
 function render() {
 
     // _____________________
-    //    _ * FLOOR *
+    //    _ * VOLUME *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( button_index == 0 ) {
+    if ( button_id == 'buttonVolume' ) {
+
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
-        var sceneMeshes = Object.values(floors); // get the meshes in the scene to check for intersections
+        var sceneMeshes = getValues(volumes, 0); // get the meshes in the scene to check for intersections
         sceneMeshes.push(ground);
         var intMeshes = raycaster.intersectObjects( sceneMeshes ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
         var intMesh0 = intMeshes[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
 
         if ( intMeshes.length > 0 ) { // if intersect with any meshes
 
+            if (intMesh0.object.name == 'volume') { //if the first mesh that the cursor intersects has the name " "
+                
+                if (!del_volume) { 
+                    // if shift button is not pressed, do nothing
+                }               
+                else { // if shift button is pressed, show geom_trans_del
+                    var intMesh0_cen = intMesh0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    volume_pos = new THREE.Vector3(intMesh0_cen.x, intMesh0_cen.y, intMesh0_cen.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+        
+                    volume_trans_del.position.set(volume_pos.x, volume_pos.y, volume_pos.z);
+                    volume_trans_del.visible = true;
+                    volume_trans.visible = false;
+                } 
+
+            } else { // if the first mesh that the cursor intersects does not has the name " ", i.e. intersect with ground
+                
+                if (!del_volume) { // if shift button is not pressed, update pos and show geom_trans 
+                    volume_pos = new THREE.Vector3();
+                    if (num_cells % 2 == 1) {// odd number of cells
+                        volume_pos.x = Math.round(intMesh0.point.x / volume_width) * volume_width;
+                        volume_pos.y = Math.round((intMesh0.point.y + volume_width_half) / volume_width ) * volume_width - volume_width_half;
+                    } else { // even number of cells
+                        volume_pos.x = Math.round((intMesh0.point.x + volume_width_half) / volume_width) * volume_width - volume_width_half;
+                        volume_pos.y = Math.round(intMesh0.point.y / volume_width) * volume_width ;
+                    }
+                    volume_pos.z = volume_height/2 ; // move volume up to align it with grid
+                    volume_trans.position.set(volume_pos.x, volume_pos.y, volume_pos.z);
+                    volume_trans_del.visible = false;
+                    volume_trans.visible = true;
+                }
+            }    
+
+        } else { // if do not intersect with anything, show nothing
+            volume_trans.visible = false;
+            volume_trans_del.visible = false;
+            volume_pos = null;
+        }
+   }
+
+    // _____________________
+    //    _ * FLOOR *
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    if ( button_id == 'buttonFloor' ) {
+        raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
+        var sceneMeshes = Object.values(floors); // get the meshes in the scene to check for intersections
+        sceneMeshes.push(meshFloorZone);
+        var intMeshes = raycaster.intersectObjects( sceneMeshes ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
+        var intMesh0 = intMeshes[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+
+        if ( intMeshes.length > 0 ) { // if intersect with any meshes
+
             if (intMesh0.object.name == 'floor') { //if the first mesh that the cursor intersects has the name " "
-                // console.log('~~~floor~~~', intMesh0) 
-                // console.log('~~~floor.object.geometry~~~', intMesh0.object.geometry) 
 
                 var intMesh0_cen = intMesh0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 floor_pos = new THREE.Vector3(intMesh0_cen.x, intMesh0_cen.y, intMesh0_cen.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 
                 if (!del_floor) { // if shift button is not pressed, update trans pos and show geom_trans 
-                    if (intMesh0.faceIndex == 0 || intMesh0.faceIndex == 1) { // right top || right bottom
-                        floor_pos.x += floor_width;
-                    } else if (intMesh0.faceIndex == 2 || intMesh0.faceIndex == 3) { // left top || bottom
-                        floor_pos.x -= floor_width;
-                    }  else if (intMesh0.faceIndex == 4 || intMesh0.faceIndex == 5) { // back right || left
-                        floor_pos.y += floor_width;
-                    }  else if (intMesh0.faceIndex == 6 || intMesh0.faceIndex == 7) { // front left || right
-                        floor_pos.y -= floor_width;
-                    }  else if (intMesh0.faceIndex == 8 || intMesh0.faceIndex == 9) { // top left || right
-                        floor_pos.z += wall_height;
-                    }  else if (intMesh0.faceIndex == 10 || intMesh0.faceIndex == 11) { // bottom left || right
-                        floor_pos.z -= wall_height;
-                    }
-                    floor_trans.position.set(floor_pos.x, floor_pos.y, floor_pos.z);
-                    floor_trans_del.visible = false;
-                    floor_trans.visible = true;
+                    // if (intMesh0.faceIndex == 0 || intMesh0.faceIndex == 1) { // right top || right bottom
+                    //     floor_pos.x += floor_width;
+                    // } else if (intMesh0.faceIndex == 2 || intMesh0.faceIndex == 3) { // left top || bottom
+                    //     floor_pos.x -= floor_width;
+                    // }  else if (intMesh0.faceIndex == 4 || intMesh0.faceIndex == 5) { // back right || left
+                    //     floor_pos.y += floor_width;
+                    // }  else if (intMesh0.faceIndex == 6 || intMesh0.faceIndex == 7) { // front left || right
+                    //     floor_pos.y -= floor_width;
+                    // }  else if (intMesh0.faceIndex == 8 || intMesh0.faceIndex == 9) { // top left || right
+                    //     floor_pos.z += wall_height;
+                    // }  else if (intMesh0.faceIndex == 10 || intMesh0.faceIndex == 11) { // bottom left || right
+                    //     floor_pos.z -= wall_height;
+                    // }
+                    // floor_trans.position.set(floor_pos.x, floor_pos.y, floor_pos.z);
+                    // floor_trans_del.visible = false;
+                    // floor_trans.visible = true;
                 }
 
                 else { // if shift button is pressed, show geom_trans_del
@@ -464,7 +611,7 @@ function render() {
                     floor_pos = new THREE.Vector3();
                     if (num_cells % 2 == 1) {// odd number of cells
                         floor_pos.x = Math.round(intMesh0.point.x / floor_width) * floor_width;
-                        floor_pos.y = Math.round(intMesh0.point.y / floor_width) * floor_width - floor_width_half;
+                        floor_pos.y = Math.round((intMesh0.point.y + floor_width_half) / floor_width) * floor_width - floor_width_half;
                     } else { // even number of cells
                         floor_pos.x = Math.round((floor_width_half + intMesh0.point.x) / floor_width) * floor_width - floor_width_half;
                         floor_pos.y = Math.round(intMesh0.point.y / floor_width) * floor_width ;
@@ -476,7 +623,7 @@ function render() {
                 }
             }    
 
-        } else { // if shift button is pressed, show nothing 
+        } else { // if do not intersect with anything, show nothing
             floor_trans.visible = false;
             floor_trans_del.visible = false;
             floor_pos = null;
@@ -486,10 +633,10 @@ function render() {
     // _____________________
     //    _ * WALL * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( button_index == 1 ) {
+    if ( button_id == 'buttonWall' ) {
         raycaster.setFromCamera( mouse, camera );
         var sceneMeshes = getMeshesInGroups(); // get the mesh in the scene to check for intersections
-        sceneMeshes.push(ground);
+        sceneMeshes.push(meshFloorZone);
         var intMeshes = raycaster.intersectObjects( sceneMeshes ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
         var intMesh0 = intMeshes[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
         
@@ -501,67 +648,67 @@ function render() {
                 wall_rotation = intMesh0.object.rotation.z;
 
                 if (!del_wall) { // if shift button is not pressed, update trans pos and show geom_trans 
-                    if (intMesh0.faceIndex == 0 || intMesh0.faceIndex == 1) { // right top || right bottom
-                        if (wall_rotation !== 0) {
-                            wall_pos.y += wall_width;
-                        } else {
-                            wall_pos.x += wall_width;
-                        }
-                    } else if (intMesh0.faceIndex == 3 || intMesh0.faceIndex == 2) { // left top || left bottom
-                        if (wall_rotation !== 0) {
-                            wall_pos.y -= wall_width;
-                        } else {
-                            wall_pos.x -= wall_width;
-                        }
-                    } else if (intMesh0.faceIndex == 6) { // front left
-                        if (wall_rotation !== 0) {
-                            wall_rotation = 0;
-                            wall_pos.x += wall_width_half;
-                            wall_pos.y -= wall_width_half;
-                        } else {
-                            wall_rotation = Math.PI / 2;
-                            wall_pos.x -= wall_width_half;
-                            wall_pos.y -= wall_width_half;
-                        }
-                    } else if (intMesh0.faceIndex == 7) { // front right
-                        if (wall_rotation !== 0) {
-                            wall_rotation = 0;
-                            wall_pos.x += wall_width_half;
-                            wall_pos.y += wall_width_half;
-                        } else {
-                            wall_rotation = Math.PI / 2;
-                            wall_pos.x += wall_width_half;
-                            wall_pos.y -= wall_width_half;
-                        }
-                    } else if (intMesh0.faceIndex == 5) { // back left
-                        if (wall_rotation !== 0) {
-                            wall_rotation = 0;
-                            wall_pos.x -= wall_width_half;
-                            wall_pos.y += wall_width_half;
-                        } else {
-                            wall_rotation = Math.PI / 2;
-                            wall_pos.x += wall_width_half;
-                            wall_pos.y += wall_width_half;
-                        }
-                    } else if (intMesh0.faceIndex == 4) { // back right
-                        if (wall_rotation !== 0) {
-                            wall_rotation = 0;
-                            wall_pos.x -= wall_width_half;
-                            wall_pos.y -= wall_width_half;
-                        } else {
-                            wall_rotation = Math.PI / 2;
-                            wall_pos.x -= wall_width_half;
-                            wall_pos.y += wall_width_half;
-                        }
-                    } else if (intMesh0.faceIndex == 8 || intMesh0.faceIndex == 9) { // top left || right
-                        wall_pos.z += wall_height; 
-                    } else if (intMesh0.faceIndex == 11 || intMesh0.faceIndex == 12) { // bottom left || right
-                        wall_pos.z -= wall_height; 
-                    }
-                    wall_trans.position.set(wall_pos.x, wall_pos.y, wall_pos.z);
-                    wall_trans.rotation.z = wall_rotation;
-                    wall_trans_del.visible = false;
-                    wall_trans.visible = true;
+                    // if (intMesh0.faceIndex == 0 || intMesh0.faceIndex == 1) { // right top || right bottom
+                    //     if (wall_rotation !== 0) {
+                    //         wall_pos.y += wall_width;
+                    //     } else {
+                    //         wall_pos.x += wall_width;
+                    //     }
+                    // } else if (intMesh0.faceIndex == 3 || intMesh0.faceIndex == 2) { // left top || left bottom
+                    //     if (wall_rotation !== 0) {
+                    //         wall_pos.y -= wall_width;
+                    //     } else {
+                    //         wall_pos.x -= wall_width;
+                    //     }
+                    // } else if (intMesh0.faceIndex == 6) { // front left
+                    //     if (wall_rotation !== 0) {
+                    //         wall_rotation = 0;
+                    //         wall_pos.x += wall_width_half;
+                    //         wall_pos.y -= wall_width_half;
+                    //     } else {
+                    //         wall_rotation = Math.PI / 2;
+                    //         wall_pos.x -= wall_width_half;
+                    //         wall_pos.y -= wall_width_half;
+                    //     }
+                    // } else if (intMesh0.faceIndex == 7) { // front right
+                    //     if (wall_rotation !== 0) {
+                    //         wall_rotation = 0;
+                    //         wall_pos.x += wall_width_half;
+                    //         wall_pos.y += wall_width_half;
+                    //     } else {
+                    //         wall_rotation = Math.PI / 2;
+                    //         wall_pos.x += wall_width_half;
+                    //         wall_pos.y -= wall_width_half;
+                    //     }
+                    // } else if (intMesh0.faceIndex == 5) { // back left
+                    //     if (wall_rotation !== 0) {
+                    //         wall_rotation = 0;
+                    //         wall_pos.x -= wall_width_half;
+                    //         wall_pos.y += wall_width_half;
+                    //     } else {
+                    //         wall_rotation = Math.PI / 2;
+                    //         wall_pos.x += wall_width_half;
+                    //         wall_pos.y += wall_width_half;
+                    //     }
+                    // } else if (intMesh0.faceIndex == 4) { // back right
+                    //     if (wall_rotation !== 0) {
+                    //         wall_rotation = 0;
+                    //         wall_pos.x -= wall_width_half;
+                    //         wall_pos.y -= wall_width_half;
+                    //     } else {
+                    //         wall_rotation = Math.PI / 2;
+                    //         wall_pos.x -= wall_width_half;
+                    //         wall_pos.y += wall_width_half;
+                    //     }
+                    // } else if (intMesh0.faceIndex == 8 || intMesh0.faceIndex == 9) { // top left || right
+                    //     wall_pos.z += wall_height; 
+                    // } else if (intMesh0.faceIndex == 11 || intMesh0.faceIndex == 12) { // bottom left || right
+                    //     wall_pos.z -= wall_height; 
+                    // }
+                    // wall_trans.position.set(wall_pos.x, wall_pos.y, wall_pos.z);
+                    // wall_trans.rotation.z = wall_rotation;
+                    // wall_trans_del.visible = false;
+                    // wall_trans.visible = true;
                 }
 
                 else { // if shift button is pressed, show geom_trans_del
@@ -650,15 +797,12 @@ function render() {
     // _____________________
     //    _ * WINDOW01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( button_index == 2 ) {
+    if ( button_id == 'buttonWindow01' ) {
         raycaster.setFromCamera( mouse, camera );
         var sceneMeshes = getMeshesInGroups(); // get the mesh in the scene to check for intersections
-        // console.log('~~~sceneMeshes~~~', sceneMeshes) 
-        sceneMeshes.push(ground);
+        sceneMeshes.push(meshFloorZone);
         var intMeshes = raycaster.intersectObjects( sceneMeshes ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
         var intMesh0 = intMeshes[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
-        // console.log('~~~intMesh0~~~', intMesh0) 
-
 
         if ( intMeshes.length > 0 ) { // if intersect with any mesh
 
@@ -682,13 +826,8 @@ function render() {
             } 
             
             else if (intMesh0.object.name == 'wall') { // if the first mesh that the cursor intersects has the name ' '
-                console.log('~~~intMesh0.object.name==wall~~~', intMesh0.object.name == 'wall') 
-
                 if (!del_Window01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var intMesh0_cen = intMesh0.object.position;
-                    console.log('~~~intMesh0_cen~~~', intMesh0_cen) 
-                    console.log('~~~Window01_pos~~~', Window01_pos)
-
                     Window01_pos = new THREE.Vector3(intMesh0_cen.x, intMesh0_cen.y, intMesh0_cen.z);
                     Window01_rotation = intMesh0.object.rotation.z;
 
@@ -723,10 +862,10 @@ function render() {
     // _____________________
     //    _ * DOOR01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( button_index == 3 ) {
+    if ( button_id == 'buttonDoor01' ) {
         raycaster.setFromCamera( mouse, camera );
         var sceneMeshes = getMeshesInGroups(); // get the mesh in the scene to check for intersections
-        sceneMeshes.push(ground);
+        sceneMeshes.push(meshFloorZone);
         var intMeshes = raycaster.intersectObjects( sceneMeshes );
         var intMesh0 = intMeshes[ 0 ];
         
@@ -795,11 +934,11 @@ function render() {
 }
 
 
-//////////////////// -------------HELPER FUNCTIONS------------------------------------------------------ //////////////////// 
+//////////////////// -------------SUBSIDIARY FUNCTIONS------------------------------------------------------ //////////////////// 
 
 
 // ====================================================
-// { Window, Mouse} 
+// { EventListener } 
 // ====================================================
 
 // --------------------------------
@@ -823,7 +962,6 @@ function onWindowResize() { // Resize browser window
 function onMouseDown(event) { // Mouse down: store the cursor (X, Y) coordinate on browser window as values between 0 and 1; centre is (0,0), corners are (+/-1, +/-1)
     mouse_down.x = event.clientX; 
     mouse_down.y = event.clientY
-
 }
 
 // --------------------------------
@@ -833,6 +971,18 @@ function onMouseDown(event) { // Mouse down: store the cursor (X, Y) coordinate 
 function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     if ((mouse_down.x !== event.clientX) || (mouse_down.y !== event.clientY)) {
         return; // if we are dragging, return nothing
+    }
+    
+    // _____________________
+    //    _ * VOLUME *
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    else if (volume_pos != null) { //If not dragging and raycaster.intersectObjects.object.values(volumes).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
+        var key = keyGen(volume_pos);
+        if (del_volume && key in volumes) { // if shift is pressed and existing key is True, delete volume
+            deleteVolume(volumes[key]); // e.g. (2) [Mesh, Mesh]
+        } else if (!del_volume && volumes[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new volume to the scene and add its key to volumes {}
+            addVolume(key); 
+        }
     }
     
     // _____________________
@@ -869,17 +1019,10 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     //    _ * WINDOW01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (Window01_pos != null) {
-        console.log('~~~Window01_pos != null~~~', Window01_pos != null)
-      
         var key = keyGen(Window01_pos);
-        console.log('~~~Window01_pos~~~', Window01_pos)
-        console.log('~~~key~~~', key)
-
         if (del_Window01 && key in Window01s) {
             deleteWindow01(Window01s[key]);  
         } else if (!del_Window01 && Window01s[key]==undefined) {
-            console.log('~~~Window01s[key]==undefined~~~', Window01s[key]==undefined) 
-
             addWindow01(key);
             if (key in walls) {
                 deleteWall(walls[key]);
@@ -921,6 +1064,15 @@ function onMouseMove( event ) {
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
     // _____________________
+    //    _ * VOLUME *
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    if (event.shiftKey) { // if shift is pressed, del_mesh and hide mesh_trans
+        del_volume = true;
+    } else { // if shift is not pressed, del_mesh is false and hide mesh_trans
+        del_volume = false;
+    }
+    
+    // _____________________
     //    _ * FLOOR *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if (event.shiftKey) { // if shift is pressed, del_mesh and hide mesh_trans
@@ -961,183 +1113,56 @@ function onMouseMove( event ) {
 
 }
 
-// ====================================================
-// { Button & Scene } ★
-// ====================================================
-// ''''''  clickbutton, add, delete
 
+// --------------------------------
+//    Buttons ★
+// --------------------------------
+
+// _____________________
+//    _ * VOLUME *
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+function onClickbuttonVolume() {
+    document.getElementById(button_id).classList.remove("pressed");
+    button_id = 'buttonVolume';
+    document.getElementById(button_id).classList.add("pressed");
+};
 
 // _____________________
 //    _ * FLOOR *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-function onClickbutton0() {
-    document.getElementById(button_ids[button_index]).classList.remove("pressed");
-    button_index = 0;
-    document.getElementById(button_ids[button_index]).classList.add("pressed");
+function onClickbuttonFloor() {
+    document.getElementById(button_id).classList.remove("pressed");
+    button_id = 'buttonFloor';
+    document.getElementById(button_id).classList.add("pressed");
 };
-
-function addFloor(key) {
-
-    // Add Mesh
-    var floor = new THREE.Mesh(floor_geom, particleboard);
-    floor.position.set(floor_pos.x, floor_pos.y, floor_pos.z);
-        // floor.castShadow = true;
-        // floor.receiveShadow = true;
-    scene.add( floor );
-
-    // Add Mesh Properties
-    floor.name = "floor"
-    floor.button_index = button_index;
-    floor.floor_key = key;
-
-    // Update Global Variables, HTML
-    floors[key] = floor;
-    floor_counters[button_index] += 1; // update the counter on the web page
-    document.getElementById(button_ids[button_index]).innerHTML = "Floor: " + floor_counters[button_index];
-    // console.log('~~~floor~~~', floor) 
-};
-
-function deleteFloor(floor) {
-    scene.remove( floor );
-    delete floors[ floor.floor_key ];
-    floor_counters[floor.button_index] -= 1; 
-    document.getElementById(button_ids[floor.button_index]).innerHTML = "Floor:" + floor_counters[floor.button_index];
-};
-
 
 // _____________________
 //    _ * WALL * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-function onClickbutton1() {
-    document.getElementById(button_ids[button_index]).classList.remove("pressed");
-    button_index = 1;
-    document.getElementById(button_ids[button_index]).classList.add("pressed");
-};
-
-function addWall(key) {
-
-    // Add Mesh
-    var wall = new THREE.Mesh( wall_geom, obs );
-    wall.position.set(wall_pos.x, wall_pos.y, wall_pos.z);
-    scene.add( wall );
-
-    // Add Mesh Properties
-    wall.name = "wall"
-    wall.button_index = 1;
-    wall.wall_key = key;
-
-    // Update Global Variables, HTML
-    walls[key] = wall;
-    wall.rotation.z = wall_rotation;
-    wall_counters += 1; 
-    document.getElementById(button_ids[wall.button_index]).innerHTML = "Wall: " + wall_counters;
-    
-    // // get wall corner points
-    // const corner_ver_shift_value = new THREE.Vector3(0, 0, wall_height_half);
-    // var corner_hor_shift_value = 0;
-    // if (wall_rotation == 0) {
-    // 	var corner_shift_value = new THREE.Vector3(wall_width_half, 0, 0);
-    // } else {
-    // 	var corner_shift_value = new THREE.Vector3(0, wall_width_half*(-1), 0);
-    // }
-    // var wall_left_corner = wall.position.clone().sub(corner_shift_value).sub(corner_ver_shift_value) ;
-    // var wall_right_corner = wall.position.clone().add(corner_shift_value).sub(corner_ver_shift_value);
-    // wall_pos_list.push(wall_left_corner, wall_right_corner);
-
-    // // Visualise Points
-    // var geom = new THREE.BufferGeometry().setFromPoints([wall_left_corner, wall_right_corner]);
-    // var matPoints = new THREE.PointsMaterial({size: 10, color: "pink"});
-    // var points = new THREE.Points(geom, matPoints);
-    // scene.add(points);
-
-    // console.log('____', wall_pos_list)
-};
-
-// Delete a wall
-function deleteWall(wall) {
-    scene.remove( wall );
-    delete walls[ wall.wall_key ];
-    wall_counters -= 1; 
-    document.getElementById(button_ids[wall.button_index]).innerHTML = "Wall: " + wall_counters;
+function onClickbuttonWall() {
+    document.getElementById(button_id).classList.remove("pressed");
+    button_id = 'buttonWall';
+    document.getElementById(button_id).classList.add("pressed");
 };
 
 // _____________________
 //    _ * WINDOW01 * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-function onClickbutton2() {
-    document.getElementById(button_ids[button_index]).classList.remove("pressed");
-    button_index = 2;
-    document.getElementById(button_ids[button_index]).classList.add("pressed");
+function onClickbuttonWindow01() {
+    document.getElementById(button_id).classList.remove("pressed");
+    button_id = 'buttonWindow01';
+    document.getElementById(button_id).classList.add("pressed");
 };
-
-
-function addWindow01(key) {
-
-    // Add Mesh
-    var Window01 = Window01_geom.clone();
-    Window01.position.set(Window01_pos.x, Window01_pos.y, Window01_pos.z);
-    scene.add( Window01 );
-
-    // Add Mesh Properties
-    Window01.name = "Window01"
-    Window01.button_index = 2;
-    Window01.Window01_key = key;
-
-    // Update Global Variables, HTML
-    Window01s[key] = Window01;
-    Window01.rotation.z = Window01_rotation;
-    Window01_counters += 1; 
-    document.getElementById(button_ids[Window01.button_index]).innerHTML = "Window01: " + Window01_counters;
-};
-
-// Delete a Window01
-function deleteWindow01(Window01) {
-    scene.remove( Window01 );
-    delete Window01s[ Window01.Window01_key ];
-    Window01_counters -= 1; 
-    document.getElementById(button_ids[Window01.button_index]).innerHTML = "Window01: " + Window01_counters;
-};
-
 
 // _____________________
 //    _ * DOOR01 * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-function onClickbutton3() {
-    document.getElementById(button_ids[button_index]).classList.remove("pressed");
-    button_index = 3;
-    document.getElementById(button_ids[button_index]).classList.add("pressed");
+function onClickbuttonDoor01() {
+    document.getElementById(button_id).classList.remove("pressed");
+    button_id = 'buttonDoor01';
+    document.getElementById(button_id).classList.add("pressed");
 };
 
-function addDoor01(key) {
-
-    // Add Mesh
-    var Door01 = Door01_geom.clone();
-    Door01.position.set(Door01_pos.x, Door01_pos.y, Door01_pos.z);
-    scene.add( Door01 );
-    
-    // Add Mesh Properties
-    Door01.name = "Door01"
-    Door01.button_index = 3;
-    Door01.Door01_key = key;
-
-    // Update Global Variables, HTML
-    Door01s[key] = Door01;
-    Door01.rotation.z = Door01_rotation;
-    Door01_counters += 1; 
-    document.getElementById(button_ids[Door01.button_index]).innerHTML = "Door01: " + Door01_counters;
-};
-
-// Delete a Door01
-function deleteDoor01(Door01) {
-    scene.remove( Door01 );
-    delete Door01s[ Door01.Door01_key ];
-    Door01_counters -= 1; 
-    document.getElementById(button_ids[Door01.button_index]).innerHTML = "Door01: " + Door01_counters;
-};
 
 
 // ====================================================
@@ -1180,18 +1205,213 @@ function getMeshesInGroups() {
 
 
 
+//////////////////// -------------HELPER FUNCTIONS------------------------------------------------------ //////////////////// 
+
 // ====================================================
-// { Mouse Up } 
+// { Mouse Up } ★
 // ====================================================
+// ''''''  add, delete
 
 // --------------------------------
-//    keyGen, addWallEnclosure
+//    Key Generation
 // --------------------------------
-
 function keyGen(mod_pos) { // mod_pos was generated through Scene Animation Loop 
-    var key = mod_pos.x + '_' + mod_pos.y + '_' + mod_pos.z; // create a key that as a string, e.g. 1_-4_0
+    var key = mod_pos.x + '_' + mod_pos.y + '_' + mod_pos.z; // create a key that as a string, e.g. 1_-4_0. 
     return key
 }
+
+// --------------------------------
+//   Scene Modifications
+// --------------------------------
+
+    // --------------------------------
+    //       ( - futurework - ) changeGridPos, autoGenWalls 
+    // --------------------------------
+
+// _____________________
+//    _ * VOLUME *
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+function addVolume(key) {
+
+    // Add Mesh
+    var meshVolume = new THREE.Mesh(geomVolume, matVolumeTrans);
+    meshVolume.position.set(volume_pos.x, volume_pos.y, volume_pos.z);
+    // scene.add( meshVolume );
+
+    var meshVolumeBase = new THREE.Mesh( geomVolumeBase, matVolume ) ;
+    meshVolumeBase.position.set(volume_pos.x, volume_pos.y, 0);
+    // scene.add( meshVolumeBase );
+
+    // Add Mesh Properties
+    meshVolume.name = "volume"
+    meshVolumeBase.name = "volume base"
+    meshVolume.volume_key = key;
+
+    // Update Global Variables, HTML
+    volumes[key] = [meshVolume, meshVolumeBase];
+    volume_counters += 1; // update the counter on the web page
+    document.getElementById('buttonVolume').innerHTML = "Volume: " + volume_counters;
+
+    // console.log('~~~meshVolume~~~', meshVolume);
+    // console.log('~~~meshVolume~~~', meshVolume.geometry.attributes.position.array);
+     
+    // var top_frontleft_coord = new THREE.Vector3( volume_pos.x - volume_width_half, volume_pos.y + volume_width_half, volume_pos.z + volume_width_half );
+    // addCoord(top_frontleft_coord);
+
+    // var top_frontright_coord = new THREE.Vector3( volume_pos.x + volume_width_half, volume_pos.y + volume_width_half, volume_pos.z + volume_width_half );
+    // addCoord(top_frontright_coord);
+
+    // var top_backleft_coord = new THREE.Vector3( volume_pos.x - volume_width_half, volume_pos.y - volume_width_half, volume_pos.z + volume_width_half );
+    // addCoord(top_backleft_coord);
+
+    // var top_backright_coord = new THREE.Vector3( volume_pos.x + volume_width_half, volume_pos.y - volume_width_half, volume_pos.z + volume_width_half );
+    // addCoord(top_backright_coord);
+
+    // console.log('~~~dictVolume~~~', dictVolume);
+
+    // var values = getValues(dictVolume, 0)
+    // console.log('~~~values~~~', values);
+
+    // var shape = new THREE.Shape(values);
+    // console.log('~~~shape~~~', shape);
+    // var geomShape = new THREE.ShapeBufferGeometry(shape);
+    // // var matShape = new THREE.MeshBasicMaterial({color:"blue"});
+    // var floorZone = new THREE.Mesh( geomShape, matVolumeTrans ) ;
+    // scene.add( floorZone );
+
+    var base_frontleft_coord = new THREE.Vector3( volume_pos.x - volume_width_half, volume_pos.y + volume_width_half, volume_pos.z - volume_width_half );
+    var base_frontright_coord = new THREE.Vector3( volume_pos.x + volume_width_half, volume_pos.y + volume_width_half, volume_pos.z - volume_width_half );
+    var base_backright_coord = new THREE.Vector3( volume_pos.x + volume_width_half, volume_pos.y - volume_width_half, volume_pos.z - volume_width_half );
+    var base_backleft_coord = new THREE.Vector3( volume_pos.x - volume_width_half, volume_pos.y - volume_width_half, volume_pos.z - volume_width_half );
+    var listVolumeCoords = [ base_frontleft_coord, base_frontright_coord, base_backright_coord, base_backleft_coord ]
+    listVolumeCoords.forEach( addCoord )
+    // var geomVolume = new THREE.ShapeBufferGeometry(new THREE.Shape(listVolumeCoords));
+
+    // console.log('~~~volumes~~~', volumes);
+    // var keys = Object.keys(volumes);
+    // var values = []
+    // console.log('~~~keys~~~', keys);
+    // keys.forEach(function(key){
+    //     values.push(volumes[key][1]);
+    // });
+    // console.log('~~~values~~~', values);
+    
+    var list_meshVolumeBase = getValues(volumes, 1)
+    var singleGeometry = new THREE.Geometry();
+    // var singleMesh = new THREE.Mesh();
+
+
+
+    if ( meshFloorZone != undefined ) {
+        scene.remove( meshFloorZone )   
+    } 
+    console.log('~~~meshFloorZone~~~', meshFloorZone);
+    mergeMesh(list_meshVolumeBase);
+    function mergeMesh(list_meshVolumeBase) {
+        list_meshVolumeBase.forEach( 
+            function(meshVolumeBase) {
+                meshVolumeBase.updateMatrix(); // as needed
+                singleGeometry.merge(meshVolumeBase.geometry, meshVolumeBase.matrix);
+                meshFloorZone = new THREE.Mesh(singleGeometry, matVolume);
+            }
+        )
+        scene.add(meshFloorZone)
+
+    }
+    // scene.add(singleMesh)
+    // console.log('~~~geomFloorZone~~~', geomFloorZone);
+
+    // var list_meshVolumeBase = getValues(volumes, 1)
+    // console.log('~~~list_meshVolumeBase~~~', list_meshVolumeBase);
+    // if ( list_meshVolumeBase.length > 0 ) {
+    //     var geomFloorZone = BufferGeometryUtils.mergeBufferGeometries( list_meshVolumeBase )
+    // //     meshFloorZone = new THREE.Mesh( geomFloorZone, matVolume );
+    // //     meshFloorZone.position.set(volume_pos.x, volume_pos.y, 0);
+    // //     // console.log('~~~meshFloorZone~~~', meshFloorZone);
+    // //     // if ( meshFloorZone != undefined ) {
+    // //     //     scene.remove( meshFloorZone )
+    // //     // }
+    // //     // console.log('~~~meshFloorZone~~~', meshFloorZone);
+    // //     // // meshFloorZone.name = "floor zone"
+    // //     // console.log('~~~meshFloorZone~~~', meshFloorZone);
+    // //     // console.log('~~~mesh~~~', meshFloorZone);
+    // //     scene.add( meshFloorZone ); 
+    // }
+    // console.log('~~~meshFloorZone~~~', meshFloorZone);
+
+
+};
+
+
+
+
+function addCoord(coord) {
+    var key = keyGen(coord)
+    // console.log('~~~dictVolume [key] ==undefined~~~', dictVolume [key] == undefined);
+
+    if ( dictVolume [key] == undefined ) {
+        var geomPoint = new THREE.BufferGeometry().setFromPoints([coord]);
+        var matPoint = new THREE.PointsMaterial({size: 1, color: "pink"});
+        var point = new THREE.Points(geomPoint, matPoint);
+        scene.add(point);
+        dictVolume[key] = [coord, point];
+
+    } else {
+        scene.remove( dictVolume [key][1] );
+        delete dictVolume [key]
+
+    }
+}
+
+function getValues(dictionary, valueIndex) {
+    var keys = Object.keys(dictionary);
+    var values = []
+    keys.forEach(function(key){
+        values.push(dictionary[key][valueIndex]);
+    });
+    return values
+}
+
+
+
+function deleteVolume( values ) {
+    scene.remove( values[0] ); // value[0] is e.g. Mesh {..}
+    delete volumes[ values.volume_key ];
+    volume_counters -= 1; 
+    document.getElementById('buttonVolume').innerHTML = "Volume:" + volume_counters;
+};
+
+
+// _____________________
+//    _ * FLOOR *
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+function addFloor(key) {
+
+    // Add Mesh
+    var floor = new THREE.Mesh(geomFloor, particleboard);
+    floor.position.set(floor_pos.x, floor_pos.y, floor_pos.z);
+        // floor.castShadow = true;
+        // floor.receiveShadow = true;
+    scene.add( floor );
+
+    // Add Mesh Properties
+    floor.name = "floor"
+    floor.floor_key = key;
+
+    // Update Global Variables, HTML
+    floors[key] = floor;
+    floor_counters += 1; // update the counter on the web page
+    document.getElementById('buttonFloor').innerHTML = "Floor: " + floor_counters;
+    // console.log('~~~floor~~~', floor) 
+};
+
+function deleteFloor(floor) {
+    scene.remove( floor );
+    delete floors[ floor.floor_key ];
+    floor_counters -= 1; 
+    document.getElementById('buttonFloor').innerHTML = "Floor:" + floor_counters;
+};
 
 function addWallEnclosure(floor_pos) {
 
@@ -1242,4 +1462,120 @@ function addWallEnclosure(floor_pos) {
         deleteWall(walls [ wall_key ]);
     }
 
+
+    wall_pos = null // restore to initialisation state
+
 }
+
+
+// _____________________
+//    _ * WALL * 
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+function addWall(key) {
+
+    // Add Mesh
+    var wall = new THREE.Mesh( geomWall, obs );
+    wall.position.set(wall_pos.x, wall_pos.y, wall_pos.z);
+    scene.add( wall );
+
+    // Add Mesh Properties
+    wall.name = "wall"
+    wall.wall_key = key;
+
+    // Update Global Variables, HTML
+    walls[key] = wall;
+    wall.rotation.z = wall_rotation;
+    wall_counters += 1; 
+    document.getElementById('buttonWall').innerHTML = "Wall: " + wall_counters;
+    
+    // // get wall corner points
+    // const corner_ver_shift_value = new THREE.Vector3(0, 0, wall_height_half);
+    // var corner_hor_shift_value = 0;
+    // if (wall_rotation == 0) {
+    // 	var corner_shift_value = new THREE.Vector3(wall_width_half, 0, 0);
+    // } else {
+    // 	var corner_shift_value = new THREE.Vector3(0, wall_width_half*(-1), 0);
+    // }
+    // var wall_left_corner = wall.position.clone().sub(corner_shift_value).sub(corner_ver_shift_value) ;
+    // var wall_right_corner = wall.position.clone().add(corner_shift_value).sub(corner_ver_shift_value);
+    // wall_pos_list.push(wall_left_corner, wall_right_corner);
+
+    // // Visualise Points
+    // var geom = new THREE.BufferGeometry().setFromPoints([wall_left_corner, wall_right_corner]);
+    // var matPoints = new THREE.PointsMaterial({size: 10, color: "pink"});
+    // var points = new THREE.Points(geom, matPoints);
+    // scene.add(points);
+
+    // console.log('____', wall_pos_list)
+};
+
+// Delete a wall
+function deleteWall(wall) {
+    scene.remove( wall );
+    delete walls[ wall.wall_key ];
+    wall_counters -= 1; 
+    document.getElementById('buttonWall').innerHTML = "Wall: " + wall_counters;
+};
+
+// _____________________
+//    _ * WINDOW01 * 
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+function addWindow01(key) {
+
+    // Add Mesh
+    var Window01 = geomWindow01.clone();
+    Window01.position.set(Window01_pos.x, Window01_pos.y, Window01_pos.z);
+    scene.add( Window01 );
+
+    // Add Mesh Properties
+    Window01.name = "Window01"
+    Window01.Window01_key = key;
+
+    // Update Global Variables, HTML
+    Window01s[key] = Window01;
+    Window01.rotation.z = Window01_rotation;
+    Window01_counters += 1; 
+    document.getElementById('buttonWindow01').innerHTML = "Window01: " + Window01_counters;
+};
+
+// Delete a Window01
+function deleteWindow01(Window01) {
+    scene.remove( Window01 );
+    delete Window01s[ Window01.Window01_key ];
+    Window01_counters -= 1; 
+    document.getElementById('buttonWindow01').innerHTML = "Window01: " + Window01_counters;
+};
+
+
+// _____________________
+//    _ * DOOR01 * 
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+function addDoor01(key) {
+
+    // Add Mesh
+    var Door01 = geomDoor01.clone();
+    Door01.position.set(Door01_pos.x, Door01_pos.y, Door01_pos.z);
+    scene.add( Door01 );
+    
+    // Add Mesh Properties
+    Door01.name = "Door01"
+    Door01.Door01_key = key;
+
+    // Update Global Variables, HTML
+    Door01s[key] = Door01;
+    Door01.rotation.z = Door01_rotation;
+    Door01_counters += 1; 
+    document.getElementById('buttonDoor01').innerHTML = "Door01: " + Door01_counters;
+};
+
+// Delete a Door01
+function deleteDoor01(Door01) {
+    scene.remove( Door01 );
+    delete Door01s[ Door01.Door01_key ];
+    Door01_counters -= 1; 
+    document.getElementById('buttonDoor01').innerHTML = "Door01: " + Door01_counters;
+};
+
