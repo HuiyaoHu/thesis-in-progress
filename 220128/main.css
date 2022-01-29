@@ -48,6 +48,11 @@ body {
 
 /* //////////////////// -------------TOP------------------------------------------------------ ///////////////////  */
 
+
+/* // ====================================================
+// { TITLEBAR }
+// ==================================================== */
+
 #body_top{
     /* GRID */
     grid-row: 1;
@@ -57,11 +62,6 @@ body {
     grid-template-rows: 50px;
     grid-gap: 0px;
 }
-
-
-/* // ====================================================
-// { TITLEBAR }
-// ==================================================== */
 
 #titlebar {
     /* GRID */
@@ -115,35 +115,7 @@ body {
 
     /* MASSING */
     background-color: bisque;
-    position: relative;
-    height: calc(100vh - 51px);
-    
-    /* MISC */
-    overflow: auto;
-}
-
-/* // --------------------------------
-//    :: scrollbar
-// -------------------------------- */
-
-/* width */
-::-webkit-scrollbar {
-    width: 3px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: rgb(180, 180, 180); 
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #888; 
+    position: relative;    
 }
 
 /* // --------------------------------
@@ -182,7 +154,6 @@ body {
     position: relative;
     margin: 5% 0;
     height: 40px;
-    background-color: burlywood;
 
     /* TEXT */
     font-size: 15px;
@@ -218,7 +189,6 @@ body {
     display: block;
     position: relative;
     padding-left: 35px;
-    margin: 5% 0;
 
     /* MISC */
     cursor: pointer;
