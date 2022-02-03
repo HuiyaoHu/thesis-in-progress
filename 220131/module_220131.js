@@ -2,6 +2,7 @@
 import * as THREE from 'https://unpkg.com/three@0.119.1/build/three.module.js'; 
 import { OrbitControls } from 'https://unpkg.com/three@0.119.1/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/GLTFLoader.js';
+import { GLTFExporter } from 'https://unpkg.com/three@0.119.1/examples/jsm/exporters/GLTFExporter.js';
 import { BufferGeometryUtils } from 'https://unpkg.com/three@0.119.1/examples/jsm/utils/BufferGeometryUtils.js';
 
 //////////////////// -------------MAIN CODES------------------------------------------------------ /////////////////// 
@@ -13,32 +14,32 @@ import { BufferGeometryUtils } from 'https://unpkg.com/three@0.119.1/examples/js
 // https://htmlcolorcodes.com/
 // https://www.w3schools.com/colors/colors_names.asp
 
-var matVolume = new THREE.MeshLambertMaterial({color: 'blue', opacity: 0.1, transparent: true});
-var matVolumeTrans = new THREE.MeshLambertMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
-var matVolumeDel = new THREE.MeshLambertMaterial({color: 'white', opacity: 0.6, transparent: true});
+var matVolume = new THREE.MeshStandardMaterial({color: 'blue', opacity: 0.1, transparent: true});
+var matVolumeTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
+var matVolumeDel = new THREE.MeshStandardMaterial({color: 'white', opacity: 0.6, transparent: true});
 
-var matFloorTrans = new THREE.MeshLambertMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
-var matFloorDel = new THREE.MeshLambertMaterial({color: 'white', opacity: 0.6, transparent: true});
+var matFloorTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
+var matFloorDel = new THREE.MeshStandardMaterial({color: 'white', opacity: 0.6, transparent: true});
 
-var matCeilingTrans = new THREE.MeshLambertMaterial({color: 0xAB9F82, opacity: 0.9, transparent: true});
+var matCeilingTrans = new THREE.MeshStandardMaterial({color: 0xAB9F82, opacity: 0.9, transparent: true});
 
-var matWallTrans = new THREE.MeshLambertMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
-var matWallDel = new THREE.MeshLambertMaterial({color: 'white', opacity: 0.6, transparent: true});
+var matWallTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
+var matWallDel = new THREE.MeshStandardMaterial({color: 'white', opacity: 0.6, transparent: true});
 
-var particleboard  = new THREE.MeshLambertMaterial({color: 0xD3C8AD}); //0xAB9F82, 0xD3C8AD, 0xE5DCC7 //floor
-var glass = new THREE.MeshLambertMaterial({color: 'turquoise', opacity: 0.2, transparent: true});
-var obs = new THREE.MeshLambertMaterial({color: 'burlywood'});		
-var aluminium = new THREE.MeshLambertMaterial({color: 'gainsboro'});
-var rubber = new THREE.MeshLambertMaterial({color: 'black'});
-var plywood = new THREE.MeshLambertMaterial({color: 'sienna'}); //door
-var brass = new THREE.MeshLambertMaterial({color: 'gainsboro'}); //darkgoldenrod
+var particleboard  = new THREE.MeshStandardMaterial({color: 0xD3C8AD}); //0xAB9F82, 0xD3C8AD, 0xE5DCC7 //floor
+var glass = new THREE.MeshStandardMaterial({color: 'turquoise', opacity: 0.2, transparent: true});
+var obs = new THREE.MeshStandardMaterial({color: 'burlywood'});		
+var aluminium = new THREE.MeshStandardMaterial({color: 'gainsboro'});
+var rubber = new THREE.MeshStandardMaterial({color: 'black'});
+var plywood = new THREE.MeshStandardMaterial({color: 'sienna'}); //door
+var brass = new THREE.MeshStandardMaterial({color: 'gainsboro'}); //darkgoldenrod
 
 
 // ====================================================
 // Geometries & Initialisation ★
 // ====================================================
 // '''''' dimensions, geometries, initialisation
-var loader = new GLTFLoader();
+const loader = new GLTFLoader();
 
 // _____________________
 //    _ * VOLUME *
@@ -138,7 +139,7 @@ var geomWindow01Del = new THREE.BoxBufferGeometry( Window01_width * 1.1, Window0
 
 var  geomWindow01 = null
 loader.load( // Load a glTF resource
-    'models_220113/Window01.gltf', // resource URL
+    'models_220131/Window01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         geomWindow01 = gltf.scene;
         geomWindow01.getObjectByName("Glass").material = glass;
@@ -147,8 +148,8 @@ loader.load( // Load a glTF resource
         geomWindow01.getObjectByName("SIP").material = obs;
         // geomWindow01.rotation.x += Math.PI /2;
         // geomWindow01.matrixAutoUpdate  = true;
-        // geomWindow01.getObjectByName("Window01R001").children.material = new THREE.MeshLambertMaterial( {color: 'burlywood'});
-        // geomWindow01.getObjectByName("mesh_36").material = new THREE.MeshLambertMaterial( {color: 'burlywood'});
+        // geomWindow01.getObjectByName("Window01R001").children.material = new THREE.MeshStandardMaterial( {color: 'burlywood'});
+        // geomWindow01.getObjectByName("mesh_36").material = new THREE.MeshStandardMaterial( {color: 'burlywood'});
         // console.log(geomWindow01.getObjectByName("mesh_36").material)
         // console.log(geomWindow01.getObjectByProperty(uuid,  "E01E399B-7EDF-4712-8FD5-574EEE30DF2B" ) )
         // console.log(geomWindow01.getObjectByName("Window01R001").children.material)
@@ -185,7 +186,7 @@ var geomDoor01Del = new THREE.BoxBufferGeometry( Door01_width * 1.1, Door01_thic
 
 var  geomDoor01 = null
 loader.load( // Load a glTF resource
-    'models_220113/Door01.gltf', // resource URL
+    'models_220131/Door01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         geomDoor01 = gltf.scene;
         geomDoor01.getObjectByName("Door").material = plywood;
@@ -209,6 +210,30 @@ var bool_delDoor01 = false;
 var cnt_grpDoor01 = 0;
 var angle_grpDoor01 = 0;
 
+// _____________________
+//    _ * TEST *
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+/*
+var  geomTest = null
+loader.load( // Load a glTF resource
+    'models_220131/test4_directionallight.gltf', // resource URL
+    function ( gltf ) { // called when the resource is loaded
+        scene.add( gltf.scene );
+        // geomTest.getObjectByName("Door").material = plywood;
+        // geomTest.getObjectByName("DoorFrame").material = aluminium;
+        // geomTest.getObjectByName("DoorHandle1").material = brass;
+        // geomTest.getObjectByName("DoorHandle2").material = brass;
+        // geomTest.getObjectByName("SIP").material = obs;
+    },
+    function ( xhr ) { // called while loading is progressing
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+    function ( error ) { // called when loading has errors
+        console.log( 'An error happened' );
+    }
+);
+*/
+
 
 // ====================================================
 // Buttons ★
@@ -217,7 +242,7 @@ var angle_grpDoor01 = 0;
 
 // IDS
 var button_ids = ['buttonVolume', 'buttonFloor', 'buttonWall', 'buttonWindow01', 'buttonDoor01'];
-var button_id = 'buttonVolume';
+var id_buttonPressed = 'buttonVolume';
 
 
 
@@ -241,9 +266,7 @@ var mouse_down = new THREE.Vector2();
 
 // GLOBAL VARIABLES
     // globally accessible variables that are defined in funciton
-var container, camera, scene, renderer, ground, raycaster, 
-    hemi_light, dir_light1, dir_light2, 
-    hemi_light_helper, dir_light1_helper, dir_light2_helper, dir_light1ShadowHeper,  
+var container, camera, scene, renderer, ground, raycaster, gridGround,
     
     meshVolumeHover, meshVolumeDel, meshFloorZone, 
     meshFloorHover, meshFloorDel, 
@@ -256,6 +279,46 @@ var container, camera, scene, renderer, ground, raycaster,
 creatingScene();
 animate();
 
+document.getElementById('export_scene').addEventListener('click', function() {exportGLTF(scene)});
+
+const gltfExporter = new GLTFExporter();
+function exportGLTF(input) {
+    const options = {
+        trs: true,
+        onlyVisible: true,
+        truncateDrawRange: true,
+        binary: false,
+    //   maxTextureSize: Number(document.getElementById('option_maxsize').value) || Infinity // To prevent NaN value
+    };
+    gltfExporter.parse(
+        input, 
+        function(result) {
+            if (result instanceof ArrayBuffer) {
+                saveArrayBuffer(result, 'scene.glb');
+            } else {
+                const output = JSON.stringify(result, null, 2);
+                // console.log(output);
+                saveString(output, 'scene.gltf');
+            }
+        }, 
+        options
+    );
+}
+
+function saveArrayBuffer(buffer, filename) {
+    save(new Blob([buffer], { type: 'application/octet-stream' }), filename);
+}      
+function saveString(text, filename) {
+    save(new Blob([text], { type: 'text/plain' }), filename);
+}
+function save(blob, filename) {
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+}
+const link = document.createElement('a');
+link.style.display = 'none';
+document.body.appendChild(link); 
 
 
 
@@ -279,7 +342,7 @@ function creatingScene() {
     camera = new THREE.PerspectiveCamera( 45, container.clientWidth / container.clientHeight, 1, 1000 ); //FOV, aspect ratio, near, far of clipping plane
         // camera = new THREE.OrthographicCamera( -window.innerWidth/camera_zoom+camera_shift_x, window.innerWidth/camera_zoom+camera_shift_x,  window.innerHeight/camera_zoom+camera_shift_y,  -window.innerHeight/camera_zoom+camera_shift_y, -10000, 10000 ) //( left, right, top, bottom, near, far )
     camera.position.set( 0, 0, 30 );
-    camera.lookAt(new THREE.Vector3(100,100,1))
+    camera.lookAt(new THREE.Vector3(0, 0, 1))
     camera.up.set( 0, 0, 1 ); //orientation of the camera. if camera. up. set(0,0,1) , it would mean that z-axis is going vertically up in the screen and x and y axes align accordingly.
         // var cameraHelper = new THREE.CameraHelper( camera );
         // scene.add( cameraHelper )
@@ -301,7 +364,7 @@ function creatingScene() {
     // --------------------------------
     window.addEventListener( 'resize', onWindowResize, false );
     
-    var controls = new OrbitControls( camera, renderer.domElement );
+    const controls = new OrbitControls( camera, renderer.domElement );
     raycaster = new THREE.Raycaster(); // Raycasting is used for mouse picking (working out what objects in the 3d space the mouse is over) amongst other things.
     document.addEventListener('mousedown', onMouseDown, false);
     document.addEventListener('mouseup', onMouseUp, false);
@@ -313,7 +376,7 @@ function creatingScene() {
     // --------------------------------
 
     // SCENE GRID
-    var gridGround = new THREE.GridHelper( ground_size, num_cells, 0x504F4F, 0x504F4F );
+    gridGround = new THREE.GridHelper( ground_size, num_cells, 0x504F4F, 0x504F4F );
     gridGround.rotation.x = Math.PI / 2;
     gridGround.position.x = 0;
     gridGround.position.y = 0;
@@ -324,7 +387,7 @@ function creatingScene() {
 
     // GROUND
     var ground_geo = new THREE.PlaneBufferGeometry( ground_size, ground_size); // width, height
-    var ground_mat = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+    var ground_mat = new THREE.MeshStandardMaterial( { color: 0xffffff } );
         // var ground_mat = new THREE.MeshStandardMaterial( { color: 'white' } )
         // var ground_mat = new THREE.MeshBasicMaterial( {color: 0x0000ffff, side: THREE.DoubleSide} );
         // ground_mat.color.setHSL( 0.095, 1, 0.75);
@@ -350,28 +413,50 @@ function creatingScene() {
     //    Light, Shadow
     // --------------------------------
 
-    // HEMISPHERE LIGHT
-    hemi_light = new THREE.HemisphereLight( 0xffffff, 0x3D3D3D, 1.15 ); //  skyColor, groundColor, intensity
-    hemi_light.position.set( 0, 0, 10 );
-    hemi_light.up.set( 0, 0, 0 );
-    scene.add( hemi_light );
-        // hemi_light_helper = new THREE.HemisphereLightHelper( hemi_light, 1 );
-        // scene.add( hemi_light_helper );
+    // // HEMISPHERE LIGHT
+    // hemi_light = new THREE.HemisphereLight( 0xffffff, 0x3D3D3D, 1.15 ); //  skyColor, groundColor, intensity
+    // hemi_light.position.set( 0, 0, 10 );
+    // hemi_light.up.set( 0, 0, 0 );
+    // scene.add( hemi_light );
+    //     hemi_light_helper = new THREE.HemisphereLightHelper( hemi_light, 1 );
+    //     scene.add( hemi_light_helper );
 
-    // DIRECTIONAL LIGHT 1
-    dir_light1 = new THREE.DirectionalLight( 0xffffff, 0.3 ); // colour, intensity
-    dir_light1.position.set( -5, -2, 0 );
+    // DIRECTIONAL LIGHT TOP
+    var dir_light0 = new THREE.DirectionalLight( 0xffffff, 1.15 ); // colour, intensity
+    dir_light0.position.set( 0, 0, 10 );
         // dir_light1.position.multiplyScalar( 1 );
+    scene.add( dir_light0 );
+        // var dir_light0_helper = new THREE.DirectionalLightHelper( dir_light0, 1, 0xFF0000 );
+        // scene.add( dir_light0_helper );
+
+    // DIRECTIONAL LIGHT 1 (RIGHT)
+    var dir_light1 = new THREE.DirectionalLight( 0xffffff, 0.9 ); // colour, intensity
+    dir_light1.position.set( -5, -2, 0 );
     scene.add( dir_light1 );
-        // dir_light1_helper = new THREE.DirectionalLightHelper( dir_light1, 1, 0xFF0000 );
+        // var dir_light1_helper = new THREE.DirectionalLightHelper( dir_light1, 1, 0xFF0000 );
         // scene.add( dir_light1_helper );
 
-    // DIRECTIONAL LIGHT 2
-    dir_light2 = new THREE.DirectionalLight( 0xffffff, 0.3 ); // colour, intensity
+    // DIRECTIONAL LIGHT 2 (LEFT)
+    var dir_light2 = new THREE.DirectionalLight( 0xffffff, 0.9 ); // colour, intensity
     dir_light2.position.set( 5, 2, 0 );
     scene.add( dir_light2 );
-        // dir_light2_helper = new THREE.DirectionalLightHelper( dir_light2, 1, 0xFF0000 );
+        // var dir_light2_helper = new THREE.DirectionalLightHelper( dir_light2, 1, 0xFF0000 );
         // scene.add( dir_light2_helper );
+
+    // DIRECTIONAL LIGHT 3 (TOP)
+    var dir_light3 = new THREE.DirectionalLight( 0xffffff, 0.3 ); // colour, intensity
+    dir_light3.position.set( -2, 5, 0 );
+    scene.add( dir_light3 );
+        // var dir_light3_helper = new THREE.DirectionalLightHelper( dir_light3, 1, 0xFF0000 );
+        // scene.add( dir_light3_helper );
+
+    // DIRECTIONAL LIGHT 4 (BOTTOM)
+    var dir_light4 = new THREE.DirectionalLight( 0xffffff, 0.3 ); // colour, intensity
+    dir_light4.position.set( 2, -5, 0 );
+    scene.add( dir_light4 );
+        // var dir_light4_helper = new THREE.DirectionalLightHelper( dir_light4, 1, 0xFF0000 );
+        // scene.add( dir_light4_helper );
+        
  
     // SHADOWS
         // ground.receiveShadow = true;
@@ -464,6 +549,7 @@ function creatingScene() {
 
 
 
+
 }
 
 // ====================================================
@@ -485,7 +571,7 @@ function render() {
     // _____________________
     //    _ * VOLUME *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( button_id == 'buttonVolume' ) {
+    if ( id_buttonPressed == 'buttonVolume' ) {
 
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
         var list_meshScene = getValueList(dictVolume, 1); // get the meshes in the scene to check for intersections
@@ -542,7 +628,7 @@ function render() {
     // _____________________
     //    _ * FLOOR *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( button_id == 'buttonFloor' ) {
+    if ( id_buttonPressed == 'buttonFloor' ) {
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
         var list_meshScene = Object.values(dictFloor); // get the meshes in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
@@ -607,7 +693,7 @@ function render() {
         });
     }
 
-    if ( button_id == 'buttonCeiling' ) {
+    if ( id_buttonPressed == 'buttonCeiling' ) {
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
         var list_meshScene = Object.values(dictCeiling); // get the meshes in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
@@ -663,7 +749,7 @@ function render() {
     // _____________________
     //    _ * WALL * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( button_id == 'buttonWall' ) {
+    if ( id_buttonPressed == 'buttonWall' ) {
         raycaster.setFromCamera( mouse, camera );
         var list_meshScene = getMeshesInGroups(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
@@ -762,12 +848,13 @@ function render() {
             meshWallDel.visible = false;
             pos_meshWall = null;
         }
+        // console.log('~~pos_meshWall~~', pos_meshWall)
     }	
 
     // _____________________
     //    _ * WINDOW01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( button_id == 'buttonWindow01' ) {
+    if ( id_buttonPressed == 'buttonWindow01' ) {
         raycaster.setFromCamera( mouse, camera );
         var list_meshScene = getMeshesInGroups(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
@@ -832,7 +919,7 @@ function render() {
     // _____________________
     //    _ * DOOR01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( button_id == 'buttonDoor01' ) {
+    if ( id_buttonPressed == 'buttonDoor01' ) {
         raycaster.setFromCamera( mouse, camera );
         var list_meshScene = getMeshesInGroups(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
@@ -1121,27 +1208,27 @@ function onMouseMove( event ) {
 //    _ * VOLUME *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 function onClickbuttonVolume() {
-    document.getElementById(button_id).classList.remove("pressed");
-    button_id = 'buttonVolume';
-    document.getElementById(button_id).classList.add("pressed");
+    document.getElementById(id_buttonPressed).classList.remove("pressed");
+    id_buttonPressed = 'buttonVolume';
+    document.getElementById(id_buttonPressed).classList.add("pressed");
 };
 
 // _____________________
 //    _ * FLOOR *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 function onClickbuttonFloor() {
-    document.getElementById(button_id).classList.remove("pressed");
-    button_id = 'buttonFloor';
-    document.getElementById(button_id).classList.add("pressed");
+    document.getElementById(id_buttonPressed).classList.remove("pressed");
+    id_buttonPressed = 'buttonFloor';
+    document.getElementById(id_buttonPressed).classList.add("pressed");
 };
 
 // _____________________
 //    _ * CEILING * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 function onClickbuttonCeiling() {
-    document.getElementById(button_id).classList.remove("pressed");
-    button_id = 'buttonCeiling';
-    document.getElementById(button_id).classList.add("pressed");
+    document.getElementById(id_buttonPressed).classList.remove("pressed");
+    id_buttonPressed = 'buttonCeiling';
+    document.getElementById(id_buttonPressed).classList.add("pressed");
 };
 
 
@@ -1149,27 +1236,27 @@ function onClickbuttonCeiling() {
 //    _ * WALL * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 function onClickbuttonWall() {
-    document.getElementById(button_id).classList.remove("pressed");
-    button_id = 'buttonWall';
-    document.getElementById(button_id).classList.add("pressed");
+    document.getElementById(id_buttonPressed).classList.remove("pressed");
+    id_buttonPressed = 'buttonWall';
+    document.getElementById(id_buttonPressed).classList.add("pressed");
 };
 
 // _____________________
 //    _ * WINDOW01 * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 function onClickbuttonWindow01() {
-    document.getElementById(button_id).classList.remove("pressed");
-    button_id = 'buttonWindow01';
-    document.getElementById(button_id).classList.add("pressed");
+    document.getElementById(id_buttonPressed).classList.remove("pressed");
+    id_buttonPressed = 'buttonWindow01';
+    document.getElementById(id_buttonPressed).classList.add("pressed");
 };
 
 // _____________________
 //    _ * DOOR01 * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 function onClickbuttonDoor01() {
-    document.getElementById(button_id).classList.remove("pressed");
-    button_id = 'buttonDoor01';
-    document.getElementById(button_id).classList.add("pressed");
+    document.getElementById(id_buttonPressed).classList.remove("pressed");
+    id_buttonPressed = 'buttonDoor01';
+    document.getElementById(id_buttonPressed).classList.add("pressed");
 };
 
 
@@ -1478,7 +1565,6 @@ function genWallEnclosure(pos_meshFloor) {
 
 
     pos_meshWall = null // restore to initialisation state
-
 }
 
 function genCeilingEnclosure(pos_meshFloor) {
@@ -1491,6 +1577,7 @@ function genCeilingEnclosure(pos_meshFloor) {
         deleteCeiling(dictCeiling [ ceiling_key ]);
     }
 
+    pos_meshCeiling = null
 }
 
 // _____________________
@@ -1530,7 +1617,7 @@ function deleteCeiling(meshCeiling) {
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 function addWall(key) {
-
+    
     // ADD MESH
     var meshWall = new THREE.Mesh( geomWall, obs );
     meshWall.position.set(pos_meshWall.x, pos_meshWall.y, pos_meshWall.z);
