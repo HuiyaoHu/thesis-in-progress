@@ -464,11 +464,6 @@ loader.load( // Load a glTF resource
     'models_220201/test4_directionallight.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         scene.add( gltf.scene );
-        // geomTest.getObjectByName("Door").material = plywood;
-        // geomTest.getObjectByName("DoorFrame").material = aluminium;
-        // geomTest.getObjectByName("DoorHandle1").material = brass;
-        // geomTest.getObjectByName("DoorHandle2").material = brass;
-        // geomTest.getObjectByName("SIP").material = obs;
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
