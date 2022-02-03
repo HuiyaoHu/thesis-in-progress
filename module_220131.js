@@ -175,6 +175,57 @@ var cnt_grpWindow01 = 0;
 var angle_grpWindow01 = 0;
 
 // _____________________
+//    _ * WINDOW02 *
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+// DIMENSIONS
+var Window02_width = 3.5; var Window02_width_half = Window02_width / 2;
+var Window02_height = 3.5; var Window02_height_half = Window02_height / 2;
+var Window02_thickness = 0.5;
+
+// GEOMETRIES
+var geomWindow02Hover = new THREE.BoxBufferGeometry( Window02_width * 1, Window02_thickness* 1, Window02_height * 1 );
+var geomWindow02Del = new THREE.BoxBufferGeometry( Window02_width * 1.1, Window02_thickness* 1.1, Window02_height * 1.1 );
+
+var  geomWindow02 = null
+loader.load( // Load a glTF resource
+    'models_220201/Window02.gltf', // resource URL
+    function ( gltf ) { // called when the resource is loaded
+        geomWindow02 = gltf.scene;
+        geomWindow02.getObjectByName("SIP").material = obs;
+        geomWindow02.traverse(function(child) { // returns all children of objects with a matching name.
+            if (child.name === "Glass") {
+              child.material = glass;
+            }
+        });
+        geomWindow02.getObjectByName("WindowFrame").material = aluminium;
+        geomWindow02.traverse(function(child) { // returns all children of objects with a matching name.
+            if (child.name === "WindowCasement") {
+              child.material = alloy;
+            }
+        });
+        geomWindow02.traverse(function(child) { // returns all children of objects with a matching name.
+            if (child.name === "SlidingWindowHandle") {
+              child.material = brass;
+            }
+        });
+    },
+    function ( xhr ) { // called while loading is progressing
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+    function ( error ) { // called when loading has errors
+        console.log( 'An error happened' );
+    }
+);
+
+// INITIALISATION
+var dictWindow02 = {};
+var pos_grpWindow02 = null;
+var bool_delWindow02 = false;
+var cnt_grpWindow02 = 0;
+var angle_grpWindow02 = 0;
+
+// _____________________
 //    _ * DOOR01 *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
@@ -402,6 +453,8 @@ var angle_grpStairs01 = 0;
 
 
 
+
+
 // _____________________
 //    _ * TEST *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -433,11 +486,10 @@ loader.load( // Load a glTF resource
 // ''''''  ids, export
 
 // IDS
-var button_ids = ['buttonVolume', 'buttonFloor', 'buttonWall', 'buttonWindow01', 'buttonDoor01', 'buttonDoor02', 'buttonRailing01', 'buttonStairs01'];
+var button_ids = ['buttonVolume', 'buttonFloor', 'buttonWall', 'buttonWindow01', 'buttonWindow02', 'buttonDoor01', 'buttonDoor02', 'buttonRailing01', 'buttonStairs01'];
 var id_buttonPressed = 'buttonVolume';
 
-
-
+// EXPORT
 document.getElementById('export_scene').addEventListener('click', function() {exportGLTF(scene)});
 
 const gltfExporter = new GLTFExporter();
@@ -508,6 +560,7 @@ var container, camera, scene, renderer, ground, raycaster, gridGround,
     meshCeilingHover, meshCeilingDel,
     meshWallHover, meshWallDel, 
     meshWindow01Trans, meshWindow01Del, 
+    meshWindow02Trans, meshWindow02Del,
     meshDoor01Trans, meshDoor01Del,
     meshDoor02Trans, meshDoor02Del,
     meshDoor03Trans, meshDoor03Del,
@@ -734,6 +787,18 @@ function creatingScene() {
     meshWindow01Del.visible = false;
     scene.add(meshWindow01Del);
 
+    // _____________________
+    //    _ * WINDOW02 *
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    document.getElementById("buttonWindow02").addEventListener("click", onClickbuttonWindow02);
+
+    meshWindow02Trans = new THREE.Mesh( geomWindow02Hover, matWallTrans );
+    meshWindow02Trans.visible = false;
+    scene.add(meshWindow02Trans);
+    meshWindow02Del = new THREE.Mesh( geomWindow02Del, matWallDel );
+    meshWindow02Del.visible = false;
+    scene.add(meshWindow02Del);
+    
     // _____________________
     //    _ * DOOR01 *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -1038,6 +1103,20 @@ function render() {
                 }
             }	
 
+            else if (meshInt0.object.parent.name == 'Window02') { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delWall) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
+                    var cen_grpInt = grpInt.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_meshWall = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_meshWall = grpInt.rotation.z;
+    
+                    meshWallHover.position.copy(pos_meshWall);
+                    meshWallHover.rotation.z = angle_meshWall
+                    meshWallDel.visible = false;
+                    meshWallHover.visible = true;
+                }
+            }	
+
             else if (meshInt0.object.parent.name == 'Door01') { // if the first mesh that the cursor intersects has the name ' '
                 if (!bool_delWall) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
@@ -1191,6 +1270,20 @@ function render() {
                 }
             }
 
+            else if (meshInt0.object.parent.name == 'Window02') { 
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpWindow01 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpWindow01 = grpInt.rotation.z;
+
+                    meshWindow01Trans.position.copy(pos_grpWindow01);
+                    meshWindow01Trans.rotation.z = angle_grpWindow01
+                    meshWindow01Trans.visible = true;
+                    meshWindow01Del.visible = false;
+                }
+            }	
+
             else if (meshInt0.object.parent.name == 'Door01') { 
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
@@ -1279,6 +1372,141 @@ function render() {
     }	
 
     // _____________________
+    //    _ * WINDOW02 * ★
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    if ( id_buttonPressed == 'buttonWindow02' ) {
+        raycaster.setFromCamera( mouse, camera );
+        var list_meshScene = getMeshesInGroups(); // get the mesh in the scene to check for intersections
+        list_meshScene.push(meshFloorZone);
+        var list_meshInt = raycaster.intersectObjects( list_meshScene );
+        var meshInt0 = list_meshInt[ 0 ];
+        
+        if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
+
+            if (meshInt0.object.parent.name == 'Window02') { // if the first mesh that the cursor intersects has the name ' '
+                var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                pos_grpWindow02 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                angle_grpWindow02 = grpInt.rotation.z;
+
+                if (!bool_delWindow02) {
+                    // if shift button is not pressed, do nothing
+                } 
+                else { // if shift button is pressed, show geom_trans_del
+                    meshWindow02Del.position.set(pos_grpWindow02.x, pos_grpWindow02.y, pos_grpWindow02.z); // show del geom
+                    meshWindow02Del.rotation.z = angle_grpWindow02;
+                    meshWindow02Del.visible = true;
+                    meshWindow02Trans.visible = false;
+                }
+            } 
+            
+            else if (meshInt0.object.name == 'wall' ) { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delWindow02) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var cen_meshInt0 = meshInt0.object.position;
+                    pos_grpWindow02 = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z);
+                    angle_grpWindow02 = meshInt0.object.rotation.z;
+
+                    meshWindow02Trans.position.copy(pos_grpWindow02);
+                    meshWindow02Trans.rotation.z = angle_grpWindow02
+                    meshWindow02Trans.visible = true;
+                    meshWindow02Del.visible = false;
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Window01') { 
+                if (!bool_delWindow02) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpWindow02 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpWindow02 = grpInt.rotation.z;
+
+                    meshWindow02Trans.position.copy(pos_grpWindow02);
+                    meshWindow02Trans.rotation.z = angle_grpWindow02
+                    meshWindow02Trans.visible = true;
+                    meshWindow02Del.visible = false;
+                }    
+            }
+
+            else if (meshInt0.object.parent.name == 'Door01') { 
+                if (!bool_delWindow02) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpWindow02 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpWindow02 = grpInt.rotation.z;
+
+                    meshWindow02Trans.position.copy(pos_grpWindow02);
+                    meshWindow02Trans.rotation.z = angle_grpWindow02
+                    meshWindow02Trans.visible = true;
+                    meshWindow02Del.visible = false;
+                }    
+            }
+
+            else if (meshInt0.object.parent.name == 'Door02') { 
+                if (!bool_delWindow02) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpWindow02 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpWindow02 = grpInt.rotation.z;
+
+                    meshWindow02Trans.position.copy(pos_grpWindow02);
+                    meshWindow02Trans.rotation.z = angle_grpWindow02
+                    meshWindow02Trans.visible = true;
+                    meshWindow02Del.visible = false;
+                }    
+            }
+
+            else if (meshInt0.object.parent.name == 'Door03') { 
+                if (!bool_delWindow02) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpWindow02 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpWindow02 = grpInt.rotation.z;
+
+                    meshWindow02Trans.position.copy(pos_grpWindow02);
+                    meshWindow02Trans.rotation.z = angle_grpWindow02
+                    meshWindow02Trans.visible = true;
+                    meshWindow02Del.visible = false;
+                }    
+            }
+
+            else if (meshInt0.object.parent.name == 'Railing01') { 
+                if (!bool_delWindow02) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpWindow02 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpWindow02 = grpInt.rotation.z;
+
+                    meshWindow02Trans.position.copy(pos_grpWindow02);
+                    meshWindow02Trans.rotation.z = angle_grpWindow02
+                    meshWindow02Trans.visible = true;
+                    meshWindow02Del.visible = false;
+                }    
+            }
+
+            else if (meshInt0.object.parent.name == 'Stairs01') { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delWall) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
+                    var cen_grpInt = grpInt.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_meshWall = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_meshWall = grpInt.rotation.z;
+    
+                    meshWallHover.position.copy(pos_meshWall);
+                    meshWallHover.rotation.z = angle_meshWall
+                    meshWallDel.visible = false;
+                    meshWallHover.visible = true;
+                }
+            }				
+           
+
+
+        } else { // if do not intersect with anything, show nothing
+            meshWindow02Trans.visible = false;
+            meshWindow02Del.visible = false;
+            pos_grpWindow02 = null;
+        }
+    }	
+    
+    // _____________________
     //    _ * DOOR01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonDoor01' ) {
@@ -1321,6 +1549,20 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window01') { 
+                if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpDoor01 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpDoor01 = grpInt.rotation.z;
+
+                    meshDoor01Trans.position.copy(pos_grpDoor01);
+                    meshDoor01Trans.rotation.z = angle_grpDoor01
+                    meshDoor01Trans.visible = true;
+                    meshDoor01Del.visible = false;
+                }    
+            }
+
+            else if (meshInt0.object.parent.name == 'Window02') { 
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                     var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
@@ -1458,6 +1700,20 @@ function render() {
                 }    
             }
 
+            else if (meshInt0.object.parent.name == 'Window02') { 
+                if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpDoor02 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpDoor02 = grpInt.rotation.z;
+
+                    meshDoor02Trans.position.copy(pos_grpDoor02);
+                    meshDoor02Trans.rotation.z = angle_grpDoor02
+                    meshDoor02Trans.visible = true;
+                    meshDoor02Del.visible = false;
+                }    
+            }
+
             else if (meshInt0.object.parent.name == 'Door01') { 
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
@@ -1565,6 +1821,20 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window01') { 
+                if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpDoor03 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpDoor03 = grpInt.rotation.z;
+
+                    meshDoor03Trans.position.copy(pos_grpDoor03);
+                    meshDoor03Trans.rotation.z = angle_grpDoor03
+                    meshDoor03Trans.visible = true;
+                    meshDoor03Del.visible = false;
+                }    
+            }
+
+            else if (meshInt0.object.parent.name == 'Window02') { 
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                     var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
@@ -1700,6 +1970,20 @@ function render() {
                 }    
             }
 
+            else if (meshInt0.object.parent.name == 'Window02') { 
+                if (!bool_delRailing01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpRailing01 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpRailing01 = grpInt.rotation.z;
+
+                    meshRailing01Trans.position.copy(pos_grpRailing01);
+                    meshRailing01Trans.rotation.z = angle_grpRailing01
+                    meshRailing01Trans.visible = true;
+                    meshRailing01Del.visible = false;
+                }    
+            }
+
             else if (meshInt0.object.parent.name == 'Door01') { 
                 if (!bool_delRailing01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
@@ -1809,6 +2093,20 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window01') { 
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    pos_grpStairs01 = new THREE.Vector3(cen_grpInt.x, cen_grpInt.y, cen_grpInt.z);
+                    angle_grpStairs01 = grpInt.rotation.z;
+
+                    meshStairs01Trans.position.copy(pos_grpStairs01);
+                    meshStairs01Trans.rotation.z = angle_grpStairs01
+                    meshStairs01Trans.visible = true;
+                    meshStairs01Del.visible = false;
+                }    
+            }
+
+            else if (meshInt0.object.parent.name == 'Window02') { 
                 if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     var grpInt = meshInt0.object.parent.parent // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                     var cen_grpInt = grpInt.position; // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
@@ -1996,6 +2294,8 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
             addWall(key);
             if (key in dictWindow01) {
                 deleteWindow01(dictWindow01[key]);
+            } else if (key in dictWindow02) {
+                deleteWindow02(dictWindow02[key]);
             } else if (key in dictDoor01) {
                 deleteDoor01(dictDoor01[key]);
             } else if (key in dictDoor02) {
@@ -2021,6 +2321,8 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
                 deleteWall(dictWall[key]);
             } else if (key in dictDoor01) {
                 deleteDoor01(dictDoor01[key]);
+            } else if (key in dictWindow02) {
+                deleteWindow02(dictWindow02[key]);
             } else if (key in dictDoor02) {
                 deleteDoor02(dictDoor02[key]);
             } else if (key in dictDoor03) {
@@ -2036,6 +2338,30 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
 
         }
     }
+
+    // _____________________
+    //    _ * WINDOW02 * ★
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    else if (pos_grpWindow02 != null) {
+        var key = keyGen(pos_grpWindow02);
+        if (bool_delWindow02 && key in dictWindow02) {
+            deleteWindow02(dictWindow02[key]);  
+        } else if (!bool_delWindow02 && dictWindow02[key]==undefined) {
+            addWindow02(key);
+            if (key in dictWall) {
+                deleteWall(dictWall[key]);
+            } else if (key in dictWindow01) {
+                deleteWindow01(dictWindow01[key]);
+            } else if (key in dictDoor02) {
+                deleteDoor02(dictDoor02[key]);
+            } else if (key in dictDoor03) {
+                deleteDoor03(dictDoor03[key]);
+            }
+
+
+        }
+    }
+
 
     // _____________________
     //    _ * DOOR01 * ★
@@ -2050,6 +2376,8 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
                 deleteWall(dictWall[key]);
             } else if (key in dictWindow01) {
                 deleteWindow01(dictWindow01[key]);
+            } else if (key in dictWindow02) {
+                deleteWindow02(dictWindow02[key]);
             } else if (key in dictDoor02) {
                 deleteDoor02(dictDoor02[key]);
             } else if (key in dictDoor03) {
@@ -2065,7 +2393,7 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     }
 
     // _____________________
-    //    _ * D00R02 * ★
+    //    _ * DOOR02 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (pos_grpDoor02 != null) {
         var key = keyGen(pos_grpDoor02);
@@ -2077,6 +2405,8 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
                 deleteWall(dictWall[key]);
             } else if (key in dictWindow01) {
                 deleteWindow01(dictWindow01[key]);
+            } else if (key in dictWindow02) {
+                deleteWindow02(dictWindow02[key]);
             } else if (key in dictDoor01) {
                 deleteDoor01(dictDoor01[key]);
             } else if (key in dictDoor03) {
@@ -2095,7 +2425,7 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     }
 
     // _____________________
-    //    _ * D00R03 * ★
+    //    _ * DOOR03 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (pos_grpDoor03 != null) {
         var key = keyGen(pos_grpDoor03);
@@ -2107,6 +2437,10 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
                 deleteWall(dictWall[key]);
             } else if (key in dictWindow01) {
                 deleteWindow01(dictWindow01[key]);
+            } else if (key in dictWindow02) {
+                deleteWindow02(dictWindow02[key]);
+            } else if (key in dictDoor01) {
+                deleteDoor01(dictDoor01[key]);
             } else if (key in dictDoor02) {
                 deleteDoor02(dictDoor02[key]);
             } else if (key in dictRailing01) {
@@ -2132,6 +2466,8 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
                 deleteWall(dictWall[key]);
             } else if (key in dictWindow01) {
                 deleteWindow01(dictWindow01[key]);
+            } else if (key in dictWindow02) {
+                deleteWindow02(dictWindow02[key]);
             } else if (key in dictDoor02) {
                 deleteDoor02(dictDoor02[key]);
             } else if (key in dictDoor03) {
@@ -2157,6 +2493,8 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
                 deleteWall(dictWall[key]);
             } else if (key in dictWindow01) {
                 deleteWindow01(dictWindow01[key]);
+            } else if (key in dictWindow02) {
+                deleteWindow02(dictWindow02[key]);
             } else if (key in dictDoor02) {
                 deleteDoor02(dictDoor02[key]);
             } else if (key in dictDoor03) {
@@ -2225,6 +2563,15 @@ function onMouseMove( event ) {
         bool_delWindow01 = false;
     }
 
+    // _____________________
+    //    _ * WINDOW02 * 
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    if (event.shiftKey) {
+        bool_delWindow02 = true;
+    } else {
+        bool_delWindow02 = false;
+    }
+    
     // _____________________
     //    _ * DOOR01 * 
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -2324,6 +2671,15 @@ function onClickbuttonWindow01() {
 };
 
 // _____________________
+//    _ * WINDOW02 * 
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+function onClickbuttonWindow02() {
+    document.getElementById(id_buttonPressed).classList.remove("pressed");
+    id_buttonPressed = 'buttonWindow02';
+    document.getElementById(id_buttonPressed).classList.add("pressed");
+};
+
+// _____________________
 //    _ * DOOR01 * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 function onClickbuttonDoor01() {
@@ -2394,6 +2750,10 @@ function getMeshesInGroups() {
         list_meshScene = list_meshScene.concat(i.children[0].children) // concat the its meshes into the list 
     })
 
+    Object.values(dictWindow02).forEach(i => {
+        list_meshScene = list_meshScene.concat(i.children[0].children)
+    })
+    
     // console.log('~~~Object.values(dictDoor01)~~~', Object.values(dictDoor01)) // e.g. (2) [Group, Group] (i.e. 2 doors in the scene)
     Object.values(dictDoor01).forEach(i => {
         list_meshScene = list_meshScene.concat(i.children[0].children)
@@ -2811,6 +3171,37 @@ function deleteWindow01(Window01) {
     delete dictWindow01[ Window01.Window01_key ];
     cnt_grpWindow01 -= 1; 
     document.getElementById('buttonWindow01').innerHTML = "Window01: " + cnt_grpWindow01;
+};
+
+
+// _____________________
+//    _ * WINDOW02 * 
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+function addWindow02(key) {
+
+    // ADD MESH
+    var Window02 = geomWindow02.clone();
+    Window02.position.set(pos_grpWindow02.x, pos_grpWindow02.y, pos_grpWindow02.z);
+    scene.add( Window02 );
+    
+    // ADD MESH PROPERTIES
+    Window02.name = "Window02"
+    Window02.Window02_key = key;
+
+    // UPDATE GLOBAL VARIABLES, HTML
+    dictWindow02[key] = Window02;
+    Window02.rotation.z = angle_grpWindow02;
+    cnt_grpWindow02 += 1; 
+    document.getElementById('buttonWindow02').innerHTML = "Window02: " + cnt_grpWindow02;
+};
+
+// Delete a Window02
+function deleteWindow02(Window02) {
+    scene.remove( Window02 );
+    delete dictWindow02[ Window02.Window02_key ];
+    cnt_grpWindow02 -= 1; 
+    document.getElementById('buttonWindow02').innerHTML = "Window02: " + cnt_grpWindow02;
 };
 
 
