@@ -53,9 +53,15 @@ body {
     grid-row: 1;
 
     display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: 50px;
+    grid-template-columns: auto 5%;
     grid-gap: 0px;
+
+    /* MASSING */
+    background-color: white;
+    border: white;
+    border-bottom: grey;
+    border-style: solid;
+    border-width: 2px;
 }
 
 
@@ -65,16 +71,47 @@ body {
 
 #titlebar {
     /* GRID */
-    grid-row: 1;
+    grid-column: 1;
 
     /* MASSING */
     background-color: white;
-    border: white;
-    border-bottom: grey;
-    border-style: solid;
-    border-width: 2px;
-
+    padding: 0;
+    margin: 0;
 }
+
+/* // ====================================================
+// { MENUBAR }
+// ==================================================== */
+
+#menubar {
+    /* GRID */
+    grid-column: 2;
+
+    /* MASSING */
+    background-color: white;
+    padding: 0;
+    margin: 0;
+}
+.export { /* Defining a class. Type of property tag that can be used multiple times. */
+    /* MASSING */
+    position: relative;
+    margin: auto;
+    height: auto;
+    background-color: burlywood;
+
+    /* TEXT */
+    font-size: 15px;
+    text-align: center;
+    line-height: 40px; /* vertical alignment */
+    
+    /* MISC */
+    cursor: pointer;
+}
+.button.pressed{
+    border: 2px solid black;
+}
+
+
 
 /* //////////////////// -------------CENTER------------------------------------------------------ ///////////////////  */
 
