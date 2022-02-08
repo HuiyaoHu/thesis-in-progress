@@ -2,6 +2,7 @@
 import * as THREE from 'https://unpkg.com/three@0.119.1/build/three.module.js'; 
 import { OrbitControls } from 'https://unpkg.com/three@0.119.1/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/DRACOLoader'
 import { GLTFExporter } from 'https://unpkg.com/three@0.119.1/examples/jsm/exporters/GLTFExporter.js';
 import { BufferGeometryUtils } from 'https://unpkg.com/three@0.119.1/examples/jsm/utils/BufferGeometryUtils.js';
 
@@ -13,6 +14,8 @@ import { BufferGeometryUtils } from 'https://unpkg.com/three@0.119.1/examples/js
 
 // https://htmlcolorcodes.com/
 // https://www.w3schools.com/colors/colors_names.asp
+
+var matGrid = new THREE.LineBasicMaterial( {color: 0x000000, linewidth: 1} );
 
 var matVolume = new THREE.MeshStandardMaterial({color: 'blue', opacity: 0.1, transparent: true});
 var matVolumeTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
@@ -26,8 +29,9 @@ var matCeilingTrans = new THREE.MeshStandardMaterial({color: 0xAB9F82, opacity: 
 var matWallTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
 var matWallDel = new THREE.MeshStandardMaterial({color: 'white', opacity: 0.6, transparent: true});
 
+var concrete = new THREE.MeshStandardMaterial({color: 0xe7e6e6});
 var particleboard  = new THREE.MeshStandardMaterial({color: 0xD3C8AD}); //0xAB9F82, 0xD3C8AD, 0xE5DCC7 //floor
-var glass = new THREE.MeshStandardMaterial({color: 'turquoise', opacity: 0.2, transparent: true, side: THREE.DoubleSide});
+var glass = new THREE.MeshStandardMaterial({color: 'turquoise', opacity: 0.1, transparent: true, side: THREE.DoubleSide});
 var obs = new THREE.MeshStandardMaterial({color: 'burlywood'});		
 var aluminium = new THREE.MeshStandardMaterial({color: 'gainsboro'});
 var rubber = new THREE.MeshStandardMaterial({color: 'black'});
@@ -41,7 +45,64 @@ var alloy = new THREE.MeshStandardMaterial({color: 'black'});
 // Geometries & Initialisation ★
 // ====================================================
 // '''''' dimensions, geometries, initialisation
+
+const dracoLoader = new DRACOLoader()
+dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.3/') // Draco library static hosting
+
 const loader = new GLTFLoader();
+loader.setDRACOLoader(dracoLoader) // https://sbcode.net/threejs/loaders-draco/
+
+// __________________________
+//    	　_ * GRID *
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+// GEOMETRIES
+var  objectGrid = null
+loader.load( // Load a glTF resource
+    'models_220208/Grid.gltf', // resource URL
+    function ( gltf ) { // called when the resource is loaded
+        objectGrid = gltf.scene;
+        objectGrid.getObjectByName("line").material = matGrid;
+        scene.add( objectGrid );
+    },
+    function ( xhr ) { // called while loading is progressing
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+    function ( error ) { // called when loading has errors
+        console.log( 'An error happened' );
+    }
+);
+
+// __________________________
+//    	　_ * CHASSIS *
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+// GEOMETRIES
+var  meshChassis = null
+loader.load( // Load a glTF resource
+    'models_220208/Chassis.gltf', // resource URL
+    function ( gltf ) { // called when the resource is loaded
+        meshChassis = gltf.scene;
+        meshChassis.getObjectByName("ChassisUnit").material = concrete;
+        meshChassis.getObjectByName("Corridor").material = concrete;
+        scene.add( meshChassis );
+        meshChassis.visible = false;
+
+        /*
+        meshChassis.traverse(function(child) { // returns all children of objects with a matching name.
+            if (child.name === "ChassisUnit") {
+              child.material = aluminium;
+            }
+        });
+        */
+    },
+    function ( xhr ) { // called while loading is progressing
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+    function ( error ) { // called when loading has errors
+        console.log( 'An error happened' );
+    }
+);
 
 // __________________________
 //    	　_ * VOLUME *
@@ -140,23 +201,22 @@ var Window01_thickness = 0.5;
 var geomWindow01Hover = new THREE.BoxBufferGeometry( Window01_width * 1, Window01_thickness* 1, Window01_height * 1 );
 var geomWindow01Del = new THREE.BoxBufferGeometry( Window01_width * 1.1, Window01_thickness* 1.1, Window01_height * 1.1 );
 
-var  geomWindow01 = null
+var  meshWindow01 = null
 loader.load( // Load a glTF resource
-    'models_220207/Window01.gltf', // resource URL
+    'models_220208/Window01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        geomWindow01 = gltf.scene;
-        geomWindow01.getObjectByName("Glass").material = glass;
-        geomWindow01.getObjectByName("WindowFrame").material = aluminium;
-        geomWindow01.getObjectByName("WindowSeal").material = rubber;
-        geomWindow01.getObjectByName("SIP").material = obs;
-        // geomWindow01.rotation.x += Math.PI /2;
-        // geomWindow01.matrixAutoUpdate  = true;
-        // geomWindow01.getObjectByName("Window01R001").children.material = new THREE.MeshStandardMaterial( {color: 'burlywood'});
-        // geomWindow01.getObjectByName("mesh_36").material = new THREE.MeshStandardMaterial( {color: 'burlywood'});
-        // console.log(geomWindow01.getObjectByName("mesh_36").material)
-        // console.log(geomWindow01.getObjectByProperty(uuid,  "E01E399B-7EDF-4712-8FD5-574EEE30DF2B" ) )
-        // console.log(geomWindow01.getObjectByName("Window01R001").children.material)
-    },
+        meshWindow01 = gltf.scene;
+        meshWindow01.getObjectByName("Glass").material = glass;
+        meshWindow01.getObjectByName("WindowFrame").material = aluminium;
+        meshWindow01.getObjectByName("WindowSeal").material = rubber;
+        meshWindow01.getObjectByName("SIP").material = obs;
+        // var meshWindow01 = gltf.scene.children[4];
+        // meshWindow01.getObjectByName("Window01R001").children.material = new THREE.MeshStandardMaterial( {color: 'burlywood'});
+        // meshWindow01.getObjectById("LowpolyBlood_Bake_Blood_0.001").material.color.set( _some_color_ )
+        // console.log(meshWindow01.getObjectByName("mesh_36").material)
+        // console.log(meshWindow01.getObjectByProperty(uuid,  "E01E399B-7EDF-4712-8FD5-574EEE30DF2B" ) )
+        // console.log(meshWindow01.getObjectByName("Window01R001").children.material)
+},
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
 	},
@@ -164,8 +224,6 @@ loader.load( // Load a glTF resource
         console.log( 'An error happened' );
     }
 );
-// geomWindow01.getObjectById("LowpolyBlood_Bake_Blood_0.001").material.color.set( _some_color_ )
-// var geomWindow01 = gltf.scene.children[4];
 
 // INITIALISATION 
 var dictWindow01 = {};
@@ -184,28 +242,16 @@ var Window02_height = 3.5; var Window02_height_half = Window02_height / 2;
 var Window02_thickness = 0.5;
 
 // GEOMETRIES
-var  geomWindow02 = null
+var  meshWindow02 = null
 loader.load( // Load a glTF resource
-    'models_220207/Window02.gltf', // resource URL
+    'models_220208/Window02.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        geomWindow02 = gltf.scene;
-        geomWindow02.getObjectByName("SIP").material = obs;
-        geomWindow02.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "Glass") {
-              child.material = glass;
-            }
-        });
-        geomWindow02.getObjectByName("WindowFrame").material = aluminium;
-        geomWindow02.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "WindowCasement") {
-              child.material = alloy;
-            }
-        });
-        geomWindow02.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "SlidingWindowHandle") {
-              child.material = brass;
-            }
-        });
+        meshWindow02 = gltf.scene;
+        meshWindow02.getObjectByName("SIP").material = obs;
+        meshWindow02.getObjectByName("Glass").material = glass;
+        meshWindow02.getObjectByName("WindowFrame").material = aluminium;
+        meshWindow02.getObjectByName("WindowCasement").material = alloy;
+        meshWindow02.getObjectByName("SlidingWindowHandle").material = brass;
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -235,20 +281,15 @@ var Door01_thickness = 0.5;
 var geomDoor01Hover = new THREE.BoxBufferGeometry( Door01_width * 1, Door01_thickness* 1, Door01_height * 1 );
 var geomDoor01Del = new THREE.BoxBufferGeometry( Door01_width * 1.1, Door01_thickness* 1.1, Door01_height * 1.1 );
 
-var  geomDoor01 = null
+var  meshDoor01 = null
 loader.load( // Load a glTF resource
-    'models_220207/Door01.gltf', // resource URL
+    'models_220208/Door01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        geomDoor01 = gltf.scene;
-        geomDoor01.getObjectByName("Door").material = plywood;
-        geomDoor01.getObjectByName("DoorFrame").material = clt;
-        geomDoor01.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "DoorHandle") {
-              child.material = brass;
-            }
-        });
-        // geomDoor01.getObjectByName("DoorHandle").material = brass;
-        geomDoor01.getObjectByName("SIP").material = obs;
+        meshDoor01 = gltf.scene;
+        meshDoor01.getObjectByName("Door").material = plywood;
+        meshDoor01.getObjectByName("DoorFrame").material = clt;
+        meshDoor01.getObjectByName("DoorHandle").material = brass;
+        meshDoor01.getObjectByName("SIP").material = obs;
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -276,20 +317,16 @@ var Door02_height = 3.5; var Door02_height_half = Door02_height / 2;
 var Door02_thickness = 0.5;
 
 // GEOMETRIES
-var  geomDoor02 = null
+var  meshDoor02 = null
 loader.load( // Load a glTF resource
-    'models_220207/Door02.gltf', // resource URL
+    'models_220208/Door02.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        geomDoor02 = gltf.scene;
-        geomDoor02.getObjectByName("SIP").material = obs;
-        geomDoor02.getObjectByName("Glass").material = glass;
-        geomDoor02.getObjectByName("Door").material = plywood;
-        geomDoor02.getObjectByName("DoorFrame").material = clt;
-        geomDoor02.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "DoorHandle") {
-              child.material = brass;
-            }
-        });
+        meshDoor02 = gltf.scene;
+        meshDoor02.getObjectByName("SIP").material = obs;
+        meshDoor02.getObjectByName("Glass").material = glass;
+        meshDoor02.getObjectByName("Door").material = plywood;
+        meshDoor02.getObjectByName("DoorFrame").material = clt;
+        meshDoor02.getObjectByName("DoorHandle").material = brass;
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -317,32 +354,16 @@ var Door03_height = 3.5; var Door03_height_half = Door03_height / 2;
 var Door03_thickness = 0.5;
 
 // GEOMETRIES
-var  geomDoor03 = null
+var  meshDoor03 = null
 loader.load( // Load a glTF resource
-    'models_220207/Door03.gltf', // resource URL
+    'models_220208/Door03.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        geomDoor03 = gltf.scene;
-        geomDoor03.getObjectByName("SIP").material = obs;
-        geomDoor03.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "Glass") {
-              child.material = glass;
-            }
-        });
-        geomDoor03.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "WindowFrame") {
-              child.material = aluminium;
-            }
-        });
-        geomDoor03.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "WindowCasement") {
-              child.material = alloy;
-            }
-        });
-        geomDoor03.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "SlidingWindowHandle") {
-              child.material = brass;
-            }
-        });
+        meshDoor03 = gltf.scene;
+        meshDoor03.getObjectByName("SIP").material = obs;
+        meshDoor03.getObjectByName("Glass").material = glass;
+        meshDoor03.getObjectByName("WindowFrame").material = aluminium;
+        meshDoor03.getObjectByName("WindowCasement").material = alloy;
+        meshDoor03.getObjectByName("SlidingDoorHandle").material = brass;
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -373,17 +394,13 @@ var Railing01_thickness = 0.5;
 var geomRailing01Hover = new THREE.BoxBufferGeometry( Railing01_width * 1, Railing01_thickness* 1, Railing01_height * 1 );
 var geomRailing01Del = new THREE.BoxBufferGeometry( Railing01_width * 1.1, Railing01_thickness* 1.1, Railing01_height * 1.1 );
 
-var  geomRailing01 = null
+var  meshRailing01 = null
 loader.load( // Load a glTF resource
-    'models_220207/Railing01.gltf', // resource URL
+    'models_220208/Railing01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        geomRailing01 = gltf.scene;
-        geomRailing01.getObjectByName("SIP").material = obs;
-        geomRailing01.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "Railing") {
-              child.material = aluminium;
-            }
-        });
+        meshRailing01 = gltf.scene;
+        meshRailing01.getObjectByName("SIP").material = obs;
+        meshRailing01.getObjectByName("Railing").material = aluminium;
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -414,17 +431,13 @@ var Stairs01_thickness = 0.5;
 var geomStairs01Hover = new THREE.BoxBufferGeometry( Stairs01_width * 1, Stairs01_thickness* 1, Stairs01_height * 1 );
 var geomStairs01Del = new THREE.BoxBufferGeometry( Stairs01_width * 1.1, Stairs01_thickness* 1.1, Stairs01_height * 1.1 );
 
-var  geomStairs01 = null
+var  meshStairs01 = null
 loader.load( // Load a glTF resource
-    'models_220207/Stairs01.gltf', // resource URL
+    'models_220208/Stairs01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        geomStairs01 = gltf.scene;
-        geomStairs01.getObjectByName("SIP").material = obs;
-        geomStairs01.traverse(function(child) { // returns all children of objects with a matching name.
-            if (child.name === "Staircase") {
-              child.material = particleboard;
-            }
-        });
+        meshStairs01 = gltf.scene;
+        meshStairs01.getObjectByName("SIP").material = obs;
+        meshStairs01.getObjectByName("Staircase").material = particleboard;
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -451,9 +464,8 @@ var scale_grpStairs01 = new THREE.Vector3(-1, 1, 1)
 //    	　_ * TEST *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 /*
-var  geomTest = null
 loader.load( // Load a glTF resource
-    'models_220207/test4_directionallight.gltf', // resource URL
+    'models_220208/test4_directionallight.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         scene.add( gltf.scene );
     },
@@ -547,7 +559,7 @@ var bool_mouseDown = false;
 setInterval(render, 20) // larger number will be faster but jerkier 16 to 17 ms is about 60fps, 33 to 34 is about 30 fps
 
 // GROUND
-var num_cells = 6;
+var num_cells = 4;
 var ground_size = num_cells * wall_width;
 
 // MOUSE
@@ -577,6 +589,7 @@ animate();
 
 
 
+
 //////////////////// -------------MAIN FUNCTIONS------------------------------------------------------ //////////////////// 
 
 // ====================================================
@@ -586,7 +599,7 @@ animate();
 // To actually be able to display anything with three.js, we need three things: scene, camera and renderer, so that we can render the scene with camera.
 
 function creatingScene() {
-
+    
     // --------------------------------
     //    Camera, Scene, Renderer
     // --------------------------------
@@ -636,7 +649,7 @@ function creatingScene() {
     gridGround.position.x = 0;
     gridGround.position.y = 0;
     gridGround.position.z = 0; // -floor_thickness/2
-    scene.add( gridGround );
+    // scene.add( gridGround );
         // var axesHelper = new THREE.AxesHelper( 600 );
         // scene.add( axesHelper )
 
@@ -669,7 +682,7 @@ function creatingScene() {
     // --------------------------------    
 
     // HEMISPHERE LIGHT
-    var hemi_light = new THREE.HemisphereLight( 0xffffff, 0x0000, 1.15 ); //  skyColor, groundColor, intensity
+    var hemi_light = new THREE.HemisphereLight( 0xffffff, 0xb4b4b4, 1 ); //  skyColor, groundColor, intensity
     hemi_light.position.set( 0, 0, 10 );
     hemi_light.up.set( 0, 0, 0 );
     scene.add( hemi_light );
@@ -677,16 +690,16 @@ function creatingScene() {
         // scene.add( hemi_light_helper );
 
     // DIRECTIONAL LIGHT 1
-    var dir_light1 = new THREE.DirectionalLight( 0xffffff, 0.4 ); // colour, intensity
-    dir_light1.position.set( -7, -1, 0 );
+    var dir_light1 = new THREE.DirectionalLight( 0xffffff, 0.2 ); // colour, intensity
+    dir_light1.position.set( 0, -7, 0 );
         // dir_light1.position.multiplyScalar( 1 );
     scene.add( dir_light1 );
         // var dir_light1_helper = new THREE.DirectionalLightHelper( dir_light1, 1, 0xFF0000 );
         // scene.add( dir_light1_helper );
 
     // DIRECTIONAL LIGHT 2
-    var dir_light2 = new THREE.DirectionalLight( 0xffffff, 0.4 ); // colour, intensity
-    dir_light2.position.set( 7, 1, 0 );
+    var dir_light2 = new THREE.DirectionalLight( 0xffffff, 0.2 ); // colour, intensity
+    dir_light2.position.set( 0, 7, 0 );
     scene.add( dir_light2 );
         // var dir_light2_helper = new THREE.DirectionalLightHelper( dir_light2, 1, 0xFF0000 );
         // scene.add( dir_light2_helper ); 
@@ -731,7 +744,7 @@ function creatingScene() {
     // __________________________
     //    	　_ * CEILING *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    document.getElementById("buttonCeiling").addEventListener("click", onClickbuttonCeiling);
+    // document.getElementById("buttonCeiling").addEventListener("click", onClickbuttonCeiling);
     
     meshCeilingHover = new THREE.Mesh( geomCeilingHover, matFloorTrans );
     meshCeilingHover.visible = false;
@@ -877,6 +890,20 @@ function render() {
         renderer.render( scene, camera ); // render the scene
         return;
     }
+    
+    
+    // __________________________
+    //    	　_ * CHASSIS *
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    
+    var checkboxChassis = document.getElementById("checkboxChassis");   
+    if (checkboxChassis.checked == true){
+        scene.getObjectByName('Chassis').parent.visible = true;
+    } else {
+        if (scene.getObjectByName('Chassis') != null) {
+        scene.getObjectByName('Chassis').parent.visible = false;
+        };   
+    };
 
     // __________________________
     //    	　_ * VOLUME *
@@ -1003,6 +1030,7 @@ function render() {
         });
     }
 
+    
     if ( id_buttonPressed == 'buttonCeiling' ) {
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
         var list_meshScene = Object.values(dictCeiling); // get the meshes in the scene to check for intersections
@@ -1053,7 +1081,7 @@ function render() {
             pos_meshCeiling = null;
         }
    }
-
+   
 
     // __________________________
     //    	　_ * WALL * ★
@@ -3091,7 +3119,7 @@ function addCeiling(key) {
     // UPDATE GLOBAL VARIABLES, HTML
     dictCeiling[key] = meshCeiling;
     cnt_meshCeiling += 1; 
-    document.getElementById('buttonCeiling').innerHTML = "Ceiling: " + cnt_meshCeiling;
+    // document.getElementById('buttonCeiling').innerHTML = "Ceiling: " + cnt_meshCeiling;
     
 };
 
@@ -3100,7 +3128,7 @@ function deleteCeiling(meshCeiling) {
     scene.remove( meshCeiling );
     delete dictCeiling[ meshCeiling.ceiling_key ];
     cnt_meshCeiling -= 1; 
-    document.getElementById('buttonCeiling').innerHTML = "Ceiling: " + cnt_meshCeiling;
+    // document.getElementById('buttonCeiling').innerHTML = "Ceiling: " + cnt_meshCeiling;
 };
 
 
@@ -3164,7 +3192,7 @@ function deleteWall(meshWall) {
 function addWindow01(key) {
 
     // ADD MESH
-    var Window01 = geomWindow01.clone();
+    var Window01 = meshWindow01.clone();
     Window01.position.set(pos_grpWindow01.x, pos_grpWindow01.y, pos_grpWindow01.z);
     scene.add( Window01 );
 
@@ -3195,7 +3223,7 @@ function deleteWindow01(Window01) {
 function addWindow02(key) {
 
     // ADD MESH
-    var Window02 = geomWindow02.clone();
+    var Window02 = meshWindow02.clone();
     Window02.position.set(pos_grpWindow02.x, pos_grpWindow02.y, pos_grpWindow02.z);
     scene.add( Window02 );
     
@@ -3226,7 +3254,7 @@ function deleteWindow02(Window02) {
 function addDoor01(key) {
 
     // ADD MESH
-    var Door01 = geomDoor01.clone();
+    var Door01 = meshDoor01.clone();
     Door01.position.set(pos_grpDoor01.x, pos_grpDoor01.y, pos_grpDoor01.z);
     scene.add( Door01 );
     
@@ -3257,7 +3285,7 @@ function deleteDoor01(Door01) {
 function addDoor02(key) {
 
     // ADD MESH
-    var Door02 = geomDoor02.clone();
+    var Door02 = meshDoor02.clone();
     Door02.position.set(pos_grpDoor02.x, pos_grpDoor02.y, pos_grpDoor02.z);
     scene.add( Door02 );
     
@@ -3288,7 +3316,7 @@ function deleteDoor02(Door02) {
 function addDoor03(key) {
 
     // ADD MESH
-    var Door03 = geomDoor03.clone();
+    var Door03 = meshDoor03.clone();
     Door03.position.set(pos_grpDoor03.x, pos_grpDoor03.y, pos_grpDoor03.z);
     scene.add( Door03 );
     
@@ -3319,7 +3347,7 @@ function deleteDoor03(Door03) {
 function addRailing01(key) {
 
     // ADD MESH
-    var Railing01 = geomRailing01.clone();
+    var Railing01 = meshRailing01.clone();
     Railing01.position.set(pos_grpRailing01.x, pos_grpRailing01.y, pos_grpRailing01.z);
     scene.add( Railing01 );
     
@@ -3349,7 +3377,7 @@ function deleteRailing01(Railing01) {
 function addStairs01(key) {
 
     // ADD MESH
-    var Stairs01 = geomStairs01.clone();
+    var Stairs01 = meshStairs01.clone();
 
     Stairs01.position.set(pos_grpStairs01.x, pos_grpStairs01.y, pos_grpStairs01.z);
     scene.add( Stairs01 );

@@ -14,7 +14,7 @@
   "scene": 0,
   "nodes": [
     {
-      "name": "SIP",
+      "name": "line",
       "extras": {
         "attributes": {
           "mode": {
@@ -23,7 +23,7 @@
           },
           "isInstanceDefinitionObject": false,
           "visible": true,
-          "name": "SIP",
+          "name": "",
           "castsShadows": true,
           "receivesShadows": true,
           "linetypeSource": {
@@ -42,7 +42,7 @@
             "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
             "value": 0
           },
-          "id": "4da74a4c-426b-4034-acec-eed46f80fe79",
+          "id": "c39bbb85-d0b1-4284-a78e-c294b2eb2444",
           "url": "",
           "layerIndex": 0,
           "materialIndex": -1,
@@ -78,15 +78,42 @@
           "isValid": true,
           "userStringCount": 0,
           "geometry": {
-            "isSolid": true,
-            "isManifold": true,
-            "isSurface": false,
+            "pointCount": 5,
+            "domain": [
+              0,
+              14.000004580789103
+            ],
+            "dimension": 3,
+            "spanCount": 4,
+            "degree": 1,
+            "isClosed": true,
+            "isPeriodic": false,
+            "pointAtStart": [
+              -1.7500005702227241,
+              0,
+              -1.7500011499491017
+            ],
+            "pointAtEnd": [
+              -1.7500005702227241,
+              0,
+              -1.7500011499491017
+            ],
+            "tangentAtStart": [
+              1,
+              0,
+              0
+            ],
+            "tangentAtEnd": [
+              0,
+              0,
+              -1
+            ],
             "objectType": {
-              "name": "ObjectType_Brep",
-              "value": 16
+              "name": "ObjectType_Curve",
+              "value": 4
             },
-            "isDeformable": false,
-            "hasBrepForm": true,
+            "isDeformable": true,
+            "hasBrepForm": false,
             "isValid": true,
             "userStringCount": 0
           },
@@ -97,12 +124,12 @@
             "a": 255
           }
         },
-        "objectType": "Brep"
+        "objectType": "Curve"
       },
       "mesh": 0
     },
     {
-      "name": "Wall",
+      "name": "Grid",
       "extras": {
         "layers": [
           {
@@ -194,9 +221,31 @@
               "type": "Material",
               "generator": "Material.toJSON"
             },
-            "uuid": "F1F8B19E-EA3C-4518-9D49-7E685C49EEDE",
+            "uuid": "91BB046B-7917-4117-B9EB-2AE1DC54BD98",
             "type": "LineBasicMaterial",
             "color": 16711680,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "B0F4CA9E-F45F-4D2F-8A30-2F94ECB3E54D",
+            "type": "LineBasicMaterial",
+            "color": 0,
             "depthFunc": 3,
             "depthTest": true,
             "depthWrite": true,
@@ -263,118 +312,57 @@
     {
       "buffer": 0,
       "byteOffset": 0,
-      "byteLength": 288,
+      "byteLength": 60,
       "target": 34962,
       "byteStride": 12
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 288,
-      "byteLength": 288,
-      "target": 34962,
-      "byteStride": 12
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 576,
-      "byteLength": 192,
-      "target": 34962,
-      "byteStride": 8
-    },
-    {
-      "buffer": 0,
-      "byteOffset": 768,
-      "byteLength": 72,
-      "target": 34963
     }
   ],
   "buffers": [
     {
-      "byteLength": 840,
-      "uri": "data:application/octet-stream;base64,BQDgv1GamT0JAOC/BQDgv1GamT0AAOA/BQDgP1GamT0JAOC/BQDgP1GamT0AAOA/BQDgP1GamT0JAOC/BQDgP+GYmb0JAOC/BQDgv1GamT0JAOC/BQDgv+GYmb0JAOC/BQDgP1GamT0AAOA/BQDgP+GYmb0AAOA/BQDgP1GamT0JAOC/BQDgP+GYmb0JAOC/BQDgv1GamT0AAOA/BQDgv+GYmb0AAOA/BQDgP1GamT0AAOA/BQDgP+GYmb0AAOA/BQDgv1GamT0JAOC/BQDgv+GYmb0JAOC/BQDgv1GamT0AAOA/BQDgv+GYmb0AAOA/BQDgv+GYmb0JAOC/BQDgv+GYmb0AAOA/BQDgP+GYmb0JAOC/BQDgP+GYmb0AAOA/AAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAgAAAAIAAAIC/AAAAgAAAAIAAAIC/AAAAgAAAAIAAAIC/AAAAgAAAAIAAAIC/AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAmjkZPwAAAD/NzMw9AAAAP5o5GT8AoH8/zczMPQCgfz/NzEY9AAAAAM3MzDwAAAAAzcxGPQAAAD/NzMw8AAAAP83MyT0AAAAAmpmZPQAAAADNzMk9AAAAP5qZmT0AAAA/zczAPAAAAAAAAAAAAAAAAM3MwDwAAAA/AAAAAAAAAD+amZY9AAAAAM3MTD0AAAAAmpmWPQAAAD/NzEw9AAAAP5o5GT8AAAAAzczMPQAAAACaORk/AED/Ps3MzD0AQP8+AQADAAIAAgAAAAEABQAHAAYABgAEAAUACQALAAoACgAIAAkADQAPAA4ADgAMAA0AEQATABIAEgAQABEAFQAUABYAFgAXABUA"
+      "byteLength": 60,
+      "uri": "data:application/octet-stream;base64,BQDgvwAAAAAKAOC/BQDgPwAAAAAKAOC/BQDgPwAAAAAAAOA/BQDgvwAAAAAAAOA/BQDgvwAAAAAKAOC/"
     }
   ],
   "accessors": [
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 24,
+      "count": 5,
       "max": [
         1.7500005960464478,
-        0.07500136643648148,
+        0,
         1.75
       ],
       "min": [
         -1.7500005960464478,
-        -0.07499862462282181,
-        -1.750001072883606
-      ],
-      "type": "VEC3"
-    },
-    {
-      "bufferView": 1,
-      "componentType": 5126,
-      "count": 24,
-      "max": [
-        1,
-        1,
-        1
-      ],
-      "min": [
-        -1,
-        -1,
-        -1
-      ],
-      "type": "VEC3"
-    },
-    {
-      "bufferView": 2,
-      "componentType": 5126,
-      "count": 24,
-      "max": [
-        0.5985351800918579,
-        0.99853515625
-      ],
-      "min": [
         0,
-        0
+        -1.7500011920928955
       ],
-      "type": "VEC2"
-    },
-    {
-      "bufferView": 3,
-      "componentType": 5123,
-      "count": 36,
-      "max": [
-        23
-      ],
-      "min": [
-        0
-      ],
-      "type": "SCALAR"
+      "type": "VEC3"
     }
   ],
   "materials": [
     {
       "pbrMetallicRoughness": {
-        "metallicFactor": 0.8,
-        "roughnessFactor": 1
-      },
-      "doubleSided": true,
-      "name": "default"
+        "baseColorFactor": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "metallicFactor": 0.5,
+        "roughnessFactor": 0.5
+      }
     }
   ],
   "meshes": [
     {
       "primitives": [
         {
-          "mode": 4,
+          "mode": 3,
           "attributes": {
-            "POSITION": 0,
-            "NORMAL": 1,
-            "TEXCOORD_0": 2
+            "POSITION": 0
           },
-          "indices": 3,
           "material": 0
         }
       ]
