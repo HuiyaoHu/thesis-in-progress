@@ -35,7 +35,7 @@
 <html lang="en">
 
     <head>
-        <title>220208</title>
+        <title>220209</title>
         <meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <!-- <link rel="stylesheet" type="text/css" href="reset.css"> -->
@@ -46,7 +46,7 @@
 
         <div id="body_top">
             <div id = "titlebar">
-                <h1>Configure Your Apartment</h1>
+                <h1>Configure Your Apartment Workspace</h1>
             </div> 
 
             <div id = "menubar">
@@ -58,38 +58,20 @@
 
             <div id="left_panel">
 
-                <div id="volume">
-                    <h2>House Volume</h2>
-                    <div class="button pressed" id="buttonVolume">Volume Unit</div>
-                    <!-- <div class="button" id="export_object">Export Sphere</div>
-                    <div class="button" id="export_objects">Export Sphere and Grid</div> -->
-            
-                </div>
-    
-                <div id="modules"> 
-                    <h2>Modules</h2>
-                    <div class="button" id="buttonFloor">Floor</div>
-                    <!-- <div class="button" id="buttonCeiling">Ceiling</div> -->
-                    <div class="button" id="buttonWall">Wall</div>
-                    <div class="button" id="buttonWindow01">Window01</div>
-                    <div class="button" id="buttonWindow02">Window02</div>
-                    <div class="button" id="buttonDoor01">Door01</div>
-                    <div class="button" id="buttonDoor02">Door02</div>
-                    <div class="button" id="buttonDoor03">Door03</div>
-                    <div class="button" id="buttonRailing01">Railing</div>
-                    <div class="button" id="buttonStairs01">Stairs</div>
-                </div>
-        
                 <div id="checkboxes"> 
                     <h2>Display</h2>
+                    <label class="checkboxText">Structure frame
+                        <input type="checkbox" id="checkboxChassis" checked>
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkboxText">Neighbours
+                        <input type="checkbox" id="checkboxNeighbour01" checked>
+                        <span class="checkmark"></span>
+                        </label>                                            
                     <label class="checkboxText">Ceiling
                         <input type="checkbox" id="checkboxCeiling">
                         <span class="checkmark"></span>
                     </label>
-                    <label class="checkboxText">Structure frame
-                        <input type="checkbox" id="checkboxChassis">
-                        <span class="checkmark"></span>
-                    </label>                    
                     <!-- <label class="checkboxText">Volume units
                         <input type="checkbox" id="checkboxVolume">
                         <span class="checkmark"></span>
@@ -100,27 +82,65 @@
                         <span class="checkmark"></span>
                     </label> -->
                 </div>
+
+                <div id="volume">
+                    <h2>1. Purchase Volume</h2>
+                    <div class="button pressed" id="buttonVolume">Volume</div>
+                    <!-- <div class="button" id="export_object">Export Sphere</div>
+                    <div class="button" id="export_objects">Export Sphere and Grid</div> -->
+            
+                </div>
+    
+                <div id="modules"> 
+                    <h2>2. Configuration Design</h2>
+                    <h3>SIP Modules</h3>               
+                    <div class="button" id="buttonFloor">Floor</div>
+                    <!-- <div class="button" id="buttonCeiling">Ceiling</div> -->
+                    <div class="button" id="buttonWall">Partition Wall</div>
+                    <h3>Hybrid Modules</h3>               
+                    <div class="button" id="buttonWindow01">Fixed Window</div>
+                    <div class="button" id="buttonWindow02">Sliding Window</div>
+                    <div class="button" id="buttonDoor01">Timber Door</div>
+                    <div class="button" id="buttonDoor02">Glass Door</div>
+                    <div class="button" id="buttonDoor03">Sliding Glass Door</div>
+                    <div class="button" id="buttonRailing01">Railing</div>
+                    <div class="button" id="buttonStairs01">Stairs</div>
+                </div>
+        
     
             </div>
     
             <div id="module">
-                <script type="module" src="module_220208.js"></script>
+                <script type="module" src="module_220209.js"></script>
             </div>
     
             <div id="right_panel"> 
                 <div class="help">
-                    <h2>Tips</h2>
+                    <h2>—　HELP MANUAL　—</h2>
+                    <!-- <br> -->
+
+                    <h4>Display</h4>               
+                    <p>Toggle off display to improve workspace clarity and reduce cpu usage.</p>
+
+                    <h4>1. Purchase Volume</h4>               
+                    <p>Place volume modules on the grid to define space for purchase.</p>
+
+                    <h4>2. Configuration Design</h4>               
+                    <p>Place floor modules to define apartment boundary.</p>
+                    <p>Add partition wall modules to configure internal walls.</p>
+                    <p>Replace wall modules with hybrid modules to add functional components.</p>
+                    
                     <br>
-    
-                    <h3>Module Actions</h3>               
+                    <h4>Workspace Actions</h4>               
+                    <p>Rotate: left click + drag</p>
+                    <p>Pan: righ click + drag</p>
+                    <p>Zoom: scroll</p>
+                    
+                    <h4>Module Actions</h4>               
                     <p>Place: left click</p>
                     <p>Delete: shift + left click</p>   
                     <br>
     
-                    <h3>Workspace Actions</h3>               
-                    <p>Rotate: left click + drag</p>
-                    <p>Pan: righ click + drag</p>
-                    <p>Zoom: scroll</p>
                 </div>
                 
             </div> 
