@@ -119,7 +119,7 @@ loader.load( // Load a glTF resource
         meshNeighbour01 = gltf.scene;
         scene.add( meshNeighbour01 );
         meshNeighbour01.visible = true;
-        meshNeighbour01.position.set = (0, 14, 0)
+        meshNeighbour01.name = "meshNeighbour01";
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -938,14 +938,13 @@ function render() {
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 var checkboxNeighbour01 = document.getElementById("checkboxNeighbour01");   
-
+// console.log(scene)
 if (checkboxNeighbour01.checked == false){
-    scene.getObjectByName('Neighbour01').visible = false;
-    console.log(scene.getObjectByName('Neighbour01'))
+    meshNeighbour01.visible=false
 } 
 else {
-    if (scene.getObjectByName('Neighbour01') != undefined) {
-        scene.getObjectByName('Neighbour01').visible = true; 
+    if (meshNeighbour01 != null) {
+        meshNeighbour01.visible = true; 
     };   
 };
 
