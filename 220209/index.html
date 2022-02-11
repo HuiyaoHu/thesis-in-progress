@@ -15,7 +15,7 @@
     py -m http.server
 -->
 <!--OPTIMISE glTF ASSESTS
-    gltf-pipeline -i C:\Users\huiya\Documents\GitHub\thesis-in-progress\models_220209\Railing01.gltf -o C:\Users\huiya\Documents\GitHub\thesis-in-progress\models_220209\Railing01.gltf -d
+    gltf-pipeline -i C:\Users\huiya\Documents\GitHub\thesis-in-progress\models_220209\Chassis.gltf -o C:\Users\huiya\Documents\GitHub\thesis-in-progress\models_220209\Chassis.gltf -d
         Cesium glTF Pipeline https://github.com/CesiumGS/gltf-pipeline
         Enable script running https://www.roelpeters.be/solved-running-scripts-is-disabled-on-this-system-in-powershell/
  -->
@@ -35,7 +35,7 @@
 <html lang="en">
 
     <head>
-        <title>220211</title>
+        <title>220209</title>
         <meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <!-- <link rel="stylesheet" type="text/css" href="reset.css"> -->
@@ -96,7 +96,7 @@
                     <h3>SIP Modules</h3>               
                     <div class="button" id="buttonFloor">Floor</div>
                     <!-- <div class="button" id="buttonCeiling">Ceiling</div> -->
-                    <div class="button" id="buttonWall">Wall</div>
+                    <div class="button" id="buttonWall">Partition Wall</div>
                     <h3>Hybrid Modules</h3>               
                     <div class="button" id="buttonWindow01">Fixed Window</div>
                     <div class="button" id="buttonWindow02">Sliding Window</div>
@@ -111,17 +111,26 @@
             </div>
     
             <div id="module">
-                <script type="module" src="module_220211.js"></script>
+                <script type="module" src="module_220209.js"></script>
             </div>
     
             <div id="right_panel"> 
                 <div class="help">
-                    <h2>—　TIPS　—</h2>
+                    <h2>—　HELP MANUAL　—</h2>
+                    <!-- <br> -->
+
                     <h4>Display</h4>               
                     <p>Toggle off display to improve workspace clarity and reduce cpu usage.</p>
-                    <br>
 
-                    <h2>—　CONTROLS　—</h2>
+                    <h4>1. Purchase Volume</h4>               
+                    <p>Place volume modules on the grid to define space for purchase.</p>
+
+                    <h4>2. Configuration Design</h4>               
+                    <p>Place floor modules to define apartment boundary.</p>
+                    <p>Add partition wall modules to configure internal walls.</p>
+                    <p>Replace wall modules with hybrid modules to add functional components.</p>
+                    
+                    <br>
                     <h4>Workspace Actions</h4>               
                     <p>Rotate: left click + drag</p>
                     <p>Pan: righ click + drag</p>
@@ -131,16 +140,6 @@
                     <p>Place: left click</p>
                     <p>Delete: shift + left click</p>   
                     <br>
-
-                    <h2>—　INSTRUCTIONS　—</h2>
-                    <h4>1. Purchase Volume</h4>               
-                    <p>Place volume modules on the grid to define space for purchase.</p>
-
-                    <h4>2. Configuration Design</h4>               
-                    <p>Step 1: Place floor modules to define apartment boundary.</p>
-                    <p>Step 2: Add partition wall modules to configure internal walls.</p>
-                    <p>Step 3: Replace wall modules with hybrid modules to add functional components.</p>
-                    
     
                 </div>
                 
