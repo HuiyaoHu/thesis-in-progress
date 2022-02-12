@@ -1,0 +1,371 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "THREE.GLTFExporter"
+  },
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        1
+      ]
+    }
+  ],
+  "scene": 0,
+  "nodes": [
+    {
+      "name": "line",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "c39bbb85-d0b1-4284-a78e-c294b2eb2444",
+          "url": "",
+          "layerIndex": 0,
+          "materialIndex": -1,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromLayer",
+            "value": 0
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "pointCount": 5,
+            "domain": [
+              0,
+              14.000004580789103
+            ],
+            "dimension": 3,
+            "spanCount": 4,
+            "degree": 1,
+            "isClosed": true,
+            "isPeriodic": false,
+            "pointAtStart": [
+              -1.7500005702227241,
+              0,
+              -1.7500011499491017
+            ],
+            "pointAtEnd": [
+              -1.7500005702227241,
+              0,
+              -1.7500011499491017
+            ],
+            "tangentAtStart": [
+              1,
+              0,
+              0
+            ],
+            "tangentAtEnd": [
+              0,
+              0,
+              -1
+            ],
+            "objectType": {
+              "name": "ObjectType_Curve",
+              "value": 4
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Curve"
+      },
+      "mesh": 0
+    },
+    {
+      "name": "Grid",
+      "extras": {
+        "layers": [
+          {
+            "name": "SIP",
+            "fullPath": "SIP",
+            "id": "cbbf6803-d9ac-43b7-ba80-c7c24a25c76b",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": -1,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          {
+            "name": "toDelete",
+            "fullPath": "toDelete",
+            "id": "4133bbf8-a1bc-4636-b0af-2970edc2ef9c",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 255,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 255,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": -1,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          }
+        ],
+        "groups": [],
+        "settings": {
+          "modelUrl": "",
+          "modelBasePoint": [
+            0,
+            0,
+            0
+          ],
+          "earthAnchorPoint": {},
+          "modelAbsoluteTolerance": 0.001,
+          "modelAngleToleranceRadians": 0.017453292519943295,
+          "modelAngleToleranceDegrees": 1,
+          "modelRelativeTolerance": 0.01,
+          "pageAbsoluteTolerance": 0.001,
+          "pageAngleToleranceRadians": 0.017453292519943295,
+          "pageAngleToleranceDegrees": 1,
+          "pageRelativeTolerance": 0.01,
+          "modelUnitSystem": {
+            "name": "UnitSystem_Meters",
+            "value": 4
+          },
+          "pageUnitSystem": {
+            "name": "UnitSystem_Millimeters",
+            "value": 2
+          }
+        },
+        "objectType": "File3dm",
+        "materials": [
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "91BB046B-7917-4117-B9EB-2AE1DC54BD98",
+            "type": "LineBasicMaterial",
+            "color": 16711680,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "B0F4CA9E-F45F-4D2F-8A30-2F94ECB3E54D",
+            "type": "LineBasicMaterial",
+            "color": 0,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          }
+        ],
+        "warnings": [
+          {
+            "message": "THREE.3DMLoader: Conversion not implemented for ObjectType_Annotation",
+            "type": "not implemented",
+            "guid": "8754d6e7-c5ad-4198-82e1-d962b46cae48"
+          },
+          {
+            "message": "THREE.3DMLoader: ObjectType_Annotation has no associated mesh geometry.",
+            "type": "missing mesh",
+            "guid": "8754d6e7-c5ad-4198-82e1-d962b46cae48"
+          },
+          {
+            "message": "THREE.3DMLoader: Conversion not implemented for ObjectType_Annotation",
+            "type": "not implemented",
+            "guid": "90630b5f-5e50-4e06-83c9-e9af285bb51f"
+          },
+          {
+            "message": "THREE.3DMLoader: ObjectType_Annotation has no associated mesh geometry.",
+            "type": "missing mesh",
+            "guid": "90630b5f-5e50-4e06-83c9-e9af285bb51f"
+          },
+          {
+            "message": "THREE.3DMLoader: Conversion not implemented for ObjectType_Annotation",
+            "type": "not implemented",
+            "guid": "d4316fd0-d0e2-4bb8-8c24-b1b0d0d669a7"
+          },
+          {
+            "message": "THREE.3DMLoader: ObjectType_Annotation has no associated mesh geometry.",
+            "type": "missing mesh",
+            "guid": "d4316fd0-d0e2-4bb8-8c24-b1b0d0d669a7"
+          },
+          {
+            "message": "THREE.3DMLoader: Conversion not implemented for ObjectType_Annotation",
+            "type": "not implemented",
+            "guid": "eebd2fe0-859c-410a-9849-127faca9172a"
+          },
+          {
+            "message": "THREE.3DMLoader: ObjectType_Annotation has no associated mesh geometry.",
+            "type": "missing mesh",
+            "guid": "eebd2fe0-859c-410a-9849-127faca9172a"
+          }
+        ]
+      },
+      "children": [
+        0
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 60,
+      "target": 34962,
+      "byteStride": 12
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 60,
+      "uri": "data:application/octet-stream;base64,BQDgvwAAAAAKAOC/BQDgPwAAAAAKAOC/BQDgPwAAAAAAAOA/BQDgvwAAAAAAAOA/BQDgvwAAAAAKAOC/"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 5,
+      "max": [
+        1.7500005960464478,
+        0,
+        1.75
+      ],
+      "min": [
+        -1.7500005960464478,
+        0,
+        -1.7500011920928955
+      ],
+      "type": "VEC3"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "metallicFactor": 0.5,
+        "roughnessFactor": 0.5
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "mode": 3,
+          "attributes": {
+            "POSITION": 0
+          },
+          "material": 0
+        }
+      ]
+    }
+  ]
+}
