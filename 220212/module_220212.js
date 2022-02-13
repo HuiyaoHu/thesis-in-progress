@@ -16,6 +16,7 @@ import { BufferGeometryUtils } from 'https://unpkg.com/three@0.119.1/examples/js
 // https://www.w3schools.com/colors/colors_names.asp
 
 var matGrid = new THREE.LineBasicMaterial( {color: 0x000000, linewidth: 1} );
+var matText = new THREE.LineBasicMaterial( {color: 0x000000, linewidth: 1} );
 
 var matVolume = new THREE.MeshStandardMaterial({color: 'blue', opacity: 0.1, transparent: true});
 var matVolumeTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
@@ -33,7 +34,7 @@ var plaster = new THREE.MeshStandardMaterial({color: 0xe7e6e6});
 var concrete = new THREE.MeshStandardMaterial({color: 0xb4b4b4, side: THREE.DoubleSide}) ;
 var particleboard  = new THREE.MeshStandardMaterial({color: 0xD3C8AD}); //0xAB9F82, 0xD3C8AD, 0xE5DCC7 //floor
 var glass = new THREE.MeshStandardMaterial({color: 'turquoise', opacity: 0.1, transparent: true, side: THREE.DoubleSide});
-var obs = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 1, transparent: true});		
+var obs = new THREE.MeshStandardMaterial({color: 'burlywood'});		
 var aluminium = new THREE.MeshStandardMaterial({color: 'gainsboro'});
 var rubber = new THREE.MeshStandardMaterial({color: 'black'});
 var plywood = new THREE.MeshStandardMaterial({color: 0x424242}); //door
@@ -60,7 +61,7 @@ loader.setDRACOLoader(dracoLoader) // https://sbcode.net/threejs/loaders-draco/
 // GEOMETRIES
 var  objectGrid = null
 loader.load( // Load a glTF resource
-    'models_220211/Grid.gltf', // resource URL
+    'models_220212/Grid.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         objectGrid = gltf.scene;
         objectGrid.getObjectByName("line").material = matGrid;
@@ -81,12 +82,13 @@ loader.load( // Load a glTF resource
 // GEOMETRIES
 var  meshChassis = null
 loader.load( // Load a glTF resource
-    'models_220211/Chassis.gltf', // resource URL
+    'models_220212/Chassis.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshChassis = gltf.scene;
         meshChassis.getObjectByName("Frame").material = plaster;
         meshChassis.getObjectByName("Corridors").material = concrete;
         meshChassis.getObjectByName("Cores").material = plaster;
+        meshChassis.getObjectByName("Texts").material = matText;
         scene.add( meshChassis );
         meshChassis.visible = true;
 
@@ -114,12 +116,9 @@ loader.load( // Load a glTF resource
 // GEOMETRIES
 var  meshNeighbour01 = null
 loader.load( // Load a glTF resource
-    'models_220211/Neighbour01.gltf', // resource URL
+    'models_220212/Neighbour01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshNeighbour01 = gltf.scene;
-        // meshNeighbour01.traverse(function(child) { // returns all children of objects with a matching name.
-        //       child.material = concrete;
-        // });
         scene.add( meshNeighbour01 );
         meshNeighbour01.visible = true;
         meshNeighbour01.name = "meshNeighbour01";
@@ -139,32 +138,37 @@ loader.load( // Load a glTF resource
 // GEOMETRIES
 var  meshNeighbour02 = null
 loader.load( // Load a glTF resource
-    'models_220211/Neighbour02.gltf', // resource URL
+    'models_220212/Neighbour02.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshNeighbour02 = gltf.scene;
-        // setOpacity( meshNeighbour02, 0.5 );
-        // function setOpacity( obj, opacity ) {
-        //   obj.children.forEach((child)=>{
-        //     setOpacity( child, opacity );
-        //   });
-        //   if ( obj.material ) {
-        //     obj.material.opacity = opacity ;
-        //   }
-        // };
+        /*
+        setOpacity( meshNeighbour02, 0.5 );
+        function setOpacity( obj, opacity ) {
+          obj.children.forEach((child)=>{
+            setOpacity( child, opacity );
+          });
+          if ( obj.material ) {
+            obj.material.opacity = opacity ;
+          }
+        };
 
-        // meshNeighbour02.traverse(function(child) { // returns all children of objects with a matching name.
-        //     setOpacity( child, 0.1 );
-        //     function setOpacity( obj, opacity ) {
-        //       obj.children.forEach((child)=>{
-        //         setOpacity( child, opacity );
-        //       });
-        //       if ( obj.material ) {
-        //         obj.material.opacity = opacity ;
-        //       }
-        //     };      });    
-    //     meshNeighbour02.traverse(function(child) { // returns all children of objects with a matching name.
-    //         child.material = concrete;
-    //   });
+        meshNeighbour02.traverse(function(child) { // returns all children of objects with a matching name.
+            setOpacity( child, 0.1 );
+            function setOpacity( obj, opacity ) {
+              obj.children.forEach((child)=>{
+                setOpacity( child, opacity );
+              });
+              if ( obj.material ) {
+                obj.material.opacity = opacity ;
+              }
+            }; 
+        });
+
+        meshNeighbour02.traverse(function(child) { // returns all children of objects with a matching name.
+            child.material = concrete;
+        });
+
+        */
         scene.add( meshNeighbour02 );
         meshNeighbour02.visible = true;
         meshNeighbour02.name = "meshNeighbour02";
@@ -185,12 +189,9 @@ loader.load( // Load a glTF resource
 // GEOMETRIES
 var  meshNeighbour03 = null
 loader.load( // Load a glTF resource
-    'models_220211/Neighbour03.gltf', // resource URL
+    'models_220212/Neighbour03.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshNeighbour03 = gltf.scene;
-    //     meshNeighbour03.traverse(function(child) { // returns all children of objects with a matching name.
-    //         child.material = concrete;
-    //   });
         scene.add( meshNeighbour03 );
         meshNeighbour03.visible = true;
         meshNeighbour03.name = "meshNeighbour03";
@@ -211,12 +212,9 @@ loader.load( // Load a glTF resource
 // GEOMETRIES
 var  meshNeighbour04 = null
 loader.load( // Load a glTF resource
-    'models_220211/Neighbour04.gltf', // resource URL
+    'models_220212/Neighbour04.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshNeighbour04 = gltf.scene;
-    //     meshNeighbour04.traverse(function(child) { // returns all children of objects with a matching name.
-    //         child.material = concrete;
-    //   });
         scene.add( meshNeighbour04 );
         meshNeighbour04.visible = true;
         meshNeighbour04.name = "meshNeighbour04";
@@ -329,7 +327,7 @@ var geomWindow01Del = new THREE.BoxBufferGeometry( Window01_width * 1.1, Window0
 
 var  meshWindow01 = null
 loader.load( // Load a glTF resource
-    'models_220211/Window01.gltf', // resource URL
+    'models_220212/Window01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshWindow01 = gltf.scene;
         meshWindow01.getObjectByName("Glass").material = glass;
@@ -370,7 +368,7 @@ var Window02_thickness = 0.5;
 // GEOMETRIES
 var  meshWindow02 = null
 loader.load( // Load a glTF resource
-    'models_220211/Window02.gltf', // resource URL
+    'models_220212/Window02.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshWindow02 = gltf.scene;
         meshWindow02.getObjectByName("SIP").material = obs;
@@ -409,7 +407,7 @@ var geomDoor01Del = new THREE.BoxBufferGeometry( Door01_width * 1.1, Door01_thic
 
 var  meshDoor01 = null
 loader.load( // Load a glTF resource
-    'models_220211/Door01.gltf', // resource URL
+    'models_220212/Door01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshDoor01 = gltf.scene;
         meshDoor01.getObjectByName("Door").material = plywood;
@@ -445,7 +443,7 @@ var Door02_thickness = 0.5;
 // GEOMETRIES
 var  meshDoor02 = null
 loader.load( // Load a glTF resource
-    'models_220211/Door02.gltf', // resource URL
+    'models_220212/Door02.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshDoor02 = gltf.scene;
         meshDoor02.getObjectByName("SIP").material = obs;
@@ -482,7 +480,7 @@ var Door03_thickness = 0.5;
 // GEOMETRIES
 var  meshDoor03 = null
 loader.load( // Load a glTF resource
-    'models_220211/Door03.gltf', // resource URL
+    'models_220212/Door03.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshDoor03 = gltf.scene;
         meshDoor03.getObjectByName("SIP").material = obs;
@@ -522,7 +520,7 @@ var geomRailing01Del = new THREE.BoxBufferGeometry( Railing01_width * 1.1, Raili
 
 var  meshRailing01 = null
 loader.load( // Load a glTF resource
-    'models_220211/Railing01.gltf', // resource URL
+    'models_220212/Railing01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshRailing01 = gltf.scene;
         meshRailing01.getObjectByName("SIP").material = obs;
@@ -559,7 +557,7 @@ var geomStairs01Del = new THREE.BoxBufferGeometry( Stairs01_width * 1.1, Stairs0
 
 var  meshStairs01 = null
 loader.load( // Load a glTF resource
-    'models_220211/Stairs01.gltf', // resource URL
+    'models_220212/Stairs01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshStairs01 = gltf.scene;
         meshStairs01.getObjectByName("SIP").material = obs;
@@ -591,7 +589,7 @@ var scale_grpStairs01 = new THREE.Vector3(-1, 1, 1)
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 /*
 loader.load( // Load a glTF resource
-    'models_220211/test4_directionallight.gltf', // resource URL
+    'models_220212/test4_directionallight.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         scene.add( gltf.scene );
     },
@@ -738,7 +736,7 @@ function creatingScene() {
 
     camera = new THREE.PerspectiveCamera( 25, container.clientWidth / container.clientHeight, 1, 10000  ); //FOV, aspect ratio, near, far of clipping plane
         // camera = new THREE.OrthographicCamera( -window.innerWidth/camera_zoom+camera_shift_x, window.innerWidth/camera_zoom+camera_shift_x,  window.innerHeight/camera_zoom+camera_shift_y,  -window.innerHeight/camera_zoom+camera_shift_y, -10000, 10000 ) //( left, right, top, bottom, near, far )
-    camera.position.set( 0, -60, 5 );
+    camera.position.set( 0, -60, 15 );
     camera.up.set( 0, 0, 1 ); //orientation of the camera. if camera. up. set(0,0,1) , it would mean that z-axis is going vertically up in the screen and x and y axes align accordingly.
     camera.lookAt(10,10,10);
     scene.add(camera)
@@ -763,6 +761,8 @@ function creatingScene() {
     
     controls = new OrbitControls( camera, renderer.domElement );
     controls.target.set(0, 0, 3.5)
+    controls.update();
+
     raycaster = new THREE.Raycaster(); // Raycasting is used for mouse picking (working out what objects in the 3d space the mouse is over) amongst other things.
     document.addEventListener('mousedown', onMouseDown, false);
     document.addEventListener('mouseup', onMouseUp, false);
@@ -1000,12 +1000,10 @@ function creatingScene() {
 function animate() {
     requestAnimationFrame( animate );
     bool_render = true;
-    controls.update();
     // render();
 }
 
 function render() {
-
 
     if (!bool_render ) { return;}
     bool_render = false;
@@ -2396,7 +2394,7 @@ else {
 // --------------------------------
 
 function onWindowResize() { // Resize browser window
-    const w = window.innerWidth - 430; // minus width of css parts
+    const w = window.innerWidth - 440; // minus width of css parts
     const h = window.innerHeight - 51; // minus height of css parts
     camera.aspect = w / h;
     // camera.aspect = container.clientWidth / container.clientHeight;
@@ -2483,7 +2481,7 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
         if (bool_delWall && key in dictWall) {
             deleteWall(dictWall[key]); 
         } else if (!bool_delWall && dictWall[key]==undefined) {
-            addWall(key);
+            addWall(key, pos_meshWall, angle_meshWall);
             if (key in dictWindow01) {
                 deleteWindow01(dictWindow01[key]);
             } else if (key in dictWindow02) {
@@ -2507,9 +2505,12 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (pos_grpWindow01 != null) {
         var key = keyGen(pos_grpWindow01);
-        if (bool_delWindow01 && key in dictWindow01) {
-            deleteWindow01(dictWindow01[key]);  
-        } else if (!bool_delWindow01 && dictWindow01[key]==undefined) {
+        if (bool_delWindow01) { // if shift is pressed and existing key is True, delete mesh and its key
+            if (key in dictWindow01) {
+                addWall(key, dictWindow01[key].position, dictWindow01[key].rotation.z); 
+                deleteWindow01(dictWindow01[key]);
+            }
+        } else if (!bool_delWindow01 && dictWindow01[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new mesh to the scene and add its key to dict
             addWindow01(key);
             if (key in dictWall) {
                 deleteWall(dictWall[key]);
@@ -3212,7 +3213,7 @@ function genWallEnclosure(pos_meshFloor) {
     var wall_key = keyGen(pos_meshWall);
 
     if ( dictWall [wall_key] == undefined ) {
-        addWall(wall_key);
+        addWall(wall_key, pos_meshWall, angle_meshWall);
     } else {
         deleteWall(dictWall [ wall_key ]);
     }
@@ -3224,7 +3225,7 @@ function genWallEnclosure(pos_meshFloor) {
     var wall_key = keyGen(pos_meshWall);
 
     if ( dictWall [wall_key] == undefined ) {
-        addWall(wall_key);
+        addWall(wall_key, pos_meshWall, angle_meshWall);
     } else {
         deleteWall(dictWall [ wall_key ]);
     }
@@ -3236,7 +3237,7 @@ function genWallEnclosure(pos_meshFloor) {
     var wall_key = keyGen(pos_meshWall);
 
     if ( dictWall [wall_key] == undefined ) {
-        addWall(wall_key);
+        addWall(wall_key, pos_meshWall, angle_meshWall);
     } else {
         deleteWall(dictWall [ wall_key ]);
     }
@@ -3248,7 +3249,7 @@ function genWallEnclosure(pos_meshFloor) {
     var wall_key = keyGen(pos_meshWall);
 
     if ( dictWall [wall_key] == undefined ) {
-        addWall(wall_key);
+        addWall(wall_key, pos_meshWall, angle_meshWall);
     } else {
         deleteWall(dictWall [ wall_key ]);
     }
@@ -3306,11 +3307,11 @@ function deleteCeiling(meshCeiling) {
 //    	　_ * WALL * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-function addWall(key) {
+function addWall(key, pos, angle) {
     
     // ADD MESH
     var meshWall = new THREE.Mesh( geomWall, obs );
-    meshWall.position.set(pos_meshWall.x, pos_meshWall.y, pos_meshWall.z);
+    meshWall.position.set(pos.x, pos.y, pos.z);
     scene.add( meshWall );
 
     // ADD MESH PROPERTIES
@@ -3319,7 +3320,7 @@ function addWall(key) {
 
     // UPDATE GLOBAL VARIABLES, HTML
     dictWall[key] = meshWall;
-    meshWall.rotation.z = angle_meshWall;
+    meshWall.rotation.z = angle;
     cnt_meshWall += 1; 
     document.getElementById('buttonWall').innerHTML = "Wall: " + cnt_meshWall;
     meshWall.matrixAutoUpdate = false;
