@@ -589,7 +589,7 @@ var scale_grpStairs01 = new THREE.Vector3(-1, 1, 1)
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 /*
 loader.load( // Load a glTF resource
-    'models_220213/test4_directionallight.gltf', // resource URL
+    'models_usabilitytesting/4_nienzhen_ceilingless.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         scene.add( gltf.scene );
     },
@@ -740,6 +740,7 @@ function creatingScene() {
     camera = new THREE.PerspectiveCamera( 25, container.clientWidth / container.clientHeight, 1, 10000  ); //FOV, aspect ratio, near, far of clipping plane
         // camera = new THREE.OrthographicCamera( -window.innerWidth/camera_zoom+camera_shift_x, window.innerWidth/camera_zoom+camera_shift_x,  window.innerHeight/camera_zoom+camera_shift_y,  -window.innerHeight/camera_zoom+camera_shift_y, -10000, 10000 ) //( left, right, top, bottom, near, far )
     camera.position.set( 0, -60, 15 );
+    // camera.position.set( -13, -40, 48 );
     camera.up.set( 0, 0, 1 ); //orientation of the camera. if camera. up. set(0,0,1) , it would mean that z-axis is going vertically up in the screen and x and y axes align accordingly.
     camera.lookAt(10,10,10);
     scene.add(camera)
