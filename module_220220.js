@@ -2428,7 +2428,7 @@ else {
 // --------------------------------
 
 function onWindowResize() { // Resize browser window
-    const w = window.innerWidth - 440; // minus width of css parts
+    const w = window.innerWidth - 442; // minus width of css parts
     const h = window.innerHeight - 51; // minus height of css parts
     camera.aspect = w / h;
     // camera.aspect = container.clientWidth / container.clientHeight;

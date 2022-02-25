@@ -57,7 +57,7 @@ p {
     /* POSITION */
     text-align: left;
     margin: 0px 0px 5px 0px; 
-    line-height: 1;
+    line-height: 1.2;
 }
 
 /* //////////////////// ----------BODY------------------------------------------------------ ///////////////////  */
@@ -66,11 +66,12 @@ body {
 
     /* GRID */
     display: grid;
-    grid-template-rows: 50px calc(100vh-50px);
+    grid-template-columns: auto;
+    grid-template-rows: 50px calc(100vh - 50px);
     grid-gap: 0;
 
     /* MASSING */
-    background-color: yellow;
+    background-color: white;
     padding: 0;
     margin: 0;
 }
@@ -149,8 +150,8 @@ body {
     grid-row: 2;
     
     display: grid;
-    grid-template-columns: 230px calc(100% - 440px) 210px;
-    grid-template-rows: calc(100vh - 50px);
+    grid-template-columns: 230px calc(100% - 442px) 210px;
+    grid-template-rows: calc(100vh - 51px);
     grid-gap: 0px;
 
     /* MASSING */
@@ -358,9 +359,6 @@ body {
     /* MASSING */
     background-color: bisque;
     position: relative;
-
-    /* MISC */
-    overflow: auto;
 }
 
 /* // ====================================================
