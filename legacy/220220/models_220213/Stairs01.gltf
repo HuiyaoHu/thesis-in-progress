@@ -1,0 +1,547 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "THREE.GLTFExporter"
+  },
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        2
+      ]
+    }
+  ],
+  "scene": 0,
+  "nodes": [
+    {
+      "name": "SIP",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "SIP",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "4da74a4c-426b-4034-acec-eed46f80fe79",
+          "url": "",
+          "layerIndex": 0,
+          "materialIndex": 0,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isSolid": true,
+            "isManifold": true,
+            "isSurface": false,
+            "objectType": {
+              "name": "ObjectType_Brep",
+              "value": 16
+            },
+            "isDeformable": false,
+            "hasBrepForm": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Brep"
+      },
+      "mesh": 0
+    },
+    {
+      "name": "Staircase",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "Staircase",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "7e5e5366-adf4-4d70-9eb6-3d62e6e0534e",
+          "url": "",
+          "layerIndex": 0,
+          "materialIndex": 1,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isClosed": true,
+            "hasCachedTextureCoordinates": false,
+            "hasPrincipalCurvatures": false,
+            "partitionCount": 0,
+            "objectType": {
+              "name": "ObjectType_Mesh",
+              "value": 32
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Mesh"
+      },
+      "mesh": 1
+    },
+    {
+      "name": "Stairs01",
+      "extras": {
+        "layers": [
+          {
+            "name": "Stairs01",
+            "fullPath": "Stairs01",
+            "id": "cbbf6803-d9ac-43b7-ba80-c7c24a25c76b",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": -1,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          }
+        ],
+        "groups": [],
+        "settings": {
+          "modelUrl": "",
+          "modelBasePoint": [
+            0,
+            0,
+            0
+          ],
+          "earthAnchorPoint": {},
+          "modelAbsoluteTolerance": 0.001,
+          "modelAngleToleranceRadians": 0.017453292519943295,
+          "modelAngleToleranceDegrees": 1,
+          "modelRelativeTolerance": 0.01,
+          "pageAbsoluteTolerance": 0.001,
+          "pageAngleToleranceRadians": 0.017453292519943295,
+          "pageAngleToleranceDegrees": 1,
+          "pageRelativeTolerance": 0.01,
+          "modelUnitSystem": {
+            "name": "UnitSystem_Meters",
+            "value": 4
+          },
+          "pageUnitSystem": {
+            "name": "UnitSystem_Millimeters",
+            "value": 2
+          }
+        },
+        "objectType": "File3dm",
+        "materials": [
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "3F91F5CA-42A1-49CD-BECA-5718F619FD2E",
+            "type": "MeshStandardMaterial",
+            "name": "obs",
+            "color": 14996405,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "CC14DF48-A469-45D4-A2EE-F2ADC0CF9499",
+            "type": "MeshStandardMaterial",
+            "name": "FrontColor",
+            "color": 16777215,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          }
+        ],
+        "warnings": []
+      },
+      "children": [
+        0,
+        1
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 234
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 240,
+      "byteLength": 557
+    }
+  ],
+  "buffers": [
+    {
+      "name": "Stairs01",
+      "byteLength": 800,
+      "uri": "data:application/octet-stream;base64,RFJBQ08CAgEBAAAACAwCCwAAA1+rCgEBEFUE11P2RlUE11P2RgP/AAAAAQABAQABAAkDAAACAQEJAwABAwEDCQIAAgIBAQEBA7EBrSqtClUF//+zVQUHqDARVKOwgAAAAAD/BwAABQDgv+GYmb0JAOC/BQBgQAsGAwEBAQEBQAEA/wAAAH8AAAD/AqFBCAUBAQALA1UVrQKtCgdVBQOtAgNVFQnfjc+NAwsA2oPMAP77D2r/DwMQAsP/RGX8D8P/RJr8D8P/RDLgv/8ADAAAABUDceSBAAAAAP8DAAAAAAAAAAAAAACgfz8KAAAAAAAARFJBQ08CAgEBAAAAUHgCbgAAHW+rirdVxduq4m1V8baqeFtVvK0q3lYVb6uKt1UFAQKgQFUX11M9Th1wHWeFeLCSgqVg0YTqZMP9S4JyGTJ2zRjy2yRBmrx4xi7Ky2EsvmMDCn6OQYAD/wAAAAEAAQEAAQAJAwAAAgEBCQMAAQMBAwkCAAICAQEBAQT/D+Ud470DA5kB//+z3QH//69pApkBiQR5A//////////////rROcBCJkF/////////0dEA0T//7NE////n0RTcItvHAdAav45glLrAgTLjOdtdJ5GvFNwJkFSA5eMurOQkpbi0Iy6s5DqCtSTQ0QY/h1ziIjbHSMpHotsgrzBopHtfW91UIsUSo0x2Y5Vsrn+z4sAAAAA/wcAAPv/37+OmYm/zcxMvwAAYEALBgMBAQEBAUABAP8AAAB/AAAA/wK0WQgFAQEBBIAIRRp8aQ4DfAv0A6SfNQPNBP////+/mQEDmQGZAcOZAf////eZAf//////k80EigFhaXln8O7cBYxaM/ciposc8Cf1TBt+/ODzETJILqn4Y2bJBxWHeD9xns9gqIwJ+SkOTOcE8BOsN1DOJxhgWVtXTzLqQXPZ2t/Z6JWyenbWKf/zACZaVtf81zoPZxQSMkguqfhjZskHFYd4P3GeGggtdQzj3MN7jX2GlZyKpM6Pm9ab/GyOT3EUxo54AAAAAgPu/0MAAAAA/wMAAPZ6HcLw9/u/9nqdQgoAAAA="
+    }
+  ],
+  "accessors": [
+    {
+      "componentType": 5123,
+      "count": 36,
+      "max": [
+        23
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "componentType": 5126,
+      "count": 24,
+      "max": [
+        1.7517104158764885,
+        0.07717534025078235,
+        1.7517099390393303
+      ],
+      "min": [
+        -1.7517104158764882,
+        -0.0767084444528623,
+        -1.7517108927136464
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 24,
+      "max": [
+        1.007843137254902,
+        1.007843137254902,
+        1.007843137254902
+      ],
+      "min": [
+        -1.007843137254902,
+        -1.007843137254902,
+        -1.007843137254902
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 24,
+      "max": [
+        0.5993163107893451,
+        0.9995112414467253
+      ],
+      "min": [
+        -0.0009760851967253177,
+        -0.0009760851967253177
+      ],
+      "type": "VEC2"
+    },
+    {
+      "componentType": 5123,
+      "count": 360,
+      "max": [
+        239
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "componentType": 5126,
+      "count": 240,
+      "max": [
+        1.7517104152941272,
+        -0.07304453803203614,
+        1.5014166954557195
+      ],
+      "min": [
+        -1.7517092232012317,
+        -1.0767084364199206,
+        -0.8017098311686085
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 240,
+      "max": [
+        1.007843137254902,
+        1.007843137254902,
+        1.007843137254902
+      ],
+      "min": [
+        -1.007843137254902,
+        -1.007843137254902,
+        -1.007843137254902
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 240,
+      "max": [
+        39.44704889202397,
+        13.887285456279855
+      ],
+      "min": [
+        -39.44704889202398,
+        -2.045473803522999
+      ],
+      "type": "VEC2"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.8941176470588236,
+          0.8274509803921568,
+          0.7098039215686275,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "obs",
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0,
+        "roughnessFactor": 1,
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "doubleSided": true,
+      "name": "FrontColor",
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 1,
+            "NORMAL": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 0,
+          "material": 0,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 0,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 5,
+            "NORMAL": 6,
+            "TEXCOORD_0": 7
+          },
+          "indices": 4,
+          "material": 1,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 1,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "extensionsRequired": [
+    "KHR_draco_mesh_compression"
+  ],
+  "extensionsUsed": [
+    "KHR_draco_mesh_compression"
+  ]
+}
