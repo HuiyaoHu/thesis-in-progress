@@ -1,0 +1,526 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "THREE.GLTFExporter"
+  },
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        2
+      ]
+    }
+  ],
+  "scene": 0,
+  "nodes": [
+    {
+      "name": "SIP",
+      "extras": {
+        "name": "SIP",
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "SIP",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "4da74a4c-426b-4034-acec-eed46f80fe79",
+          "url": "",
+          "layerIndex": 0,
+          "materialIndex": 0,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isSolid": true,
+            "isManifold": true,
+            "isSurface": false,
+            "objectType": {
+              "name": "ObjectType_Brep",
+              "value": 16
+            },
+            "isDeformable": false,
+            "hasBrepForm": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Brep"
+      },
+      "mesh": 0
+    },
+    {
+      "name": "Railing",
+      "extras": {
+        "name": "Railing",
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "Railing",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "c4706842-6284-4d90-9bed-6f6e1b7b6262",
+          "url": "",
+          "layerIndex": 0,
+          "materialIndex": -1,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromLayer",
+            "value": 0
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isSolid": true,
+            "isManifold": true,
+            "isSurface": false,
+            "objectType": {
+              "name": "ObjectType_Brep",
+              "value": 16
+            },
+            "isDeformable": false,
+            "hasBrepForm": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Brep"
+      },
+      "mesh": 1
+    },
+    {
+      "name": "Railing01",
+      "extras": {
+        "name": "Railing",
+        "layers": [
+          {
+            "name": "Railing",
+            "fullPath": "Railing",
+            "id": "353200a5-67ba-4fce-a16c-5d04105a8864",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": -1,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          }
+        ],
+        "groups": [],
+        "settings": {
+          "modelUrl": "",
+          "modelBasePoint": [
+            0,
+            0,
+            0
+          ],
+          "earthAnchorPoint": {},
+          "modelAbsoluteTolerance": 0.001,
+          "modelAngleToleranceRadians": 0.017453292519943295,
+          "modelAngleToleranceDegrees": 1,
+          "modelRelativeTolerance": 0.01,
+          "pageAbsoluteTolerance": 0.001,
+          "pageAngleToleranceRadians": 0.017453292519943295,
+          "pageAngleToleranceDegrees": 1,
+          "pageRelativeTolerance": 0.01,
+          "modelUnitSystem": {
+            "name": "UnitSystem_Meters",
+            "value": 4
+          },
+          "pageUnitSystem": {
+            "name": "UnitSystem_Millimeters",
+            "value": 2
+          }
+        },
+        "objectType": "File3dm",
+        "materials": [
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "9F147A0C-0EA4-4F10-B00A-4D24F57C244F",
+            "type": "MeshStandardMaterial",
+            "name": "obs",
+            "color": 14996405,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          }
+        ],
+        "warnings": [
+          {
+            "message": "THREE.3DMLoader: ObjectType_Extrusion has no associated mesh geometry.",
+            "type": "missing mesh",
+            "guid": "713fb2c1-3260-465f-8689-23041df55f31"
+          }
+        ]
+      },
+      "children": [
+        0,
+        1
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 245
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 248,
+      "byteLength": 4228
+    }
+  ],
+  "buffers": [
+    {
+      "name": "Railing01",
+      "byteLength": 4480,
+      "uri": "data:application/octet-stream;base64,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"
+    }
+  ],
+  "accessors": [
+    {
+      "componentType": 5125,
+      "count": 36,
+      "max": [
+        23
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "componentType": 5126,
+      "count": 24,
+      "max": [
+        1.7517104158764885,
+        0.07717533280020175,
+        -1.048975061776292
+      ],
+      "min": [
+        -1.7517104158764882,
+        -0.0767084519034429,
+        -1.751711011922936
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 24,
+      "max": [
+        1.007843137254902,
+        1.007843137254902,
+        1.007843137254902
+      ],
+      "min": [
+        -1.007843137254902,
+        -1.007843137254902,
+        -1.007843137254902
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 24,
+      "max": [
+        0.9995112414467253,
+        0.9204483405119745
+      ],
+      "min": [
+        -0.0009760851967253177,
+        -0.0009760851967253177
+      ],
+      "type": "VEC2"
+    },
+    {
+      "componentType": 5125,
+      "count": 3732,
+      "max": [
+        1391
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "componentType": 5126,
+      "count": 1370,
+      "max": [
+        1.7517104158764885,
+        0.021035676368006746,
+        0.172520034069775
+      ],
+      "min": [
+        -1.7517104158764882,
+        -0.02170981938300566,
+        -1.0517109642392202
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 1370,
+      "max": [
+        1.007843137254902,
+        1.007843137254902,
+        1.007843137254902
+      ],
+      "min": [
+        -1.007843137254902,
+        -1.007843137254902,
+        -1.007843137254902
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 1370,
+      "max": [
+        0.46754480923142716,
+        0.9995112414467253
+      ],
+      "min": [
+        -0.0009760851967253177,
+        -0.0009760851967253177
+      ],
+      "type": "VEC2"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.8941176470588236,
+          0.8274509803921568,
+          0.7098039215686275,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "obs",
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0.8,
+        "roughnessFactor": 1,
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "doubleSided": true,
+      "name": "default",
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 1,
+            "NORMAL": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 0,
+          "material": 0,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 0,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 5,
+            "NORMAL": 6,
+            "TEXCOORD_0": 7
+          },
+          "indices": 4,
+          "material": 1,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 1,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "extensionsRequired": [
+    "KHR_draco_mesh_compression"
+  ],
+  "extensionsUsed": [
+    "KHR_draco_mesh_compression"
+  ]
+}
