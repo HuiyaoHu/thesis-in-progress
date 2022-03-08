@@ -1465,7 +1465,7 @@ else {
                     const meshInt = meshInt0.object
                     const grpAttrLine = getAttriLine_atBdyWall( meshInt );
                     if (grpAttrLine != undefined) { // if attribute line exisit
-                        dispHelperAndReplaceHover_wallModRule_adjCheck ( replaceHoverDisp_Window01, grpAttrLine, meshInt )
+                        replaceHoverDisp_baseOnAttr ( replaceHoverDisp_Window01, grpAttrLine, meshInt, 'neighbour', 'extent' )
                     } else { // if meshInt is not on an attribute line
                         replaceHoverDisp_Window01( meshInt );
                     }
@@ -1578,7 +1578,7 @@ else {
                     const meshInt = meshInt0.object
                     const grpAttrLine = getAttriLine_atBdyWall( meshInt );
                     if (grpAttrLine != undefined) { // if attribute line exisit
-                        dispHelperAndReplaceHover_wallModRule_adjCheck ( replaceHoverDisp_Window02, grpAttrLine, meshInt )
+                        replaceHoverDisp_baseOnAttr ( replaceHoverDisp_Window02, grpAttrLine, meshInt, 'neighbour', 'extent')
                     } else { // if meshInt is not on an attribute line
                         replaceHoverDisp_Window02( meshInt );
                     }
@@ -1670,6 +1670,20 @@ else {
         reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); // if do not intersect with anything, show nothing
         
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
+            // const meshInt = meshInt0.object;
+            // const angle_meshInt = meshInt.object.rotation.z;
+            // const pos_adjFloor_front = 
+            // // console.log(angle_meshInt)
+            // if ( angle_meshInt == 0 || angle_meshInt == Math.PI || angle_meshInt == - Math.PI ) { // meshInt facing left or right
+            //     console.log("facing front or back");
+
+            // } else { // meshInt facing front or back
+            //     console.log("facing left or right");
+            // }
+
+            // function checkPresence_adjacentFloor () {
+                
+            // }
 
             if (meshInt0.object.parent.name == 'Door01') { // if the first mesh that the cursor intersects has the name ' '
                 var grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
@@ -1680,11 +1694,22 @@ else {
                     delHoverDisp_Door01( grpInt );
                 }
             } 
+            
+            //OTHER PREREQUISITE
+
 
 
             else if (meshInt0.object.name == 'BoundaryWall' ) { // if the first mesh that the cursor intersects has the name ' '
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door01, meshInt0.object );
+
+                    const meshInt = meshInt0.object
+                    const grpAttrLine = getAttriLine_atBdyWall( meshInt );
+                    if (grpAttrLine != undefined) { // if attribute line exisit
+                        replaceHoverDisp_baseOnAttr ( replaceHoverDisp_Door01, grpAttrLine, meshInt, 'neighbour', 'extent')
+                    } else { // if meshInt is not on an attribute line
+                        replaceHoverDisp_Door01( meshInt );
+                    }
+                    
                 }
             }
 
@@ -1697,7 +1722,7 @@ else {
             else if (meshInt0.object.parent.name == 'Window01') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door01, grpInt );
+                    replaceHoverDisp_Door01( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window01( grpInt );
@@ -1707,7 +1732,7 @@ else {
             else if (meshInt0.object.parent.name == 'Window02') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door01, grpInt );
+                    replaceHoverDisp_Door01( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window02( grpInt );
@@ -1737,7 +1762,7 @@ else {
             else if (meshInt0.object.parent.name == 'Railing01') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door01, grpInt );
+                    replaceHoverDisp_Door01( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Railing01( grpInt );
@@ -1747,7 +1772,7 @@ else {
             else if (meshInt0.object.parent.name == 'Stairs01') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door01, grpInt );
+                    replaceHoverDisp_Door01( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Stairs01( grpInt );
@@ -1788,7 +1813,15 @@ else {
             
             else if (meshInt0.object.name == 'BoundaryWall' ) { // if the first mesh that the cursor intersects has the name ' '
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door02, meshInt0.object );
+
+                    const meshInt = meshInt0.object
+                    const grpAttrLine = getAttriLine_atBdyWall( meshInt );
+                    if (grpAttrLine != undefined) { // if attribute line exisit
+                        replaceHoverDisp_baseOnAttr ( replaceHoverDisp_Door02, grpAttrLine, meshInt, 'neighbour', 'extent')
+                    } else { // if meshInt is not on an attribute line
+                        replaceHoverDisp_Door02( meshInt );
+                    }
+                    
                 }
             }
 
@@ -1801,7 +1834,7 @@ else {
             else if (meshInt0.object.parent.name == 'Window01') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door02, grpInt );
+                    replaceHoverDisp_Door02( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window01( grpInt );
@@ -1811,7 +1844,7 @@ else {
             else if (meshInt0.object.parent.name == 'Window02') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door02, grpInt );
+                    replaceHoverDisp_Door02( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window02( grpInt );
@@ -1841,7 +1874,7 @@ else {
             else if (meshInt0.object.parent.name == 'Railing01') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door02, grpInt );
+                    replaceHoverDisp_Door02( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Railing01( grpInt );
@@ -1851,7 +1884,7 @@ else {
             else if (meshInt0.object.parent.name == 'Stairs01') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door02, grpInt );
+                    replaceHoverDisp_Door02( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Stairs01( grpInt );
@@ -1888,7 +1921,15 @@ else {
             
             else if (meshInt0.object.name == 'BoundaryWall' ) { // if the first mesh that the cursor intersects has the name ' '
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door03, meshInt0.object );
+
+                    const meshInt = meshInt0.object
+                    const grpAttrLine = getAttriLine_atBdyWall( meshInt );
+                    if (grpAttrLine != undefined) { // if attribute line exisit
+                        replaceHoverDisp_baseOnAttr ( replaceHoverDisp_Door03, grpAttrLine, meshInt, 'neighbour', 'extent')
+                    } else { // if meshInt is not on an attribute line
+                        replaceHoverDisp_Door03( meshInt );
+                    }
+                    
                 }
             }
 
@@ -1901,7 +1942,7 @@ else {
             else if (meshInt0.object.parent.name == 'Window01') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door03, grpInt );
+                    replaceHoverDisp_Door03( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window01( grpInt );
@@ -1911,7 +1952,7 @@ else {
             else if (meshInt0.object.parent.name == 'Window02') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door03, grpInt );
+                    replaceHoverDisp_Door03( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window02( grpInt );
@@ -1941,7 +1982,7 @@ else {
             else if (meshInt0.object.parent.name == 'Railing01') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door03, grpInt );
+                    replaceHoverDisp_Door03( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Railing01( grpInt );
@@ -1951,7 +1992,7 @@ else {
             else if (meshInt0.object.parent.name == 'Stairs01') { 
                 var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door03, grpInt );
+                    replaceHoverDisp_Door03( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Stairs01( grpInt );
@@ -1998,7 +2039,7 @@ else {
                     const meshInt = meshInt0.object
                     const grpAttrLine = getAttriLine_atBdyWall( meshInt );
                     if (grpAttrLine != undefined) { // if attribute line exisit
-                        dispHelperAndReplaceHover_wallModRule_adjCheck ( replaceHoverDisp_Railing01, grpAttrLine, meshInt)
+                        replaceHoverDisp_baseOnAttr ( replaceHoverDisp_Railing01, grpAttrLine, meshInt, 'neighbour', 'extent')
                     } else { // if meshInt is not on an attribute line
                         replaceHoverDisp_Railing01( meshInt );
                     }
@@ -3195,42 +3236,20 @@ function ifMatchKey_deleteStairs01(key) {
 // { Attribute Line } 
 // ====================================================
 
-// --------------------------------
-//    Execution Based on Attribute Line 
-// --------------------------------
+function replaceHoverDisp_baseOnAttr (func_replaceHoverDisp, grpAttrLine, meshtoReplace, ...args) {
 
-function dispHelperAndReplaceHover_doorModRule (func_replaceHoverDisp, grpInt) {
-    const grpAttrLine = getAttriLine_atBdyWall( grpInt )
-    if (grpAttrLine != undefined) { // if boundary-positioned attribute line exist
-        dispHelperAndReplaceHover_doorModRule_adjCheck ( func_replaceHoverDisp, grpAttrLine, grpInt )
-    } else { // if boundary-positioned attribute line do not exist
-        func_replaceHoverDisp( grpInt );
-    }
-}
-
-function dispHelperAndReplaceHover_wallModRule_adjCheck (func_replaceHoverDisp, grpAttrLine, meshtoReplace) {
-
-    // var list_args = Array.from(arguments);
-    // const args_adjacency = list_args.slice(3) // remove the first 3 parameters
+    var list_args = Array.from(arguments);
+    const args_adjacency = list_args.slice(3) // remove the first 3 parameters
 
     if (grpAttrLine.adjacency == 'neighbour') { // check attribute
-        showHelper("Only wall modules can be placed against the boundaries along neighouring volumes.")
+        showHelper("Only wall modules can be placed against boundaries with neighouring volumes.")
     } else if (grpAttrLine.adjacency == 'extent') {
-        showHelper("Only wall modules can be placed against the boundaries along neighouring volumes.")
+        showHelper("Only wall modules can be placed against boundaries with neighouring volumes.")
     } else {
         func_replaceHoverDisp( meshtoReplace );
     }
 }
 
-
-function dispHelperAndReplaceHover_doorModRule_adjCheck (func_replaceHoverDisp, grpAttrLine, meshtoReplace) {
-
-    if (grpAttrLine.adjacency !== 'corridor') { // check attribute
-        showHelper("Door modules on the boundary walls can only be placed along the corridor.")
-    } else {
-        func_replaceHoverDisp( meshtoReplace );
-    }
-}
 
 // --------------------------------
 //    Match Key to Boundary Wall 
@@ -3337,12 +3356,10 @@ function addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrS
     scene.add(AttrLineUnit)
     
     // Add Text
-    const pos_midpoint = starting_pt.clone().add(ending_pt).divideScalar(2);
-    const pos_text = textPosFromPos ( pos_midpoint );
-
+    const pos_midpoint = starting_pt.clone().add(ending_pt).divideScalar(2)
         // const midpointdot = dispDotsfromCoords( matAttrDot_Large, [pos_midpoint] );
     const textDisp_attr = String( attrSet );
-    addAttrText (textDisp_attr, pos_text); // toggle for display
+    addAttrText (textDisp_attr, pos_midpoint); // toggle for display
 
     // UPDATE GLOBAL VARIABLES
     const key = keyGen( pos_midpoint );
@@ -3358,22 +3375,13 @@ function addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrS
     return AttrLineUnit, pos_midpoint
 }
 
-function textPosFromPos ( pos ) {
-    const pos_text = new THREE.Vector3 ( (pos.x - 0.9), (pos.y -0.1 ), (pos.z + 0.8))
-    return pos_text
-}
 
 
-function deleteAttrLineUnit (pos_AttrLine) {
-    const textpos = textPosFromPos (pos_AttrLine)
-    const key_text = keyGen( textpos )
-    scene.remove( dictTextMesh[key_text] );
-    delete dictTextMesh[ key_text ];
-
-    const key_AttrLine = keyGen( pos_AttrLine )
-    scene.remove( dictAttrLine[key_AttrLine] );
-    delete dictAttrLine[ key_AttrLine ];
-
+function deleteAttrLineUnit (key) {
+    scene.remove( dictAttrLine[key] );
+    delete dictAttrLine[ key ];
+    scene.remove( dictTextMesh[key] );
+    delete dictTextMesh[ key ];
 }
 
 function addAttrText (textDisp_attr, pos_text) {
@@ -3381,7 +3389,7 @@ function addAttrText (textDisp_attr, pos_text) {
     function(font) {
         var textgeometry = new THREE.TextGeometry(textDisp_attr, {
         font: font,
-        size: 0.3,
+        size: 0.2,
         height: 0,
         });
         const textMesh = new THREE.Mesh(textgeometry, matAttrText);
@@ -3391,7 +3399,6 @@ function addAttrText (textDisp_attr, pos_text) {
         // UPDATE GLOBAL VARIABLES
         const key_textMesh = keyGen(pos_text);
         dictTextMesh[key_textMesh] = textMesh;
-
     });
 }
 
@@ -3505,7 +3512,7 @@ function addAttrLine_purchasedVolBdy (list_CoordOfCorner) {
             const grpAttrLine = dictAttrLine[key];
             const adjacency = grpAttrLine.adjacency;
             if (adjacency == 'extent')  {
-                deleteAttrLineUnit (pos_midpoint);
+                deleteAttrLineUnit (key);
                 const attrSet = ['', 'interior'];
                 addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
             } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
@@ -3526,9 +3533,9 @@ function deleteAttrLine_purchasedVolBdy (list_CoordOfCorner) {
         const grpAttrLine = dictAttrLine[key];
         const adjacency = grpAttrLine.adjacency;
         if (adjacency == 'extent' )  {
-            deleteAttrLineUnit (pos_midpoint);
+            deleteAttrLineUnit (key);
         } else if (adjacency == 'interior') {
-            deleteAttrLineUnit (pos_midpoint);
+            deleteAttrLineUnit (key);
             const attrSet = ['', 'extent'];
             addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
         }
@@ -3823,11 +3830,11 @@ function addBdyWall(key, pos, angle) {
     var meshBdyWall = new THREE.Mesh( geomBdyWall, materials );
     meshBdyWall.position.set(pos.x, pos.y, pos.z);
     scene.add( meshBdyWall );
-
+    
 
     // ADD MESH PROPERTIES
     meshBdyWall.name = "BoundaryWall"
-    meshBdyWall.key = key;
+    meshBdyWall.BdyWall_key = key;
 
     // UPDATE GLOBAL VARIABLES, HTML
     dictBdyWall[key] = meshBdyWall;
@@ -3837,89 +3844,59 @@ function addBdyWall(key, pos, angle) {
     meshBdyWall.matrixAutoUpdate = false;
     meshBdyWall.updateMatrix();
     
-        // const attrSet = ['', 'interior'];
-    addAttrLine_BdyWall (pos, angle, meshBdyWall);
-     
+    // // get BdyWall corner points
+    // const corner_ver_shift_value = new THREE.Vector3(0, 0, BdyWall_height_half);
+    // var corner_hor_shift_value = 0;
+    // if (angle_meshBdyWall == 0) {
+    // 	var corner_shift_value = new THREE.Vector3(BdyWall_width_half, 0, 0);
+    // } else {
+    // 	var corner_shift_value = new THREE.Vector3(0, BdyWall_width_half*(-1), 0);
+    // }
+    // var BdyWall_left_corner = meshBdyWall.position.clone().sub(corner_shift_value).sub(corner_ver_shift_value) ;
+    // var BdyWall_right_corner = meshBdyWall.position.clone().add(corner_shift_value).sub(corner_ver_shift_value);
+    // BdyWall_pos_list.push(BdyWall_left_corner, BdyWall_right_corner);
+
+    // // Visualise Points
+    // var geom = new THREE.BufferGeometry().setFromPoints([BdyWall_left_corner, BdyWall_right_corner]);
+    // var matPoints = new THREE.PointsMaterial({size: 10, color: "pink"});
+    // var points = new THREE.Points(geom, matPoints);
+    // scene.add(points);
+
+    // console.log('____', BdyWall_pos_list)
 };
-
-function addAttrLine_BdyWall (pos, angle, meshBdyWall) {
-    const pos_AttrLine = getPos_AttrLine_atBdyWall (pos, angle);
-    const grpAttrLine = getAttriLine_atBdyWall( meshBdyWall ); 
-    const adjacency = grpAttrLine.adjacency;
-    if (adjacency == 'interior')  {
-        deleteAttrLineUnit (pos_AttrLine);
-
-        const dir = checkDirofMesh ( angle );
-        var starting_pt = null;
-        var ending_pt = null;
-        if (dir == "front/back") {
-            starting_pt = new THREE.Vector3 ( (pos_AttrLine.x - volume_width_half) , pos_AttrLine.y, pos_AttrLine.z );
-            ending_pt = new THREE.Vector3 ( (pos_AttrLine.x + volume_width_half) , pos_AttrLine.y, pos_AttrLine.z );
-        } else {
-            starting_pt = new THREE.Vector3 ( pos_AttrLine.x, (pos_AttrLine.y - volume_width_half), pos_AttrLine.z );
-            ending_pt = new THREE.Vector3 ( pos_AttrLine.x , (pos_AttrLine.y + volume_width_half), pos_AttrLine.z );
-        }
-
-        const attrSet = ['', 'boundary']
-        addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrSet)
-
-    } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
-}
-
-function deleteAttrLine_BdyWall (meshBdyWall) {
-    const angle = meshBdyWall.rotation.z
-    const pos_AttrLine = getPos_AttrLine_atBdyWall (meshBdyWall.position, angle);
-
-    const grpAttrLine = getAttriLine_atBdyWall( meshBdyWall ); 
-    const adjacency = grpAttrLine.adjacency;
-    if (adjacency == 'boundary' )  {
-        deleteAttrLineUnit (pos_AttrLine);
-        
-        const dir = checkDirofMesh ( angle );
-        var starting_pt = null;
-        var ending_pt = null;
-        if (dir == "front/back") {
-            starting_pt = new THREE.Vector3 ( (pos_AttrLine.x - volume_width_half) , pos_AttrLine.y, pos_AttrLine.z );
-            ending_pt = new THREE.Vector3 ( (pos_AttrLine.x + volume_width_half) , pos_AttrLine.y, pos_AttrLine.z );
-        } else {
-            starting_pt = new THREE.Vector3 ( pos_AttrLine.x, (pos_AttrLine.y - volume_width_half), pos_AttrLine.z );
-            ending_pt = new THREE.Vector3 ( pos_AttrLine.x , (pos_AttrLine.y + volume_width_half), pos_AttrLine.z );
-        }
-        
-        const attrSet = ['', 'interior']
-        addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrSet)
-    } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
-}
-
-
-
 
 // Delete a BdyWall
 function deleteBdyWall(meshBdyWall) {
-    deleteAttrLine_BdyWall (meshBdyWall);
-
     scene.remove( meshBdyWall );
-    delete dictBdyWall[ meshBdyWall.key ];
+    delete dictBdyWall[ meshBdyWall.BdyWall_key ];
     cnt_meshBdyWall -= 1; 
     document.getElementById('buttonBoundaryWall').innerHTML = "Boundary Wall (ignore): " + cnt_meshBdyWall;
-
 };
 
 
-function checkDirofMesh ( angle ) {
-    if ( angle == 0 || angle == Math.PI || angle == - Math.PI ) { // meshInt facing left or right
-        return("front/back");
-    } else { // meshInt facing front or back
-        return("left/right");
+function addAttrLine_BdyWall (list_CoordOfCorner) {
+    const grpAttrLine = getAttriLine_atBdyWall;
+    if (grpAttrLine = undefined) { // if it doesnt not exist
+        addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrSet)
     }
+        const pos_midpoint = calcMidptof2pt (list[i], list[i+1]);
+        const key = keyGen ( pos_midpoint );
+        const bool_keyExistance = getbool_keyExistance(key);
+        if ( bool_keyExistance ) { // if key already exist
+            const grpAttrLine = dictAttrLine[key];
+            const adjacency = grpAttrLine.adjacency;
+            if (adjacency == 'extent')  {
+                deleteAttrLineUnit (key);
+                const attrSet = ['', 'interior'];
+                addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
+            } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
+    
+        } else { // if key does not exist
+            const attrSet = ['', 'extent']
+            addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet)
+        }
+    
 }
-
-function getCornerpointsofMesh ( mesh ) {
-    if (checkDirofMesh (mesh) == "front/back") {
-        console.log("front/back")
-    }
-}
-
 
 // __________________________
 //    	　_ * PARTITION WALL * 

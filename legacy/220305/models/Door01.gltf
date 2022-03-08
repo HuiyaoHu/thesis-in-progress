@@ -1,0 +1,960 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "THREE.GLTFExporter"
+  },
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        4
+      ]
+    }
+  ],
+  "scene": 0,
+  "nodes": [
+    {
+      "name": "DoorFrame",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "DoorFrame",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "0662a63e-a401-4dfa-ba6e-0f0ebb00faa4",
+          "url": "",
+          "layerIndex": 0,
+          "materialIndex": 1,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isClosed": false,
+            "hasCachedTextureCoordinates": false,
+            "hasPrincipalCurvatures": false,
+            "partitionCount": 0,
+            "objectType": {
+              "name": "ObjectType_Mesh",
+              "value": 32
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Mesh"
+      },
+      "mesh": 0
+    },
+    {
+      "name": "SIP",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "SIP",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "4da74a4c-426b-4034-acec-eed46f80fe79",
+          "url": "",
+          "layerIndex": 0,
+          "materialIndex": 0,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isSolid": true,
+            "isManifold": true,
+            "isSurface": false,
+            "objectType": {
+              "name": "ObjectType_Brep",
+              "value": 16
+            },
+            "isDeformable": false,
+            "hasBrepForm": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Brep"
+      },
+      "mesh": 1
+    },
+    {
+      "name": "Door",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "Door",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "9f01b53e-2b38-423d-82fa-66938a1c8698",
+          "url": "",
+          "layerIndex": 0,
+          "materialIndex": 2,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isSolid": true,
+            "isManifold": true,
+            "isSurface": false,
+            "objectType": {
+              "name": "ObjectType_Brep",
+              "value": 16
+            },
+            "isDeformable": false,
+            "hasBrepForm": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Brep"
+      },
+      "mesh": 2
+    },
+    {
+      "name": "DoorHandle",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "DoorHandle",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "0893b4f9-1971-4cab-9dde-f8e15d7cb53b",
+          "url": "",
+          "layerIndex": 0,
+          "materialIndex": 3,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isClosed": false,
+            "hasCachedTextureCoordinates": false,
+            "hasPrincipalCurvatures": false,
+            "partitionCount": 0,
+            "objectType": {
+              "name": "ObjectType_Mesh",
+              "value": 32
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Mesh"
+      },
+      "mesh": 3
+    },
+    {
+      "name": "Door01",
+      "extras": {
+        "layers": [
+          {
+            "name": "Door01",
+            "fullPath": "Door01",
+            "id": "1f765b34-25f8-44ab-b90d-f7764236767c",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": -1,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          }
+        ],
+        "groups": [],
+        "settings": {
+          "modelUrl": "",
+          "modelBasePoint": [
+            0,
+            0,
+            0
+          ],
+          "earthAnchorPoint": {},
+          "modelAbsoluteTolerance": 0.001,
+          "modelAngleToleranceRadians": 0.017453292519943295,
+          "modelAngleToleranceDegrees": 1,
+          "modelRelativeTolerance": 0.01,
+          "pageAbsoluteTolerance": 0.001,
+          "pageAngleToleranceRadians": 0.017453292519943295,
+          "pageAngleToleranceDegrees": 1,
+          "pageRelativeTolerance": 0.01,
+          "modelUnitSystem": {
+            "name": "UnitSystem_Meters",
+            "value": 4
+          },
+          "pageUnitSystem": {
+            "name": "UnitSystem_Millimeters",
+            "value": 2
+          }
+        },
+        "objectType": "File3dm",
+        "materials": [
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "8DE33248-A7C6-4E4F-831C-A306E02379B9",
+            "type": "MeshStandardMaterial",
+            "name": "clt",
+            "color": 13421772,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "DDF11BDF-1C92-44E7-A793-36ECFF98F774",
+            "type": "MeshStandardMaterial",
+            "name": "obs",
+            "color": 14996405,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "FBB9DA72-C296-4E76-8A6C-E141D324E85D",
+            "type": "MeshStandardMaterial",
+            "name": "plywood",
+            "color": 16448250,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "CC155AE1-BE95-4385-A817-239009E3EA91",
+            "type": "MeshStandardMaterial",
+            "name": "brass",
+            "color": 9670332,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          }
+        ],
+        "warnings": []
+      },
+      "children": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 254
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 256,
+      "byteLength": 346
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 608,
+      "byteLength": 787
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1400,
+      "byteLength": 11434
+    }
+  ],
+  "buffers": [
+    {
+      "name": "Door01",
+      "byteLength": 12840,
+      "uri": "data:application/octet-stream;base64,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"
+    }
+  ],
+  "accessors": [
+    {
+      "componentType": 5123,
+      "count": 141,
+      "max": [
+        89
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "componentType": 5126,
+      "count": 91,
+      "max": [
+        0.5014655593551538,
+        0.0410956561194144,
+        0.9509758951609228
+      ],
+      "min": [
+        -0.5009770395701025,
+        -0.040975667769203084,
+        -1.0509781839792822
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 91,
+      "max": [
+        1.007843137254902,
+        1.007843137254902,
+        1.007843137254902
+      ],
+      "min": [
+        -1.007843137254902,
+        -1.007843137254902,
+        -1.007843137254902
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5123,
+      "count": 96,
+      "max": [
+        47
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        1.7517104158764885,
+        0.07717533280020175,
+        1.7517098198300407
+      ],
+      "min": [
+        -1.7517104158764882,
+        -0.0767084519034429,
+        -1.751711011922936
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        1.007843137254902,
+        1.007843137254902,
+        1.007843137254902
+      ],
+      "min": [
+        -1.007843137254902,
+        -1.007843137254902,
+        -1.007843137254902
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        0.6705705301502932,
+        0.9995112414467253
+      ],
+      "min": [
+        -0.0009760851967253177,
+        -0.0009760851967253177
+      ],
+      "type": "VEC2"
+    },
+    {
+      "componentType": 5123,
+      "count": 420,
+      "max": [
+        231
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "componentType": 5126,
+      "count": 232,
+      "max": [
+        0.41696626081895294,
+        0.001056573819141593,
+        0.860931894985361
+      ],
+      "min": [
+        -0.4209330894624424,
+        -0.04093170097224236,
+        -1.0509342171823215
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 232,
+      "max": [
+        1.007843137254902,
+        1.007843137254902,
+        1.007843137254902
+      ],
+      "min": [
+        -1.007843137254902,
+        -1.007843137254902,
+        -1.007843137254902
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 232,
+      "max": [
+        0.8804288474462365,
+        0.9995112414467253
+      ],
+      "min": [
+        -0.0009760851967253177,
+        -0.0009760851967253177
+      ],
+      "type": "VEC2"
+    },
+    {
+      "componentType": 5123,
+      "count": 26496,
+      "max": [
+        4515
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "componentType": 5126,
+      "count": 4516,
+      "max": [
+        -0.22157616914046585,
+        0.05612635745702865,
+        -0.00916830392424281
+      ],
+      "min": [
+        -0.39878666400181473,
+        -0.10517065226303757,
+        -0.09089788793789566
+      ],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 4516,
+      "max": [
+        1.0078419886383356,
+        1.007833405569488,
+        1.0078340016159357
+      ],
+      "min": [
+        -1.0078248225006403,
+        -1.007833405569488,
+        -1.0078328095230402
+      ],
+      "type": "VEC3"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.8,
+          0.8,
+          0.8,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "clt",
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.8941176470588236,
+          0.8274509803921568,
+          0.7098039215686275,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "obs",
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.9803921568627451,
+          0.9803921568627451,
+          0.9803921568627451,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "plywood",
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5764705882352941,
+          0.5568627450980392,
+          0.7372549019607844,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "brass",
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 1,
+            "NORMAL": 2
+          },
+          "indices": 0,
+          "material": 0,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 0,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 4,
+            "NORMAL": 5,
+            "TEXCOORD_0": 6
+          },
+          "indices": 3,
+          "material": 1,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 1,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 8,
+            "NORMAL": 9,
+            "TEXCOORD_0": 10
+          },
+          "indices": 7,
+          "material": 2,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 2,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 12,
+            "NORMAL": 13
+          },
+          "indices": 11,
+          "material": 3,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 3,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "extensionsRequired": [
+    "KHR_draco_mesh_compression"
+  ],
+  "extensionsUsed": [
+    "KHR_draco_mesh_compression"
+  ]
+}
