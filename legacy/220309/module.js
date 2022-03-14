@@ -154,7 +154,6 @@ const gltfExporter = new GLTFExporter(); // https://threejs.org/docs/#examples/e
 const matAttrLine = new THREE.LineBasicMaterial( { color: 0x0000ff } );
 const matAttrDot = new THREE.PointsMaterial( { size: 1, color: "pink"} );
 const matAttrDot_Large = new THREE.PointsMaterial( { size: 2, color: "pink"} );
-const matDot_Large = new THREE.PointsMaterial( { size: 1, color: "red"} );
 const matAttrText = new THREE.LineBasicMaterial( {color: 0x0000ff, linewidth: 1} );
 
 const matGrid = new THREE.LineBasicMaterial( {color: 0x000000, linewidth: 1} );
@@ -204,8 +203,7 @@ const alloy = new THREE.MeshStandardMaterial({color: 'black'});
 // DIMENSIONS
 const volume_width = 3.5; const volume_width_half = volume_width/2;
 const volume_length = 3.5;
-const volume_height = 3.5; const volume_height_half = 3.5/2;
-
+const volume_height = 3.5;
 
 // GEOMETRIES
 const geomVolume = new THREE.BoxBufferGeometry( volume_width, volume_length, volume_height );
@@ -435,7 +433,7 @@ loader.load( // Load a glTF resource
 // DIMENSIONS
 const floor_width = 3.5; const floor_width_half = floor_width/2;
 const floor_length = 3.5;
-const floor_thickness = 0.7; const floor_thickness_half = 0.7/2;
+const floor_thickness = 0.7;
 
 // GEOMETRIES
 const geomFloor = new THREE.BoxBufferGeometry( floor_width, floor_length, floor_thickness );
@@ -491,7 +489,7 @@ var cnt_meshCeiling = 0;
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 // DIMENSIONS
-const BdyWall_width = round((3.5/3),7); const BdyWall_width_half = BdyWall_width / 2;
+const BdyWall_width = 3.5; const BdyWall_width_half = BdyWall_width / 2;
 const BdyWall_height = 3.5; const BdyWall_height_half = BdyWall_height / 2;
 const BdyWall_thickness = 0.15;
 
@@ -512,7 +510,6 @@ scene.add(meshBdyWallDel);
 
 const offsetValue_BdyWall = BdyWall_thickness/2 - 0.01;
 
-
 // INITIALISATION 
 var dictBdyWall = {};
 var pos_meshBdyWall = null;
@@ -525,8 +522,8 @@ var angle_meshBdyWall = 0;
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 // DIMENSIONS
+const PartWall_width = 3.5; const PartWall_width_half = PartWall_width / 2;
 const PartWall_height = 3.5; const PartWall_height_half = PartWall_height / 2;
-const PartWall_width = BdyWall_width; const PartWall_width_half = PartWall_width / 2;
 const PartWall_thickness = 0.15;
 
 // GEOMETRIES
@@ -534,9 +531,9 @@ const geomPartWall = new THREE.BoxBufferGeometry( PartWall_width, PartWall_thick
 const geomPartWallHover = new THREE.BoxBufferGeometry( PartWall_width * 1, PartWall_thickness* 2, PartWall_height * 1 );
 const geomPartWallDel = new THREE.BoxBufferGeometry( PartWall_width * 1.1, PartWall_thickness* 3, PartWall_height * 1.1 );
 
-const meshPartWallTrans = new THREE.Mesh( geomPartWallHover, matBdyWallTrans );
+const meshPartWallTrans = new THREE.Mesh( geomBdyWallHover, matBdyWallTrans );
 meshPartWallTrans.visible = false;
-const meshPartWallDel = new THREE.Mesh( geomPartWallDel, matBdyWallDel );
+const meshPartWallDel = new THREE.Mesh( geomBdyWallDel, matBdyWallDel );
 meshPartWallDel.visible = false;
 
 scene.add(meshPartWallTrans);
@@ -883,23 +880,6 @@ var scale_grpStairs01 = new THREE.Vector3(-1, 1, 1)
 //    	　_ * ATTRIBUTE LINES *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-// GEOMETRIES
-const offsetHeight_AttrLine_fromFloorPos = new THREE.Vector3( 0, 0, floor_thickness_half);
-const offsetValue_hor_PartWall = new THREE.Vector3( PartWall_width, 0, 0); 
-const offsetValue_ver_PartWall = new THREE.Vector3( 0, PartWall_width, 0); 
-const offsetHeight_meshPartWall_fromAttrLine = new THREE.Vector3(0, 0, PartWall_height_half - floor_thickness);
-
-const offsetValue_hor_BdyWall = new THREE.Vector3( PartWall_width_half, 0, 0); 
-const offsetHeight_posVerMod_fromFloorPos = BdyWall_height_half - floor_thickness_half;
-const offsetHeight_AttrLine_fromVolPos = -volume_height_half + floor_thickness;
-
-const num_div_row_onFloor = floor_width / PartWall_width;
-const num_div_onFloor = num_div_row_onFloor * num_div_row_onFloor;
-
-const zpos_AttrLine = floor_thickness;
-
-
-
 // INITIALISATION
 var dictAttrLine = {};
 var dictTextMesh = {};
@@ -910,8 +890,8 @@ var angle_grpAttrLine = 0;
 
 // GEOMETRIES
 
-const top_left_corner = new THREE.Vector3( -volume_width*2, volume_width*2, floor_thickness );
-    // dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
+const top_left_corner = new THREE.Vector3( -volume_width*2, volume_width*2, 0 );
+dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
 posaddAttrLine_availBdy ( // Add Attribute line
     top_left_corner,
     ['R', 'corridor'],
@@ -1048,10 +1028,10 @@ function render() {
     if ( id_buttonPressed == 'buttonVolume' ) {
 
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
-        const list_meshScene = getValueList(dictVolume, 1); // get the meshes in the scene to check for intersections
+        var list_meshScene = getValueList(dictVolume, 1); // get the meshes in the scene to check for intersections
         list_meshScene.push(ground);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
-        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+        var list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
+        var meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
 
         if ( list_meshInt.length > 0 ) { // if intersect with any meshes
 
@@ -1064,7 +1044,7 @@ function render() {
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     
-                    const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                    var cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                     pos_meshVolume = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z + volume_height/2); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     
                     meshVolumeDel.position.set(pos_meshVolume.x, pos_meshVolume.y, pos_meshVolume.z);
@@ -1104,16 +1084,16 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonFloor' ) {
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
-        const list_meshScene = Object.values(dictFloor); // get the meshes in the scene to check for intersections
+        var list_meshScene = Object.values(dictFloor); // get the meshes in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
-        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+        var list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
+        var meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
 
         if ( list_meshInt.length > 0 ) { // if intersect with any meshes
 
             if (meshInt0.object.name == 'floor') { //if the first mesh that the cursor intersects has the name " "
 
-                const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 pos_meshFloor = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 
                 if (!bool_delFloor) { // if shift button is not pressed, update trans pos and show geom_trans 
@@ -1168,16 +1148,16 @@ function render() {
 
     if ( id_buttonPressed == 'buttonCeiling' ) {
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
-        const list_meshScene = Object.values(dictCeiling); // get the meshes in the scene to check for intersections
+        var list_meshScene = Object.values(dictCeiling); // get the meshes in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
-        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+        var list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
+        var meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
 
         if ( list_meshInt.length > 0 ) { // if intersect with any meshes
 
             if (meshInt0.object.name == 'ceiling') { //if the first mesh that the cursor intersects has the name " "
 
-                const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 pos_meshCeiling = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 
                 if (!bool_delCeiling) { // if shift button is not pressed, show nothing
@@ -1223,10 +1203,10 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonBoundaryWall' ) {
         raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        var list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
-        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+        var list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
+        var meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
         
         if ( list_meshInt.length > 0 ) { // if intersect with any meshes
 
@@ -1252,10 +1232,10 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonPartitionWall' ) {
         raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        var list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
-        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+        var list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
+        var meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
 
         if ( list_meshInt.length > 0 ) { // if intersect with any meshes
 
@@ -1291,17 +1271,17 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonWindow01' ) {
         raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        var list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
-        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+        var list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
+        var meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
         
         reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); // if do not intersect with anything, show nothing
        
         if ( list_meshInt.length > 0 ) { // if intersect with any mesh
             
             if (meshInt0.object.parent.name == 'Window01') { // if the first mesh that the cursor intersects has the name ' '
-                const grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
+                var grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
                 if (!bool_delWindow01) { 
                     // if shift button is not pressed, do nothing
                 }
@@ -1311,9 +1291,17 @@ function render() {
             } 
             
             else if (meshInt0.object.name == 'BoundaryWall') { // if the first mesh that the cursor intersects has the name ' '
-                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                
+               if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+
                     const meshInt = meshInt0.object
-                    dispHelperAndReplaceHover_wallModRule (replaceHoverDisp_Window01, meshInt);
+                    const grpAttrLine = getAttriLine_atBdyWall( meshInt );
+                    if (grpAttrLine != undefined) { // if attribute line exisit
+                        dispHelperAndReplaceHover_wallModRule_adjCheck ( replaceHoverDisp_Window01, grpAttrLine, meshInt )
+                    } else { // if meshInt is not on an attribute line
+                        replaceHoverDisp_Window01( meshInt );
+                    }
+                    
                 }
             }
 
@@ -1324,7 +1312,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Window01( grpInt );
                 }
@@ -1334,7 +1322,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Door01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Window01( grpInt );
                 }
@@ -1344,7 +1332,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Door02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Window01( grpInt );
                 }
@@ -1354,7 +1342,7 @@ function render() {
             }	
             
             else if (meshInt0.object.parent.name == 'Door03') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Window01( grpInt );
                 }
@@ -1364,7 +1352,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Railing01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Window01( grpInt );
                 }
@@ -1374,9 +1362,9 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Stairs01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_wallModRule (replaceHoverDisp_Window01, grpInt)
+                    replaceHoverDisp_Window01( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Stairs01( grpInt );
@@ -1392,17 +1380,17 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonWindow02' ) {
         raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        var list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene );
-        const meshInt0 = list_meshInt[ 0 ];
+        var list_meshInt = raycaster.intersectObjects( list_meshScene );
+        var meshInt0 = list_meshInt[ 0 ];
 
         reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); // if do not intersect with anything, show nothing
         
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
             if (meshInt0.object.parent.name == 'Window02') { // if the first mesh that the cursor intersects has the name ' '
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow02) {
                     // if shift button is not pressed, do nothing
                 } 
@@ -1413,8 +1401,15 @@ function render() {
             
             else if (meshInt0.object.name == 'BoundaryWall' ) { // if the first mesh that the cursor intersects has the name ' '
                 if (!bool_delWindow02) { // if shift button is not pressed, update global variable of geom & geom_trans
+
                     const meshInt = meshInt0.object
-                    dispHelperAndReplaceHover_wallModRule (replaceHoverDisp_Window02, meshInt);
+                    const grpAttrLine = getAttriLine_atBdyWall( meshInt );
+                    if (grpAttrLine != undefined) { // if attribute line exisit
+                        dispHelperAndReplaceHover_wallModRule_adjCheck ( replaceHoverDisp_Window02, grpAttrLine, meshInt )
+                    } else { // if meshInt is not on an attribute line
+                        replaceHoverDisp_Window02( meshInt );
+                    }
+                    
                 }
             }
 
@@ -1425,7 +1420,7 @@ function render() {
             }
             
             else if (meshInt0.object.parent.name == 'Window01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Window02( grpInt );
                 }
@@ -1435,7 +1430,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Door01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Window02( grpInt );
                 }
@@ -1445,7 +1440,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Door02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Window02( grpInt );
                 }
@@ -1455,7 +1450,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Door03') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Window02( grpInt );
                 }
@@ -1465,7 +1460,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Railing01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Window02( grpInt );
                 }
@@ -1475,9 +1470,9 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Stairs01') { // if the first mesh that the cursor intersects has the name ' '
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_wallModRule (replaceHoverDisp_Window02, grpInt)
+                    replaceHoverDisp_Window02( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Stairs01( grpInt );
@@ -1494,17 +1489,17 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonDoor01' ) {
         raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        var list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene );
-        const meshInt0 = list_meshInt[ 0 ];
+        var list_meshInt = raycaster.intersectObjects( list_meshScene );
+        var meshInt0 = list_meshInt[ 0 ];
         
         reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); // if do not intersect with anything, show nothing
         
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
             if (meshInt0.object.parent.name == 'Door01') { // if the first mesh that the cursor intersects has the name ' '
-                const grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
+                var grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
                 if (!bool_delDoor01) { 
                     // if shift button is not pressed, do nothing
                 }
@@ -1527,7 +1522,7 @@ function render() {
             }
             
             else if (meshInt0.object.parent.name == 'Window01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door01, grpInt );
                 }
@@ -1537,7 +1532,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door01, grpInt );
                 }
@@ -1547,7 +1542,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Door02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Door01( grpInt );
                 }
@@ -1557,7 +1552,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Door03') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Door01( grpInt );
                 }
@@ -1567,7 +1562,7 @@ function render() {
             }	
             
             else if (meshInt0.object.parent.name == 'Railing01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door01, grpInt );
                 }
@@ -1577,7 +1572,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Stairs01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door01, grpInt );
                 }
@@ -1599,17 +1594,17 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonDoor02' ) {
         raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        var list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene );
-        const meshInt0 = list_meshInt[ 0 ];
+        var list_meshInt = raycaster.intersectObjects( list_meshScene );
+        var meshInt0 = list_meshInt[ 0 ];
         
         reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); // if do not intersect with anything, show nothing
 
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
             if (meshInt0.object.parent.name == 'Door02') { // if the first mesh that the cursor intersects has the name ' '
-                const grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
+                var grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
                 if (!bool_delDoor02) { 
                     // if shift button is not pressed, do nothing
                 }
@@ -1631,7 +1626,7 @@ function render() {
             }
             
             else if (meshInt0.object.parent.name == 'Window01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door02, grpInt );
                 }
@@ -1641,7 +1636,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door02, grpInt );
                 }
@@ -1651,7 +1646,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Door01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Door02( grpInt );
                 }
@@ -1661,7 +1656,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Door03') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Door02( grpInt );
                 }
@@ -1671,7 +1666,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Railing01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door02, grpInt );
                 }
@@ -1681,7 +1676,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Stairs01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door02, grpInt );
                 }
@@ -1699,17 +1694,17 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonDoor03' ) {
         raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        var list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene );
-        const meshInt0 = list_meshInt[ 0 ];
+        var list_meshInt = raycaster.intersectObjects( list_meshScene );
+        var meshInt0 = list_meshInt[ 0 ];
         
         reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); // if do not intersect with anything, show nothing
         
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
             if (meshInt0.object.parent.name == 'Door03') { // if the first mesh that the cursor intersects has the name ' '
-                const grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
+                var grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
                 if (!bool_delDoor03) { 
                     // if shift button is not pressed, do nothing
                 }
@@ -1731,7 +1726,7 @@ function render() {
             }
             
             else if (meshInt0.object.parent.name == 'Window01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door03, grpInt );
                 }
@@ -1741,7 +1736,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door03, grpInt );
                 }
@@ -1751,7 +1746,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Door01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Door03( grpInt );
                 }
@@ -1761,7 +1756,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Door02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Door03( grpInt );
                 }
@@ -1771,7 +1766,7 @@ function render() {
             }	
         
             else if (meshInt0.object.parent.name == 'Railing01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door03, grpInt );
                 }
@@ -1781,7 +1776,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Stairs01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor03) { // if shift button is not pressed, update global variable of geom & geom_trans
                     dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door03, grpInt );
                 }
@@ -1805,17 +1800,17 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonRailing01' ) {
         raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        var list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene );
-        const meshInt0 = list_meshInt[ 0 ];
+        var list_meshInt = raycaster.intersectObjects( list_meshScene );
+        var meshInt0 = list_meshInt[ 0 ];
         
         reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); // if do not intersect with anything, show nothing
         
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
             if (meshInt0.object.parent.name == 'Railing01') { // if the first mesh that the cursor intersects has the name ' '
-                const grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
+                var grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
                 if (!bool_delRailing01) { 
                     // if shift button is not pressed, do nothing
                 }
@@ -1826,8 +1821,15 @@ function render() {
             
             else if (meshInt0.object.name == 'BoundaryWall' ) { // if the first mesh that the cursor intersects has the name ' '
                 if (!bool_delRailing01) { // if shift button is not pressed, update global variable of geom & geom_trans
+
                     const meshInt = meshInt0.object
-                    dispHelperAndReplaceHover_wallModRule (replaceHoverDisp_Railing01, meshInt);
+                    const grpAttrLine = getAttriLine_atBdyWall( meshInt );
+                    if (grpAttrLine != undefined) { // if attribute line exisit
+                        dispHelperAndReplaceHover_wallModRule_adjCheck ( replaceHoverDisp_Railing01, grpAttrLine, meshInt)
+                    } else { // if meshInt is not on an attribute line
+                        replaceHoverDisp_Railing01( meshInt );
+                    }
+                    
                 }
             }
 
@@ -1838,7 +1840,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delRailing01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Railing01( grpInt );
                 }
@@ -1848,7 +1850,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delRailing01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Railing01( grpInt );
                 }
@@ -1858,7 +1860,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Door01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delRailing01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Railing01( grpInt );
                 }
@@ -1868,7 +1870,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Door02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delRailing01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Railing01( grpInt );
                 }
@@ -1878,7 +1880,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Door03') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delRailing01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Railing01( grpInt );
                 }
@@ -1888,9 +1890,9 @@ function render() {
             }	
         
             else if (meshInt0.object.parent.name == 'Stairs01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delRailing01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    dispHelperAndReplaceHover_wallModRule (replaceHoverDisp_Railing01, grpInt)
+                    replaceHoverDisp_Railing01( grpInt );
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Stairs01( grpInt );
@@ -1908,17 +1910,17 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonStairs01' ) {
         raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        var list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene );
-        const meshInt0 = list_meshInt[ 0 ];
+        var list_meshInt = raycaster.intersectObjects( list_meshScene );
+        var meshInt0 = list_meshInt[ 0 ];
         
         reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); // if do not intersect with anything, show nothing
 
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
             if (meshInt0.object.parent.name == 'Stairs01') { // if the first mesh that the cursor intersects has the name ' '
-                const grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
+                var grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
                 if (!bool_delStairs01) { 
                     // if shift button is not pressed, do nothing
                 }
@@ -1940,7 +1942,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Stairs01( grpInt );
                 }
@@ -1950,7 +1952,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Window02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Stairs01( grpInt );
                 }
@@ -1960,7 +1962,7 @@ function render() {
             }
 
             else if (meshInt0.object.parent.name == 'Door01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Stairs01( grpInt );
                 }
@@ -1970,7 +1972,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Door02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Stairs01( grpInt );
                 }
@@ -1980,7 +1982,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Door03') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Stairs01( grpInt );
                 }
@@ -1990,7 +1992,7 @@ function render() {
             }	
 
             else if (meshInt0.object.parent.name == 'Railing01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                var grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
                     replaceHoverDisp_Stairs01( grpInt );
                 }
@@ -2279,7 +2281,7 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     //    	　_ * VOLUME *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (pos_meshVolume != null) { //If not dragging and raycaster.intersectObjects.object.values(dictVolume).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
-        const key = keyGen(pos_meshVolume);
+        var key = keyGen(pos_meshVolume);
         if (bool_delVolume && key in dictVolume) { // if shift is pressed and existing key is True, delete volume
             deleteVolume(dictVolume[key]); // e.g. (2) [Mesh, Mesh]
         } else if (!bool_delVolume && dictVolume[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new volume to the scene and add its key to dictVolume {}
@@ -2291,7 +2293,7 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     //    	　_ * FLOOR *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (pos_meshFloor != null) { //If not dragging and raycaster.intersectObjects.object.values(dictFloor).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
-        const key = keyGen(pos_meshFloor);
+        var key = keyGen(pos_meshFloor);
         if (bool_delFloor && key in dictFloor) { // if shift is pressed and existing key is True, delete meshFloor
             deleteFloor(dictFloor[key]); 
             deleteMeshEnclosure(pos_meshFloor);
@@ -2302,12 +2304,12 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
             genCeilingEnclosure(pos_meshFloor);
         }
     }
-   
+
     // __________________________
     //    	　_ * CEILING *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (pos_meshCeiling != null) { //If not dragging and raycaster.intersectObjects.object.values(dictCeiling).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
-        const key = keyGen(pos_meshCeiling);
+        var key = keyGen(pos_meshCeiling);
         if (bool_delCeiling && key in dictCeiling) { // if shift is pressed and existing key is True, delete meshCeiling
             deleteCeiling(dictCeiling[key]); 
         } else if (!bool_delCeiling && dictCeiling[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new meshCeiling to the scene and add its key to dictCeiling {}
@@ -2319,7 +2321,7 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     //    	　_ * BOUNDARY WALL * 
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (pos_meshBdyWall != null) {
-        const key = keyGen(pos_meshBdyWall);
+        var key = keyGen(pos_meshBdyWall);
         if (bool_delBdyWall && key in dictBdyWall) { // if shift is pressed and existing key is True, delete mesh
             deleteBdyWall(dictBdyWall[key]); 
         } else if (!bool_delBdyWall && dictBdyWall[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new mesh
@@ -2331,7 +2333,8 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     //    	　_ * PARTITION WALL * 
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     else if (pos_meshPartWall != null) {
-        const key = keyGen(pos_meshPartWall);
+        var key = keyGen(pos_meshPartWall);
+
         if (bool_delPartWall && key in dictPartWall) { // if shift is pressed and existing key is True, delete mesh
             deletePartWall(dictPartWall[key]); 
         } else if (!bool_delPartWall && dictPartWall[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new mesh
@@ -2369,7 +2372,7 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
 //////////////////// -------------SUBSIDIARY FUNCTIONS------------------------------------------------------ //////////////////// 
 
 // ====================================================
-// { Module Operations } ★
+// { Scene Modifications } ★
 // ====================================================
 // ''''''  add/del mesh and attributes
 
@@ -2380,11 +2383,11 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
 function addVolume(key) {
 
     // ADD MESH
-    const meshVolume = new THREE.Mesh(geomVolume, matVolumeTrans);
+    var meshVolume = new THREE.Mesh(geomVolume, matVolumeTrans);
     meshVolume.position.set(pos_meshVolume.x, pos_meshVolume.y, pos_meshVolume.z);
         // scene.add( meshVolume );
 
-    const meshVolumeBase = new THREE.Mesh( geomVolumeBase, matVolume ) ;
+    var meshVolumeBase = new THREE.Mesh( geomVolumeBase, matVolume ) ;
     meshVolumeBase.position.set(pos_meshVolume.x, pos_meshVolume.y, 0);
     scene.add( meshVolumeBase );
 
@@ -2399,86 +2402,75 @@ function addVolume(key) {
     document.getElementById('buttonVolume').innerHTML = "Volume: " + cnt_meshVolume; 
 
     // UPDATE POINTS IN SCENE
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshVolume, volume_width,  offsetHeight_AttrLine_fromVolPos);
+    var list_CoordOfCorner = findCoordsOfBaseCorners( pos_meshVolume );
     list_CoordOfCorner.forEach( updatePoints );
     addAttrLine_purchasedVolBdy(list_CoordOfCorner);
 
     // UPDATE FLOOR ZONE MESH
-    const list_meshVolumeBase = getValueList(dictVolume, 1)
+    var list_meshVolumeBase = getValueList(dictVolume, 1)
     if ( meshFloorZone != undefined ) {
         scene.remove( meshFloorZone )   
     } 
     meshFloorZone = mergeMeshes(list_meshVolumeBase, matVolume, meshFloorZone, "Floor_Zone");
 };
 
+function findCoordsOfBaseCorners( pos ) { // of a volume cube
+    var base_frontleft_coord = new THREE.Vector3( pos.x - volume_width_half, pos.y + volume_width_half, pos.z - volume_width_half );
+    var base_frontright_coord = new THREE.Vector3( pos.x + volume_width_half, pos.y + volume_width_half, pos.z - volume_width_half );
+    var base_backright_coord = new THREE.Vector3( pos.x + volume_width_half, pos.y - volume_width_half, pos.z - volume_width_half );
+    var base_backleft_coord = new THREE.Vector3( pos.x - volume_width_half, pos.y - volume_width_half, pos.z - volume_width_half );
+    var list_CoordOfCorner = [ base_frontleft_coord, base_frontright_coord, base_backright_coord, base_backleft_coord ]
+
+    return list_CoordOfCorner
+}
 
 function addAttrLine_purchasedVolBdy (list_CoordOfCorner) { // "extent"
     const list = list_CoordOfCorner.slice(0)
     list.push(list[0]);
     for(var i=0; i < list.length - 1; i++){
-        // CLOCKWISE MULTIPLIERS
-        const arrDir_x = [1,0,-1,0]; const arrDir_y = arrDir_x.slice(0).reverse();
-        
-        // CREATE LINEAR ARRAYS
-        const pos_corner = list[i]; // at boundary
-        const list_pt = arrLinearPoints ( num_div_row_onFloor+1, pos_corner, PartWall_width*arrDir_x[i], PartWall_width*arrDir_y[i] )// CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-
-        /*
-        const list_pt = []; // to be overwritten
-        for(var j=0; j < num_div_row_onFloor+1; j++){
-            const pos_arr = pos_corner.clone().add(new THREE.Vector3( PartWall_width*j*arrDir_x[i], PartWall_width*j*arrDir_y[i], 0)); // at boundary
-            list_pt.push( pos_arr );
-                // dispDotsfromCoords ( matDot_Large, [pos_arr] )
-        }
-        */
-
-        // CREATE ATTRIBUTE LINES
-        for(var k=0; k < list_pt.length-1; k++){
-            const pos_midpoint = calcMidptof2pt (list_pt[k], list_pt[k+1]);
-            addAttr_extent (pos_midpoint, list_pt[k], list_pt[k+1])
-            // const pos_BdyWall = calcMidptof2pt(list_pt[k], list_pt[k+1])
-            // const key_BdyWall = keyGen(pos_BdyWall);
-            // addBdyWall(key_BdyWall, pos_BdyWall, 0)
+        const pos_midpoint = calcMidptof2pt (list[i], list[i+1]);
+        const key = keyGen ( pos_midpoint );
+        const bool_keyExistance = getbool_keyExistance(key);
+        if ( bool_keyExistance ) { // if key already exist
+            const grpAttrLine = dictAttrLine[key];
+            const adjacency = grpAttrLine.adjacency;
+            if (adjacency == 'extent')  {
+                deleteAttrLineUnit (pos_midpoint);
+                const attrSet = ['', 'interior'];
+                addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
+            } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
+    
+        } else { // if key does not exist
+            const attrSet = ['', 'extent']
+            addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet)
         }
     } 
 }
-
 
 function deleteAttrLine_purchasedVolBdy (list_CoordOfCorner) {
     const list = list_CoordOfCorner.slice(0)
     list.push(list[0]);
     for(var i=0; i < list.length - 1; i++){
-        // CLOCKWISE MULTIPLIERS
-        const arrDir_x = [1,0,-1,0]; const arrDir_y = arrDir_x.slice(0).reverse();
-        
-        // CREATE LINEAR ARRAYS
-        const pos_corner = list[i]; // at boundary
-        const list_pt = arrLinearPoints ( num_div_row_onFloor+1, pos_corner, PartWall_width*arrDir_x[i], PartWall_width*arrDir_y[i] )// CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-        // const list_pt = []; // to be overwritten
-        // for(var j=0; j < num_div_row_onFloor+1; j++){
-            // const pos_arr = pos_corner.clone().add(new THREE.Vector3( j*PartWall_width*arrDir_x[i], j*PartWall_width*arrDir_y[i], 0)); // at boundary
-            // list_pt.push( pos_arr );
-                // dispDotsfromCoords ( matDot_Large, [pos_arr] )
-        // }
-
-        // CREATE ATTRIBUTE LINES
-        for(var k=0; k < list_pt.length-1; k++){
-            const pos_midpoint = calcMidptof2pt (list_pt[k], list_pt[k+1]);
-
-            delAttr_extent (pos_midpoint, list_pt[k], list_pt[k+1]);
-            // const pos_BdyWall = calcMidptof2pt(list_pt[k], list_pt[k+1])
-            // const key_BdyWall = keyGen(pos_BdyWall);
-            // addBdyWall(key_BdyWall, pos_BdyWall, 0)
+        const pos_midpoint = calcMidptof2pt (list[i], list[i+1]);
+        const key = keyGen ( pos_midpoint );
+        const grpAttrLine = dictAttrLine[key];
+        const adjacency = grpAttrLine.adjacency;
+        if (adjacency == 'extent' )  {
+            deleteAttrLineUnit (pos_midpoint);
+        } else if (adjacency == 'interior') {
+            deleteAttrLineUnit (pos_midpoint);
+            const attrSet = ['', 'extent'];
+            addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
         }
-    } 
+    }
 }
 
 function updatePoints(coord) { // add or remove points in the scene
-    const key = keyGen(coord) // generate key for each corner point
+    var key = keyGen(coord) // generate key for each corner point
     if ( dictPoints [key] == undefined ) { // if key does not exists
-        const geomPoint = new THREE.BufferGeometry().setFromPoints([coord]);
-        const matPoint = new THREE.PointsMaterial({size: 0.8, color: "pink"});
-        const point = new THREE.Points(geomPoint, matPoint);
+        var geomPoint = new THREE.BufferGeometry().setFromPoints([coord]);
+        var matPoint = new THREE.PointsMaterial({size: 0.8, color: "pink"});
+        var point = new THREE.Points(geomPoint, matPoint);
         scene.add(point);
         dictPoints[key] = [coord, point]; // add new key-value pair to dict
     } 
@@ -2496,7 +2488,7 @@ function deleteVolume( values ) {
     cnt_meshVolume -= 1; 
 
     // UPDATE POINTS IN SCENE
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshVolume, volume_width, offsetHeight_AttrLine_fromVolPos );
+    var list_CoordOfCorner = findCoordsOfBaseCorners( pos_meshVolume );
     list_CoordOfCorner.forEach( updatePoints );
 
     deleteAttrLine_purchasedVolBdy (list_CoordOfCorner);
@@ -2510,7 +2502,7 @@ function deleteVolume( values ) {
 function addFloor(key) {
 
     // ADD MESH
-    const meshFloor = new THREE.Mesh(geomFloor, particleboard);
+    var meshFloor = new THREE.Mesh(geomFloor, particleboard);
     meshFloor.position.set(pos_meshFloor.x, pos_meshFloor.y, pos_meshFloor.z);
         // meshFloor.castShadow = true;
         // meshFloor.receiveShadow = true;
@@ -2525,8 +2517,6 @@ function addFloor(key) {
     cnt_meshFloor += 1; // update the counter on the web page
     document.getElementById('buttonFloor').innerHTML = "Floor: " + cnt_meshFloor;
     // console.log('~~~meshFloor~~~', meshFloor) 
-
-    addAttrLinesOnFloor();
 };
 
 function deleteFloor(meshFloor) {
@@ -2534,121 +2524,9 @@ function deleteFloor(meshFloor) {
     delete dictFloor[ meshFloor.floor_key ];
     cnt_meshFloor -= 1; 
     document.getElementById('buttonFloor').innerHTML = "Floor: " + cnt_meshFloor;
-    delAttrLinesOnFloor();
 };
 
-function genBdyWallEnclosure( pos_meshFloor ) {
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshFloor, floor_width, offsetHeight_posVerMod_fromFloorPos );//frontleft, frontright, backright, backleft
-    const list = list_CoordOfCorner.slice(0)
-    list.push(list[0]);
-
-    for(var i=0; i < list.length-1; i++){
-        // CLOCKWISE MULTIPLIERS
-        const arrDir_x = [1,0,-1,0]; const arrDir_y = arrDir_x.slice(0).reverse();
-        const multp_angle = [0,-1,2,1];
-        const offsetDir_x = [0,-1,0,1]; 
-        const offsetDir_y = [-1,0,1,0]; 
-        const adjoffsetDir_x = [0,1,0,-1];
-        const adjoffsetDir_y = [1,0,-1,0];
-
-        // CREATE STARTING POS OF ARRAY
-        const pos_corner = list[i]; // at boundary
-        const pos_arrstart = pos_corner.clone().add(new THREE.Vector3( PartWall_width_half*arrDir_x[i], PartWall_width_half*arrDir_y[i], 0)); // at boundary
-            // dispDotsfromCoords ( matDot_Large, [pos_arrstart] )
-            // console.log(dictBdyWall)
-
-        // CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-        for(var j=0; j < num_div_row_onFloor; j++){
-            const pos_arr = pos_arrstart.clone().add(new THREE.Vector3( PartWall_width*j*arrDir_x[i], PartWall_width*j*arrDir_y[i], 0)); // at boundary
-            const pos_arr_rounded = roundPos(pos_arr, 3) // at boundary, Javascript limitation: giving infinite decimal when the value is not infinite (see BdyWall_width)
-            const pos_mesh = pos_arr_rounded.clone().add(new THREE.Vector3( offsetValue_BdyWall*arrDir_y[i], offsetValue_BdyWall*offsetDir_y[i], 0 ) ) // offset from boundary
-            const key_mesh = keyGen(pos_mesh);
-            const angle_mesh = Math.PI / 2 *multp_angle[i];
-
-            const pos_adjacent_mesh = pos_arr_rounded.clone().add(new THREE.Vector3( offsetValue_BdyWall*adjoffsetDir_x[i], offsetValue_BdyWall*adjoffsetDir_y[i], 0 ) );
-            const key_adjacent_mesh = keyGen(pos_adjacent_mesh);
-                // dispDotsfromCoords ( matDot_Large, [pos_mesh, pos_adjacent_mesh] )  
-                // console.log(pos_adjacent_mesh)
-           
-            const bool_keyExistance = getbool_keyExistance(key_adjacent_mesh);
-            if ( bool_keyExistance ) { // if adjacent mesh exists, delete adjacent mesh
-                ifMatchKey_deleteMesh(key_adjacent_mesh, 'BoundaryWall', 'Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); 
-            } else {
-                addBdyWall(key_mesh, pos_mesh, angle_mesh); // if adjacent mesh does not exist, add meshs
-            }
-                    
-        }
-
-
-
-    }
-
-}
-
-function deleteMeshEnclosure(pos_meshFloor) { // overwrite any existing hybrid module
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshFloor, floor_width, BdyWall_height_half-floor_thickness_half );//frontleft, frontright, backright, backleft
-    const list = list_CoordOfCorner.slice(0)
-    list.push(list[0]);
-    // console.log( Object.keys(dictBdyWall) )
-    console.log( Object.keys(dictPartWall) )
-
-
-
-    for(var i=0; i < list.length-1; i++){
-        // CLOCKWISE MULTIPLIERS
-        const arrDir_x = [1,0,-1,0]; const arrDir_y = arrDir_x.slice(0).reverse();
-        const multp_angle_adj = [2,1,0,-1]; // [0,-1,2,1]
-        const offsetDir_x = [0,-1,0,1]; 
-        const offsetDir_y = [-1,0,1,0]; 
-        const adjoffsetDir_x = [0,1,0,-1];
-        const adjoffsetDir_y = [1,0,-1,0];
-
-        // CREATE STARTING POS OF ARRAY
-        const pos_corner = list[i]; // at boundary
-        const pos_arrstart = pos_corner.clone().add(new THREE.Vector3( PartWall_width_half*arrDir_x[i], PartWall_width_half*arrDir_y[i], 0)); // at boundary
-            // dispDotsfromCoords ( matDot_Large, [pos_arrstart] )
-            // console.log(dictBdyWall)
-
-        // CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-        // const list_pt = []; // to be overwritten
-        for(var j=0; j < num_div_row_onFloor; j++){
-            const pos_arr = pos_arrstart.clone().add(new THREE.Vector3( PartWall_width*j*arrDir_x[i], PartWall_width*j*arrDir_y[i], 0)); // at boundary
-            const pos_arr_rounded = roundPos(pos_arr, 3); // at boundary, Javascript limitation: giving infinite decimal when the value is not infinite (see BdyWall_width)
-            const pos_mesh = pos_arr_rounded.clone().add(new THREE.Vector3( offsetValue_BdyWall*arrDir_y[i], offsetValue_BdyWall*offsetDir_y[i], 0 ) ) // offset from boundary
-            const key_mesh = keyGen(pos_mesh);
-
-            const pos_adjacent_mesh = pos_arr_rounded.clone().add(new THREE.Vector3( offsetValue_BdyWall*adjoffsetDir_x[i], offsetValue_BdyWall*adjoffsetDir_y[i], 0 ) );
-            const key_adjacent_mesh = keyGen(pos_adjacent_mesh);
-            const angle_adjmesh = Math.PI / 2 *multp_angle_adj[i];
-
-                // dispDotsfromCoords ( matDot_Large, [pos_mesh, pos_adjacent_mesh] )  
-                // console.log(pos_adjacent_mesh)
-            const pos_partMesh = pos_arr_rounded;
-            const key_partMesh = keyGen(pos_partMesh);
-
-            const bool_keyExistance = getbool_keyExistance(key_mesh);
-            const bool_keyExistance_partMesh = getbool_keyExistance(key_partMesh);
-            // console.log( key_partMesh )
-            // console.log( key_mesh )
-
-            if ( bool_keyExistance ) { // if adjacent mesh exists, delete adjacent mesh
-                ifMatchKey_deleteMesh(key_mesh, 'BoundaryWall', 'Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); 
-            } else {
-                if (bool_keyExistance_partMesh) { // if partition mesh exist, delete
-                    ifMatchKey_deleteMesh(key_partMesh, 'PartitionWall', 'Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); 
-                }
-                addBdyWall(key_adjacent_mesh, pos_adjacent_mesh, angle_adjmesh);
-            }
-            
-            // list_pt.push( pt );
-        }
-
-
-    }
-
-}
-
-function XgenBdyWallEnclosure(pos_meshFloor) { // overwrite any existing hybrid mod
+function genBdyWallEnclosure(pos_meshFloor) { // overwrite any existing hybrid mod
 
     // LEFT BOUNDARY WALL
     var angle_mesh = Math.PI / 2;
@@ -2717,7 +2595,7 @@ function XgenBdyWallEnclosure(pos_meshFloor) { // overwrite any existing hybrid 
     // pos_meshBdyWall = null // restore to initialisation state
 }
 
-function XdeleteMeshEnclosure(pos_meshFloor) { // overwrite any existing hybrid module
+function deleteMeshEnclosure(pos_meshFloor) { // overwrite any existing hybrid module
 
     // LEFT BOUNDARY MESH
     var pos_mesh = new THREE.Vector3(pos_meshFloor.x - floor_width_half + offsetValue_BdyWall, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
@@ -2810,7 +2688,7 @@ function XdeleteMeshEnclosure(pos_meshFloor) { // overwrite any existing hybrid 
 
 function genCeilingEnclosure(pos_meshFloor) {
     pos_meshCeiling = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height - ceiling_thickness/2 - overlapOffset); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-    const ceiling_key = keyGen(pos_meshCeiling);
+    var ceiling_key = keyGen(pos_meshCeiling);
 
     if ( dictCeiling [ceiling_key] == undefined ) {
         addCeiling(ceiling_key);
@@ -2828,7 +2706,7 @@ function genCeilingEnclosure(pos_meshFloor) {
 function addCeiling(key) {
 
     // ADD MESH
-    const meshCeiling = new THREE.Mesh(geomCeiling, matCeilingTrans);
+    var meshCeiling = new THREE.Mesh(geomCeiling, matCeilingTrans);
     meshCeiling.position.set(pos_meshCeiling.x, pos_meshCeiling.y, pos_meshCeiling.z);
     scene.add( meshCeiling );
 
@@ -2869,7 +2747,7 @@ function addBdyWall(key, pos, angle) {
     }
     geomBdyWall.groups[2].materialIndex = 1 //[2]outside, [3]inside, [4]top, [5]bottom, [0][1]sides
 
-    const meshBdyWall = new THREE.Mesh( geomBdyWall, materials );
+    var meshBdyWall = new THREE.Mesh( geomBdyWall, materials );
     meshBdyWall.position.set(pos.x, pos.y, pos.z);
     scene.add( meshBdyWall );
 
@@ -2886,23 +2764,15 @@ function addBdyWall(key, pos, angle) {
     meshBdyWall.matrixAutoUpdate = false;
     meshBdyWall.updateMatrix();
     
-    const pos_AttrLine = getPos_AttrLine_atBdy (pos, angle);
-    const endPoints = getpos_EndPtsOfAttrLine (pos_AttrLine, angle, BdyWall_width_half);
-    
-    const xkey = keyGen(pos_AttrLine)
-    // console.log( dictAttrLine[xkey] );
-        // dispDotsfromCoords(matDot_Large, [pos_AttrLine])
-    addAttr_boundary (pos_AttrLine, endPoints[0],  endPoints[1]);
+        // const attrSet = ['', 'interior'];
+    addAttrLine_BdyWall (pos, angle, meshBdyWall);
      
 };
 
-
-
-
-function XaddAttrLine_BdyWall (pos, angle, meshBdyWall) {
-    const pos_AttrLine = getPos_AttrLine_atBdy (pos, angle);
-    const AttrLine = getAttriLine_atBdyMesh( meshBdyWall ); 
-    const adjacency = AttrLine.adjacency;
+function addAttrLine_BdyWall (pos, angle, meshBdyWall) {
+    const pos_AttrLine = getPos_AttrLine_atBdyWall (pos, angle);
+    const grpAttrLine = getAttriLine_atBdyWall( meshBdyWall ); 
+    const adjacency = grpAttrLine.adjacency;
     if (adjacency == 'interior')  {
         deleteAttrLineUnit (pos_AttrLine);
 
@@ -2924,11 +2794,11 @@ function XaddAttrLine_BdyWall (pos, angle, meshBdyWall) {
 }
 
 function deleteAttrLine_BdyWall (meshBdyWall) {
-    const angle = meshBdyWall.rotation.z;
-    const pos_AttrLine = getPos_AttrLine_atBdy (meshBdyWall.position, angle);
+    const angle = meshBdyWall.rotation.z
+    const pos_AttrLine = getPos_AttrLine_atBdyWall (meshBdyWall.position, angle);
 
-    const AttrLine = getAttriLine_atBdyMesh( meshBdyWall ); 
-    const adjacency = AttrLine.adjacency;
+    const grpAttrLine = getAttriLine_atBdyWall( meshBdyWall ); 
+    const adjacency = grpAttrLine.adjacency;
     if (adjacency == 'boundary' )  {
         deleteAttrLineUnit (pos_AttrLine);
         
@@ -2951,7 +2821,7 @@ function deleteAttrLine_BdyWall (meshBdyWall) {
 
 // Delete a BdyWall
 function deleteBdyWall(meshBdyWall) {
-    // deleteAttrLine_BdyWall (meshBdyWall);
+    deleteAttrLine_BdyWall (meshBdyWall);
 
     scene.remove( meshBdyWall );
     delete dictBdyWall[ meshBdyWall.key ];
@@ -2967,7 +2837,7 @@ function deleteBdyWall(meshBdyWall) {
 function addPartWall(key, pos, angle) {
     
     // ADD MESH
-    const meshPartWall = new THREE.Mesh( geomPartWall, obsLight );
+    var meshPartWall = new THREE.Mesh( geomPartWall, obsLight );
     meshPartWall.position.set(pos.x, pos.y, pos.z);
     scene.add( meshPartWall );
 
@@ -3000,7 +2870,7 @@ function deletePartWall(meshPartWall) {
 function addWindow01(key) {
 
     // ADD MESH
-    const Window01 = meshWindow01.clone();
+    var Window01 = meshWindow01.clone();
     Window01.position.set(pos_grpWindow01.x, pos_grpWindow01.y, pos_grpWindow01.z);
     scene.add( Window01 );
 
@@ -3031,7 +2901,7 @@ function deleteWindow01(Window01) {
 function addWindow02(key) {
 
     // ADD MESH
-    const Window02 = grpWindow02.clone();
+    var Window02 = grpWindow02.clone();
     Window02.position.set(pos_grpWindow02.x, pos_grpWindow02.y, pos_grpWindow02.z);
     scene.add( Window02 );
     
@@ -3062,7 +2932,7 @@ function deleteWindow02(Window02) {
 function addDoor01(key) {
 
     // ADD MESH
-    const Door01 = meshDoor01.clone();
+    var Door01 = meshDoor01.clone();
     Door01.position.set(pos_grpDoor01.x, pos_grpDoor01.y, pos_grpDoor01.z);
     scene.add( Door01 );
     
@@ -3093,7 +2963,7 @@ function deleteDoor01(Door01) {
 function addDoor02(key) {
 
     // ADD MESH
-    const Door02 = meshDoor02.clone();
+    var Door02 = meshDoor02.clone();
     Door02.position.set(pos_grpDoor02.x, pos_grpDoor02.y, pos_grpDoor02.z);
     scene.add( Door02 );
     
@@ -3124,7 +2994,7 @@ function deleteDoor02(Door02) {
 function addDoor03(key) {
 
     // ADD MESH
-    const Door03 = meshDoor03.clone();
+    var Door03 = meshDoor03.clone();
     Door03.position.set(pos_grpDoor03.x, pos_grpDoor03.y, pos_grpDoor03.z);
     scene.add( Door03 );
     
@@ -3155,7 +3025,7 @@ function deleteDoor03(Door03) {
 function addRailing01(key) {
 
     // ADD MESH
-    const Railing01 = meshRailing01.clone();
+    var Railing01 = meshRailing01.clone();
     Railing01.position.set(pos_grpRailing01.x, pos_grpRailing01.y, pos_grpRailing01.z);
     scene.add( Railing01 );
     
@@ -3185,7 +3055,7 @@ function deleteRailing01(Railing01) {
 function addStairs01(key) {
 
     // ADD MESH
-    const Stairs01 = meshStairs01.clone();
+    var Stairs01 = meshStairs01.clone();
 
     Stairs01.position.set(pos_grpStairs01.x, pos_grpStairs01.y, pos_grpStairs01.z);
     scene.add( Stairs01 );
@@ -3365,7 +3235,7 @@ function orientVertMeshToFaceOfIntMesh( meshInt0, pos, meshVertHover, meshVertDe
 
 
 // --------------------------------
-//    Add PartWall Hover Display ★ 
+//    Add Hover Display ★ 
 // --------------------------------
 
 function addHoverDisp_PartWall(pos, angle){
@@ -3375,151 +3245,15 @@ function addHoverDisp_PartWall(pos, angle){
     meshPartWallDel.visible = false;
 }
 
-function getPos_allAttrLine () {
-    const list_key = Object.keys(dictAttrLine)
-    const list_pos = []
-    list_key.forEach( function (key) {
-        const pos = posfromKey( key );
-        list_pos.push( pos );
-    })
-    return list_pos
-}
-
 function addHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from boundary and presense of boundary mesh
-    const pos_cursor = meshInt0.point;
-
-    // CHECK CLOSEST ATTRIBUTE LINE
-    const pos_meshFloor = meshInt0.object.position; 
-    const list_posAttrLine = getPos_allAttrLine ();
-    const pos_closestAttrLine = getClosestPos (pos_cursor, list_posAttrLine); // CAN BE OPTIMISED
-    // dispDotsfromCoords ( matDot_Large, [pos_closestDivCen] ); 
-
-        // console.log(pos_closestAttrLine)
-    
-    // CHECK ATTRIBUTE LINE
-    const key_AttrLine = keyGen( pos_closestAttrLine );
-    const AttrLine = dictAttrLine[ key_AttrLine ];
-    const adjacency = AttrLine.adjacency;
-    if (adjacency == 'interior') {
-
-        angle_meshPartWall = AttrLine.angle;
-        pos_meshPartWall = pos_closestAttrLine.clone().add(offsetHeight_meshPartWall_fromAttrLine); 
-        // console.log(pos_closestAttrLine)
-
-        
-        // CHECK MESH PRESENSE
-        const key_partMesh = keyGen( pos_meshPartWall );
-        const bool_presence_partMesh = dictPartWall[key_partMesh]
-        if (bool_presence_partMesh) {
-            // do nothing if partMesh exist
-        } else {
-            addHoverDisp_PartWall(pos_meshPartWall, angle_meshPartWall);
-        }
-        // console.log(pos_closestAttrLine, offsetHeight_meshPartWall_fromAttrLine)
-
-    }
-
-
-
-
-
-
-
-
-    /*                
-    // CHECK DISTANCE FROM BOUNDARY ON 4 SIDES
-
-    const pos_leftBdyMesh = new THREE.Vector3(pos_meshInt.x - floor_width_half + offsetValue_BdyWall, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-    const pos_rightBdyMesh = new THREE.Vector3(pos_meshInt.x + floor_width_half - offsetValue_BdyWall, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-    const pos_frontBdyMesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y + floor_width_half - offsetValue_BdyWall, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-    const pos_backBdyMesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y - floor_width_half + offsetValue_BdyWall, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-
-    const dist_leftBdyMesh = pos_leftBdyMesh.distanceTo(meshInt0.point); // distance to mouse pointer
-    const dist_rightBdyMesh = pos_rightBdyMesh.distanceTo(meshInt0.point); // distance to mouse pointer
-    const dist_frontBdyMesh = pos_frontBdyMesh.distanceTo(meshInt0.point); // distance to mouse pointer
-    const dist_backBdyMesh = pos_backBdyMesh.distanceTo(meshInt0.point); // distance to mouse pointer
-    const closest_dist_mesh = Math.min(dist_leftBdyMesh, dist_rightBdyMesh, dist_frontBdyMesh, dist_backBdyMesh);
-
-
-    const angle_hor = 0;
-    const angle_ver = Math.PI / 2;
-
-    // IF CLOSEST TO LEFT BOUNDARY
-    if (closest_dist_mesh == dist_leftBdyMesh) {
-        const key_BdyMesh = keyGen(pos_leftBdyMesh);
-        
-        const pos_mesh = new THREE.Vector3(pos_meshInt.x - floor_width_half, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-        const key_mesh = keyGen(pos_mesh);
-        
-        const bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
-        if ( bool_keyExistance ) { // if mesh exists, do nothing
-        } else { // if mesh does not exist, show trans
-            pos_meshPartWall = pos_mesh;
-            angle_meshPartWall = angle_ver;
-            addHoverDisp_PartWall(pos_meshPartWall, angle_meshPartWall);
-        }
-    }
-
-    // IF CLOSEST TO RIGHT BOUNDARY
-    if (closest_dist_mesh == dist_rightBdyMesh) {
-        const key_BdyMesh = keyGen(pos_rightBdyMesh);
-
-        const pos_mesh = new THREE.Vector3(pos_meshInt.x + floor_width_half, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-        const key_mesh = keyGen(pos_mesh);
-
-        const bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
-        if ( bool_keyExistance ) { // if mesh exists, do nothing
-        } else { // if mesh does not exist, show trans
-            pos_meshPartWall = pos_mesh;
-            angle_meshPartWall = angle_ver;
-            addHoverDisp_PartWall(pos_meshPartWall, angle_meshPartWall);
-        }
-    }
-
-    // IF CLOSEST TO FRONT BOUNDARY
-    if (closest_dist_mesh == dist_frontBdyMesh) {
-        const key_BdyMesh = keyGen(pos_frontBdyMesh);
-        
-        const pos_mesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y + floor_width_half, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-        const key_mesh = keyGen(pos_mesh);
-
-        const bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
-        if ( bool_keyExistance ) { // if mesh exists, do nothing
-        } else { // if mesh does not exist, show trans
-            pos_meshPartWall = pos_mesh;
-            angle_meshPartWall = angle_hor;
-            addHoverDisp_PartWall(pos_meshPartWall, angle_meshPartWall);
-        }
-    }
-    
-    // IF CLOSEST TO BACK BOUNDARY
-    if (closest_dist_mesh == dist_backBdyMesh) {
-        const key_BdyMesh = keyGen(pos_backBdyMesh);
-        
-        const pos_mesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y - floor_width_half, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-        const key_mesh = keyGen(pos_mesh);
-
-        const bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
-        if ( bool_keyExistance ) { // if mesh exists, do nothing
-        } else { // if mesh does not exist, show trans
-            pos_meshPartWall = pos_mesh;
-            angle_meshPartWall = angle_hor;
-            addHoverDisp_PartWall(pos_meshPartWall, angle_meshPartWall);
-        }
-    }
-    */
-}
-
-
-function xaddHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from boundary and presense of boundary mesh
-    const pos_meshInt = meshInt0.object.position;
+    var pos_meshInt = meshInt0.object.position;
                     
     // CHECK DISTANCE FROM BOUNDARY ON 4 SIDES
 
-    const pos_leftBdyMesh = new THREE.Vector3(pos_meshInt.x - floor_width_half + offsetValue_BdyWall, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-    const pos_rightBdyMesh = new THREE.Vector3(pos_meshInt.x + floor_width_half - offsetValue_BdyWall, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-    const pos_frontBdyMesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y + floor_width_half - offsetValue_BdyWall, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-    const pos_backBdyMesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y - floor_width_half + offsetValue_BdyWall, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_leftBdyMesh = new THREE.Vector3(pos_meshInt.x - floor_width_half + offsetValue_BdyWall, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_rightBdyMesh = new THREE.Vector3(pos_meshInt.x + floor_width_half - offsetValue_BdyWall, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_frontBdyMesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y + floor_width_half - offsetValue_BdyWall, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_backBdyMesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y - floor_width_half + offsetValue_BdyWall, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
 
     const dist_leftBdyMesh = pos_leftBdyMesh.distanceTo(meshInt0.point); // distance to mouse pointer
     const dist_rightBdyMesh = pos_rightBdyMesh.distanceTo(meshInt0.point); // distance to mouse pointer
@@ -3533,12 +3267,14 @@ function xaddHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from bo
 
     // IF CLOSEST TO LEFT BOUNDARY
     if (closest_dist_mesh == dist_leftBdyMesh) {
-        const key_BdyMesh = keyGen(pos_leftBdyMesh);
+        var key_BdyMesh = keyGen(pos_leftBdyMesh);
         
-        const pos_mesh = new THREE.Vector3(pos_meshInt.x - floor_width_half, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-        const key_mesh = keyGen(pos_mesh);
+        var pos_mesh = new THREE.Vector3(pos_meshInt.x - floor_width_half, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
+        var key_mesh = keyGen(pos_mesh);
         
-        const bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
+        var key_mesh = keyGen(pos_mesh);
+        var key_BdyMesh = keyGen(pos_leftBdyMesh);
+        var bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
         if ( bool_keyExistance ) { // if mesh exists, do nothing
         } else { // if mesh does not exist, show trans
             pos_meshPartWall = pos_mesh;
@@ -3549,12 +3285,12 @@ function xaddHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from bo
 
     // IF CLOSEST TO RIGHT BOUNDARY
     if (closest_dist_mesh == dist_rightBdyMesh) {
-        const key_BdyMesh = keyGen(pos_rightBdyMesh);
+        var key_BdyMesh = keyGen(pos_rightBdyMesh);
 
-        const pos_mesh = new THREE.Vector3(pos_meshInt.x + floor_width_half, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-        const key_mesh = keyGen(pos_mesh);
+        var pos_mesh = new THREE.Vector3(pos_meshInt.x + floor_width_half, pos_meshInt.y, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
+        var key_mesh = keyGen(pos_mesh);
 
-        const bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
+        var bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
         if ( bool_keyExistance ) { // if mesh exists, do nothing
         } else { // if mesh does not exist, show trans
             pos_meshPartWall = pos_mesh;
@@ -3565,12 +3301,12 @@ function xaddHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from bo
 
     // IF CLOSEST TO FRONT BOUNDARY
     if (closest_dist_mesh == dist_frontBdyMesh) {
-        const key_BdyMesh = keyGen(pos_frontBdyMesh);
+        var key_BdyMesh = keyGen(pos_frontBdyMesh);
         
-        const pos_mesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y + floor_width_half, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-        const key_mesh = keyGen(pos_mesh);
+        var pos_mesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y + floor_width_half, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
+        var key_mesh = keyGen(pos_mesh);
 
-        const bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
+        var bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
         if ( bool_keyExistance ) { // if mesh exists, do nothing
         } else { // if mesh does not exist, show trans
             pos_meshPartWall = pos_mesh;
@@ -3581,12 +3317,12 @@ function xaddHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from bo
     
     // IF CLOSEST TO BACK BOUNDARY
     if (closest_dist_mesh == dist_backBdyMesh) {
-        const key_BdyMesh = keyGen(pos_backBdyMesh);
+        var key_BdyMesh = keyGen(pos_backBdyMesh);
         
-        const pos_mesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y - floor_width_half, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
-        const key_mesh = keyGen(pos_mesh);
+        var pos_mesh = new THREE.Vector3(pos_meshInt.x, pos_meshInt.y - floor_width_half, pos_meshInt.z - floor_thickness/2 + BdyWall_height_half);
+        var key_mesh = keyGen(pos_mesh);
 
-        const bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
+        var bool_keyExistance = getbool_keyExistance(key_mesh) || getbool_keyExistance(key_BdyMesh) ;
         if ( bool_keyExistance ) { // if mesh exists, do nothing
         } else { // if mesh does not exist, show trans
             pos_meshPartWall = pos_mesh;
@@ -3774,9 +3510,6 @@ function delHoverDisp_Stairs01( mesh ) { // copy pos, angle, show meshTrans
 function reinstate_mods() { //  no display of trans or del mesh, clear position
     // reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
     const args = Array.from(arguments) // arguments is an Array-like object, it doesn't have Array's built-in methods
-    // if (args.includes('Window01')) {
-    //     reinstate_Window01()
-    // }
     if (args.includes('Window01')) {
         reinstate_Window01()
     }
@@ -3841,9 +3574,9 @@ function reinstate_Stairs01() {
 // --------------------------------
 
 function MouseUpDisplay_onHybridMod(name_HybridMesh, pos_HybridMesh, bool_delHybridMesh, dictHybridMesh, deleteHybridMesh, addHybridMesh) { 
-    const key = keyGen(pos_HybridMesh);
+    var key = keyGen(pos_HybridMesh);
     if (bool_delHybridMesh && key in dictHybridMesh) { // if shift is pressed and existing key is True, delete mesh and its key
-        const bool_posPartWall = (pos_HybridMesh.x % BdyWall_width_half + pos_HybridMesh.y % BdyWall_width_half == 0);// if the mesh position is on the grid line with no offset, there should be no remainder
+        const bool_posPartWall = (pos_HybridMesh.x % (BdyWall_width/2) + pos_HybridMesh.y % (BdyWall_width/2) == 0);// if the mesh position is on the grid line with no offset, there should be no remainder
         if (bool_posPartWall) { // if pos is for partition wall
             addPartWall(key, pos_HybridMesh, dictHybridMesh[key].rotation.z);
         } else {
@@ -3862,17 +3595,13 @@ function MouseUpDisplay_onHybridMod(name_HybridMesh, pos_HybridMesh, bool_delHyb
 // ====================================================
 
 // --------------------------------
-//    All Values From Dictionary
+//    Values From Dictionary
 // --------------------------------
 function getValueList(dict, valueIndex) {
-    const list_key = Object.keys(dict);
+    var list_key = Object.keys(dict);
     var list_value = []
     list_key.forEach(function(key){
-        if (Object.prototype.toString.call(dict[key]) === '[object Array]') { // if each value is an array e.g. key: [a, b]
-            list_value.push(dict[key][valueIndex]);
-        } else { // if each value is not an array e.g. key: a
-            list_value.push(dict[key])
-        }
+        list_value.push(dict[key][valueIndex]);
     });
     return list_value
 }
@@ -3882,17 +3611,8 @@ function getValueList(dict, valueIndex) {
 //    Key Generation
 // --------------------------------
 function keyGen(mod_pos) { // mod_pos was generated through Scene Animation Loop 
-    const key = mod_pos.x + '_' + mod_pos.y + '_' + mod_pos.z; // create a key that as a string, e.g. 1_-4_0. 
+    var key = mod_pos.x + '_' + mod_pos.y + '_' + mod_pos.z; // create a key that as a string, e.g. 1_-4_0. 
     return key
-}
-
-// --------------------------------
-//    Position from Key
-// --------------------------------
-function posfromKey( key ){
-    const list = key.split( '_' )
-    const pos = new THREE.Vector3(Number(list[0]), Number(list[1]), Number(list[2]))
-    return pos
 }
 
 
@@ -3992,145 +3712,6 @@ function ifMatchKey_deleteStairs01(key) {
     }
 }
 
-// ====================================================
-// { Attributes } 
-// ====================================================
-
-/*
-Hierachy (lowest to highest)
-
-'interior'
-'boundary'
-'extent'
-'corridor', 'neighbour', 'buildingedge', 'neighbour'
-
-*/
-
-// --------------------------------
-//    interior
-// --------------------------------
-
-function addAttr_interior (pos, start_pt, end_pt) { // edit below to customise display appearance
-    const key = keyGen(pos)
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-    } // Do nothing. Interior cannot overwrite any other attributes
-    else { // if key does not exist
-        const attrSet = ['', 'interior']; 
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-function delAttr_interior (pos, start_pt, end_pt) { // edit below to customise display appearance
-    const key = keyGen(pos)
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        // OVERWRITE
-        if (adjacency == 'interior')  {
-            deleteAttrLineUnit (pos);
-        } // Do nothing. Interior cannot overwrite any other attributes
-    }
-        else { // if key does not exist
-        // const attrSet = ['', 'interior']; 
-        // addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-// --------------------------------
-//    boundary
-// --------------------------------
-
-function addAttr_boundary (pos, start_pt, end_pt) { // edit below to customise display appearance
-
-    const key = keyGen(pos);
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        // OVERWRITE
-        if (adjacency == 'boundary')  {
-            deleteAttrLineUnit (pos);
-            const attrSet = ['', 'interior']; // replace with attr of 1 lower hierarchy
-            addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-        } else if (adjacency == 'interior') {
-            // console.log(adjacency)
-
-            // dispDotsfromCoords(matDot_Large, [textpos])
-
-            // delete dictAttrLine[ key ]
-            deleteAttrLineUnit (pos);
-            // const attrSet = ['', 'boundary'];
-            // addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-        }
-    } else { // if key does not exist
-        const attrSet = ['', 'boundary']
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-function delAttr_boundary (pos, start_pt, end_pt) { // edit below to customise display appearance
-    const key = keyGen(pos)
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        if (adjacency == 'extent' )  {
-            deleteAttrLineUnit (pos);
-        } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
-        // else if (adjacency == 'interior') {
-        //     deleteAttrLineUnit (pos_midpoint);
-        //     const attrSet = ['', 'extent'];
-        //     addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
-        // }
-    } else { // if key does not exist
-        const attrSet = ['', 'extent']
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-// --------------------------------
-//    extent
-// --------------------------------
-
-function addAttr_extent (pos, start_pt, end_pt) { // edit below to customise display appearance
-    const key = keyGen(pos);
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        // OVERWRITE
-        if (adjacency == 'extent')  {
-            deleteAttrLineUnit (pos);
-            // const attrSet = ['', 'boundary'] // replace with attr of 1 lower hierarchy
-            // addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-            } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
-    } else { // if key does not exist
-        const attrSet = ['', 'extent']
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-function delAttr_extent (pos, start_pt, end_pt) { // edit below to customise display appearance
-    const key = keyGen(pos)
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        if (adjacency == 'extent' )  {
-            deleteAttrLineUnit (pos);
-        } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
-        // else if (adjacency == 'interior') {
-        //     deleteAttrLineUnit (pos_midpoint);
-        //     const attrSet = ['', 'extent'];
-        //     addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
-        // }
-    } else { // if key does not exist
-        const attrSet = ['', 'extent']
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
 
 // ====================================================
 // { Helper and Rules } 
@@ -4140,21 +3721,14 @@ function delAttr_extent (pos, start_pt, end_pt) { // edit below to customise dis
 //    Wall Module Rule
 // --------------------------------
 
-function dispHelperAndReplaceHover_wallModRule (func_replaceHoverDisp, grpInt) {
-    const AttrLine = getAttriLine_atBdyMesh( grpInt );
-    if (AttrLine != undefined) { // if boundary-positioned attribute line exist
-        dispHelperAndReplaceHover_wallModRule_adjCheck ( func_replaceHoverDisp, AttrLine, grpInt );
-    } else { // if boundary-positioned attribute line do not exist
-        func_replaceHoverDisp( grpInt );
-    }
-}
 
-function dispHelperAndReplaceHover_wallModRule_adjCheck (func_replaceHoverDisp, AttrLine, meshtoReplace) {
+function dispHelperAndReplaceHover_wallModRule_adjCheck (func_replaceHoverDisp, grpAttrLine, meshtoReplace) {
+
     // var list_args = Array.from(arguments);
     // const args_adjacency = list_args.slice(3) // remove the first 3 parameters
-    if (AttrLine.adjacency == 'neighbour') { // check attribute
+    if (grpAttrLine.adjacency == 'neighbour') { // check attribute
         showHelper("Only wall modules can be placed against the boundaries along neighouring volumes.")
-    } else if (AttrLine.adjacency == 'extent') {
+    } else if (grpAttrLine.adjacency == 'extent') {
         showHelper("Only wall modules can be placed against the boundaries along neighouring volumes.")
     } else {
         func_replaceHoverDisp( meshtoReplace );
@@ -4166,17 +3740,17 @@ function dispHelperAndReplaceHover_wallModRule_adjCheck (func_replaceHoverDisp, 
 // --------------------------------
 
 function dispHelperAndReplaceHover_doorModRule (func_replaceHoverDisp, grpInt) {
-    const AttrLine = getAttriLine_atBdyMesh( grpInt );
-    if (AttrLine != undefined) { // if boundary-positioned attribute line exist
-        dispHelperAndReplaceHover_doorModRule_adjCheck ( func_replaceHoverDisp, AttrLine, grpInt );
+    const grpAttrLine = getAttriLine_atBdyWall( grpInt )
+    if (grpAttrLine != undefined) { // if boundary-positioned attribute line exist
+        dispHelperAndReplaceHover_doorModRule_adjCheck ( func_replaceHoverDisp, grpAttrLine, grpInt )
     } else { // if boundary-positioned attribute line do not exist
         func_replaceHoverDisp( grpInt );
     }
 }
 
-function dispHelperAndReplaceHover_doorModRule_adjCheck (func_replaceHoverDisp, AttrLine, meshtoReplace) {
+function dispHelperAndReplaceHover_doorModRule_adjCheck (func_replaceHoverDisp, grpAttrLine, meshtoReplace) {
 
-    if (AttrLine.adjacency !== 'corridor') { // check attribute
+    if (grpAttrLine.adjacency !== 'corridor') { // check attribute
         showHelper("Door modules on the boundary walls can only be placed along the corridor.")
     } else {
         func_replaceHoverDisp( meshtoReplace );
@@ -4188,125 +3762,29 @@ function dispHelperAndReplaceHover_doorModRule_adjCheck (func_replaceHoverDisp, 
 // ====================================================
 
 // --------------------------------
-//    Get End Points of AttrLine
+//    Get AttrLine at Bdy Wall 
 // --------------------------------
 
-function getpos_EndPtsOfAttrLine (pos, angle, len_half) {
-    const dir = checkDirofMesh ( angle );
-    const endPoints = [];
-    if (dir == "front/back") {
-        const starting_pt = new THREE.Vector3 ( (pos.x - len_half), pos.y, zpos_AttrLine );
-        const ending_pt   = new THREE.Vector3 ( (pos.x + len_half), pos.y, zpos_AttrLine );
-        endPoints.push( starting_pt,ending_pt )
-    } else {
-        const starting_pt = new THREE.Vector3 ( pos.x, (pos.y - len_half), zpos_AttrLine );
-        const ending_pt   = new THREE.Vector3 ( pos.x, (pos.y + len_half), zpos_AttrLine );
-        endPoints.push( starting_pt,ending_pt )
-    }
-    return endPoints
-}
-
-// --------------------------------
-//    Add AttrLine on Floor
-// --------------------------------
-
-function addAttrLinesOnFloor() {
-    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_meshFloor);
-
-    list_posOfDivCen.forEach(function(cen) {
-        const list_CoordOfCorner = getCoordsOfBaseCorners( cen, PartWall_width, 0 );
-
-        // dispDotsfromCoords ( matDot_Large, list_CoordOfCorner)
-
-        // console.log(list_posOfDivCen)
-        const list = list_CoordOfCorner.slice(0)
-        list.push(list[0]);
-        for(var i=0; i < list.length - 1; i++){
-            const pos_midpoint = calcMidptof2pt (list[i], list[i+1]);
-            addAttr_interior (pos_midpoint, list[i], list[i+1]);
-            // console.log( 'interior',pos_midpoint );
-
-
-            // const key = keyGen ( pos_midpoint );
-            // const bool_keyExistance = getbool_keyExistance(key);
-            // if ( bool_keyExistance ) { // if key already exist
-            // const AttrLine = dictAttrLine[key];
-            // const adjacency = AttrLine.adjacency;
-            // if (adjacency == 'extent')  {
-            //     deleteAttrLineUnit (pos_midpoint);
-            //     const attrSet = ['', 'interior'];
-            //     addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
-            // } //Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
-        
-            // } else { // if key does not exist
-            //     const attrSet = ['', 'interior']
-            //     addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet)
-            // }
-            // console.log('interior', pos_midpoint)
-        } 
-    
-    })
-    // addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrSet)
-
-}
-
-// --------------------------------
-//    Delete AttrLine on Floor
-// --------------------------------
-function delAttrLinesOnFloor() {
-    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_meshFloor);
-
-    list_posOfDivCen.forEach(function(cen) {
-        const list_CoordOfCorner = getCoordsOfBaseCorners( cen, PartWall_width, 0 );
-        const list = list_CoordOfCorner.slice(0)
-        list.push(list[0]);
-        for(var i=0; i < list.length - 1; i++){
-            const pos_midpoint = calcMidptof2pt (list[i], list[i+1]);
-            delAttr_interior (pos_midpoint, list[i], list[i+1]);
-        } 
-    })
-}
-
-
-
-
-function getListofDivCen_fromFloorPos (pos_meshFloor) {
-    const cen_middle = pos_meshFloor.clone().add(offsetHeight_AttrLine_fromFloorPos);
-    const cen_starting = cen_middle.clone().sub(offsetValue_hor_PartWall).add(offsetValue_ver_PartWall);
-    const list_posOfDivCen = getPointArr( num_div_onFloor, num_div_row_onFloor, cen_starting, PartWall_width );
-    // console.log(offsetValue_hor_PartWall)
-
-    return list_posOfDivCen
-}
-
-
-// --------------------------------
-//    Get AttrLine at Bdy
-// --------------------------------
-
-function getAttriLine_atBdyMesh( meshBdyWall ) {
+function getAttriLine_atBdyWall( meshBdyWall ) {
     const pos_meshInt = meshBdyWall.position;
     const angle_meshInt = meshBdyWall.rotation.z;
-    const pos_grpAttrLine = getPos_AttrLine_atBdy (pos_meshInt, angle_meshInt);
+    const pos_grpAttrLine = getPos_AttrLine_atBdyWall (pos_meshInt, angle_meshInt);
     const key_grpAttrLine = keyGen( pos_grpAttrLine );
-    const AttrLine = dictAttrLine[key_grpAttrLine]
-
-    return AttrLine
+    const grpAttrLine = dictAttrLine[key_grpAttrLine]
+    return grpAttrLine
 }
 
-function getPos_AttrLine_atBdy (pos_BdyWall, angle_BdyWall) { 
-    var pos_intAttrLine = null; // to be overwritten
+function getPos_AttrLine_atBdyWall (pos_BdyWall, angle_BdyWall) { 
+    var pos_intAttrLine = null;
     if (angle_BdyWall == Math.PI / 2 ) { // left boundary wall
-        pos_intAttrLine = new THREE.Vector3 ( (pos_BdyWall.x - offsetValue_BdyWall) , pos_BdyWall.y, zpos_AttrLine );
+        var pos_intAttrLine = new THREE.Vector3 ( (pos_BdyWall.x - offsetValue_BdyWall) , pos_BdyWall.y, (pos_BdyWall.z-BdyWall_height_half) );
     } else if ( angle_BdyWall == - Math.PI / 2 ) { // right boundary wall
-        pos_intAttrLine = new THREE.Vector3 ( (pos_BdyWall.x + offsetValue_BdyWall) , pos_BdyWall.y, zpos_AttrLine );
+        var pos_intAttrLine = new THREE.Vector3 ( (pos_BdyWall.x + offsetValue_BdyWall) , pos_BdyWall.y, (pos_BdyWall.z-BdyWall_height_half) );
     } else if ( angle_BdyWall == 0 ) { // front boundary wall
-        pos_intAttrLine = new THREE.Vector3 ( pos_BdyWall.x, (pos_BdyWall.y + offsetValue_BdyWall), zpos_AttrLine );
+        var pos_intAttrLine = new THREE.Vector3 ( pos_BdyWall.x, (pos_BdyWall.y + offsetValue_BdyWall), (pos_BdyWall.z-BdyWall_height_half) );
     } else { // back boundary wall
-        pos_intAttrLine = new THREE.Vector3 ( pos_BdyWall.x, (pos_BdyWall.y - offsetValue_BdyWall), zpos_AttrLine );
+        var pos_intAttrLine = new THREE.Vector3 ( pos_BdyWall.x, (pos_BdyWall.y - offsetValue_BdyWall), (pos_BdyWall.z-BdyWall_height_half) );
     }
-    // console.log('pos_intAttrLine',pos_intAttrLine)
-    pos_intAttrLine = roundPos(pos_intAttrLine,3)
     return pos_intAttrLine
 }
 
@@ -4329,9 +3807,7 @@ function addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrS
     scene.add(AttrLineUnit)
     
     // Add Text
-    const pos_midpoint = calcMidptof2pt(starting_pt, ending_pt);
-    // console.log(pos_midpoint)
-
+    const pos_midpoint = starting_pt.clone().add(ending_pt).divideScalar(2);
     const pos_text = textPosFromPos ( pos_midpoint );
 
         // const midpointdot = dispDotsfromCoords( matAttrDot_Large, [pos_midpoint] );
@@ -4346,29 +3822,15 @@ function addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrS
     AttrLineUnit.name = "attribute_line";
     AttrLineUnit.adjacency = attrSet[1];
     AttrLineUnit.key = key;
-    if ( starting_pt.x == ending_pt.x ) { // VERT
-        AttrLineUnit.angle = Math.PI/2;
-    } else { // HORIZ
-        AttrLineUnit.angle = 0;
-    }
-
     
-    return AttrLineUnit
+    return AttrLineUnit, pos_midpoint
 }
 
 function deleteAttrLineUnit (pos_AttrLine) {
-    // console.log(Object.keys(dictTextMesh).length )
-
     const textpos = textPosFromPos (pos_AttrLine)
     const key_text = keyGen( textpos )
-    // console.log(key_text, dictTextMesh, dictTextMesh[key_text])
-
     scene.remove( dictTextMesh[key_text] );
-
     delete dictTextMesh[ key_text ];
-    // console.log(Object.keys(dictTextMesh).length )
-
-
 
     const key_AttrLine = keyGen( pos_AttrLine )
     scene.remove( dictAttrLine[key_AttrLine] );
@@ -4384,7 +3846,7 @@ function posaddAttrLine_availBdy (first_pt, ...args) { // 'RRR DDD LLL UUUU'
     var start_pt = first_pt; // to be overwritten 
     var AttrLine = null; // to be overwritten
 
-    const list_attrSet = Array.from(arguments); // e.g. list_attrSet = [ first_pt, ['R', 'corridor'], ['D', 'corridor'] ]
+    var list_attrSet = Array.from(arguments); // e.g. list_attrSet = [ first_pt, ['R', 'corridor'], ['D', 'corridor'] ]
     list_attrSet.shift(); // return array with the first item removed
 
     list_attrSet.forEach ( function(attrSet) { // e.g. attrSet = ['R', 'corridor']
@@ -4395,32 +3857,44 @@ function posaddAttrLine_availBdy (first_pt, ...args) { // 'RRR DDD LLL UUUU'
 }
 
 function drawCmd_AttrLines (start_pt, attrSet) { // based on command, execute function accordingly
-    // DIRECTION MULTIPLIERS
-    const dir = attrSet[0]
-    var arrDir_x = null; // to be overwritten
-    var arrDir_y = null; // to be overwritten
-        if (dir == 'R') { arrDir_x = 1; arrDir_y = 0; };
-        if (dir == 'D') { arrDir_x = 0; arrDir_y =-1; };
-        if (dir == 'L') { arrDir_x =-1; arrDir_y = 0; };
-        if (dir == 'U') { arrDir_x = 0; arrDir_y = 1; };
-        // const arrDir_x = [1,0,-1,0]; const arrDir_y = arrDir_x.slice(0).reverse();
-        // dispDotsfromCoords ( matDot_Large, [start_pt] )
-    
-    // CREATE LINEAR ARRAYS
-    const list_pt = arrLinearPoints ( num_div_row_onFloor+1, start_pt, PartWall_width*arrDir_x, PartWall_width*arrDir_y )// CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-    start_pt = list_pt[list_pt.length-1]
-        // dispDotsfromCoords ( matDot_Large, list_pt )
-    
-    // CREATE ATTRIBUTE LINES
     var AttrLine = null; // to be overwritten
-    for(var k=0; k < list_pt.length-1; k++){
-        // const pos_midpoint = calcMidptof2pt (list_pt[k], list_pt[k+1]);
-        AttrLine = addAttrLineUnit (list_pt[k], list_pt[k+1], matAttrLine, matAttrDot, attrSet);
-    }
 
+    const dir = attrSet[0]
+    if (dir == 'R') {
+        [start_pt, AttrLine]= drawAttrLineRight (start_pt, attrSet);
+    };
+    if (dir == 'D') {
+        [start_pt, AttrLine] = drawAttrLineDown (start_pt, attrSet);
+    };
+    if (dir == 'L') {
+        [start_pt, AttrLine] = drawAttrLineLeft (start_pt, attrSet);
+    };
+    if (dir == 'U') {
+        [start_pt, AttrLine] = drawAttrLineUp (start_pt, attrSet);
+    };
     return [start_pt, AttrLine]
 }
 
+function drawAttrLineRight (start_pt, attrSet) {
+    const end_pt = start_pt.clone().add( new THREE.Vector3( volume_width, 0, 0 ) );
+    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
+    return [end_pt, AttrLine]
+}
+function drawAttrLineDown (start_pt, attrSet) {
+    const end_pt = start_pt.clone().add( new THREE.Vector3( 0, -volume_width, 0 ) );
+    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
+    return [end_pt, AttrLine]
+}
+function drawAttrLineLeft (start_pt, attrSet) {
+    const end_pt = start_pt.clone().add( new THREE.Vector3( -volume_width, 0, 0 ) );
+    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
+    return [end_pt, AttrLine]
+}
+function drawAttrLineUp (start_pt, attrSet) {
+    const end_pt = start_pt.clone().add( new THREE.Vector3( 0, volume_width, 0 ) );
+    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
+    return [end_pt, AttrLine]
+}
 
 
 // ====================================================
@@ -4428,18 +3902,16 @@ function drawCmd_AttrLines (start_pt, attrSet) { // based on command, execute fu
 // ====================================================
 
 function textPosFromPos ( pos ) {
-    const pos_text = new THREE.Vector3 ( (pos.x - 0.2), (pos.y -0.05 ), (pos.z + 0.1))
-    const pos_text_rounded = roundPos(pos_text,3);
-    // console.log(pos_text_rounded)
-    return pos_text_rounded
+    const pos_text = new THREE.Vector3 ( (pos.x - 0.9), (pos.y -0.1 ), (pos.z + 0.8))
+    return pos_text
 }
 
 function displayText (string, pos) {
     fontloader.load('https://unpkg.com/three@0.119.1/examples/fonts/helvetiker_regular.typeface.json', 
     function(font) {
-        const textgeometry = new THREE.TextGeometry(string, {
+        var textgeometry = new THREE.TextGeometry(string, {
         font: font,
-        size: 0.1,
+        size: 0.3,
         height: 0,
         });
         const textMesh = new THREE.Mesh(textgeometry, matAttrText);
@@ -4510,84 +3982,6 @@ document.body.appendChild(link);
 //////////////////// -------------PRIMITIVE FUNCTIONS------------------------------------------------------ //////////////////// 
 
 // --------------------------------
-//    Round Decimal Poits
-// --------------------------------
-
-function roundPos (pos, dp){ //mostly 3, with a few 7
-    const rounded_pos = new THREE.Vector3( round(pos.x, dp), round(pos.y, dp), round(pos.z, dp));
-    return rounded_pos
-}
-
-function round(num, dp) {
-    const num_rounded = Number( num.toFixed(dp) );
-    // const num_rounded = Math.round(num * (10**dp)) / (10**dp)
-    // console.log(num_rounded)
-    return num_rounded
-}
-
-// --------------------------------
-//    Create Point Array
-// --------------------------------
-
-function getPointArr( num_pt, num_rows, starting_pt, spacing ){ // starting_pt is the top left pt
-    const list_CoordofPts = []
-    for (let i = 0; i < num_pt; i++) {
-        const remainder = i % num_rows;
-        const quotient = Math.floor( i/num_rows );
-        const pt = starting_pt.clone().add(new THREE.Vector3( spacing*remainder, -spacing*quotient, 0));
-        const pt_rounded = roundPos (pt, 3);
-        list_CoordofPts.push(pt_rounded);
-        // console.log(pt, pt_rounded)
-            // console.log(remainder, quotient)
-            // dispDotsfromCoords ( matDot_Large, [pt])
-    }
-    return list_CoordofPts
-}
-
-function arrLinearPoints ( num_pt, start_pt, translation_x, translation_y ) {
-    // CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-    const list_pt = []; // to be overwritten
-    for(var j=0; j < num_pt; j++){
-        const pos_arr = start_pt.clone().add(new THREE.Vector3( j*translation_x, j*translation_y, 0)); // at boundary
-        list_pt.push( pos_arr );
-            // dispDotsfromCoords ( matDot_Large, [pos_arr] )
-    }
-    return list_pt
-}
-
-
-// --------------------------------
-//    Get 4 Corners Coords
-// --------------------------------
-
-function getCoordsOfBaseCorners( cen, baseLen, vertOffset ) { // of a volume cube
-    const base_frontleft_coord = new THREE.Vector3( cen.x - baseLen/2, cen.y + baseLen/2, cen.z + vertOffset );
-    const base_frontright_coord = new THREE.Vector3( cen.x + baseLen/2, cen.y + baseLen/2, cen.z + vertOffset );
-    const base_backright_coord = new THREE.Vector3( cen.x + baseLen/2, cen.y - baseLen/2, cen.z + vertOffset );
-    const base_backleft_coord = new THREE.Vector3( cen.x - baseLen/2, cen.y - baseLen/2, cen.z + vertOffset );
-    const list_CoordOfCorner = [ roundPos(base_frontleft_coord, 7), roundPos(base_frontright_coord, 7), roundPos(base_backright_coord, 7), roundPos(base_backleft_coord, 7) ]
-    // console.log(list_CoordOfCorner)
-    return list_CoordOfCorner
-}
-
-// --------------------------------
-//    Get Closest Position
-// --------------------------------
-
-function getClosestPos (MainPos, list_pos) {
-    var pos_closest = new THREE.Vector3(10,10,10); // to be overwritten; it is not a random far away position
-    list_pos.forEach( function(pos) {
-        const dist_toPos = pos.distanceTo( MainPos );
-        const dist_toPosClosest = pos_closest.distanceTo( MainPos );
-        if (dist_toPos < dist_toPosClosest) {
-            pos_closest = pos;
-        }
-    })
-    return pos_closest
-}
-
-
-// --------------------------------
 //    Check Horiz / Vert
 // --------------------------------
 
@@ -4636,7 +4030,7 @@ function mergeMeshes(list_mesh, mat, meshMerged, meshMergedName) { // meshMerge 
 //    Merge Buffer Geometry
 // --------------------------------
 function mergeBufferGeometry(list_bufferGeom, mat, meshMerged, meshMergedName) {
-    const bufferGeometryMerged = BufferGeometryUtils.mergeBufferGeometries(list_bufferGeom, false); // https://jsfiddle.net/j3dakqmr/
+    var bufferGeometryMerged = BufferGeometryUtils.mergeBufferGeometries(list_bufferGeom, false); // https://jsfiddle.net/j3dakqmr/
     meshMerged = new THREE.Mesh(bufferGeometryMerged, mat);
     meshMerged.name = meshMergedName
     meshMerged.visible = false;
@@ -4647,7 +4041,7 @@ function mergeBufferGeometry(list_bufferGeom, mat, meshMerged, meshMergedName) {
 
 function removeSingleArrayItem(arr, value) {
     var arr_copy = arr.slice(0); // makes a copy of the original array by taking a slice from the element at index 0 to the last element.
-    const index = arr_copy.indexOf(value);
+    var index = arr_copy.indexOf(value);
     if (index > -1) { // prevent reversed index
         arr_copy.splice(index, 1); // 2nd parameter means remove one item only
     }
@@ -4659,24 +4053,22 @@ function removeSingleArrayItem(arr, value) {
 // --------------------------------
 
 function showHelper(string) {
-    const helper = document.getElementById('helper');
+    var helper = document.getElementById('helper');
     helper.innerHTML = string;
     helper.style.visibility = "visible";
 }
 function hideHelper() {
-    const helper = document.getElementById('helper');
+    var helper = document.getElementById('helper');
     helper.style.visibility = "hidden";
 }
 
 // --------------------------------
-//    Get Midpoint of 2 Points
+//    Get Midpoint Position
 // --------------------------------
 
 function calcMidptof2pt (starting_pt, ending_pt) {
     const pos_midpoint = starting_pt.clone().add(ending_pt).divideScalar(2)
-    const pos_midpoint_rounded = roundPos(pos_midpoint, 3)
-    // console.log(pos_midpoint_rounded)
-    return pos_midpoint_rounded
+    return pos_midpoint
 }
 
 
@@ -4709,27 +4101,6 @@ function draw_lines (first_pt, str) { // 'RRR DDD LLL UUUU'
         // ignore if dir == ' '
     }
 }
-function drawAttrLineRight (start_pt, attrSet) {
-    const end_pt = start_pt.clone().add( new THREE.Vector3( volume_width, 0, 0 ) );
-    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    return [end_pt, AttrLine]
-}
-function drawAttrLineDown (start_pt, attrSet) {
-    const end_pt = start_pt.clone().add( new THREE.Vector3( 0, -volume_width, 0 ) );
-    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    return [end_pt, AttrLine]
-}
-function drawAttrLineLeft (start_pt, attrSet) {
-    const end_pt = start_pt.clone().add( new THREE.Vector3( -volume_width, 0, 0 ) );
-    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    return [end_pt, AttrLine]
-}
-function drawAttrLineUp (start_pt, attrSet) {
-    const end_pt = start_pt.clone().add( new THREE.Vector3( 0, volume_width, 0 ) );
-    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    return [end_pt, AttrLine]
-}
-
 
 // --------------------------------
 //       ( - futurework - ) changeGridPos, autoGenBdyWalls 

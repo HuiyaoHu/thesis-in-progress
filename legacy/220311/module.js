@@ -204,8 +204,7 @@ const alloy = new THREE.MeshStandardMaterial({color: 'black'});
 // DIMENSIONS
 const volume_width = 3.5; const volume_width_half = volume_width/2;
 const volume_length = 3.5;
-const volume_height = 3.5; const volume_height_half = 3.5/2;
-
+const volume_height = 3.5;
 
 // GEOMETRIES
 const geomVolume = new THREE.BoxBufferGeometry( volume_width, volume_length, volume_height );
@@ -491,7 +490,7 @@ var cnt_meshCeiling = 0;
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 // DIMENSIONS
-const BdyWall_width = round((3.5/3),7); const BdyWall_width_half = BdyWall_width / 2;
+const BdyWall_width = 3.5; const BdyWall_width_half = BdyWall_width / 2;
 const BdyWall_height = 3.5; const BdyWall_height_half = BdyWall_height / 2;
 const BdyWall_thickness = 0.15;
 
@@ -512,7 +511,6 @@ scene.add(meshBdyWallDel);
 
 const offsetValue_BdyWall = BdyWall_thickness/2 - 0.01;
 
-
 // INITIALISATION 
 var dictBdyWall = {};
 var pos_meshBdyWall = null;
@@ -526,7 +524,7 @@ var angle_meshBdyWall = 0;
 
 // DIMENSIONS
 const PartWall_height = 3.5; const PartWall_height_half = PartWall_height / 2;
-const PartWall_width = BdyWall_width; const PartWall_width_half = PartWall_width / 2;
+const PartWall_width = 3.5/3; const PartWall_width_half = PartWall_width / 2;
 const PartWall_thickness = 0.15;
 
 // GEOMETRIES
@@ -889,14 +887,8 @@ const offsetValue_hor_PartWall = new THREE.Vector3( PartWall_width, 0, 0);
 const offsetValue_ver_PartWall = new THREE.Vector3( 0, PartWall_width, 0); 
 const offsetHeight_meshPartWall_fromAttrLine = new THREE.Vector3(0, 0, PartWall_height_half - floor_thickness);
 
-const offsetValue_hor_BdyWall = new THREE.Vector3( PartWall_width_half, 0, 0); 
-const offsetHeight_posVerMod_fromFloorPos = BdyWall_height_half - floor_thickness_half;
-const offsetHeight_AttrLine_fromVolPos = -volume_height_half + floor_thickness;
-
-const num_div_row_onFloor = floor_width / PartWall_width;
+const num_div_row_onFloor = 3;
 const num_div_onFloor = num_div_row_onFloor * num_div_row_onFloor;
-
-const zpos_AttrLine = floor_thickness;
 
 
 
@@ -910,8 +902,8 @@ var angle_grpAttrLine = 0;
 
 // GEOMETRIES
 
-const top_left_corner = new THREE.Vector3( -volume_width*2, volume_width*2, floor_thickness );
-    // dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
+const top_left_corner = new THREE.Vector3( -volume_width*2, volume_width*2, 0 );
+dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
 posaddAttrLine_availBdy ( // Add Attribute line
     top_left_corner,
     ['R', 'corridor'],
@@ -2399,7 +2391,7 @@ function addVolume(key) {
     document.getElementById('buttonVolume').innerHTML = "Volume: " + cnt_meshVolume; 
 
     // UPDATE POINTS IN SCENE
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshVolume, volume_width,  offsetHeight_AttrLine_fromVolPos);
+    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshVolume, volume_width, -volume_width_half );
     list_CoordOfCorner.forEach( updatePoints );
     addAttrLine_purchasedVolBdy(list_CoordOfCorner);
 
@@ -2416,61 +2408,41 @@ function addAttrLine_purchasedVolBdy (list_CoordOfCorner) { // "extent"
     const list = list_CoordOfCorner.slice(0)
     list.push(list[0]);
     for(var i=0; i < list.length - 1; i++){
-        // CLOCKWISE MULTIPLIERS
-        const arrDir_x = [1,0,-1,0]; const arrDir_y = arrDir_x.slice(0).reverse();
-        
-        // CREATE LINEAR ARRAYS
-        const pos_corner = list[i]; // at boundary
-        const list_pt = arrLinearPoints ( num_div_row_onFloor+1, pos_corner, PartWall_width*arrDir_x[i], PartWall_width*arrDir_y[i] )// CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-
-        /*
-        const list_pt = []; // to be overwritten
-        for(var j=0; j < num_div_row_onFloor+1; j++){
-            const pos_arr = pos_corner.clone().add(new THREE.Vector3( PartWall_width*j*arrDir_x[i], PartWall_width*j*arrDir_y[i], 0)); // at boundary
-            list_pt.push( pos_arr );
-                // dispDotsfromCoords ( matDot_Large, [pos_arr] )
-        }
-        */
-
-        // CREATE ATTRIBUTE LINES
-        for(var k=0; k < list_pt.length-1; k++){
-            const pos_midpoint = calcMidptof2pt (list_pt[k], list_pt[k+1]);
-            addAttr_extent (pos_midpoint, list_pt[k], list_pt[k+1])
-            // const pos_BdyWall = calcMidptof2pt(list_pt[k], list_pt[k+1])
-            // const key_BdyWall = keyGen(pos_BdyWall);
-            // addBdyWall(key_BdyWall, pos_BdyWall, 0)
+        const pos_midpoint = calcMidptof2pt (list[i], list[i+1]);
+        const key = keyGen ( pos_midpoint );
+        const bool_keyExistance = getbool_keyExistance(key);
+        if ( bool_keyExistance ) { // if key already exist
+            const AttrLine = dictAttrLine[key];
+            const adjacency = AttrLine.adjacency;
+            if (adjacency == 'extent')  {
+                deleteAttrLineUnit (pos_midpoint);
+                const attrSet = ['', 'interior'];
+                addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
+            } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
+    
+        } else { // if key does not exist
+            const attrSet = ['', 'extent']
+            addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet)
         }
     } 
 }
-
 
 function deleteAttrLine_purchasedVolBdy (list_CoordOfCorner) {
     const list = list_CoordOfCorner.slice(0)
     list.push(list[0]);
     for(var i=0; i < list.length - 1; i++){
-        // CLOCKWISE MULTIPLIERS
-        const arrDir_x = [1,0,-1,0]; const arrDir_y = arrDir_x.slice(0).reverse();
-        
-        // CREATE LINEAR ARRAYS
-        const pos_corner = list[i]; // at boundary
-        const list_pt = arrLinearPoints ( num_div_row_onFloor+1, pos_corner, PartWall_width*arrDir_x[i], PartWall_width*arrDir_y[i] )// CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-        // const list_pt = []; // to be overwritten
-        // for(var j=0; j < num_div_row_onFloor+1; j++){
-            // const pos_arr = pos_corner.clone().add(new THREE.Vector3( j*PartWall_width*arrDir_x[i], j*PartWall_width*arrDir_y[i], 0)); // at boundary
-            // list_pt.push( pos_arr );
-                // dispDotsfromCoords ( matDot_Large, [pos_arr] )
-        // }
-
-        // CREATE ATTRIBUTE LINES
-        for(var k=0; k < list_pt.length-1; k++){
-            const pos_midpoint = calcMidptof2pt (list_pt[k], list_pt[k+1]);
-
-            delAttr_extent (pos_midpoint, list_pt[k], list_pt[k+1]);
-            // const pos_BdyWall = calcMidptof2pt(list_pt[k], list_pt[k+1])
-            // const key_BdyWall = keyGen(pos_BdyWall);
-            // addBdyWall(key_BdyWall, pos_BdyWall, 0)
+        const pos_midpoint = calcMidptof2pt (list[i], list[i+1]);
+        const key = keyGen ( pos_midpoint );
+        const AttrLine = dictAttrLine[key];
+        const adjacency = AttrLine.adjacency;
+        if (adjacency == 'extent' )  {
+            deleteAttrLineUnit (pos_midpoint);
+        } else if (adjacency == 'interior') {
+            deleteAttrLineUnit (pos_midpoint);
+            const attrSet = ['', 'extent'];
+            addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
         }
-    } 
+    }
 }
 
 function updatePoints(coord) { // add or remove points in the scene
@@ -2496,7 +2468,7 @@ function deleteVolume( values ) {
     cnt_meshVolume -= 1; 
 
     // UPDATE POINTS IN SCENE
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshVolume, volume_width, offsetHeight_AttrLine_fromVolPos );
+    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshVolume, volume_width, -volume_width_half );
     list_CoordOfCorner.forEach( updatePoints );
 
     deleteAttrLine_purchasedVolBdy (list_CoordOfCorner);
@@ -2526,7 +2498,7 @@ function addFloor(key) {
     document.getElementById('buttonFloor').innerHTML = "Floor: " + cnt_meshFloor;
     // console.log('~~~meshFloor~~~', meshFloor) 
 
-    addAttrLinesOnFloor();
+    addAttrLinesOnFloor(  );
 };
 
 function deleteFloor(meshFloor) {
@@ -2534,121 +2506,9 @@ function deleteFloor(meshFloor) {
     delete dictFloor[ meshFloor.floor_key ];
     cnt_meshFloor -= 1; 
     document.getElementById('buttonFloor').innerHTML = "Floor: " + cnt_meshFloor;
-    delAttrLinesOnFloor();
 };
 
-function genBdyWallEnclosure( pos_meshFloor ) {
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshFloor, floor_width, offsetHeight_posVerMod_fromFloorPos );//frontleft, frontright, backright, backleft
-    const list = list_CoordOfCorner.slice(0)
-    list.push(list[0]);
-
-    for(var i=0; i < list.length-1; i++){
-        // CLOCKWISE MULTIPLIERS
-        const arrDir_x = [1,0,-1,0]; const arrDir_y = arrDir_x.slice(0).reverse();
-        const multp_angle = [0,-1,2,1];
-        const offsetDir_x = [0,-1,0,1]; 
-        const offsetDir_y = [-1,0,1,0]; 
-        const adjoffsetDir_x = [0,1,0,-1];
-        const adjoffsetDir_y = [1,0,-1,0];
-
-        // CREATE STARTING POS OF ARRAY
-        const pos_corner = list[i]; // at boundary
-        const pos_arrstart = pos_corner.clone().add(new THREE.Vector3( PartWall_width_half*arrDir_x[i], PartWall_width_half*arrDir_y[i], 0)); // at boundary
-            // dispDotsfromCoords ( matDot_Large, [pos_arrstart] )
-            // console.log(dictBdyWall)
-
-        // CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-        for(var j=0; j < num_div_row_onFloor; j++){
-            const pos_arr = pos_arrstart.clone().add(new THREE.Vector3( PartWall_width*j*arrDir_x[i], PartWall_width*j*arrDir_y[i], 0)); // at boundary
-            const pos_arr_rounded = roundPos(pos_arr, 3) // at boundary, Javascript limitation: giving infinite decimal when the value is not infinite (see BdyWall_width)
-            const pos_mesh = pos_arr_rounded.clone().add(new THREE.Vector3( offsetValue_BdyWall*arrDir_y[i], offsetValue_BdyWall*offsetDir_y[i], 0 ) ) // offset from boundary
-            const key_mesh = keyGen(pos_mesh);
-            const angle_mesh = Math.PI / 2 *multp_angle[i];
-
-            const pos_adjacent_mesh = pos_arr_rounded.clone().add(new THREE.Vector3( offsetValue_BdyWall*adjoffsetDir_x[i], offsetValue_BdyWall*adjoffsetDir_y[i], 0 ) );
-            const key_adjacent_mesh = keyGen(pos_adjacent_mesh);
-                // dispDotsfromCoords ( matDot_Large, [pos_mesh, pos_adjacent_mesh] )  
-                // console.log(pos_adjacent_mesh)
-           
-            const bool_keyExistance = getbool_keyExistance(key_adjacent_mesh);
-            if ( bool_keyExistance ) { // if adjacent mesh exists, delete adjacent mesh
-                ifMatchKey_deleteMesh(key_adjacent_mesh, 'BoundaryWall', 'Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); 
-            } else {
-                addBdyWall(key_mesh, pos_mesh, angle_mesh); // if adjacent mesh does not exist, add meshs
-            }
-                    
-        }
-
-
-
-    }
-
-}
-
-function deleteMeshEnclosure(pos_meshFloor) { // overwrite any existing hybrid module
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshFloor, floor_width, BdyWall_height_half-floor_thickness_half );//frontleft, frontright, backright, backleft
-    const list = list_CoordOfCorner.slice(0)
-    list.push(list[0]);
-    // console.log( Object.keys(dictBdyWall) )
-    console.log( Object.keys(dictPartWall) )
-
-
-
-    for(var i=0; i < list.length-1; i++){
-        // CLOCKWISE MULTIPLIERS
-        const arrDir_x = [1,0,-1,0]; const arrDir_y = arrDir_x.slice(0).reverse();
-        const multp_angle_adj = [2,1,0,-1]; // [0,-1,2,1]
-        const offsetDir_x = [0,-1,0,1]; 
-        const offsetDir_y = [-1,0,1,0]; 
-        const adjoffsetDir_x = [0,1,0,-1];
-        const adjoffsetDir_y = [1,0,-1,0];
-
-        // CREATE STARTING POS OF ARRAY
-        const pos_corner = list[i]; // at boundary
-        const pos_arrstart = pos_corner.clone().add(new THREE.Vector3( PartWall_width_half*arrDir_x[i], PartWall_width_half*arrDir_y[i], 0)); // at boundary
-            // dispDotsfromCoords ( matDot_Large, [pos_arrstart] )
-            // console.log(dictBdyWall)
-
-        // CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-        // const list_pt = []; // to be overwritten
-        for(var j=0; j < num_div_row_onFloor; j++){
-            const pos_arr = pos_arrstart.clone().add(new THREE.Vector3( PartWall_width*j*arrDir_x[i], PartWall_width*j*arrDir_y[i], 0)); // at boundary
-            const pos_arr_rounded = roundPos(pos_arr, 3); // at boundary, Javascript limitation: giving infinite decimal when the value is not infinite (see BdyWall_width)
-            const pos_mesh = pos_arr_rounded.clone().add(new THREE.Vector3( offsetValue_BdyWall*arrDir_y[i], offsetValue_BdyWall*offsetDir_y[i], 0 ) ) // offset from boundary
-            const key_mesh = keyGen(pos_mesh);
-
-            const pos_adjacent_mesh = pos_arr_rounded.clone().add(new THREE.Vector3( offsetValue_BdyWall*adjoffsetDir_x[i], offsetValue_BdyWall*adjoffsetDir_y[i], 0 ) );
-            const key_adjacent_mesh = keyGen(pos_adjacent_mesh);
-            const angle_adjmesh = Math.PI / 2 *multp_angle_adj[i];
-
-                // dispDotsfromCoords ( matDot_Large, [pos_mesh, pos_adjacent_mesh] )  
-                // console.log(pos_adjacent_mesh)
-            const pos_partMesh = pos_arr_rounded;
-            const key_partMesh = keyGen(pos_partMesh);
-
-            const bool_keyExistance = getbool_keyExistance(key_mesh);
-            const bool_keyExistance_partMesh = getbool_keyExistance(key_partMesh);
-            // console.log( key_partMesh )
-            // console.log( key_mesh )
-
-            if ( bool_keyExistance ) { // if adjacent mesh exists, delete adjacent mesh
-                ifMatchKey_deleteMesh(key_mesh, 'BoundaryWall', 'Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); 
-            } else {
-                if (bool_keyExistance_partMesh) { // if partition mesh exist, delete
-                    ifMatchKey_deleteMesh(key_partMesh, 'PartitionWall', 'Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); 
-                }
-                addBdyWall(key_adjacent_mesh, pos_adjacent_mesh, angle_adjmesh);
-            }
-            
-            // list_pt.push( pt );
-        }
-
-
-    }
-
-}
-
-function XgenBdyWallEnclosure(pos_meshFloor) { // overwrite any existing hybrid mod
+function genBdyWallEnclosure(pos_meshFloor) { // overwrite any existing hybrid mod
 
     // LEFT BOUNDARY WALL
     var angle_mesh = Math.PI / 2;
@@ -2717,7 +2577,7 @@ function XgenBdyWallEnclosure(pos_meshFloor) { // overwrite any existing hybrid 
     // pos_meshBdyWall = null // restore to initialisation state
 }
 
-function XdeleteMeshEnclosure(pos_meshFloor) { // overwrite any existing hybrid module
+function deleteMeshEnclosure(pos_meshFloor) { // overwrite any existing hybrid module
 
     // LEFT BOUNDARY MESH
     var pos_mesh = new THREE.Vector3(pos_meshFloor.x - floor_width_half + offsetValue_BdyWall, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
@@ -2886,20 +2746,12 @@ function addBdyWall(key, pos, angle) {
     meshBdyWall.matrixAutoUpdate = false;
     meshBdyWall.updateMatrix();
     
-    const pos_AttrLine = getPos_AttrLine_atBdy (pos, angle);
-    const endPoints = getpos_EndPtsOfAttrLine (pos_AttrLine, angle, BdyWall_width_half);
-    
-    const xkey = keyGen(pos_AttrLine)
-    // console.log( dictAttrLine[xkey] );
-        // dispDotsfromCoords(matDot_Large, [pos_AttrLine])
-    addAttr_boundary (pos_AttrLine, endPoints[0],  endPoints[1]);
+        // const attrSet = ['', 'interior'];
+    addAttrLine_BdyWall (pos, angle, meshBdyWall);
      
 };
 
-
-
-
-function XaddAttrLine_BdyWall (pos, angle, meshBdyWall) {
+function addAttrLine_BdyWall (pos, angle, meshBdyWall) {
     const pos_AttrLine = getPos_AttrLine_atBdy (pos, angle);
     const AttrLine = getAttriLine_atBdyMesh( meshBdyWall ); 
     const adjacency = AttrLine.adjacency;
@@ -2951,7 +2803,7 @@ function deleteAttrLine_BdyWall (meshBdyWall) {
 
 // Delete a BdyWall
 function deleteBdyWall(meshBdyWall) {
-    // deleteAttrLine_BdyWall (meshBdyWall);
+    deleteAttrLine_BdyWall (meshBdyWall);
 
     scene.remove( meshBdyWall );
     delete dictBdyWall[ meshBdyWall.key ];
@@ -3393,8 +3245,6 @@ function addHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from bou
     const list_posAttrLine = getPos_allAttrLine ();
     const pos_closestAttrLine = getClosestPos (pos_cursor, list_posAttrLine); // CAN BE OPTIMISED
     // dispDotsfromCoords ( matDot_Large, [pos_closestDivCen] ); 
-
-        // console.log(pos_closestAttrLine)
     
     // CHECK ATTRIBUTE LINE
     const key_AttrLine = keyGen( pos_closestAttrLine );
@@ -3403,9 +3253,17 @@ function addHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from bou
     if (adjacency == 'interior') {
 
         angle_meshPartWall = AttrLine.angle;
-        pos_meshPartWall = pos_closestAttrLine.clone().add(offsetHeight_meshPartWall_fromAttrLine); 
-        // console.log(pos_closestAttrLine)
+        // const dir = checkDirofMesh ( angle_meshPartWall );
+        // if (dir == "front/back") {
+    //         pos_Lpoint = pos_closestAttrLine.clone().sub(offsetValue_hor).add(offsetHeight_meshPartWall);
+    //         pos_Rpoint = pos_closestAttrLine.clone().add(offsetValue_hor).add(offsetHeight_meshPartWall);
+    //     } else {
+    //         pos_Lpoint = pos_closestAttrLine.clone().sub(offsetValue_ver).add(offsetHeight_meshPartWall);
+    //         pos_Rpoint = pos_closestAttrLine.clone().add(offsetValue_ver).add(offsetHeight_meshPartWall);
+    //     }
 
+    //     const list_posCenPoint = [pos_Lpoint, pos_Mpoint, pos_Rpoint];
+        pos_meshPartWall = pos_closestAttrLine.clone().add(offsetHeight_meshPartWall_fromAttrLine); 
         
         // CHECK MESH PRESENSE
         const key_partMesh = keyGen( pos_meshPartWall );
@@ -3415,7 +3273,7 @@ function addHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from bou
         } else {
             addHoverDisp_PartWall(pos_meshPartWall, angle_meshPartWall);
         }
-        // console.log(pos_closestAttrLine, offsetHeight_meshPartWall_fromAttrLine)
+        console.log(pos_closestAttrLine, offsetHeight_meshPartWall_fromAttrLine)
 
     }
 
@@ -3843,7 +3701,7 @@ function reinstate_Stairs01() {
 function MouseUpDisplay_onHybridMod(name_HybridMesh, pos_HybridMesh, bool_delHybridMesh, dictHybridMesh, deleteHybridMesh, addHybridMesh) { 
     const key = keyGen(pos_HybridMesh);
     if (bool_delHybridMesh && key in dictHybridMesh) { // if shift is pressed and existing key is True, delete mesh and its key
-        const bool_posPartWall = (pos_HybridMesh.x % BdyWall_width_half + pos_HybridMesh.y % BdyWall_width_half == 0);// if the mesh position is on the grid line with no offset, there should be no remainder
+        const bool_posPartWall = (pos_HybridMesh.x % (BdyWall_width/2) + pos_HybridMesh.y % (BdyWall_width/2) == 0);// if the mesh position is on the grid line with no offset, there should be no remainder
         if (bool_posPartWall) { // if pos is for partition wall
             addPartWall(key, pos_HybridMesh, dictHybridMesh[key].rotation.z);
         } else {
@@ -3992,145 +3850,6 @@ function ifMatchKey_deleteStairs01(key) {
     }
 }
 
-// ====================================================
-// { Attributes } 
-// ====================================================
-
-/*
-Hierachy (lowest to highest)
-
-'interior'
-'boundary'
-'extent'
-'corridor', 'neighbour', 'buildingedge', 'neighbour'
-
-*/
-
-// --------------------------------
-//    interior
-// --------------------------------
-
-function addAttr_interior (pos, start_pt, end_pt) { // edit below to customise display appearance
-    const key = keyGen(pos)
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-    } // Do nothing. Interior cannot overwrite any other attributes
-    else { // if key does not exist
-        const attrSet = ['', 'interior']; 
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-function delAttr_interior (pos, start_pt, end_pt) { // edit below to customise display appearance
-    const key = keyGen(pos)
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        // OVERWRITE
-        if (adjacency == 'interior')  {
-            deleteAttrLineUnit (pos);
-        } // Do nothing. Interior cannot overwrite any other attributes
-    }
-        else { // if key does not exist
-        // const attrSet = ['', 'interior']; 
-        // addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-// --------------------------------
-//    boundary
-// --------------------------------
-
-function addAttr_boundary (pos, start_pt, end_pt) { // edit below to customise display appearance
-
-    const key = keyGen(pos);
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        // OVERWRITE
-        if (adjacency == 'boundary')  {
-            deleteAttrLineUnit (pos);
-            const attrSet = ['', 'interior']; // replace with attr of 1 lower hierarchy
-            addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-        } else if (adjacency == 'interior') {
-            // console.log(adjacency)
-
-            // dispDotsfromCoords(matDot_Large, [textpos])
-
-            // delete dictAttrLine[ key ]
-            deleteAttrLineUnit (pos);
-            // const attrSet = ['', 'boundary'];
-            // addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-        }
-    } else { // if key does not exist
-        const attrSet = ['', 'boundary']
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-function delAttr_boundary (pos, start_pt, end_pt) { // edit below to customise display appearance
-    const key = keyGen(pos)
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        if (adjacency == 'extent' )  {
-            deleteAttrLineUnit (pos);
-        } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
-        // else if (adjacency == 'interior') {
-        //     deleteAttrLineUnit (pos_midpoint);
-        //     const attrSet = ['', 'extent'];
-        //     addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
-        // }
-    } else { // if key does not exist
-        const attrSet = ['', 'extent']
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-// --------------------------------
-//    extent
-// --------------------------------
-
-function addAttr_extent (pos, start_pt, end_pt) { // edit below to customise display appearance
-    const key = keyGen(pos);
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        // OVERWRITE
-        if (adjacency == 'extent')  {
-            deleteAttrLineUnit (pos);
-            // const attrSet = ['', 'boundary'] // replace with attr of 1 lower hierarchy
-            // addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-            } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
-    } else { // if key does not exist
-        const attrSet = ['', 'extent']
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-function delAttr_extent (pos, start_pt, end_pt) { // edit below to customise display appearance
-    const key = keyGen(pos)
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        if (adjacency == 'extent' )  {
-            deleteAttrLineUnit (pos);
-        } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
-        // else if (adjacency == 'interior') {
-        //     deleteAttrLineUnit (pos_midpoint);
-        //     const attrSet = ['', 'extent'];
-        //     addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
-        // }
-    } else { // if key does not exist
-        const attrSet = ['', 'extent']
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
 
 // ====================================================
 // { Helper and Rules } 
@@ -4188,97 +3907,62 @@ function dispHelperAndReplaceHover_doorModRule_adjCheck (func_replaceHoverDisp, 
 // ====================================================
 
 // --------------------------------
-//    Get End Points of AttrLine
-// --------------------------------
-
-function getpos_EndPtsOfAttrLine (pos, angle, len_half) {
-    const dir = checkDirofMesh ( angle );
-    const endPoints = [];
-    if (dir == "front/back") {
-        const starting_pt = new THREE.Vector3 ( (pos.x - len_half), pos.y, zpos_AttrLine );
-        const ending_pt   = new THREE.Vector3 ( (pos.x + len_half), pos.y, zpos_AttrLine );
-        endPoints.push( starting_pt,ending_pt )
-    } else {
-        const starting_pt = new THREE.Vector3 ( pos.x, (pos.y - len_half), zpos_AttrLine );
-        const ending_pt   = new THREE.Vector3 ( pos.x, (pos.y + len_half), zpos_AttrLine );
-        endPoints.push( starting_pt,ending_pt )
-    }
-    return endPoints
-}
-
-// --------------------------------
 //    Add AttrLine on Floor
 // --------------------------------
 
-function addAttrLinesOnFloor() {
+function addAttrLinesOnFloor(  ) {
     const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_meshFloor);
 
     list_posOfDivCen.forEach(function(cen) {
         const list_CoordOfCorner = getCoordsOfBaseCorners( cen, PartWall_width, 0 );
-
-        // dispDotsfromCoords ( matDot_Large, list_CoordOfCorner)
-
-        // console.log(list_posOfDivCen)
+        // dispDotsfromCoords ( matDot_Large, list_CoordOfCorner)   
         const list = list_CoordOfCorner.slice(0)
         list.push(list[0]);
         for(var i=0; i < list.length - 1; i++){
             const pos_midpoint = calcMidptof2pt (list[i], list[i+1]);
-            addAttr_interior (pos_midpoint, list[i], list[i+1]);
-            // console.log( 'interior',pos_midpoint );
-
-
-            // const key = keyGen ( pos_midpoint );
-            // const bool_keyExistance = getbool_keyExistance(key);
-            // if ( bool_keyExistance ) { // if key already exist
-            // const AttrLine = dictAttrLine[key];
-            // const adjacency = AttrLine.adjacency;
-            // if (adjacency == 'extent')  {
-            //     deleteAttrLineUnit (pos_midpoint);
-            //     const attrSet = ['', 'interior'];
-            //     addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
-            // } //Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
+            const key = keyGen ( pos_midpoint );
+            const bool_keyExistance = getbool_keyExistance(key);
+            if ( bool_keyExistance ) { // if key already exist
+                // const AttrLine = dictAttrLine[key];
+                // const adjacency = AttrLine.adjacency;
+                // if (adjacency == 'extent')  {
+                //     deleteAttrLineUnit (pos_midpoint);
+                //     const attrSet = ['', 'interior'];
+                //     addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet);
+                // } //Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
         
-            // } else { // if key does not exist
-            //     const attrSet = ['', 'interior']
-            //     addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet)
-            // }
-            // console.log('interior', pos_midpoint)
+            } else { // if key does not exist
+                const attrSet = ['', 'interior']
+                addAttrLineUnit (list[i], list[i+1], matAttrLine, matAttrDot, attrSet)
+            }
         } 
     
     })
+    
+
     // addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrSet)
 
 }
 
-// --------------------------------
-//    Delete AttrLine on Floor
-// --------------------------------
-function delAttrLinesOnFloor() {
-    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_meshFloor);
-
-    list_posOfDivCen.forEach(function(cen) {
-        const list_CoordOfCorner = getCoordsOfBaseCorners( cen, PartWall_width, 0 );
-        const list = list_CoordOfCorner.slice(0)
-        list.push(list[0]);
-        for(var i=0; i < list.length - 1; i++){
-            const pos_midpoint = calcMidptof2pt (list[i], list[i+1]);
-            delAttr_interior (pos_midpoint, list[i], list[i+1]);
-        } 
-    })
-}
-
-
-
-
 function getListofDivCen_fromFloorPos (pos_meshFloor) {
     const cen_middle = pos_meshFloor.clone().add(offsetHeight_AttrLine_fromFloorPos);
     const cen_starting = cen_middle.clone().sub(offsetValue_hor_PartWall).add(offsetValue_ver_PartWall);
-    const list_posOfDivCen = getPointArr( num_div_onFloor, num_div_row_onFloor, cen_starting, PartWall_width );
-    // console.log(offsetValue_hor_PartWall)
-
+    const list_posOfDivCen = getListofDivCen( num_div_onFloor, num_div_row_onFloor, cen_starting, PartWall_width );
     return list_posOfDivCen
 }
 
+function getListofDivCen( num_div, num_rows, starting_cen, div_width ){ // starting_cen is the top left cen
+    const list_CoordofCen = []
+    for (let i = 0; i < num_div; i++) {
+        const remainder = i % num_rows; // get quotient
+        const quotient = Math.floor( i/num_rows ); // get remainder
+        const cen = starting_cen.clone().add(new THREE.Vector3( div_width*remainder, -div_width*quotient, 0));
+        list_CoordofCen.push(cen);
+            // console.log(remainder, quotient)
+            // dispDotsfromCoords ( matDot_Large, [cen])
+    }
+    return list_CoordofCen
+}
 
 // --------------------------------
 //    Get AttrLine at Bdy
@@ -4297,16 +3981,14 @@ function getAttriLine_atBdyMesh( meshBdyWall ) {
 function getPos_AttrLine_atBdy (pos_BdyWall, angle_BdyWall) { 
     var pos_intAttrLine = null; // to be overwritten
     if (angle_BdyWall == Math.PI / 2 ) { // left boundary wall
-        pos_intAttrLine = new THREE.Vector3 ( (pos_BdyWall.x - offsetValue_BdyWall) , pos_BdyWall.y, zpos_AttrLine );
+        pos_intAttrLine = new THREE.Vector3 ( (pos_BdyWall.x - offsetValue_BdyWall) , pos_BdyWall.y, (pos_BdyWall.z-BdyWall_height_half) );
     } else if ( angle_BdyWall == - Math.PI / 2 ) { // right boundary wall
-        pos_intAttrLine = new THREE.Vector3 ( (pos_BdyWall.x + offsetValue_BdyWall) , pos_BdyWall.y, zpos_AttrLine );
+        pos_intAttrLine = new THREE.Vector3 ( (pos_BdyWall.x + offsetValue_BdyWall) , pos_BdyWall.y, (pos_BdyWall.z-BdyWall_height_half) );
     } else if ( angle_BdyWall == 0 ) { // front boundary wall
-        pos_intAttrLine = new THREE.Vector3 ( pos_BdyWall.x, (pos_BdyWall.y + offsetValue_BdyWall), zpos_AttrLine );
+        pos_intAttrLine = new THREE.Vector3 ( pos_BdyWall.x, (pos_BdyWall.y + offsetValue_BdyWall), (pos_BdyWall.z-BdyWall_height_half) );
     } else { // back boundary wall
-        pos_intAttrLine = new THREE.Vector3 ( pos_BdyWall.x, (pos_BdyWall.y - offsetValue_BdyWall), zpos_AttrLine );
+        pos_intAttrLine = new THREE.Vector3 ( pos_BdyWall.x, (pos_BdyWall.y - offsetValue_BdyWall), (pos_BdyWall.z-BdyWall_height_half) );
     }
-    // console.log('pos_intAttrLine',pos_intAttrLine)
-    pos_intAttrLine = roundPos(pos_intAttrLine,3)
     return pos_intAttrLine
 }
 
@@ -4329,9 +4011,7 @@ function addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrS
     scene.add(AttrLineUnit)
     
     // Add Text
-    const pos_midpoint = calcMidptof2pt(starting_pt, ending_pt);
-    // console.log(pos_midpoint)
-
+    const pos_midpoint = starting_pt.clone().add(ending_pt).divideScalar(2);
     const pos_text = textPosFromPos ( pos_midpoint );
 
         // const midpointdot = dispDotsfromCoords( matAttrDot_Large, [pos_midpoint] );
@@ -4353,22 +4033,14 @@ function addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrS
     }
 
     
-    return AttrLineUnit
+    return AttrLineUnit, pos_midpoint
 }
 
 function deleteAttrLineUnit (pos_AttrLine) {
-    // console.log(Object.keys(dictTextMesh).length )
-
     const textpos = textPosFromPos (pos_AttrLine)
     const key_text = keyGen( textpos )
-    // console.log(key_text, dictTextMesh, dictTextMesh[key_text])
-
     scene.remove( dictTextMesh[key_text] );
-
     delete dictTextMesh[ key_text ];
-    // console.log(Object.keys(dictTextMesh).length )
-
-
 
     const key_AttrLine = keyGen( pos_AttrLine )
     scene.remove( dictAttrLine[key_AttrLine] );
@@ -4395,32 +4067,44 @@ function posaddAttrLine_availBdy (first_pt, ...args) { // 'RRR DDD LLL UUUU'
 }
 
 function drawCmd_AttrLines (start_pt, attrSet) { // based on command, execute function accordingly
-    // DIRECTION MULTIPLIERS
-    const dir = attrSet[0]
-    var arrDir_x = null; // to be overwritten
-    var arrDir_y = null; // to be overwritten
-        if (dir == 'R') { arrDir_x = 1; arrDir_y = 0; };
-        if (dir == 'D') { arrDir_x = 0; arrDir_y =-1; };
-        if (dir == 'L') { arrDir_x =-1; arrDir_y = 0; };
-        if (dir == 'U') { arrDir_x = 0; arrDir_y = 1; };
-        // const arrDir_x = [1,0,-1,0]; const arrDir_y = arrDir_x.slice(0).reverse();
-        // dispDotsfromCoords ( matDot_Large, [start_pt] )
-    
-    // CREATE LINEAR ARRAYS
-    const list_pt = arrLinearPoints ( num_div_row_onFloor+1, start_pt, PartWall_width*arrDir_x, PartWall_width*arrDir_y )// CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-    start_pt = list_pt[list_pt.length-1]
-        // dispDotsfromCoords ( matDot_Large, list_pt )
-    
-    // CREATE ATTRIBUTE LINES
     var AttrLine = null; // to be overwritten
-    for(var k=0; k < list_pt.length-1; k++){
-        // const pos_midpoint = calcMidptof2pt (list_pt[k], list_pt[k+1]);
-        AttrLine = addAttrLineUnit (list_pt[k], list_pt[k+1], matAttrLine, matAttrDot, attrSet);
-    }
 
+    const dir = attrSet[0]
+    if (dir == 'R') {
+        [start_pt, AttrLine]= drawAttrLineRight (start_pt, attrSet);
+    };
+    if (dir == 'D') {
+        [start_pt, AttrLine] = drawAttrLineDown (start_pt, attrSet);
+    };
+    if (dir == 'L') {
+        [start_pt, AttrLine] = drawAttrLineLeft (start_pt, attrSet);
+    };
+    if (dir == 'U') {
+        [start_pt, AttrLine] = drawAttrLineUp (start_pt, attrSet);
+    };
     return [start_pt, AttrLine]
 }
 
+function drawAttrLineRight (start_pt, attrSet) {
+    const end_pt = start_pt.clone().add( new THREE.Vector3( volume_width, 0, 0 ) );
+    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
+    return [end_pt, AttrLine]
+}
+function drawAttrLineDown (start_pt, attrSet) {
+    const end_pt = start_pt.clone().add( new THREE.Vector3( 0, -volume_width, 0 ) );
+    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
+    return [end_pt, AttrLine]
+}
+function drawAttrLineLeft (start_pt, attrSet) {
+    const end_pt = start_pt.clone().add( new THREE.Vector3( -volume_width, 0, 0 ) );
+    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
+    return [end_pt, AttrLine]
+}
+function drawAttrLineUp (start_pt, attrSet) {
+    const end_pt = start_pt.clone().add( new THREE.Vector3( 0, volume_width, 0 ) );
+    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
+    return [end_pt, AttrLine]
+}
 
 
 // ====================================================
@@ -4428,10 +4112,8 @@ function drawCmd_AttrLines (start_pt, attrSet) { // based on command, execute fu
 // ====================================================
 
 function textPosFromPos ( pos ) {
-    const pos_text = new THREE.Vector3 ( (pos.x - 0.2), (pos.y -0.05 ), (pos.z + 0.1))
-    const pos_text_rounded = roundPos(pos_text,3);
-    // console.log(pos_text_rounded)
-    return pos_text_rounded
+    const pos_text = new THREE.Vector3 ( (pos.x - 0.1), (pos.y -0.1 ), (pos.z + 0.8))
+    return pos_text
 }
 
 function displayText (string, pos) {
@@ -4510,54 +4192,7 @@ document.body.appendChild(link);
 //////////////////// -------------PRIMITIVE FUNCTIONS------------------------------------------------------ //////////////////// 
 
 // --------------------------------
-//    Round Decimal Poits
-// --------------------------------
-
-function roundPos (pos, dp){ //mostly 3, with a few 7
-    const rounded_pos = new THREE.Vector3( round(pos.x, dp), round(pos.y, dp), round(pos.z, dp));
-    return rounded_pos
-}
-
-function round(num, dp) {
-    const num_rounded = Number( num.toFixed(dp) );
-    // const num_rounded = Math.round(num * (10**dp)) / (10**dp)
-    // console.log(num_rounded)
-    return num_rounded
-}
-
-// --------------------------------
-//    Create Point Array
-// --------------------------------
-
-function getPointArr( num_pt, num_rows, starting_pt, spacing ){ // starting_pt is the top left pt
-    const list_CoordofPts = []
-    for (let i = 0; i < num_pt; i++) {
-        const remainder = i % num_rows;
-        const quotient = Math.floor( i/num_rows );
-        const pt = starting_pt.clone().add(new THREE.Vector3( spacing*remainder, -spacing*quotient, 0));
-        const pt_rounded = roundPos (pt, 3);
-        list_CoordofPts.push(pt_rounded);
-        // console.log(pt, pt_rounded)
-            // console.log(remainder, quotient)
-            // dispDotsfromCoords ( matDot_Large, [pt])
-    }
-    return list_CoordofPts
-}
-
-function arrLinearPoints ( num_pt, start_pt, translation_x, translation_y ) {
-    // CREATE ARRAY OF POS USING INCREMNENT BY FACTOR OF J
-    const list_pt = []; // to be overwritten
-    for(var j=0; j < num_pt; j++){
-        const pos_arr = start_pt.clone().add(new THREE.Vector3( j*translation_x, j*translation_y, 0)); // at boundary
-        list_pt.push( pos_arr );
-            // dispDotsfromCoords ( matDot_Large, [pos_arr] )
-    }
-    return list_pt
-}
-
-
-// --------------------------------
-//    Get 4 Corners Coords
+//    Get Corners Coords
 // --------------------------------
 
 function getCoordsOfBaseCorners( cen, baseLen, vertOffset ) { // of a volume cube
@@ -4565,8 +4200,8 @@ function getCoordsOfBaseCorners( cen, baseLen, vertOffset ) { // of a volume cub
     const base_frontright_coord = new THREE.Vector3( cen.x + baseLen/2, cen.y + baseLen/2, cen.z + vertOffset );
     const base_backright_coord = new THREE.Vector3( cen.x + baseLen/2, cen.y - baseLen/2, cen.z + vertOffset );
     const base_backleft_coord = new THREE.Vector3( cen.x - baseLen/2, cen.y - baseLen/2, cen.z + vertOffset );
-    const list_CoordOfCorner = [ roundPos(base_frontleft_coord, 7), roundPos(base_frontright_coord, 7), roundPos(base_backright_coord, 7), roundPos(base_backleft_coord, 7) ]
-    // console.log(list_CoordOfCorner)
+    const list_CoordOfCorner = [ base_frontleft_coord, base_frontright_coord, base_backright_coord, base_backleft_coord ]
+
     return list_CoordOfCorner
 }
 
@@ -4669,14 +4304,12 @@ function hideHelper() {
 }
 
 // --------------------------------
-//    Get Midpoint of 2 Points
+//    Get Midpoint Position
 // --------------------------------
 
 function calcMidptof2pt (starting_pt, ending_pt) {
     const pos_midpoint = starting_pt.clone().add(ending_pt).divideScalar(2)
-    const pos_midpoint_rounded = roundPos(pos_midpoint, 3)
-    // console.log(pos_midpoint_rounded)
-    return pos_midpoint_rounded
+    return pos_midpoint
 }
 
 
@@ -4709,27 +4342,6 @@ function draw_lines (first_pt, str) { // 'RRR DDD LLL UUUU'
         // ignore if dir == ' '
     }
 }
-function drawAttrLineRight (start_pt, attrSet) {
-    const end_pt = start_pt.clone().add( new THREE.Vector3( volume_width, 0, 0 ) );
-    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    return [end_pt, AttrLine]
-}
-function drawAttrLineDown (start_pt, attrSet) {
-    const end_pt = start_pt.clone().add( new THREE.Vector3( 0, -volume_width, 0 ) );
-    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    return [end_pt, AttrLine]
-}
-function drawAttrLineLeft (start_pt, attrSet) {
-    const end_pt = start_pt.clone().add( new THREE.Vector3( -volume_width, 0, 0 ) );
-    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    return [end_pt, AttrLine]
-}
-function drawAttrLineUp (start_pt, attrSet) {
-    const end_pt = start_pt.clone().add( new THREE.Vector3( 0, volume_width, 0 ) );
-    const AttrLine = addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    return [end_pt, AttrLine]
-}
-
 
 // --------------------------------
 //       ( - futurework - ) changeGridPos, autoGenBdyWalls 
