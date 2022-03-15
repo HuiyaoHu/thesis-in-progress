@@ -2860,7 +2860,6 @@ function deleteCeiling(meshCeiling) {
 function addBdyWall(key, pos, angle) {
     
     // ADD MESH
-    /*
     const materials = [
         obs,
         concrete,
@@ -2871,9 +2870,6 @@ function addBdyWall(key, pos, angle) {
     geomBdyWall.groups[2].materialIndex = 1 //[2]outside, [3]inside, [4]top, [5]bottom, [0][1]sides
 
     const meshBdyWall = new THREE.Mesh( geomBdyWall, materials );
-    */
-    const meshBdyWall = new THREE.Mesh( geomBdyWall, obs );
-
     meshBdyWall.position.set(pos.x, pos.y, pos.z);
     scene.add( meshBdyWall );
 
@@ -2971,9 +2967,7 @@ function deleteBdyWall(meshBdyWall) {
 function addPartWall(key, pos, angle) {
     
     // ADD MESH
-    const meshPartWall = new THREE.Mesh( geomPartWall, obs );
-
-    // const meshPartWall = new THREE.Mesh( geomPartWall, obsLight );
+    const meshPartWall = new THREE.Mesh( geomPartWall, obsLight );
     meshPartWall.position.set(pos.x, pos.y, pos.z);
     scene.add( meshPartWall );
 
@@ -4331,7 +4325,7 @@ function addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrS
 
     const AttrLineUnit = new THREE.Group();
     AttrLineUnit.add( line );
-    // AttrLineUnit.add( verticedots );
+    AttrLineUnit.add( verticedots );
     scene.add(AttrLineUnit)
     
     // Add Text
@@ -4450,7 +4444,7 @@ function displayText (string, pos) {
         });
         const textMesh = new THREE.Mesh(textgeometry, matAttrText);
         textMesh.position.copy(pos);
-        // scene.add(textMesh);
+        scene.add(textMesh);
 
         // UPDATE GLOBAL VARIABLES
         const key_textMesh = keyGen(pos);
