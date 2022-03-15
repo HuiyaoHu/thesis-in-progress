@@ -151,6 +151,7 @@ const gltfExporter = new GLTFExporter(); // https://threejs.org/docs/#examples/e
 // https://htmlcolorcodes.com/
 // https://www.w3schools.com/colors/colors_names.asp
 
+const matInvisibleLine = new THREE.LineBasicMaterial( {color: 0x000000, linewidth: 1, opacity: 0, transparent: true} );
 const matAttrLine = new THREE.LineBasicMaterial( { color: 0x0000ff } );
 const matAttrDot = new THREE.PointsMaterial( { size: 1, color: "pink"} );
 const matAttrDot_Large = new THREE.PointsMaterial( { size: 2, color: "pink"} );
@@ -4114,7 +4115,7 @@ function addAttr_extent (pos, start_pt, end_pt) { // edit below to customise dis
             } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
     } else { // if key does not exist
         const attrSet = ['', 'extent']
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
+        addAttrLineUnit (start_pt, end_pt, matInvisibleLine, matAttrDot, attrSet);
     }
 }
 
@@ -4327,7 +4328,7 @@ function addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrS
     const geometry = new THREE.BufferGeometry().setFromPoints( points );
 
     const line = new THREE.Line( geometry, matAttrLine );
-    const verticedots = new THREE.Points( geometry, matAttrDot );
+    // const verticedots = new THREE.Points( geometry, matAttrDot );
 
     const AttrLineUnit = new THREE.Group();
     AttrLineUnit.add( line );
@@ -4421,7 +4422,7 @@ function drawCmd_AttrLines (start_pt, attrSet) { // based on command, execute fu
     var AttrLine = null; // to be overwritten
     for(var k=0; k < list_pt.length-1; k++){
         // const pos_midpoint = calcMidptof2pt (list_pt[k], list_pt[k+1]);
-        AttrLine = addAttrLineUnit (list_pt[k], list_pt[k+1], matAttrLine, matAttrDot, attrSet);
+        AttrLine = addAttrLineUnit (list_pt[k], list_pt[k+1], matInvisibleLine, matAttrDot, attrSet);
     }
 
     return [start_pt, AttrLine]
