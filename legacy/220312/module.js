@@ -560,8 +560,8 @@ const Window01_height = 3.5; const Window01_height_half = Window01_height / 2;
 const Window01_thickness = 0.5;
 
 // GEOMETRIES
-const geomWindow01Hover = geomBdyWallHover;
-const geomWindow01Del = geomBdyWallDel;
+const geomWindow01Hover = new THREE.BoxBufferGeometry( Window01_width * 1, Window01_thickness* 1, Window01_height * 1 );
+const geomWindow01Del = new THREE.BoxBufferGeometry( Window01_width * 1.1, Window01_thickness* 1.1, Window01_height * 1.1 );
 const meshWindow01Trans = new THREE.Mesh( geomWindow01Hover, matHybridTrans );
 meshWindow01Trans.visible = false;
 const meshWindow01Del = new THREE.Mesh( geomWindow01Del, matBdyWallDel );
@@ -629,8 +629,8 @@ loader.load( // Load a glTF resource
         grpWindow02.getObjectByName("SIP").material = obs;
         grpWindow02.getObjectByName("Glass").material = glass;
         grpWindow02.getObjectByName("WindowFrame").material = aluminium;
-        grpWindow02.getObjectByName("WindowCasement").material = aluminium;
-        grpWindow02.getObjectByName("WindowHandle").material = brass;
+        grpWindow02.getObjectByName("WindowCasement").material = alloy;
+        grpWindow02.getObjectByName("SlidingWindowHandle").material = brass;
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -657,8 +657,8 @@ const Door01_height = 3.5; const Door01_height_half = Door01_height / 2;
 const Door01_thickness = 0.5;
 
 // GEOMETRIES
-const geomDoor01Hover = geomBdyWallHover;
-const geomDoor01Del = geomBdyWallDel;
+const geomDoor01Hover = new THREE.BoxBufferGeometry( Door01_width * 1, Door01_thickness* 1, Door01_height * 1 );
+const geomDoor01Del = new THREE.BoxBufferGeometry( Door01_width * 1.1, Door01_thickness* 1.1, Door01_height * 1.1 );
 
 const meshDoor01Trans = new THREE.Mesh( geomDoor01Hover, matHybridTrans );
 meshDoor01Trans.visible = false;
@@ -797,8 +797,8 @@ const Railing01_height = 3.5; const Railing01_height_half = Railing01_height / 2
 const Railing01_thickness = 0.5;
 
 // GEOMETRIES
-const geomRailing01Hover = geomBdyWallHover
-const geomRailing01Del = geomBdyWallDel
+const geomRailing01Hover = new THREE.BoxBufferGeometry( Railing01_width * 1, Railing01_thickness* 1, Railing01_height * 1 );
+const geomRailing01Del = new THREE.BoxBufferGeometry( Railing01_width * 1.1, Railing01_thickness* 1.1, Railing01_height * 1.1 );
 const meshRailing01Trans = new THREE.Mesh( geomRailing01Hover, matHybridTrans );
 meshRailing01Trans.visible = false;
 const meshRailing01Del = new THREE.Mesh( geomRailing01Del, matBdyWallDel );
@@ -1607,7 +1607,7 @@ function render() {
         reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); // if do not intersect with anything, show nothing
 
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
-            console.log(meshInt0.object.parent.name)
+
             if (meshInt0.object.parent.name == 'Door02') { // if the first mesh that the cursor intersects has the name ' '
                 const grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
                 if (!bool_delDoor02) { 
