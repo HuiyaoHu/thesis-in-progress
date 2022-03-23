@@ -855,36 +855,21 @@ var angle_grpRailing01 = 0;
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 // DIMENSIONS
-const Stairs01_width = truncNumTo3dp(3.5/3*2); const Stairs01_width_half = Stairs01_width / 2; //0.583
-const Stairs01_height = 3.5+0.3; const Stairs01_height_half = Stairs01_height / 2;
-const Stairs01_thickness = Stairs01_width; const Stairs01_thickness_half = Stairs01_thickness / 2;
+const Stairs01_width = 3.5; const Stairs01_width_half = Stairs01_width / 2;
+const Stairs01_height = 3.5; const Stairs01_height_half = Stairs01_height / 2;
+const Stairs01_thickness = 0.5;
 
 // GEOMETRIES
-const pt_axis = dispDotsfromCoords(matAttrDot, [ new THREE.Vector3(0,0,0)] )
-
 const geomStairs01Hover = new THREE.BoxBufferGeometry( Stairs01_width * 1, Stairs01_thickness* 1, Stairs01_height * 1 );
+const geomStairs01Del = new THREE.BoxBufferGeometry( Stairs01_width * 1.1, Stairs01_thickness* 1.1, Stairs01_height * 1.1 );
+
 const meshStairs01Trans = new THREE.Mesh( geomStairs01Hover, matHybridTrans );
-meshStairs01Trans.position.set( -Stairs01_width_half+ floor_width/6, Stairs01_thickness_half- floor_width/6, Stairs01_height_half );
-const GrpStairs01Trans = new THREE.Group();
-GrpStairs01Trans.add( meshStairs01Trans, pt_axis );
-scene.add(GrpStairs01Trans)
-GrpStairs01Trans.visible = false;
+meshStairs01Trans.visible = false;
+const meshStairs01Del = new THREE.Mesh( geomStairs01Del, matBdyWallDel );
+meshStairs01Del.visible = false;
 
-
-// const geomStairs01Del = new THREE.BoxBufferGeometry( Stairs01_width * 1, Stairs01_thickness* 1, Stairs01_height * 1 );
-// const meshStairs01Del = new THREE.Mesh( geomStairs01Del, matBdyWallDel );
-// meshStairs01Del.position.set( -Stairs01_width_half+ floor_width/6, Stairs01_thickness_half- floor_width/6, Stairs01_height_half );
-// const GrpStairs01Del = new THREE.Group();
-// GrpStairs01Del.add( meshStairs01Trans, pt_axis );
-// scene.add(GrpStairs01Del)
-// GrpStairs01Del.visible = false;
-
-// meshStairs01Trans.visible = false;
-// meshStairs01Del.visible = false;
-// scene.add(meshStairs01Trans);
-// scene.add(meshStairs01Del);
-// GrpStairs01Trans.rotation.z = -Math.PI/2
-
+scene.add(meshStairs01Trans);
+scene.add(meshStairs01Del);
 
 
 var  meshStairs01 = null
@@ -892,9 +877,8 @@ loader.load( // Load a glTF resource
     'models/Stairs01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
         meshStairs01 = gltf.scene;
-        meshStairs01.getObjectByName("Riser").material = clt;
-        meshStairs01.getObjectByName("Tread").material = obsLight;
-        meshStairs01.getObjectByName("Baluster").material = alloy;
+        meshStairs01.getObjectByName("SIP").material = obs;
+        meshStairs01.getObjectByName("Staircase").material = clt;
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -1031,8 +1015,7 @@ function render() {
         renderer.render( scene, camera ); // render the scene
         return;
     }
-
-
+    
     // __________________________
     //    	　_ * CHASSIS *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -1315,142 +1298,6 @@ function render() {
                 else { // if shift button is pressed, do nothing
                 }
             }
-
-        } 
-    }	
-
-    // __________________________
-    //    	　_ * STAIRS01 * ★
-    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( id_buttonPressed == 'buttonStairs01' ) {
-        raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
-        list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene );
-        const meshInt0 = list_meshInt[ 0 ];
-        
-        reinstate_mods('Stairs01'); // if do not intersect with anything, show nothing
-
-        if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
-
-            if (meshInt0.object.parent.name == 'PartitionWall') { // if the first mesh that the cursor intersects has the name ' '
-
-                if (!bool_delPartWall) { // if shift button is not pressed, update trans pos and show geom_trans 
-                    // orientVertMeshToFaceOfIntMesh( meshInt0, pos_meshPartWall, meshPartWallTrans, meshPartWallDel );
-                }
-                else { // if shift button is pressed, show geom_trans_del
-                    delHoverDisp_PartWall( meshInt0.object );
-                } 
-            } 
-
-            if (meshInt0.object.name == 'floor') { //if the first mesh that the cursor intersects has the name " "
-                
-                if (!bool_delPartWall) { // if shift button is not pressed, update pos and show geom_trans
-                    addHoverDisp_Stairs01_toIntFloor (meshInt0);
-                } 
-                else { // if shift button is pressed, do nothing
-                }
-
-                
-            } 
-/*
-                pos_meshFloor = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                
-                if (!bool_delFloor) { // if shift button is not pressed, update trans pos and show geom_trans 
-                    // orientHorizMeshToFaceOfIntMesh( meshInt0, pos_meshFloor, meshFloorTrans, meshFloorDel );
-                }
-
-                else { // if shift button is pressed, show geom_trans_del
-                    meshFloorDel.position.set(pos_meshFloor.x, pos_meshFloor.y, pos_meshFloor.z);
-                    meshFloorDel.visible = true;
-                    meshFloorTrans.visible = false;
-                } 
-
-
-            if (meshInt0.object.parent.name == 'Stairs01') { // if the first mesh that the cursor intersects has the name ' '
-                const grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
-                if (!bool_delStairs01) { 
-                    // if shift button is not pressed, do nothing
-                }
-                else { // if shift button is pressed, show geom_trans_del
-                    delHoverDisp_Stairs01( grpInt );
-                }
-            } 
-            
-            else if (meshInt0.object.name == 'BoundaryWall' ) { // if the first mesh that the cursor intersects has the name ' '
-                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    replaceHoverDisp_Stairs01( meshInt0.object );
-                }
-            }
-
-            else if (meshInt0.object.name == 'PartitionWall') { // if the first mesh that the cursor intersects has the name ' '
-                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    replaceHoverDisp_Stairs01( meshInt0.object );
-                }
-            }
-
-            else if (meshInt0.object.parent.name == 'Window01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    replaceHoverDisp_Stairs01( grpInt );
-                }
-                else { // if shift button is pressed, show geom_trans_del
-                    delHoverDisp_Window01( grpInt );
-                }
-            }
-
-            else if (meshInt0.object.parent.name == 'Window02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    replaceHoverDisp_Stairs01( grpInt );
-                }
-                else { // if shift button is pressed, show geom_trans_del
-                    delHoverDisp_Window02( grpInt );
-                }
-            }
-
-            else if (meshInt0.object.parent.name == 'Door01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    replaceHoverDisp_Stairs01( grpInt );
-                }
-                else { // if shift button is pressed, show geom_trans_del
-                    delHoverDisp_Door01( grpInt );
-                }
-            }	
-
-            else if (meshInt0.object.parent.name == 'Door02') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    replaceHoverDisp_Stairs01( grpInt );
-                }
-                else { // if shift button is pressed, show geom_trans_del
-                    delHoverDisp_Door02( grpInt );
-                }
-            }	
-
-            else if (meshInt0.object.parent.name == 'Door03') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    replaceHoverDisp_Stairs01( grpInt );
-                }
-                else { // if shift button is pressed, show geom_trans_del
-                    delHoverDisp_Door03( grpInt );
-                }
-            }	
-
-            else if (meshInt0.object.parent.name == 'Railing01') { 
-                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
-                    replaceHoverDisp_Stairs01( grpInt );
-                }
-                else { // if shift button is pressed, show geom_trans_del
-                    delHoverDisp_Railing01( grpInt );
-                }
-            }	
-            */
-           
-
 
         } 
     }	
@@ -2071,6 +1918,107 @@ function render() {
         } 
     }	
 
+    // __________________________
+    //    	　_ * STAIRS01 * ★
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    if ( id_buttonPressed == 'buttonStairs01' ) {
+        raycaster.setFromCamera( mouse, camera );
+        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        list_meshScene.push(meshFloorZone);
+        const list_meshInt = raycaster.intersectObjects( list_meshScene );
+        const meshInt0 = list_meshInt[ 0 ];
+        
+        reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); // if do not intersect with anything, show nothing
+
+        if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
+
+            if (meshInt0.object.parent.name == 'Stairs01') { // if the first mesh that the cursor intersects has the name ' '
+                const grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
+                if (!bool_delStairs01) { 
+                    // if shift button is not pressed, do nothing
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Stairs01( grpInt );
+                }
+            } 
+            
+            else if (meshInt0.object.name == 'BoundaryWall' ) { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( meshInt0.object );
+                }
+            }
+
+            else if (meshInt0.object.name == 'PartitionWall') { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( meshInt0.object );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Window01') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window01( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Window02') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window02( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Door01') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Door01( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Door02') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Door02( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Door03') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Door03( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Railing01') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Railing01( grpInt );
+                }
+            }	
+            
+           
+
+
+        } 
+    }	
 
 
 
@@ -2727,7 +2675,7 @@ function addBdyWall(key, pos, angle) {
     scene.add( meshBdyWall );
 
     // ADD MESH PROPERTIES
-    meshBdyWall.name = "BoundaryWall";
+    meshBdyWall.name = "BoundaryWall"
     meshBdyWall.key = key;
 
     // UPDATE GLOBAL VARIABLES, HTML
@@ -3013,6 +2961,7 @@ function addStairs01(key) {
 
     // ADD MESH
     const mesh = meshStairs01.clone();
+
     mesh.position.set(pos_grpStairs01.x, pos_grpStairs01.y, pos_grpStairs01.z);
     scene.add( mesh );
     
@@ -3101,57 +3050,6 @@ function getMeshInScene() {
     return list_meshScene
 }
 
-// --------------------------------
-//    Add Stairs Hover Display ★ 
-// --------------------------------
-
-function addHoverDisp_Stairs01(pos, angle){
-    GrpStairs01Trans.position.copy(pos);
-    GrpStairs01Trans.rotation.z = angle;
-    GrpStairs01Trans.visible = true;
-    // GrpStairs01Del.visible = false;
-}
-function addHoverDisp_Stairs01_toIntFloor (meshInt0) {
-
-    // GET POSITION (CLOSEST MINOR GRID CENTER POINTS) 
-    const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-    const list_posOfDivCen = getListofDivCen_fromFloorPos (cen_meshInt0); // 9 center points
-    const pos_cen_closest = getClosestPos (meshInt0.point, list_posOfDivCen) // closest center point
-    pos_grpStairs01 = pos_cen_closest;
-
-    // GET CLOSEST MINOR GRID HOVER POINTS
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_cen_closest, PartWall_width, 0 ); // 4 corner grid points to the centre point, [frontleft, frontright, backright, backleft]
-    const list = list_CoordOfCorner.slice(0); list.push(list[0]); // add first corner into the list again to allow a full for loop
-
-    const list_hover = []; // to be overwritten; list of corner points that are end points of 2 attrlines 
-    const list_interior = []; // to be overwritten; list of all corner points of interior attrlines with no repetitions 
-    for(var i=0; i < list.length - 1; i++){ // loop through all the corner points
-        const pos_midpoint = calcMidptof2pt (list[i], list[i+1]); // position of attribute lines
-
-        const key = keyGen(pos_midpoint) // keys of attribute lines 
-        const bool_Attr_interior = dictAttrLine[ key ].adjacency == "interior" // check value of adjacency
-
-        if ( bool_Attr_interior ) {
-            [list[i], list[i+1]].forEach(function( point ) {
-                if ( list_interior.includes(point) ) {
-                    list_hover.push(point)
-                } else {
-                    list_interior.push(point)
-                }
-            })
-        }
-    } 
-    const pos_hover_closest = getClosestPos (meshInt0.point, list_hover); // closest hover point
-
-    // SET ROTATION
-    const index = list_CoordOfCorner.indexOf(pos_hover_closest); // [frontleft, frontright, backright, backleft]
-    angle_grpStairs01 = (-Math.PI/2)*index; //  [0, 90, 180, 360]
-
-    // console.log( index, angle_grpStairs01 )
-    // if (i==0){break}
-    // dispDotsfromCoords(matAttrDot, [pos_midpoint]);
-    addHoverDisp_Stairs01(pos_grpStairs01, angle_grpStairs01)
-}
 
 
 // --------------------------------
@@ -3200,8 +3098,6 @@ function addHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from bou
 
     }
 }
-
-
 
 // --------------------------------
 //    Replace Hover Display ★ 
@@ -3267,7 +3163,15 @@ function replaceHoverDisp_Railing01( mesh ) { // copy pos, angle, show meshTrans
     meshRailing01Del.visible = false;
 }
 
+function replaceHoverDisp_Stairs01( mesh ) { // copy pos, angle, show meshTrans
+    pos_grpStairs01 = new THREE.Vector3(mesh.position.x, mesh.position.y, mesh.position.z);
+    angle_grpStairs01 = mesh.rotation.z;
 
+    meshStairs01Trans.position.copy(pos_grpStairs01);
+    meshStairs01Trans.rotation.z = angle_grpStairs01
+    meshStairs01Trans.visible = true;
+    meshStairs01Del.visible = false;
+}
 
 
 // --------------------------------
@@ -3362,7 +3266,7 @@ function delHoverDisp_Stairs01( mesh ) { // copy pos, angle, show meshTrans
     meshStairs01Del.position.copy(pos_grpStairs01);
     meshStairs01Del.rotation.z = angle_grpStairs01;
     meshStairs01Del.visible = true;
-    GrpStairs01Trans.visible = false;
+    meshStairs01Trans.visible = false;
 }
 
 // --------------------------------
@@ -3445,8 +3349,8 @@ function reinstate_Railing01() {
     pos_grpRailing01 = null;
 }
 function reinstate_Stairs01() {
-    GrpStairs01Trans.visible = false;
-    GrpStairs01Trans.visible = false;
+    meshStairs01Trans.visible = false;
+    meshStairs01Del.visible = false;
     pos_grpStairs01 = null;
 }
 
@@ -4313,7 +4217,6 @@ function dispDotsfromCoords ( material, list_coord ) {
     } ) 
     const dot = new THREE.Points( dotGeometry, material );
     scene.add( dot );
-    return dot
 }
 
 
