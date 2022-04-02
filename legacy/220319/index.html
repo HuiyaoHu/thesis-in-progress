@@ -38,12 +38,11 @@
 <html lang="en">
 
     <head>
-        <title>220331</title>
+        <title>220318</title>
         <meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <!-- <link rel="stylesheet" type="text/css" href="reset.css"> -->
         <link rel="stylesheet" type="text/css" href="main.css">
-        <script src="https://kit.fontawesome.com/f846d0f5a8.js" crossorigin="anonymous"></script>
     </head>
 
 	<body>
@@ -67,11 +66,19 @@
             <div id="left_panel">
 
                 <div id="checkboxes"> 
-                    <h2>DISPLAY TOGGLE</h2> <!-- https://www.csestack.org/hide-show-password-eye-icon-html-javascript/-->
-                    <i class="fa-solid fa-eye" id="Chassis"></i>  Structure frame <br>
-                    <i class="fa-solid fa-eye" id="GrpMeshNeighbours"></i>  Neighbours <br>
-                    <!-- <i class="fa-solid fa-eye" id="ceiling"></i>  Ceiling (Ignore) <br> -->
-
+                    <h2>DISPLAY TOGGLE</h2>
+                    <label class="checkboxText">Structure frame
+                        <input type="checkbox" id="checkboxChassis" >
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkboxText">Neighbours
+                        <input type="checkbox" id="checkboxNeighbour01">
+                        <span class="checkmark"></span>
+                        </label>                                            
+                    <label class="checkboxText">Ceiling (Ignore)
+                        <input type="checkbox" id="checkboxCeiling">
+                        <span class="checkmark"></span>
+                    </label>
                     <!-- <label class="checkboxText">Volume units
                         <input type="checkbox" id="checkboxVolume">
                         <span class="checkmark"></span>
@@ -81,28 +88,6 @@
                         <input type="checkbox" id="checkboxNeighbours">
                         <span class="checkmark"></span>
                     </label> -->
-
-                    
-                    <input type="radio" class ="visibility" name="storeyNum" value="1" checked> <!-- id="Storey1"  -->
-                    <i class="fa-solid fa-eye" value = "1"></i> 
-                    <label>Storey 1</label> 
-                    
-                    <br>
-
-                    <input type="radio" class ="visibility" name="storeyNum" value="2"> <!-- id="Storey2"  -->
-                    <i class="fa-solid fa-eye" value = "2"></i> 
-                    <label>Storey 2</label>
-                    <br>
-
-                    <input type="radio" class ="visibility" name="storeyNum" value="3"> <!-- id="Storey2"  -->
-                    <i class="fa-solid fa-eye" value = "3"></i> 
-                    <label>Storey 3</label>
-                    <br>
-
-                    <input type="radio" class ="visibility" name="storeyNum" value="4"> <!-- id="Storey2"  -->
-                    <i class="fa-solid fa-eye" value = "4"></i> 
-                    <label>Storey 4</label>
-                    <br>
                 </div>
 
                 <div id="volume">
@@ -115,17 +100,8 @@
     
                 <div id="modules"> 
                     <h2>2. MODULE PLACEMENT</h2>
-
-
-                    <!-- <label class="checkboxText"> Visibility
-                    <input type="checkbox" id="Storey2_Visibility" >
-                    <span class="checkmark"></span> -->
-                    <!-- <br> -->
-
-                    <h3>SIP Modules</h3>   
+                    <h3>SIP Modules</h3>               
                     <div class="button" id="buttonFloor">Floor</div>
-                    <div class="button" id="buttonFloorFrac">Floor Opening</div>
-
                     <!-- <div class="button" id="buttonCeiling">Ceiling</div> -->
                     <div class="button" id="buttonBoundaryWall">Boundary Wall (ignore) </div>
                     <div class="button" id="buttonPartitionWall">Partition Wall</div>

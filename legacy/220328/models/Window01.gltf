@@ -1,0 +1,1001 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "THREE.GLTFExporter"
+  },
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        4
+      ]
+    }
+  ],
+  "scene": 0,
+  "nodes": [
+    {
+      "name": "WindowFrame",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "WindowFrame",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "183e6785-7a4d-4dec-b128-14c661d48faf",
+          "url": "",
+          "layerIndex": 2,
+          "materialIndex": 0,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isClosed": true,
+            "hasCachedTextureCoordinates": false,
+            "hasPrincipalCurvatures": false,
+            "partitionCount": 0,
+            "objectType": {
+              "name": "ObjectType_Mesh",
+              "value": 32
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Mesh"
+      },
+      "mesh": 0
+    },
+    {
+      "name": "WindowSeal",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "WindowSeal",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "8bd7cdc9-14d5-4cf4-a8d9-86659bc72f88",
+          "url": "",
+          "layerIndex": 2,
+          "materialIndex": 1,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isClosed": false,
+            "hasCachedTextureCoordinates": false,
+            "hasPrincipalCurvatures": false,
+            "partitionCount": 0,
+            "objectType": {
+              "name": "ObjectType_Mesh",
+              "value": 32
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Mesh"
+      },
+      "mesh": 1
+    },
+    {
+      "name": "Glass",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "Glass",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "f66f0c71-904f-46a8-b431-02a5c790fc4e",
+          "url": "",
+          "layerIndex": 2,
+          "materialIndex": 2,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isClosed": false,
+            "hasCachedTextureCoordinates": false,
+            "hasPrincipalCurvatures": false,
+            "partitionCount": 0,
+            "objectType": {
+              "name": "ObjectType_Mesh",
+              "value": 32
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Mesh"
+      },
+      "mesh": 2
+    },
+    {
+      "name": "SIP",
+      "extras": {
+        "attributes": {
+          "mode": {
+            "name": "ObjectMode_Normal",
+            "value": 0
+          },
+          "isInstanceDefinitionObject": false,
+          "visible": true,
+          "name": "SIP",
+          "castsShadows": true,
+          "receivesShadows": true,
+          "linetypeSource": {
+            "name": "ObjectLinetypeSource_LinetypeFromLayer",
+            "value": 0
+          },
+          "colorSource": {
+            "name": "ObjectColorSource_ColorFromLayer",
+            "value": 0
+          },
+          "plotColorSource": {
+            "name": "ObjectPlotColorSource_PlotColorFromLayer",
+            "value": 0
+          },
+          "plotWeightSource": {
+            "name": "ObjectPlotWeightSource_PlotWeightFromLayer",
+            "value": 0
+          },
+          "id": "027f8480-b409-49b1-b980-86515d9390fe",
+          "url": "",
+          "layerIndex": 1,
+          "materialIndex": 3,
+          "materialSource": {
+            "name": "ObjectMaterialSource_MaterialFromObject",
+            "value": 1
+          },
+          "objectColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "plotColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          },
+          "displayOrder": 0,
+          "plotWeight": 0,
+          "objectDecoration": {
+            "name": "ObjectDecoration_None",
+            "value": 0
+          },
+          "wireDensity": 1,
+          "viewportId": "00000000-0000-0000-0000-000000000000",
+          "activeSpace": {
+            "name": "ActiveSpace_ModelSpace",
+            "value": 1
+          },
+          "groupCount": 0,
+          "isValid": true,
+          "userStringCount": 0,
+          "geometry": {
+            "isClosed": true,
+            "hasCachedTextureCoordinates": false,
+            "hasPrincipalCurvatures": false,
+            "partitionCount": 0,
+            "objectType": {
+              "name": "ObjectType_Mesh",
+              "value": 32
+            },
+            "isDeformable": true,
+            "hasBrepForm": false,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          "drawColor": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 255
+          }
+        },
+        "objectType": "Mesh"
+      },
+      "mesh": 3
+    },
+    {
+      "name": "Window01",
+      "extras": {
+        "layers": [
+          {
+            "name": "Window01",
+            "fullPath": "Window01",
+            "id": "c876dbed-e59b-4193-aed4-952682794720",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": -1,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          {
+            "name": "SIP",
+            "fullPath": "SIP",
+            "id": "cbbf6803-d9ac-43b7-ba80-c7c24a25c76b",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": -1,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          },
+          {
+            "name": "Window_Group",
+            "fullPath": "Window_Group",
+            "id": "36cb1dea-d70a-457e-b86c-0720f99f9b3d",
+            "parentLayerId": "00000000-0000-0000-0000-000000000000",
+            "igesLevel": -1,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotColor": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "plotWeight": 0,
+            "linetypeIndex": -1,
+            "renderMaterialIndex": -1,
+            "visible": true,
+            "locked": false,
+            "expanded": true,
+            "isValid": true,
+            "userStringCount": 0
+          }
+        ],
+        "groups": [],
+        "settings": {
+          "modelUrl": "",
+          "modelBasePoint": [
+            0,
+            0,
+            0
+          ],
+          "earthAnchorPoint": {},
+          "modelAbsoluteTolerance": 0.001,
+          "modelAngleToleranceRadians": 0.017453292519943295,
+          "modelAngleToleranceDegrees": 1,
+          "modelRelativeTolerance": 0.01,
+          "pageAbsoluteTolerance": 0.001,
+          "pageAngleToleranceRadians": 0.017453292519943295,
+          "pageAngleToleranceDegrees": 1,
+          "pageRelativeTolerance": 0.01,
+          "modelUnitSystem": {
+            "name": "UnitSystem_Meters",
+            "value": 4
+          },
+          "pageUnitSystem": {
+            "name": "UnitSystem_Millimeters",
+            "value": 2
+          }
+        },
+        "objectType": "File3dm",
+        "materials": [
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "8C79B87E-B5AA-4B50-A7CA-773DD2DB1884",
+            "type": "MeshStandardMaterial",
+            "name": "PVC [imported] (1)",
+            "color": 16777215,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "865AFC06-B86F-42DB-BCCA-FDC39C2F04D6",
+            "type": "MeshStandardMaterial",
+            "name": "Plastic [imported] (1)",
+            "color": 16777215,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "9DC5D5C2-98E8-411A-BD05-D806AD5F7CCB",
+            "type": "MeshStandardMaterial",
+            "name": "Glass [imported] (2)",
+            "color": 5593061,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          },
+          {
+            "metadata": {
+              "version": 4.5,
+              "type": "Material",
+              "generator": "Material.toJSON"
+            },
+            "uuid": "E30BAC71-59DF-4DC3-9C47-293CC0C3121F",
+            "type": "MeshStandardMaterial",
+            "name": "obs",
+            "color": 14996405,
+            "roughness": 1,
+            "metalness": 0,
+            "emissive": 0,
+            "envMapIntensity": 1,
+            "refractionRatio": 0.98,
+            "side": 2,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "colorWrite": true,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilFunc": 519,
+            "stencilRef": 0,
+            "stencilFuncMask": 255,
+            "stencilFail": 7680,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680
+          }
+        ],
+        "warnings": []
+      },
+      "children": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 1536,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 1536,
+      "byteLength": 1536,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3072,
+      "byteLength": 384,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3456,
+      "byteLength": 576,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 4032,
+      "byteLength": 576,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 4608,
+      "byteLength": 144,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 4752,
+      "byteLength": 96,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 4848,
+      "byteLength": 96,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 4944,
+      "byteLength": 24,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 4968,
+      "byteLength": 576,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5544,
+      "byteLength": 576,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 6120,
+      "byteLength": 384,
+      "target": 34962,
+      "byteStride": 8
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 6504,
+      "byteLength": 192,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 6696,
+      "uri": "data:application/octet-stream;base64,mpnZvkVSOL25HoW/mpnZvkHUozu5HoW/AADAvkNSOL2mcH2/AADAvlLUozumcH2/AADAPkNSOL2mcH2/AADAPlLUozumcH2/mpnZPkVSOL25HoW/mpnZPkHUozu5HoW/mpnZvulROL0Troc/mpnZvh/XozsTroc/AADAvutROL2tR4E/AADAvg7XozutR4E/AADAPutROL2tR4E/AADAPg7XozutR4E/mpnZPulROL0Troc/mpnZPh/XozsTroc/AADAvsTZo7umcH2/ZmamvrLZo7vZo3C/ZmamvpZROD3Zo3C/AADAvpRROD2mcH2/AADAvgjXo7utR4E/ZmamvhnXo7uNwnU/ZmamvulROD2NwnU/AADAvutROD2tR4E/AADAPgjXo7utR4E/ZmamPhnXo7uNwnU/ZmamPulROD2NwnU/AADAPutROD2tR4E/AADAPsTZo7umcH2/ZmamPrLZo7vZo3C/ZmamPpZROD3Zo3C/AADAPpRROD2mcH2/mpnZPkVSOL25HoW/AADAPkNSOL2mcH2/AADAvkNSOL2mcH2/mpnZvkVSOL25HoW/mpnZvkHUozu5HoW/AADAvlLUozumcH2/AADAPlLUozumcH2/mpnZPkHUozu5HoW/mpnZvkHUozu5HoW/mpnZvkVSOL25HoW/AADAvlLUozumcH2/mpnZvkHUozu5HoW/mpnZvh/XozsTroc/AADAvkNSOL2mcH2/AADAvlLUozumcH2/AADAvg7XozutR4E/mpnZvkVSOL25HoW/AADAvkNSOL2mcH2/AADAvutROL2tR4E/mpnZvulROL0Troc/AADAPlLUozumcH2/AADAPkNSOL2mcH2/mpnZPkHUozu5HoW/AADAPlLUozumcH2/AADAPg7XozutR4E/mpnZPkVSOL25HoW/mpnZPkHUozu5HoW/mpnZPh/XozsTroc/AADAPkNSOL2mcH2/mpnZPkVSOL25HoW/mpnZPulROL0Troc/AADAPutROL2tR4E/ZmamvrLZo7vZo3C/ZmamvhnXo7uNwnU/ZmamvpZROD3Zo3C/ZmamvulROD2NwnU/AADAvpRROD2mcH2/AADAvsTZo7umcH2/AADAvgjXo7utR4E/AADAvutROD2tR4E/AADAvgjXo7utR4E/ZmamvhnXo7uNwnU/ZmamvhnXo7uNwnU/ZmamvulROD2NwnU/ZmamPhnXo7uNwnU/ZmamvulROD2NwnU/AADAvutROD2tR4E/ZmamPulROD2NwnU/AADAvutROD2tR4E/AADAvgjXo7utR4E/AADAPgjXo7utR4E/AADAPutROD2tR4E/AADAPgjXo7utR4E/ZmamPhnXo7uNwnU/ZmamPhnXo7uNwnU/ZmamPulROD2NwnU/ZmamPrLZo7vZo3C/ZmamPulROD2NwnU/AADAPutROD2tR4E/ZmamPpZROD3Zo3C/AADAPutROD2tR4E/AADAPgjXo7utR4E/AADAPsTZo7umcH2/AADAPpRROD2mcH2/AADAPsTZo7umcH2/ZmamPrLZo7vZo3C/ZmamvrLZo7vZo3C/AADAvsTZo7umcH2/ZmamPrLZo7vZo3C/ZmamPpZROD3Zo3C/ZmamvpZROD3Zo3C/ZmamvrLZo7vZo3C/ZmamPpZROD3Zo3C/AADAPpRROD2mcH2/AADAvpRROD2mcH2/ZmamvpZROD3Zo3C/AADAPpRROD2mcH2/AADAPsTZo7umcH2/AADAvsTZo7umcH2/AADAvpRROD2mcH2/mpnZvh/XozsTroc/mpnZvulROL0Troc/mpnZPulROL0Troc/mpnZPh/XozsTroc/AADAvutROL2tR4E/AADAvg7XozutR4E/AADAPg7XozutR4E/AADAPutROL2tR4E/mpnZvulROL0Troc/AADAvutROL2tR4E/AADAPutROL2tR4E/mpnZPulROL0Troc/mpnZPh/XozsTroc/AADAPg7XozutR4E/AADAvg7XozutR4E/mpnZvh/XozsTroc/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL8C3R40AAAAAAAAgL8C3R40AAAAAEzvLrQAAIC/AAAAAAAAgD90OG+0AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgL9MTwY0AAAAAAAAgL9MTwY0AAAAAAAAgL9MTwY0AAAAAAAAgL9MTwY0AAAAAAAAgD9Mj1e0AAAAAAAAgD9Mj1e0AAAAAAAAgD9Mj1e0AAAAAAAAgD9Mj1e0AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgL8C3R40AAAAAAAAgL8C3R40AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAEzvLrQAAIC/AAAAAAAAgD90OG+0AAAAAAAAgD90OG+0AAAAAAAAgD90OG+0AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAEzvLjQAAIA/AAAAAAAAgL9M7y40AAAAAAAAgL9M7y40AACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AAAAAAAAgD9M7y60AACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgL+UAT80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"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 128,
+      "max": [
+        0.42500001192092896,
+        0.044999998062849045,
+        1.0599998235702515
+      ],
+      "min": [
+        -0.42500001192092896,
+        -0.045000333338975906,
+        -1.040000081062317
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 128,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5123,
+      "count": 192,
+      "max": [
+        127
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        0.32499998807907104,
+        0.0299999937415123,
+        0.9599998593330383
+      ],
+      "min": [
+        -0.32499998807907104,
+        0.009999683126807213,
+        -0.9400001168251038
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5123,
+      "count": 72,
+      "max": [
+        47
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 8,
+      "max": [
+        0.3050000071525574,
+        0.024999991059303284,
+        0.9399998784065247
+      ],
+      "min": [
+        -0.3050000071525574,
+        0.014999686740338802,
+        -0.9200001358985901
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 8,
+      "max": [
+        0,
+        1,
+        1.6292068494294654e-7
+      ],
+      "min": [
+        0,
+        -1,
+        -1.6292068494294654e-7
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5123,
+      "count": 12,
+      "max": [
+        7
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        0.5833335518836975,
+        0.07500136643648148,
+        1.75
+      ],
+      "min": [
+        -0.5833335518836975,
+        -0.07499862462282181,
+        -1.750001072883606
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 10,
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 11,
+      "componentType": 5126,
+      "count": 48,
+      "max": [
+        0.5985351800918579,
+        0.99853515625
+      ],
+      "min": [
+        0,
+        0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 12,
+      "componentType": 5123,
+      "count": 96,
+      "max": [
+        47
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "PVC [imported] (1)"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "Plastic [imported] (1)"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.3333333333333333,
+          0.3411764705882353,
+          0.8980392156862745,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "Glass [imported] (2)"
+    },
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.8941176470588236,
+          0.8274509803921568,
+          0.7098039215686275,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "doubleSided": true,
+      "name": "obs"
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 3,
+            "NORMAL": 4
+          },
+          "indices": 5,
+          "material": 1
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 6,
+            "NORMAL": 7
+          },
+          "indices": 8,
+          "material": 2
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "mode": 4,
+          "attributes": {
+            "POSITION": 9,
+            "NORMAL": 10,
+            "TEXCOORD_0": 11
+          },
+          "indices": 12,
+          "material": 3
+        }
+      ]
+    }
+  ]
+}

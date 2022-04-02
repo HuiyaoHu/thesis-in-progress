@@ -17,13 +17,13 @@ document.addEventListener('mousedown', onMouseDown, false);
 document.addEventListener('mouseup', onMouseUp, false);
 document.addEventListener( 'mousemove', onMouseMove, false );
 
+const checkboxChassis = document.getElementById("checkboxChassis");   
+const checkboxNeighbours = document.getElementById("checkboxNeighbour01");   
 const checkboxCeiling = document.getElementById("checkboxCeiling");   
 
 // IDS
 document.getElementById("buttonVolume").addEventListener("click", onClickbuttonVolume );
 document.getElementById("buttonFloor").addEventListener("click",  onClickbuttonFloor);
-document.getElementById("buttonFloorFrac").addEventListener("click",  onClickbuttonFloorFrac);
-
     // document.getElementById("buttonCeiling").addEventListener("click", onClickbuttonCeiling);
     // document.getElementById("buttonBoundaryWall").addEventListener("click", onClickbuttonBoundaryWall);
 document.getElementById("buttonPartitionWall").addEventListener("click", onClickbuttonPartWall);
@@ -173,11 +173,11 @@ const matAttrText = new THREE.LineBasicMaterial( {color: 0x0000ff, linewidth: 1}
 const matText = new THREE.LineBasicMaterial( {color: 0x000000, linewidth: 1} );
 
 // VOLUME
-const matVolume = new THREE.MeshStandardMaterial({color: 'blue', opacity: 0.06, transparent: true});
-const matVolumeTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.4, transparent: true});
+const matVolume = new THREE.MeshStandardMaterial({color: 'blue', opacity: 0.1, transparent: true});
+const matVolumeTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
 const matVolumeDel = new THREE.MeshStandardMaterial({color: 'white', opacity: 0.6, transparent: true});
 
-const matFloorTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.4, transparent: true});
+const matFloorTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.2, transparent: true});
 const matFloorDel = new THREE.MeshStandardMaterial({color: 'white', opacity: 0.6, transparent: true});
 
 const matCeilingTrans = new THREE.MeshStandardMaterial({color: 0xAB9F82, opacity: 0.9, transparent: true});
@@ -256,25 +256,19 @@ ground.visible = false;
 ground.name = "ground"
 scene.add( ground );
 
-var groundHeight = 0
-var storeyNum = 1
 
 // __________________________
 //    	　_ * GRID *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-const dictGrid = {}
 
-// GRID 1
-var  Grid01 = null
+// GEOMETRIES
+var  objectGrid = null
 loader.load( // Load a glTF resource
-    'models/Grid01.gltf', // resource URL
+    'models/Grid.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        Grid01 = gltf.scene;
-        // Grid01.getObjectByName("line").material = matGrid;
-        scene.add( Grid01 );
-        dictGrid[1] = Grid01;
-        Grid01.storey = storeyNum;
-        Grid01.visibility = true;
+        objectGrid = gltf.scene;
+        // objectGrid.getObjectByName("line").material = matGrid;
+        scene.add( objectGrid );
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -283,81 +277,17 @@ loader.load( // Load a glTF resource
         console.log( 'An error happened' );
     }
 );
-
-// GRID 2
-var  Grid02 = null
-loader.load( // Load a glTF resource
-    'models/Grid02.gltf', // resource URL
-    function ( gltf ) { // called when the resource is loaded
-        Grid02 = gltf.scene;
-        // Grid02.getObjectByName("line").material = matGrid;
-        scene.add( Grid02 );
-        dictGrid[2] = Grid02;
-        Grid02.storey = storeyNum;
-        Grid02.visibility = false;
-    },
-    function ( xhr ) { // called while loading is progressing
-		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-	},
-    function ( error ) { // called when loading has errors
-        console.log( 'An error happened' );
-    }
-);
-
-// GRID 3
-var  Grid03 = null
-loader.load( // Load a glTF resource
-    'models/Grid03.gltf', // resource URL
-    function ( gltf ) { // called when the resource is loaded
-        Grid03 = gltf.scene;
-        // Grid03.getObjectByName("line").material = matGrid;
-        scene.add( Grid03 );
-        dictGrid[3] = Grid03;
-        Grid03.storey = storeyNum;
-        Grid03.visibility = false;
-    },
-    function ( xhr ) { // called while loading is progressing
-		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-	},
-    function ( error ) { // called when loading has errors
-        console.log( 'An error happened' );
-    }
-);
-
-// GRID 4
-var  Grid04 = null
-loader.load( // Load a glTF resource
-    'models/Grid04.gltf', // resource URL
-    function ( gltf ) { // called when the resource is loaded
-        Grid04 = gltf.scene;
-        // Grid04.getObjectByName("line").material = matGrid;
-        scene.add( Grid04 );
-        dictGrid[4] = Grid04;
-        Grid04.storey = storeyNum;
-        Grid04.visibility = false;
-    },
-    function ( xhr ) { // called while loading is progressing
-		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-	},
-    function ( error ) { // called when loading has errors
-        console.log( 'An error happened' );
-    }
-);
-
-
-    /*
 
     // SCENE GRID
     const gridGround = new THREE.GridHelper( ground_size, num_cells, 0x504F4F, 0x504F4F );
     gridGround.rotation.x = Math.PI / 2;
     gridGround.position.x = 0;
     gridGround.position.y = 0;
-    gridGround.position.z = ground.position.z; // -floor_thickness/2
-    scene.add( gridGround );
+    gridGround.position.z = 0; // -floor_thickness/2
+    // scene.add( gridGround );
         // var axesHelper = new THREE.AxesHelper( 600 );
         // scene.add( axesHelper )
 
-    */
 
 // __________________________
 //    	　_ * CHASSIS *
@@ -374,7 +304,8 @@ loader.load( // Load a glTF resource
         meshChassis.getObjectByName("Cores").material = plaster;
         meshChassis.getObjectByName("Texts").material = matText;
         scene.add( meshChassis );
-        meshChassis.visible = false;
+        meshChassis.visible = true;
+
         /*
         meshChassis.traverse(function(child) { // returns all children of objects with a matching name.
             if (child.name === "ChassisUnit") {
@@ -391,26 +322,20 @@ loader.load( // Load a glTF resource
     }
 );
 
- 
+
 // __________________________
-//    	　_ * NEIGHBOURS *
-// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-const GrpMeshNeighbours = new THREE.Group();
-
 //    	　_ * NEIGHBOUR01 *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 // GEOMETRIES
-var  Neighbour01 = null
+var  meshNeighbour01 = null
 loader.load( // Load a glTF resource
     'models/Neighbour01.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        Neighbour01 = gltf.scene;
-        Neighbour01.name = "Neighbour01";
-        // scene.add( Neighbour01 );
-        // Neighbour01.visible = false;
-        addNeighbourtoGroup(Neighbour01);
+        meshNeighbour01 = gltf.scene;
+        scene.add( meshNeighbour01 );
+        meshNeighbour01.visible = false;
+        meshNeighbour01.name = "meshNeighbour01";
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -420,21 +345,18 @@ loader.load( // Load a glTF resource
     }
 );
 
+// __________________________
 //    	　_ * NEIGHBOUR02 *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 // GEOMETRIES
-var  Neighbour02 = null
+var  meshNeighbour02 = null
 loader.load( // Load a glTF resource
     'models/Neighbour02.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        Neighbour02 = gltf.scene;
-        Neighbour02.name = "Neighbour02";
-        // scene.add( Neighbour02 );
-        // Neighbour02.visible = false;
-        addNeighbourtoGroup(Neighbour02)    
+        meshNeighbour02 = gltf.scene;
         /*
-        setOpacity( Neighbour02, 0.5 );
+        setOpacity( meshNeighbour02, 0.5 );
         function setOpacity( obj, opacity ) {
           obj.children.forEach((child)=>{
             setOpacity( child, opacity );
@@ -444,7 +366,7 @@ loader.load( // Load a glTF resource
           }
         };
 
-        Neighbour02.traverse(function(child) { // returns all children of objects with a matching name.
+        meshNeighbour02.traverse(function(child) { // returns all children of objects with a matching name.
             setOpacity( child, 0.1 );
             function setOpacity( obj, opacity ) {
               obj.children.forEach((child)=>{
@@ -456,11 +378,15 @@ loader.load( // Load a glTF resource
             }; 
         });
 
-        Neighbour02.traverse(function(child) { // returns all children of objects with a matching name.
+        meshNeighbour02.traverse(function(child) { // returns all children of objects with a matching name.
             child.material = concrete;
         });
 
         */
+        scene.add( meshNeighbour02 );
+        meshNeighbour02.visible = false;
+        meshNeighbour02.name = "meshNeighbour02";
+
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -471,19 +397,20 @@ loader.load( // Load a glTF resource
 );
 
 
+// __________________________
 //    	　_ * NEIGHBOUR03 *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 // GEOMETRIES
-var  Neighbour03 = null
+var  meshNeighbour03 = null
 loader.load( // Load a glTF resource
     'models/Neighbour03.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        Neighbour03 = gltf.scene;
-        Neighbour03.name = "Neighbour03";
-        // scene.add( Neighbour03 );
-        // Neighbour03.visible = false;
-        addNeighbourtoGroup(Neighbour03);
+        meshNeighbour03 = gltf.scene;
+        scene.add( meshNeighbour03 );
+        meshNeighbour03.visible = false;
+        meshNeighbour03.name = "meshNeighbour03";
+
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -493,19 +420,20 @@ loader.load( // Load a glTF resource
     }
 );
 
+// __________________________
 //    	　_ * NEIGHBOUR04 *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 // GEOMETRIES
-var  Neighbour04 = null
+var  meshNeighbour04 = null
 loader.load( // Load a glTF resource
     'models/Neighbour04.gltf', // resource URL
     function ( gltf ) { // called when the resource is loaded
-        Neighbour04 = gltf.scene;
-        Neighbour04.name = "Neighbour04";
-        // scene.add( Neighbour04 );
-        // Neighbour04.visible = false;
-        addNeighbourtoGroup(Neighbour04);
+        meshNeighbour04 = gltf.scene;
+        scene.add( meshNeighbour04 );
+        meshNeighbour04.visible = false;
+        meshNeighbour04.name = "meshNeighbour04";
+
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -515,67 +443,35 @@ loader.load( // Load a glTF resource
     }
 );
 
-GrpMeshNeighbours.name = "GrpMeshNeighbours"
-scene.add(GrpMeshNeighbours)
-GrpMeshNeighbours.visible = false;
 
 // __________________________
 //    	　_ * FLOOR *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-//    	　_ * FLOOR GROUP *
-// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
 // DIMENSIONS
 const floor_width = 3.5; const floor_width_half = floor_width/2;
 const floor_length = 3.5;
-const floor_thickness = 0.7; const floor_thickness_half = floor_thickness/2;
+const floor_thickness = 0.7; const floor_thickness_half = 0.7/2;
 
 // GEOMETRIES
 const geomFloor = new THREE.BoxBufferGeometry( floor_width, floor_length, floor_thickness );
-
 const geomFloorHover = new THREE.BoxBufferGeometry( floor_width * 1, floor_length* 1, floor_thickness * 1 );
+const geomFloorDel = new THREE.BoxBufferGeometry( floor_width * 1.1, floor_length* 1.1, floor_thickness * 1.1 );
+
 const meshFloorTrans = new THREE.Mesh( geomFloorHover, matFloorTrans );
 meshFloorTrans.visible = false;
-scene.add(meshFloorTrans);
-
-const geomFloorDel = new THREE.BoxBufferGeometry( floor_width * 1.1, floor_length* 1.1, floor_thickness * 1.1 );
 const meshFloorDel = new THREE.Mesh( geomFloorDel, matFloorDel );
 meshFloorDel.visible = false;
+
+scene.add(meshFloorTrans);
 scene.add(meshFloorDel);
+
 
 // INITIALISATION 
 var dictFloor = {};
-var pos_grpFloor = null;
+var pos_meshFloor = null;
 var bool_delFloor = false;
-var cnt_grpFloor = 0;
-
-
-//    	　_ * FLOOR FRACTION *
-// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-// DIMENSIONS
-const FloorFrac_width = truncNumTo3dp(floor_width/3); const FloorFrac_width_half = FloorFrac_width/2;
-const FloorFrac_length = truncNumTo3dp(floor_length/3);
-
-// GEOMETRIES
-const geomFloorFrac = new THREE.BoxBufferGeometry( FloorFrac_width, FloorFrac_length, floor_thickness );
-const meshFloorFrac = new THREE.Mesh(geomFloorFrac, particleboard);
-
-const geomFloorFracHover = new THREE.BoxBufferGeometry( FloorFrac_width * 1, FloorFrac_length* 1, floor_thickness * 1 );
-const meshFloorFracTrans = new THREE.Mesh( geomFloorFracHover, matFloorTrans );
-meshFloorFracTrans.visible = false;
-scene.add(meshFloorFracTrans);
-
-const geomFloorFracDel = new THREE.BoxBufferGeometry( FloorFrac_width * 1.1, FloorFrac_length* 1.1, floor_thickness * 1.1 );
-const meshFloorFracDel = new THREE.Mesh( geomFloorFracDel, matFloorDel );
-meshFloorFracDel.visible = false;
-scene.add(meshFloorFracDel);
-
-// INITIALISATION 
-var dictFloorFrac = {};
-var pos_FloorFrac = null;
-var bool_delFloorFrac = false;
+var cnt_meshFloor = 0;
 
 
 // __________________________
@@ -583,56 +479,29 @@ var bool_delFloorFrac = false;
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 // DIMENSIONS
-const ceiling_width = floor_width; const ceiling_width_half = ceiling_width/2;
-const ceiling_length = floor_length;
-const ceiling_thickness = 0.10; const ceiling_thickness_half = ceiling_thickness/2;
+const ceiling_width = 3.5; const ceiling_width_half = ceiling_width/2;
+const ceiling_length = 3.5;
+const ceiling_thickness = 0.10;
 const overlapOffset = 0.001;
 
 // GEOMETRIES
 const geomCeiling = new THREE.BoxBufferGeometry( ceiling_width, ceiling_length, ceiling_thickness );
-
 const geomCeilingHover = new THREE.BoxBufferGeometry( ceiling_width * 1, ceiling_length* 1, ceiling_thickness * 1 );
+const geomCeilingDel = new THREE.BoxBufferGeometry( ceiling_width * 1.1, ceiling_length* 1.1, ceiling_thickness * 1.01 );
+
 const meshCeilingTrans = new THREE.Mesh( geomCeilingHover, matFloorTrans );
 meshCeilingTrans.visible = false;
-scene.add(meshCeilingTrans);
-
-const geomCeilingDel = new THREE.BoxBufferGeometry( ceiling_width * 1.1, ceiling_length* 1.1, ceiling_thickness * 1.01 );
 const meshCeilingDel = new THREE.Mesh( geomCeilingDel, matFloorDel );
 meshCeilingDel.visible = false;
+
+scene.add(meshCeilingTrans);
 scene.add(meshCeilingDel);
 
 // INITIALISATION 
 var dictCeiling = {};
-var pos_grpCeiling = null;
+var pos_meshCeiling = null;
 var bool_delCeiling = false;
-var cnt_grpCeiling = 0;
-
-//    	　_ * CEILING FRACTION *
-// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-// DIMENSIONS
-const CeilingFrac_width = truncNumTo3dp(ceiling_width/3); const CeilingFrac_width_half = CeilingFrac_width/2;
-const CeilingFrac_length = truncNumTo3dp(ceiling_length/3);
-
-// GEOMETRIES
-const geomCeilingFrac = new THREE.BoxBufferGeometry( CeilingFrac_width, CeilingFrac_length, ceiling_thickness );
-const meshCeilingFrac = new THREE.Mesh(geomCeilingFrac, obs);
-
-const geomCeilingFracHover = new THREE.BoxBufferGeometry( CeilingFrac_width * 1, CeilingFrac_length* 1, ceiling_thickness * 1 );
-const meshCeilingFracTrans = new THREE.Mesh( geomCeilingFracHover, matFloorTrans );
-meshCeilingFracTrans.visible = false;
-scene.add(meshCeilingFracTrans);
-
-const geomCeilingFracDel = new THREE.BoxBufferGeometry( CeilingFrac_width * 1.1, CeilingFrac_length* 1.1, ceiling_thickness * 1.1 );
-const meshCeilingFracDel = new THREE.Mesh( geomCeilingFracDel, matFloorDel );
-meshCeilingFracDel.visible = false;
-scene.add(meshCeilingFracDel);
-
-// INITIALISATION 
-var dictCeilingFrac = {};
-var pos_CeilingFrac = null;
-var bool_delCeilingFrac = false;
-
+var cnt_meshCeiling = 0;
 
 
 // __________________________
@@ -1051,9 +920,9 @@ var scale_grpStairs01 = new THREE.Vector3(-1, 1, 1)
 // GEOMETRIES
 const offsetHeight_AttrLine_fromFloorPos = new THREE.Vector3( 0, 0, floor_thickness_half);
 const offsetHeight_AttrLine_fromVolPos = -volume_height_half + floor_thickness;
+const offsetHeight_AttrLine_fromVerModPos = BdyWall_height_half - floor_thickness;
 const offsetHeight_meshPartWall_fromAttrLine = new THREE.Vector3(0, 0, PartWall_height_half - floor_thickness);
 const offsetHeight_posVerMod_fromFloorPos = BdyWall_height_half - floor_thickness_half;
-const offsetHeight_posVerMod_fromAttLine = BdyWall_height_half - floor_thickness;
 
 
 const offsetValue_hor_PartWall = new THREE.Vector3( PartWall_width, 0, 0); 
@@ -1063,7 +932,7 @@ const offsetValue_hor_BdyWall = new THREE.Vector3( PartWall_width_half, 0, 0);
 const num_div_row_onFloor = floor_width / PartWall_width;
 const num_div_onFloor = num_div_row_onFloor * num_div_row_onFloor;
 
-var zpos_AttrLine = floor_thickness + groundHeight;
+const zpos_AttrLine = floor_thickness;
 
 const hideAttrLine = false; // false: hide, true: show
 const offsetHeight_AttrLineDisp_AttrLine = new THREE.Vector3( 0, 0, 0.01);
@@ -1079,7 +948,6 @@ var angle_grpAttrLine = 0;
 // GEOMETRIES
 const top_left_corner = new THREE.Vector3( -volume_width*2, volume_width*2, floor_thickness );
     // dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
-/*
 posaddAttrLine_availBdy ( // Add Attribute line
     top_left_corner,
     ['R', 'corridor'],
@@ -1102,7 +970,7 @@ posaddAttrLine_availBdy ( // Add Attribute line
     ['U', 'neighbour'],
     ['U', 'neighbour'],
 );
-*/
+
 
 // __________________________
 //    	　_ * TEST *
@@ -1124,8 +992,7 @@ loader.load( // Load a glTF resource
 
 
 // EXECUTE FUNCTIONS
-const dictAll = [dictVolume, dictAttrLine, dictTextMesh, dictFloor, dictBdyWall, dictPartWall, dictWindow01, dictWindow02, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
-    // dictGrid, , dictCeiling
+const dictAll = [dictAttrLine, dictBdyWall, dictPartWall, dictWindow01, dictWindow02, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
 const dictInterior = [dictPartWall, dictWindow01, dictWindow02, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
 
 var meshFloorZone;
@@ -1147,11 +1014,9 @@ function animate() {
 }
 
 function render() {
-    changeGroundHeight();
-    toggleDisp_Grid();
-    eyeIconStoreyTgl();
 
     hideHelper();
+
     if (!bool_render ) { return;}
     bool_render = false;
     bool_mouseDown = false;
@@ -1167,23 +1032,65 @@ function render() {
         return;
     }
 
+
+    // __________________________
+    //    	　_ * CHASSIS *
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    
+    // console.log(checkboxChassis.checked)
+    if (checkboxChassis.checked == false){
+        if (scene.getObjectByName('Chassis') != undefined) {
+            scene.getObjectByName('Chassis').visible = false;
+        } else {
+            // scene.getObjectByName('Chassis').visible = false; // turn on if index.html starts with checked
+        } 
+    } 
+    else {
+        if (scene.getObjectByName('Chassis') != undefined) {
+            scene.getObjectByName('Chassis').visible = true; 
+        };   
+    };
+
+    // __________________________
+    //    	　_ * NEIGHBOURS *
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+    if (checkboxNeighbours.checked == false){
+        if (meshNeighbour01 != null) {
+            meshNeighbour01.visible=false;
+            meshNeighbour02.visible=false;
+            meshNeighbour03.visible=false;
+            meshNeighbour04.visible=false;
+        } else { // turn on if index.html starts with checked
+            // meshNeighbour01.visible=false;
+            // meshNeighbour02.visible=false;
+            // meshNeighbour03.visible=false;
+            // meshNeighbour04.visible=false;
+        } 
+    } 
+    else {
+        if (meshNeighbour01 != null) {
+            meshNeighbour01.visible = true; 
+            meshNeighbour02.visible = true; 
+            meshNeighbour03.visible = true; 
+            meshNeighbour04.visible = true; 
+        };   
+    };
+    // console.log(scene)
+    // console.log(meshNeighbour01)
+
     // __________________________
     //    	　_ * VOLUME *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonVolume' ) {
 
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
-        var list_meshScene = []; // get the meshes in the scene to check for intersections
-        Object.values(dictVolume).forEach(i => {
-            if (i.storey == storeyNum) {
-                list_meshScene = list_meshScene.concat(i.children[1])
-            }
-        })
+        const list_meshScene = getValueList(dictVolume, 1); // get the meshes in the scene to check for intersections
         list_meshScene.push(ground);
         const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
         const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
 
-        reinstate_mods('volume','floor'); // if do not intersect with anything, show nothing
+        reinstate_mods('floor'); // if do not intersect with anything, show nothing
         
         if ( list_meshInt.length > 0 ) { // if intersect with any meshes
 
@@ -1195,6 +1102,7 @@ function render() {
                     pos_meshVolume = null;
                 }
                 else { // if shift button is pressed, show geom_trans_del
+                    
                     const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                     pos_meshVolume = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z + volume_height/2); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     
@@ -1216,14 +1124,18 @@ function render() {
                         pos_meshVolume.x = Math.round((meshInt0.point.x + volume_width_half) / volume_width) * volume_width - volume_width_half;
                         pos_meshVolume.y = Math.round((meshInt0.point.y + volume_width_half) / volume_width) * volume_width - volume_width_half;
                     }
-                    pos_meshVolume.z = groundHeight + volume_height/2 ; // move volume up to align it with grid
+                    pos_meshVolume.z = volume_height/2 ; // move volume up to align it with grid
                     meshVolumeTrans.position.set(pos_meshVolume.x, pos_meshVolume.y, pos_meshVolume.z);
                     meshVolumeDel.visible = false;
                     meshVolumeTrans.visible = true;
                 }
             }    
 
-        } 
+        } else { // if do not intersect with anything, show nothing
+            meshVolumeTrans.visible = false;
+            meshVolumeDel.visible = false;
+            pos_meshVolume = null;
+        }
    }
 
     // __________________________
@@ -1231,128 +1143,145 @@ function render() {
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonFloor' ) {
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
-        const list_meshScene = getMeshInScene(); // get the meshes in the scene to check for intersections
-        // list_meshScene.push(meshFloorZone);
-        if (dictMergedMesh[storeyNum] !== undefined) {
-            list_meshScene.push(dictMergedMesh[storeyNum]);
-            console.log(dictMergedMesh[storeyNum])
-
-        }
-
-        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
-        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
-
-        reinstate_mods('floor'); // if do not intersect with anything, show nothing
-
-        if ( list_meshInt.length > 0 ) { // if intersect with any meshes
-
-            const pos_mouse = meshInt0.point;
-            const bool_meshIntIsOnCurrentStorey = (groundHeight - volume_height_half) < pos_mouse.z && pos_mouse.z <= (groundHeight + volume_height_half)
-                // console.log( groundHeight - volume_height_half, groundHeight + volume_height_half )
-            
-            // if (bool_meshIntIsOnCurrentStorey) { // if intersected on 'Floor_Zone' on the current storey
-
-
-                if (meshInt0.object.parent.name == 'floor') { //if the first mesh that the cursor intersects has the name " "
-                    // const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                    // pos_grpFloor = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                    pos_grpFloor = posfromKey( meshInt0.object.parent.key );
-                    // console.log(meshInt0.object, pos_grpFloor)
-                    if (!bool_delFloor) { // if shift button is not pressed, update trans pos and show geom_trans 
-                        // orientHorizMeshToFaceOfIntMesh( meshInt0, pos_grpFloor, meshFloorTrans, meshFloorDel );
-                    }
-
-                    else { // if shift button is pressed, show geom_trans_del
-                        meshFloorDel.position.set(pos_grpFloor.x, pos_grpFloor.y, pos_grpFloor.z);
-                        meshFloorDel.visible = true;
-                        meshFloorTrans.visible = false;
-                    } 
-
-                } else if ( meshInt0.object.name == 'Floor_Zone' ) { //if the first mesh that the cursor intersects does not has the name " ", i.e. intersect with ground
-
-                    if (!bool_delFloor) {//if shift button is not pressed, update pos and show geom_trans
-
-                            getPos_grpFloor_MathGrid ( pos_mouse ); // gives pos_grpFloor
-                            const key = keyGen(pos_grpFloor);
-
-                            if ( dictFloor[key]==undefined ) { // if groupFloor key does not exist, add Floor Frac
-
-                                meshFloorTrans.position.set(pos_grpFloor.x, pos_grpFloor.y, pos_grpFloor.z);
-                                meshFloorDel.visible = false;
-                                meshFloorTrans.visible = true;
-
-                            }
-                    }
-                } 
-
-            // }
-   
-
-        } 
-   }
-
-
-    // __________________________
-    //    	　_ * FLOOR FRACTION *
-    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( id_buttonPressed == 'buttonFloorFrac' ) {
-        raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
-        const list_meshScene = getMeshInScene(); // get the meshes in the scene to check for intersections
+        const list_meshScene = Object.values(dictFloor); // get the meshes in the scene to check for intersections
         list_meshScene.push(meshFloorZone);
         const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
         const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
         
-        reinstate_mods('floor_fraction', 'floor', 'ceiling_fraction', 'ceiling'); // if do not intersect with anything, show nothing
+        reinstate_mods('floor'); // if do not intersect with anything, show nothing
 
         if ( list_meshInt.length > 0 ) { // if intersect with any meshes
 
-            if (meshInt0.object.name == 'floor_fraction') { //if the first mesh that the cursor intersects has the name " "
+            if (meshInt0.object.name == 'floor') { //if the first mesh that the cursor intersects has the name " "
 
-                if (!bool_delFloorFrac) { 
-                    // if shift button is not pressed, do nothing 
+                const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                pos_meshFloor = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                
+                if (!bool_delFloor) { // if shift button is not pressed, update trans pos and show geom_trans 
+                    // orientHorizMeshToFaceOfIntMesh( meshInt0, pos_meshFloor, meshFloorTrans, meshFloorDel );
                 }
 
                 else { // if shift button is pressed, show geom_trans_del
-                    const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                    pos_FloorFrac = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                    
-                    getPos_grpFloor_MathGrid ( pos_FloorFrac ); // gives pos_grpFloor
-
-                    const pos_volumeBelow = pos_grpFloor.clone().add(new THREE.Vector3(0,0, -floor_thickness_half - volume_height_half  ) )
-                    const key_volumeBelow = keyGen(pos_volumeBelow);
-                    if (key_volumeBelow in dictVolume) { // show geom_trans_del only if there is volume below
-                        meshFloorFracDel.position.set(pos_FloorFrac.x, pos_FloorFrac.y, pos_FloorFrac.z);
-                        meshFloorFracDel.visible = true;
-                        meshFloorFracTrans.visible = false;
-                    } else {
-                        showHelper('Cannot create floor opening without a purchased volume below.')
-                    }
+                    meshFloorDel.position.set(pos_meshFloor.x, pos_meshFloor.y, pos_meshFloor.z);
+                    meshFloorDel.visible = true;
+                    meshFloorTrans.visible = false;
                 } 
 
-            } else if ( meshInt0.object.name == 'Floor_Zone' ) { //if the first mesh that the cursor intersects does not has the name " ", i.e. intersect with ground
-
-                if (!bool_delFloorFrac) { // if shift button is not pressed, update pos and show geom_trans 
-
-                    const pos_mouse = meshInt0.point;
-                    getPos_grpFloor_MathGrid ( pos_mouse ); // gives pos_grpFloor
-                    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_grpFloor); // getPos_FloorFrac_MathGrid ( pos ) do not work due to rounding issues
-                    const key_grpFloor = keyGen(pos_grpFloor);
-
-                    if ( key_grpFloor in dictFloor ) { // if groupFloor key exist, add Floor Frac
-                        pos_FloorFrac = getClosestPos (pos_mouse, list_posOfDivCen);
-                        pos_FloorFrac.z = groundHeight + floor_thickness_half;
-
-                        meshFloorFracTrans.position.set(pos_FloorFrac.x, pos_FloorFrac.y, pos_FloorFrac.z);
-                        meshFloorFracDel.visible = false;
-                        meshFloorFracTrans.visible = true;
+            } else { // if the first mesh that the cursor intersects does not has the name " ", i.e. intersect with ground
+                
+                if (!bool_delFloor) { // if shift button is not pressed, update pos and show geom_trans 
+                    pos_meshFloor = new THREE.Vector3();
+                    if (num_cells % 2 == 1) {// odd number of cells
+                        pos_meshFloor.x = Math.round(meshInt0.point.x / floor_width) * floor_width;
+                        pos_meshFloor.y = Math.round(meshInt0.point.y / floor_width) * floor_width;
+                    } else { // even number of cells
+                        pos_meshFloor.x = Math.round((floor_width_half + meshInt0.point.x) / floor_width) * floor_width - floor_width_half;
+                        pos_meshFloor.y = Math.round((meshInt0.point.y + floor_width_half) / floor_width) * floor_width - floor_width_half;
                     }
-
+                    pos_meshFloor.z = floor_thickness/2 ; // move meshFloor up to align it with grid
+                    meshFloorTrans.position.set(pos_meshFloor.x, pos_meshFloor.y, pos_meshFloor.z);
+                    meshFloorDel.visible = false;
+                    meshFloorTrans.visible = true;
                 }
             }    
 
         } 
    }
-  
+
+    // __________________________
+    //    	　_ * CEILING *
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+    const list_meshCeiling = Object.values(dictCeiling)
+    if (checkboxCeiling.checked == true){
+        list_meshCeiling.forEach(function(meshCeiling){
+            meshCeiling.visible = true;
+        });
+    } else {
+        list_meshCeiling.forEach(function(meshCeiling){
+            meshCeiling.visible = false;
+        });
+    }
+
+    if ( id_buttonPressed == 'buttonCeiling' ) {
+        raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
+        const list_meshScene = Object.values(dictCeiling); // get the meshes in the scene to check for intersections
+        list_meshScene.push(meshFloorZone);
+        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
+        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+
+        if ( list_meshInt.length > 0 ) { // if intersect with any meshes
+
+            if (meshInt0.object.name == 'ceiling') { //if the first mesh that the cursor intersects has the name " "
+
+                const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                pos_meshCeiling = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                
+                if (!bool_delCeiling) { // if shift button is not pressed, show nothing
+                    meshCeilingTrans.visible = false;
+                    meshCeilingDel.visible = false;
+                    pos_meshCeiling = null;
+                }
+
+                else { // if shift button is pressed, show geom_trans_del
+                    meshCeilingDel.position.set(pos_meshCeiling.x, pos_meshCeiling.y, pos_meshCeiling.z);
+                    meshCeilingDel.visible = true;
+                    meshCeilingTrans.visible = false;
+                } 
+
+            } else { // if the first mesh that the cursor intersects does not has the name " ", i.e. intersect with ground
+                
+                if (!bool_delCeiling) { // if shift button is not pressed, update pos and show geom_trans 
+                    pos_meshCeiling = new THREE.Vector3();
+                    if (num_cells % 2 == 1) {// odd number of cells
+                        pos_meshCeiling.x = Math.round(meshInt0.point.x / ceiling_width) * ceiling_width;
+                        pos_meshCeiling.y = Math.round(meshInt0.point.y / ceiling_width) * ceiling_width;
+                    } else { // even number of cells
+                        pos_meshCeiling.x = Math.round((ceiling_width_half + meshInt0.point.x) / ceiling_width) * ceiling_width - ceiling_width_half;
+                        pos_meshCeiling.y = Math.round((meshInt0.point.y + ceiling_width_half) / ceiling_width) * ceiling_width  - ceiling_width_half;
+                    }
+                    pos_meshCeiling.z = BdyWall_height - ceiling_thickness/2 - overlapOffset ; // move meshCeiling up to align it with grid
+                    meshCeilingTrans.position.set(pos_meshCeiling.x, pos_meshCeiling.y, pos_meshCeiling.z);
+                    meshCeilingDel.visible = false;
+                    meshCeilingTrans.visible = true;
+                }
+            }    
+
+        } else { // if do not intersect with anything, show nothing
+            meshCeilingTrans.visible = false;
+            meshCeilingDel.visible = false;
+            pos_meshCeiling = null;
+        }
+   }
+
+    // __________________________
+    //    	　_ * BOUNDARY WALL * ★
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    if ( id_buttonPressed == 'buttonBoundaryWall' ) {
+        raycaster.setFromCamera( mouse, camera );
+        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        list_meshScene.push(meshFloorZone);
+        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
+        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+        
+        if ( list_meshInt.length > 0 ) { // if intersect with any meshes
+
+            if (meshInt0.object.name == 'BoundaryWall') { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delBdyWall) { // if shift button is not pressed, update trans pos and show geom_trans 
+                    // orientVertMeshToFaceOfIntMesh( meshInt0, pos_meshBdyWall, meshBdyWallTrans, meshBdyWallDel );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    // delHoverDisp_BdyWall( meshInt0.object )
+                } 
+            } 
+            
+        } else { // if do not intersect with anything, show nothing
+            meshBdyWallTrans.visible = false;
+            meshBdyWallDel.visible = false;
+            pos_meshBdyWall = null;
+        }
+        // console.log('~~pos_meshBdyWall~~', pos_meshBdyWall)
+    }	
 
     // __________________________
     //    	　_ * PARTITION WALL * ★
@@ -1378,7 +1307,7 @@ function render() {
                 } 
             } 
           
-            else if (meshInt0.object.parent.name == "floor") { // if the first mesh that the cursor intersects does not have name, i.e. intersect with ground
+            else if (meshInt0.object.name == "floor") { // if the first mesh that the cursor intersects does not have name, i.e. intersect with ground
                 
                 if (!bool_delPartWall) { // if shift button is not pressed, update pos and show geom_trans
                     addHoverDisp_PartWall_toIntFloor(meshInt0); // check distance from boundary and presense of boundary and non-boundary mesh
@@ -1421,8 +1350,106 @@ function render() {
                 } 
                 else { // if shift button is pressed, do nothing
                 }
-               
-            }          
+
+                
+            } 
+/*
+                pos_meshFloor = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                
+                if (!bool_delFloor) { // if shift button is not pressed, update trans pos and show geom_trans 
+                    // orientHorizMeshToFaceOfIntMesh( meshInt0, pos_meshFloor, meshFloorTrans, meshFloorDel );
+                }
+
+                else { // if shift button is pressed, show geom_trans_del
+                    meshFloorDel.position.set(pos_meshFloor.x, pos_meshFloor.y, pos_meshFloor.z);
+                    meshFloorDel.visible = true;
+                    meshFloorTrans.visible = false;
+                } 
+
+
+            if (meshInt0.object.parent.name == 'Stairs01') { // if the first mesh that the cursor intersects has the name ' '
+                const grpInt = meshInt0.object.parent.parent; // Group { .., name: 'Window01', ..}
+                if (!bool_delStairs01) { 
+                    // if shift button is not pressed, do nothing
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Stairs01( grpInt );
+                }
+            } 
+            
+            else if (meshInt0.object.name == 'BoundaryWall' ) { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( meshInt0.object );
+                }
+            }
+
+            else if (meshInt0.object.name == 'PartitionWall') { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( meshInt0.object );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Window01') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window01( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Window02') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window02( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Door01') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Door01( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Door02') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Door02( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Door03') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Door03( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Railing01') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Stairs01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Railing01( grpInt );
+                }
+            }	
+            */
+           
 
 
         } 
@@ -2103,15 +2130,6 @@ function onClickbuttonFloor() {
     document.getElementById(id_buttonPressed).classList.add("pressed");
 };
 
-//    	　_ * FLOOR FRACTION *
-// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-function onClickbuttonFloorFrac() {
-    document.getElementById(id_buttonPressed).classList.remove("pressed");
-    id_buttonPressed = 'buttonFloorFrac';
-    document.getElementById(id_buttonPressed).classList.add("pressed");
-};
-
-
 //    	　_ * CEILING * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 function onClickbuttonCeiling() {
@@ -2217,14 +2235,6 @@ function onMouseMove( event ) {
         bool_delFloor = true;
     } else { // if shift is not pressed, del_mesh is false and hide mesh_trans
         bool_delFloor = false;
-    }
-
-    //    	　_ * FLOOR FRACTION *
-    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if (event.shiftKey) { // if shift is pressed, del_mesh and hide mesh_trans
-        bool_delFloorFrac = true;
-    } else { // if shift is not pressed, del_mesh is false and hide mesh_trans
-        bool_delFloorFrac = false;
     }
 
     //    	　_ * CEILING * 
@@ -2341,8 +2351,8 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
             deleteVolume(dictVolume[key]); // e.g. (2) [Mesh, Mesh]
             
             // TRIGGER FLOOR DELETE SCRIPT
-            pos_grpFloor = new THREE.Vector3( pos_meshVolume.x, pos_meshVolume.y, groundHeight+floor_thickness_half ) ; 
-            bool_delFloor = true; 
+            pos_meshFloor = new THREE.Vector3( pos_meshVolume.x, pos_meshVolume.y, floor_thickness_half ) ; 
+            bool_delFloor = true 
             
         } else if (!bool_delVolume && dictVolume[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new volume to the scene and add its key to dictVolume {}
             addVolume(key); 
@@ -2352,74 +2362,29 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     // __________________________
     //    	　_ * FLOOR *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if (pos_grpFloor != null &&pos_FloorFrac ==null) { //If not dragging and raycaster.intersectObjects.object.values(dictFloor).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
-        const key = keyGen(pos_grpFloor);
+    if (pos_meshFloor != null) { //If not dragging and raycaster.intersectObjects.object.values(dictFloor).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
+        const key = keyGen(pos_meshFloor);
         if (bool_delFloor && key in dictFloor) { // if shift is pressed and existing key is True, delete meshFloor, meshEnclosure and meshInterior
             deleteFloor(dictFloor[key]); 
-            deleteMeshEnclosure(pos_grpFloor);
-            deleteAllInteriorMesh(pos_grpFloor);
-            genCeilingEnclosure(pos_grpFloor);
+            deleteMeshEnclosure(pos_meshFloor);
+            deleteAllInteriorMesh(pos_meshFloor);
+            genCeilingEnclosure(pos_meshFloor);
         } else if (!bool_delFloor && dictFloor[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new meshFloor to the scene and add its key to dictFloor {}
             addFloor(key); 
-            genBdyWallEnclosure(pos_grpFloor);
-            genCeilingEnclosure(pos_grpFloor);
+            genBdyWallEnclosure(pos_meshFloor);
+            genCeilingEnclosure(pos_meshFloor);
         }
     }
    
     // __________________________
-    //    	　_ * FLOOR FRACTION *
-    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    else if (pos_FloorFrac != null) { //If not dragging and raycaster.intersectObjects.object.values(dictCeiling).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
-        const key = keyGen(pos_FloorFrac);
-
-        pos_CeilingFrac = new THREE.Vector3(pos_FloorFrac.x, pos_FloorFrac.y, truncNumTo3dp(groundHeight - ceiling_thickness_half - overlapOffset) ); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-        const key_CeilingFrac = keyGen(pos_CeilingFrac);
-
-        if (bool_delFloorFrac &&key in dictFloorFrac) { // if shift is pressed and existing key is True, delete meshCeiling
-            deleteFloorFrac(dictFloorFrac[key]); 
-
-            if (key_CeilingFrac in dictCeilingFrac) { // if there is ceiling below the floor, delete
-                deleteCeilingFrac(dictCeilingFrac[key_CeilingFrac]);
-            }
-
-            gen_BdyWallEnclosure();
-
-
-        } else if (!bool_delFloorFrac && dictFloorFrac[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new meshCeiling to the scene and add its key to dictCeiling {}
-            addFloorFrac(key); 
-
-            pos_grpCeiling = new THREE.Vector3( pos_grpFloor.x, pos_grpFloor.y, truncNumTo3dp(groundHeight - ceiling_thickness_half - overlapOffset) )
-            const key_Ceiling = keyGen( pos_grpCeiling )
-            if ( key_Ceiling in dictCeiling ) { // if there is ceiling key, add
-                addCeilingFrac(key_CeilingFrac);
-            }
-
-        }
-
-    }
-    
-    /*
-    // __________________________
     //    	　_ * CEILING *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    else if (pos_grpCeiling != null) { //If not dragging and raycaster.intersectObjects.object.values(dictCeiling).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
-        const key = keyGen(pos_grpCeiling);
+    else if (pos_meshCeiling != null) { //If not dragging and raycaster.intersectObjects.object.values(dictCeiling).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
+        const key = keyGen(pos_meshCeiling);
         if (bool_delCeiling && key in dictCeiling) { // if shift is pressed and existing key is True, delete meshCeiling
             deleteCeiling(dictCeiling[key]); 
         } else if (!bool_delCeiling && dictCeiling[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new meshCeiling to the scene and add its key to dictCeiling {}
             addCeiling(key); 
-        }
-    }
-    
-
-    //    	　_ * CEILING FRACTION *
-    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    else if (pos_CeilingFrac != null) { //If not dragging and raycaster.intersectObjects.object.values(dictCeiling).position != null, e.g. Vector3 {x: 1.5, y: 3, z: 0}
-        const key = keyGen(pos_CeilingFrac);
-        if (bool_delCeilingFrac &&key in dictCeilingFrac) { // if shift is pressed and existing key is True, delete meshCeiling
-            deleteCeilingFrac(dictCeilingFrac[key]); 
-        } else if (!bool_delCeilingFrac && dictCeilingFrac[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new meshCeiling to the scene and add its key to dictCeiling {}
-            addCeilingFrac(key); 
         }
     }
 
@@ -2434,7 +2399,7 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
             addBdyWall(key, pos_meshBdyWall, angle_meshBdyWall);
         }
     }
-*/
+
     // __________________________
     //    	　_ * PARTITION WALL * 
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -2490,17 +2455,20 @@ function addVolume(key) {
     // ADD MESH
     const meshVolume = new THREE.Mesh(geomVolume, matVolumeTrans);
     meshVolume.position.set(pos_meshVolume.x, pos_meshVolume.y, pos_meshVolume.z);
-
+        // scene.add( meshVolume );
     const meshVolumeBase = new THREE.Mesh( geomVolumeBase, matVolume ) ;
-    meshVolumeBase.position.set(pos_meshVolume.x, pos_meshVolume.y, groundHeight);
+    meshVolumeBase.position.set(pos_meshVolume.x, pos_meshVolume.y, 0);
     scene.add( meshVolumeBase );
+        // dispDotsfromCoords(matAttrDot_Large,  [meshVolume.position])
+        // console.log(meshVolume.position)
 
-    const grpVolume = new THREE.Group();
-    grpVolume.add(meshVolume, meshVolumeBase)
-    meshVolume.visible = false
+    // ADD MESH PROPERTIES
+    meshVolume.name = "volume"
+    meshVolumeBase.name = "volume_base"
+    meshVolume.volume_key = key;
 
     // UPDATE GLOBAL VARIABLES, HTML
-    dictVolume[key] = grpVolume;
+    dictVolume[key] = [meshVolume, meshVolumeBase];
     cnt_meshVolume += 1; // update the counter on the web page
     document.getElementById('buttonVolume').innerHTML = "Volume: " + cnt_meshVolume; 
 
@@ -2509,34 +2477,18 @@ function addVolume(key) {
     list_CoordOfCorner.forEach( updatePoints );
     addAttrLine_purchasedVolBdy(list_CoordOfCorner);
 
-    
-    // grpVolume.add(meshFloorZone)
-    scene.add(grpVolume)
-
-    // ADD MESH PROPERTIES
-    meshVolume.name = "volume_cube"
-    meshVolume.storey = storeyNum;
-
-    meshVolumeBase.name = "volume_base"
-    meshVolumeBase.storey = storeyNum;
-    
-    grpVolume.name = "volume"
-    grpVolume.key = key;
-    grpVolume.storey = storeyNum;
-
     // UPDATE FLOOR ZONE MESH
-    const list_meshVolumeBase = getChildList(getValueList(dictVolume), 1)
+    const list_meshVolumeBase = getValueList(dictVolume, 1)
     if ( meshFloorZone != undefined ) {
         scene.remove( meshFloorZone )   
     } 
     meshFloorZone = mergeMeshes(list_meshVolumeBase, matVolume, meshFloorZone, "Floor_Zone");
-    
 };
 
-function deleteVolume( grpVolume ) {
+function deleteVolume( values ) {
 
-    scene.remove( grpVolume ); // value[0] is e.g. Mesh {..}
-    delete dictVolume[ grpVolume.key ];
+    scene.remove( values[0], values[1] ); // value[0] is e.g. Mesh {..}
+    delete dictVolume[ values[0].volume_key ];
     cnt_meshVolume -= 1; 
     document.getElementById('buttonVolume').innerHTML = "Volume: " + cnt_meshVolume;
 
@@ -2569,134 +2521,41 @@ function updatePoints(coord) { // add or remove points in the scene
 //    	　_ * FLOOR *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-
-
 function addFloor(key) {
 
     // ADD MESH
-    const grpFloor = new THREE.Group();
-    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_grpFloor);
-    list_posOfDivCen.forEach(function(cen) {
-        const mesh = meshFloorFrac.clone();
-        mesh.position.set( cen.x, cen.y, cen.z-floor_thickness_half );
-
-        // ADD MESH PROPERTIES
-        mesh.name = "floor_fraction";
-        grpFloor.add(mesh);
-
-        const key = keyGen(mesh.position);
-        mesh.key = key;
-        dictFloorFrac[key] = mesh;
-        /*
-        const index = list_posOfDivCen.indexOf(cen)
-        const gridKey = key+"_"+String(index)
-        mesh.key = gridKey;
-        dictFloor[gridKey] = mesh;
-        */
-        // console.log(Object.keys( dictFloor ))
-    })
-    scene.add( grpFloor );
+    const meshFloor = new THREE.Mesh(geomFloor, particleboard);
+    meshFloor.position.set(pos_meshFloor.x, pos_meshFloor.y, pos_meshFloor.z);
+        // meshFloor.castShadow = true;
+        // meshFloor.receiveShadow = true;
+    scene.add( meshFloor );
 
     // ADD MESH PROPERTIES
-    grpFloor.name = "floor"
-    grpFloor.key = key;
-    const vol_id = calcVolumeID (pos_grpFloor)
-    grpFloor.volume_id = vol_id;
-    grpFloor.storey = storeyNum;
+    meshFloor.name = "floor"
+    meshFloor.floor_key = key;
+    const vol_id = calcVolumeID (pos_meshFloor)
+    meshFloor.volume_id = vol_id;
+
 
     // UPDATE GLOBAL VARIABLES, HTML
-    dictFloor[key] = grpFloor;
-    cnt_grpFloor += 1; // update the counter on the web page
-    document.getElementById('buttonFloor').innerHTML = "Floor: " + cnt_grpFloor;
+    dictFloor[key] = meshFloor;
+    cnt_meshFloor += 1; // update the counter on the web page
+    document.getElementById('buttonFloor').innerHTML = "Floor: " + cnt_meshFloor;
+    // console.log('~~~meshFloor~~~', meshFloor) 
 
     addAttrLinesOnFloor();
 };
 
-function deleteFloor(grpFloor) {
-    scene.remove( grpFloor );
-    delete dictFloor[ grpFloor.key ];
-    cnt_grpFloor -= 1; 
-    document.getElementById('buttonFloor').innerHTML = "Floor: " + cnt_grpFloor;
+function deleteFloor(meshFloor) {
+    scene.remove( meshFloor );
+    delete dictFloor[ meshFloor.floor_key ];
+    cnt_meshFloor -= 1; 
+    document.getElementById('buttonFloor').innerHTML = "Floor: " + cnt_meshFloor;
     delAttrLinesOnFloor();
-
-    // DELETE KEY FROM DICTFLOORFRAC
-    const children = grpFloor.children
-    children.forEach( function(child){
-        const key = getKeyByValue(dictFloorFrac, child);
-        delete dictFloorFrac[ key ];
-    })
 };
 
-function gen_BdyWallEnclosure(  ) {
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_FloorFrac, FloorFrac_width, offsetHeight_posVerMod_fromFloorPos );//frontleft, frontright, backright, backleft
-    const list = list_CoordOfCorner.slice(0)
-    list.push(list[0]);
-
-    // CLOCKWISE MULTIPLIERS
-    const multp_angle = [2,1,0,-1]; // Front, Right, Back, Left
-    const offsetDir_x    = [ 0, 1, 0,-1]; 
-    const offsetDir_y    = [ 1, 0,-1, 0]; // [-1, 0, 1, 0]
-    const adjoffsetDir_x = [ 0,-1, 0, 1]; // [ 0, 1, 0,-1]
-    const adjoffsetDir_y = [-1, 0, 1, 0]; // [ 1, 0,-1, 0]
-
-    for(var i=0; i < list.length - 1; i++){
-
-        const pos_centre = calcMidptof2pt (list[i], list[i+1]);
-
-        const pos_mesh = truncPosTo2dp(pos_centre.clone().add(new THREE.Vector3( offsetValue_BdyWall*offsetDir_x[i], offsetValue_BdyWall*offsetDir_y[i], 0 ) ) ) // offset from boundary
-        const key_mesh = keyGen(pos_mesh);
-        const angle_mesh = Math.PI / 2 *multp_angle[i]
-
-        const pos_adjacent_mesh = truncPosTo2dp(pos_centre.clone().add(new THREE.Vector3( offsetValue_BdyWall*adjoffsetDir_x[i], offsetValue_BdyWall*adjoffsetDir_y[i], 0 ) ) );
-        const key_adjacent_mesh = keyGen( pos_adjacent_mesh )
-            // dispDotsfromCoords( matAttrDot_Large, [pos_mesh] )
-            // console.log( pos_mesh, pos_adjacent_mesh )
-              const bool_keyExistance = getbool_keyExistance(key_adjacent_mesh);
-        if ( bool_keyExistance ) { // if adjacent mesh exists, delete adjacent mesh
-            ifMatchKey_deleteMesh(key_adjacent_mesh, 'BoundaryWall', 'Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); 
-
-    
-            const pos_AttrLine = getClosestAttrLinePos(pos_centre, pos_grpFloor);
-            const endPoints = getpos_EndPtsOfAttrLine (pos_AttrLine, angle_mesh, BdyWall_width_half);
-            // console.log( key_AttrLine in dictAttrLine )
-            // dispDotsfromCoords ( matDot_Large, [pos_centre] )
-            // addAttr_opening (pos_AttrLine, endPoints[0], endPoints[1]);
-        } else {
-            addBdyWall(key_mesh, pos_mesh, angle_mesh, false); // if adjacent mesh does not exist, add meshs
-            const pos_AttrLine = getClosestAttrLinePos(pos_centre, pos_grpFloor);
-            const endPoints = getpos_EndPtsOfAttrLine (pos_AttrLine, angle_mesh, BdyWall_width_half);
-                // dispDotsfromCoords(matAttrDot_Large, endPoints)
-            // addAttr_opening (pos_AttrLine, endPoints[0],  endPoints[1]);
-        }
-
-    } 
-}
-
-function getClosestAttrLinePos(pos, pos_grpFloor) { // combat stack overflow issue
-    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_grpFloor);
-    const list_AttrLinesOnFloor = []
-    list_posOfDivCen.forEach(function(cen) {
-            // console.log( '1 grid' );
-            // dispDotsfromCoords(matAttrDot_Large,[cen])
-        const list_CoordOfCorner = getCoordsOfBaseCorners( cen, PartWall_width, 0 );
-        // console.log(list_posOfDivCen)
-        const list = list_CoordOfCorner.slice(0)
-        list.push(list[0]);
-        for(var i=0; i < list.length - 1; i++){
-            const pos_midpoint = calcMidptof2pt (list[i], list[i+1]);
-            list_AttrLinesOnFloor.push(pos_midpoint)
-        } 
-    })
-    const pos_AttrLine = getClosestPos(pos, list_AttrLinesOnFloor)
-    if (pos_AttrLine.distanceTo(pos) < 1.1) {
-        return pos_AttrLine
-    } else {
-        return pos
-    }
-}
-
-function genBdyWallEnclosure( pos_grpFloor ) {
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_grpFloor, floor_width, offsetHeight_posVerMod_fromFloorPos );//frontleft, frontright, backright, backleft
+function genBdyWallEnclosure( pos_meshFloor ) {
+    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshFloor, floor_width, offsetHeight_posVerMod_fromFloorPos );//frontleft, frontright, backright, backleft
     const list = list_CoordOfCorner.slice(0)
     list.push(list[0]);
 
@@ -2740,11 +2599,12 @@ function genBdyWallEnclosure( pos_grpFloor ) {
             }
                     
         }
-   }
+
+    }
 }
 
-function deleteMeshEnclosure(pos_grpFloor) { // overwrite any existing hybrid module
-    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_grpFloor, floor_width, BdyWall_height_half-floor_thickness_half );//frontleft, frontright, backright, backleft
+function deleteMeshEnclosure(pos_meshFloor) { // overwrite any existing hybrid module
+    const list_CoordOfCorner = getCoordsOfBaseCorners( pos_meshFloor, floor_width, BdyWall_height_half-floor_thickness_half );//frontleft, frontright, backright, backleft
     const list = list_CoordOfCorner.slice(0)
     list.push(list[0]);
     // console.log( Object.keys(dictBdyWall) )
@@ -2781,8 +2641,7 @@ function deleteMeshEnclosure(pos_grpFloor) { // overwrite any existing hybrid mo
             const pos_adjacent_mesh = pos_arr_rounded.clone().add(new THREE.Vector3( offsetValue_BdyWall*adjoffsetDir_x[i], offsetValue_BdyWall*adjoffsetDir_y[i], 0 ) );
             const key_adjacent_mesh = keyGen(pos_adjacent_mesh);
             const angle_adjmesh = Math.PI / 2 *multp_angle_adj[i];
-            
-            // console.log( key_mesh,  key_adjacent_mesh)
+
             if ( bool_keyExistance ) { // if mesh exists, delete mesh
                 ifMatchKey_deleteMesh(key_mesh, 'BoundaryWall', 'Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'); 
             } else {
@@ -2798,63 +2657,18 @@ function deleteMeshEnclosure(pos_grpFloor) { // overwrite any existing hybrid mo
     }
 }
 
-// var ceiling_height = truncNumTo3dp(groundHeight + BdyWall_height - ceiling_thickness_half - overlapOffset) // unusable as groundheight variable do not update
-function genCeilingEnclosure(pos_grpFloor) {
-    pos_grpCeiling = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y, truncNumTo3dp(groundHeight + BdyWall_height - ceiling_thickness_half - overlapOffset)); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-    const ceiling_key = keyGen(pos_grpCeiling);
+function genCeilingEnclosure(pos_meshFloor) {
+    pos_meshCeiling = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height - ceiling_thickness/2 - overlapOffset); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    const ceiling_key = keyGen(pos_meshCeiling);
+
     if ( dictCeiling [ceiling_key] == undefined ) {
         addCeiling(ceiling_key);
     } else {
         deleteCeiling(dictCeiling [ ceiling_key ]);
     }
 
-    pos_grpCeiling = null;
+    pos_meshCeiling = null
 }
-
-
-// __________________________
-//    	　_ * FLOOR FRACTION *
-// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-function addFloorFrac(key) {
-
-    // ADD MESH
-    const mesh = meshFloorFrac.clone();
-    mesh.position.set(pos_FloorFrac.x, pos_FloorFrac.y, pos_FloorFrac.z);
-    scene.add( mesh );
-    
-    // ADD MESH PROPERTIES
-    mesh.name = "floor_fraction"
-    mesh.key = key;
-    mesh.storey = storeyNum;
-
-    const vol_id = calcVolumeID (mesh.position);
-    mesh.volume_id = vol_id;
-
-    // UPDATE GLOBAL VARIABLES, HTML
-    dictFloorFrac[key] = mesh;
-
-    // ADD MESH TO DICTFLOOR
-    const key_parent = keyGen(pos_grpFloor);
-    const grp_FloorFrac = dictFloor[key_parent] // Group {uuid: ...}
-    console.log(grp_FloorFrac)
-    grp_FloorFrac.add(mesh) // since key is alw in dictFloor, add child to value(parent)
-}
-
-function deleteFloorFrac( mesh ) {
-    scene.remove( mesh );
-    delete dictFloorFrac[ mesh.key ];
-
-    // DELETE MESH FROM DICTFLOOR
-    getValueList(dictFloor).forEach( function(grp_FloorFrac){ // Group {uuid:...}
-        const list_FloorFrac = grp_FloorFrac.children; // (9) [Mesh, Mesh, Mesh, Mesh, Mesh, Mesh, Mesh, Mesh, Mesh]
-        const FloorFrac = list_FloorFrac.find(element => element === mesh);
-        if (FloorFrac !== undefined) {
-            grp_FloorFrac.remove( FloorFrac );
-        }
-    }) 
-}
-
 
 
 // __________________________
@@ -2864,106 +2678,39 @@ function deleteFloorFrac( mesh ) {
 function addCeiling(key) {
 
     // ADD MESH
-    const grpCeiling = new THREE.Group();
-    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_grpCeiling);
-    list_posOfDivCen.forEach(function(cen) {
-        const mesh = meshCeilingFrac.clone();
-        mesh.position.set( cen.x, cen.y, truncNumTo3dp(cen.z-floor_thickness_half) );
-
-        // ADD MESH PROPERTIES
-        mesh.name = "ceiling_fraction";
-        grpCeiling.add(mesh);
-
-        const key = keyGen(mesh.position);
-        mesh.key = key;
-        dictCeilingFrac[key] = mesh;
-    })
-    scene.add( grpCeiling );
-    
-    // ADD MESH PROPERTIES
-    grpCeiling.name = "ceiling"
-    grpCeiling.key = key;
-    // const vol_id = calcVolumeID (pos_grpCeiling)
-    // grpCeiling.volume_id = vol_id;
-    grpCeiling.storey = storeyNum;
-
-    // UPDATE GLOBAL VARIABLES, HTML
-    dictCeiling[key] = grpCeiling;
-    cnt_grpCeiling += 1; 
-    // document.getElementById('buttonCeiling').innerHTML = "Ceiling: " + cnt_grpCeiling;
-
-    /*
-    // ADD MESH
-    const meshCeiling = new THREE.Mesh(geomCeiling, particleboard);
-    meshCeiling.position.set(pos_grpCeiling.x, pos_grpCeiling.y, pos_grpCeiling.z);
+    const meshCeiling = new THREE.Mesh(geomCeiling, matCeilingTrans);
+    meshCeiling.position.set(pos_meshCeiling.x, pos_meshCeiling.y, pos_meshCeiling.z);
     scene.add( meshCeiling );
 
     // ADD MESH PROPERTIES
     meshCeiling.name = "ceiling"
     meshCeiling.ceiling_key = key;
-    meshCeiling.storey = storeyNum;
-    meshCeiling.visible = false
-    */
-};
-
-
-function deleteCeiling(grpCeiling) {
-    scene.remove( grpCeiling );
-    delete dictCeiling[ grpCeiling.key ];
-    cnt_grpCeiling -= 1; 
-    // document.getElementById('buttonCeiling').innerHTML = "Ceiling: " + cnt_grpCeiling;
-};
-
-//    	　_ * CEILING FRACTION *
-// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-function addCeilingFrac(key) {
-
-    // ADD MESH
-    const mesh = meshCeilingFrac.clone();
-    mesh.position.set(pos_CeilingFrac.x, pos_CeilingFrac.y, pos_CeilingFrac.z);
-    scene.add( mesh );
-    
-    // ADD MESH PROPERTIES
-    mesh.name = "ceiling_fraction"
-    mesh.key = key;
-    mesh.storey = storeyNum;
-
-    const vol_id = calcVolumeID (mesh.position);
-    mesh.volume_id = vol_id;
 
     // UPDATE GLOBAL VARIABLES, HTML
-    dictCeilingFrac[key] = mesh;
+    dictCeiling[key] = meshCeiling;
+    cnt_meshCeiling += 1; 
+    // document.getElementById('buttonCeiling').innerHTML = "Ceiling: " + cnt_meshCeiling;
+    
+};
 
-    // ADD MESH TO DICTFLOOR
-    const key_parent = keyGen(pos_grpCeiling);
-    const grp_CeilingFrac = dictCeiling[key_parent] // Group {uuid: ...}
-    grp_CeilingFrac.add(mesh) // since key is alw in dictCeiling, add child to value(parent)
-}
 
-function deleteCeilingFrac( mesh ) {
-    scene.remove( mesh );
-    delete dictCeilingFrac[ mesh.key ];
+function deleteCeiling(meshCeiling) {
+    scene.remove( meshCeiling );
+    delete dictCeiling[ meshCeiling.ceiling_key ];
+    cnt_meshCeiling -= 1; 
+    // document.getElementById('buttonCeiling').innerHTML = "Ceiling: " + cnt_meshCeiling;
+};
 
-    // DELETE MESH FROM DICTFLOOR
-    getValueList(dictCeiling).forEach( function(grp_CeilingFrac){ // Group {uuid:...}
-        const list_CeilingFrac = grp_CeilingFrac.children; // (9) [Mesh, Mesh, Mesh, Mesh, Mesh, Mesh, Mesh, Mesh, Mesh]
-        const CeilingFrac = list_CeilingFrac.find(element => element === mesh);
-        if (CeilingFrac !== undefined) {
-            grp_CeilingFrac.remove( CeilingFrac );
-        }
-    }) 
-}
 
 
 // __________________________
 //    	　_ * BOUNDARY WALL * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-function addBdyWall(key, pos, angle, DefaultAttr = true) {
+function addBdyWall(key, pos, angle) {
     
     // ADD MESH
-    // /*
+    /*
     const materials = [
         obs,
         concrete,
@@ -2974,16 +2721,14 @@ function addBdyWall(key, pos, angle, DefaultAttr = true) {
     geomBdyWall.groups[2].materialIndex = 1 //[2]outside, [3]inside, [4]top, [5]bottom, [0][1]sides
 
     const meshBdyWall = new THREE.Mesh( geomBdyWall, materials );
-    // */
-    // const meshBdyWall = new THREE.Mesh( geomBdyWall, obs );
+    */
+    const meshBdyWall = new THREE.Mesh( geomBdyWall, obs );
     meshBdyWall.position.set(pos.x, pos.y, pos.z);
     scene.add( meshBdyWall );
 
     // ADD MESH PROPERTIES
     meshBdyWall.name = "BoundaryWall";
     meshBdyWall.key = key;
-    meshBdyWall.storey = storeyNum;
-
 
     // UPDATE GLOBAL VARIABLES, HTML
     dictBdyWall[key] = meshBdyWall;
@@ -2993,12 +2738,10 @@ function addBdyWall(key, pos, angle, DefaultAttr = true) {
     meshBdyWall.matrixAutoUpdate = false;
     meshBdyWall.updateMatrix();
     
-    if (DefaultAttr) {
-        const pos_AttrLine = getPos_AttrLine_atBdy (pos, angle);
-        // dispDotsfromCoords( matAttrDot_Large, [pos_AttrLine])
-        const endPoints = getpos_EndPtsOfAttrLine (pos_AttrLine, angle, BdyWall_width_half);
-        addAttr_boundary (pos_AttrLine, endPoints[0],  endPoints[1]);
-    }
+    const pos_AttrLine = getPos_AttrLine_atBdy (pos, angle);
+    const endPoints = getpos_EndPtsOfAttrLine (pos_AttrLine, angle, BdyWall_width_half);
+    addAttr_boundary (pos_AttrLine, endPoints[0],  endPoints[1]);
+     
 };
 
 // Delete a BdyWall
@@ -3031,8 +2774,6 @@ function addPartWall(key, pos, angle) {
     // ADD MESH PROPERTIES
     mesh.name = "PartitionWall"
     mesh.key = key;
-    mesh.storey = storeyNum;
-
 
     const vol_id = calcVolumeID (pos);
     mesh.volume_id = vol_id;
@@ -3075,7 +2816,6 @@ function addWindow01(key) {
     // ADD MESH PROPERTIES
     mesh.name = "Window01"
     mesh.key = key;
-    mesh.storey = storeyNum;
 
     const vol_id = calcVolumeID (mesh.position);
     mesh.volume_id = vol_id;
@@ -3110,7 +2850,6 @@ function addWindow02(key) {
     // ADD MESH PROPERTIES
     mesh.name = "Window02"
     mesh.key = key;
-    mesh.storey = storeyNum;
 
     const vol_id = calcVolumeID (mesh.position);
     mesh.volume_id = vol_id;
@@ -3145,7 +2884,6 @@ function addDoor01(key) {
     // ADD MESH PROPERTIES
     mesh.name = "Door01"
     mesh.key = key;
-    mesh.storey = storeyNum;
 
     const vol_id = calcVolumeID (mesh.position);
     mesh.volume_id = vol_id;
@@ -3180,7 +2918,6 @@ function addDoor02(key) {
     // ADD MESH PROPERTIES
     mesh.name = "Door02"
     mesh.key = key;
-    mesh.storey = storeyNum;
 
     const vol_id = calcVolumeID (mesh.position);
     mesh.volume_id = vol_id;
@@ -3215,7 +2952,6 @@ function addDoor03(key) {
     // ADD MESH PROPERTIES
     mesh.name = "Door03"
     mesh.key = key;
-    mesh.storey = storeyNum;
 
     const vol_id = calcVolumeID (mesh.position);
     mesh.volume_id = vol_id;
@@ -3250,11 +2986,9 @@ function addRailing01(key) {
     // ADD MESH PROPERTIES
     mesh.name = "Railing01"
     mesh.key = key;
-    mesh.storey = storeyNum;
 
     const vol_id = calcVolumeID (mesh.position);
     mesh.volume_id = vol_id;
-    console.log(vol_id)
 
     // UPDATE GLOBAL VARIABLES, HTML
     dictRailing01[key] = mesh;
@@ -3285,7 +3019,6 @@ function addStairs01(key) {
     // ADD MESH PROPERTIES
     mesh.name = "Stairs01"
     mesh.key = key;
-    mesh.storey = storeyNum;
 
     const vol_id = calcVolumeID (mesh.position);
     mesh.volume_id = vol_id;
@@ -3310,139 +3043,6 @@ function deleteStairs01(mesh) {
 //////////////////// -------------HELPER FUNCTIONS------------------------------------------------------ //////////////////// 
 
 // ====================================================
-// { Display } 
-// ====================================================
-
-// --------------------------------
-//    Toggle Storey Height
-// --------------------------------
-
-function changeGroundHeight() { // update storeyNum, groundHeight and grid display
-    const radioButtons = document.querySelectorAll('input[name="storeyNum"]');
-    for (const radioButton of radioButtons) {
-        if (radioButton.checked) {
-            // console.log(parseInt(radioButton.value), typeof(parseInt(radioButton.value)))
-            storeyNum = parseInt(radioButton.value);
-            break; // Since only one radio button in a radio group can be checked at a time, the loop is terminated immediately by the break statement.
-        }
-    }
-    groundHeight = (storeyNum-1)*volume_height;
-    zpos_AttrLine = floor_thickness + groundHeight;
-    ground.position.z = groundHeight;    
-}
-
-// --------------------------------
-//    Toggle Grid Display
-// --------------------------------
-
-
-function toggleDisp_Grid(){
-    for (var i = 1; i <= Object.keys(dictGrid).length; i++) {
-        if (i==storeyNum) {
-            dictGrid[i].visible = true;
-                dictGrid[i].position.z = ground.position.z;
-        } else {
-            dictGrid[i].visible = false;
-        }
-    }
-}
-
-// --------------------------------
-//    Toggle Storey and Ceiling Display
-// --------------------------------
-
-function eyeIconStoreyTgl(){ // https://www.csestack.org/hide-show-password-eye-icon-html-javascript/
-    const eyeIcons = document.getElementsByClassName("fa-eye"); // HTMLCollection;  
-    for (const eyeIcon of eyeIcons) { // cannot interate through a collection using forEach
-        const value = eyeIcon.getAttribute('value');
-        if (value == storeyNum) { // working storey
-            eyeIcon.classList.remove('fa-eye-slash'); // eye
-            toggleDisp_Storey(value, true); // show storey
-            toggleDisp_Ceiling (value, false); // hide ceiling
-        } 
-        else if (value > storeyNum) { // higher storey
-            eyeIcon.classList.add('fa-eye-slash'); // eye-slash
-            toggleDisp_Storey(value, false); // hide storey
-            toggleDisp_Ceiling (value, false); // hide ceiling
-        } 
-        else if (value < storeyNum) { // higher storey
-            const classlist = eyeIcon.classList[2]; // undefined or fa-eye-slash; eyeIcon.classList = DOMTokenList(3) ['fa-solid', 'fa-eye', 'fa-eye-slash', value: 'fa-solid fa-eye fa-eye-slash']
-            const bool_eyeSlash = classlist== "fa-eye-slash";
-
-            if (bool_eyeSlash) { // eye slash
-                toggleDisp_Storey(value, false); // hide storey
-                toggleDisp_Ceiling (value, false); // hide ceiling
-                eyeIcon.addEventListener('click', function () { // eye when click
-                    eyeIcon.classList.remove('fa-eye-slash');
-                });
-            }
-            else { // eye
-                toggleDisp_Storey(value, true); // show storey
-                toggleDisp_Ceiling (value, true); // show ceiling
-                eyeIcon.addEventListener('click', function () { // eye-slash when click
-                    eyeIcon.classList.add('fa-eye-slash');
-                });
-            }
-        }
-        
-    }
-}
-
-function toggleDisp_Storey(eyeIcon_value, bool) { // i.e. 'Storey1', 'Storey2'
-    dictAll.forEach( function(dict){
-        const list_mesh = getValueList(dict); // [Mesh]
-        list_mesh.forEach( function(mesh) {
-            if (typeof(mesh.storey)!="undefined") {
-                const bool_idMatch = String(mesh.storey)==eyeIcon_value;
-                // console.log(bool_idMatch)
-                if ( bool_idMatch ) { // if id match, delete
-                    mesh.visible = bool; // toggle a boolean in JavaScript: !true = false, !false = true
-                }
-            }
-        } );
-
-    } );
-};
-
-function toggleDisp_Ceiling (storeylvl, bool_visibility) {
-    const list_meshCeiling = Object.values(dictCeiling)
-    list_meshCeiling.forEach(function(meshCeiling){
-        if (meshCeiling.storey == storeylvl){
-            meshCeiling.visible = bool_visibility; // if on the storey, hide ceiling
-        } 
-    });
-}
-
-// --------------------------------
-//    Toggle Object Display
-// --------------------------------
-
-eyeIconObjectTgl();
-
-function eyeIconObjectTgl(){ // https://www.csestack.org/hide-show-password-eye-icon-html-javascript/
-    const eyeIcons = document.getElementsByClassName("fa-eye"); // HTMLCollection;  
-
-    for (const eyeIcon of eyeIcons) { // cannot interate through a collection using forEach
-        eyeIcon.addEventListener('click', function () { // when clicked
-            const id = eyeIcon.id;
-            if (id !== "") { // if id exist, i.e. not an emptry string
-                toggleDisp_Object(id);
-                eyeIcon.classList.toggle('fa-eye-slash'); // toggle the eye slash icon. 
-            }
-        });
-    }
-}
-function toggleDisp_Object(eyeIcon_id) { // i.e. 'Chassis', 'GrpMeshNeighbours'
-        scene.getObjectByName(eyeIcon_id).visible = !scene.getObjectByName(eyeIcon_id).visible;
-};
-
-function addNeighbourtoGroup(mesh) {
-    const fullmesh = mesh.getObjectByName(mesh.name+"gltf")
-    GrpMeshNeighbours.add( fullmesh ) // Object3D { children: (36) [Object3D, Object3D...]}
-}
-
-
-// ====================================================
 // { Raycaster } 
 // ====================================================
 
@@ -3457,13 +3057,8 @@ function getMeshInScene() {
     // console.log('~~~Object.values(dictBdyWall)~~~', Object.values(dictBdyWall)) // e.g. (2) [Mesh, Mesh] (i.e. 2 BdyWalls in the scene)
     list_meshScene = list_meshScene.concat(Object.values(dictBdyWall));
     list_meshScene = list_meshScene.concat(Object.values(dictPartWall));
+    list_meshScene = list_meshScene.concat(Object.values(dictFloor));
     list_meshScene = list_meshScene.concat(Object.values(dictAttrLine)); // (4) [Group, Group, Group, Group]
-
-    Object.values(dictFloor).forEach(i => {
-        // console.log(i.children) // e.g. (9) [Mesh, Mesh, Mesh, Mesh..]
-        list_meshScene = list_meshScene.concat(i.children)
-    })
-    list_meshScene = list_meshScene.concat(Object.values(dictFloorFrac));
 
     // console.log('~~~Object.values(dictWindow01)~~~', Object.values(dictWindow01)) // e.g. (3) [Group, Group, Group] (i.e. 3 windows in the scene)
     Object.values(dictWindow01).forEach(i => { // for each group in the scene
@@ -3588,7 +3183,7 @@ function addHoverDisp_PartWall_toIntFloor(meshInt0) { // check distance from bou
     if (adjacency == 'interior') {
 
         angle_meshPartWall = AttrLine.angle;
-        pos_meshPartWall = new THREE.Vector3( pos_closestAttrLine.x, pos_closestAttrLine.y, groundHeight+PartWall_height_half); 
+        pos_meshPartWall = new THREE.Vector3( pos_closestAttrLine.x, pos_closestAttrLine.y, PartWall_height_half); 
             // console.log(pos_closestAttrLine)
         
         // CHECK MESH PRESENSE
@@ -3777,45 +3372,42 @@ function delHoverDisp_Stairs01( mesh ) { // copy pos, angle, show meshTrans
 function reinstate_mods() { //  no display of trans or del mesh, clear position
     // reinstate_mods('Window01', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
     const args = Array.from(arguments) // arguments is an Array-like object, it doesn't have Array's built-in methods
-    if (args.includes('floor')) { reinstate_floor() };
-    if (args.includes('floor_fraction')) { reinstate_floorfrac() };
-    if (args.includes('ceiling')) { reinstate_ceiling() };
-    if (args.includes('ceiling_fraction')) { reinstate_ceilingfrac() };
+    // if (args.includes('Window01')) {
+    //     reinstate_Window01()
+    // }
+    if (args.includes('floor')) {
+        reinstate_floor()
+    }
 
-    if (args.includes('volume')) { reinstate_volume() };
-    if (args.includes('PartitionWall')) { reinstate_PartWall() };
-    if (args.includes('Window01')) { reinstate_Window01() };
-    if (args.includes('Window02')) { reinstate_Window02() };
-    if (args.includes('Door01')) { reinstate_Door01() };
-    if (args.includes('Door02')) { reinstate_Door02() };
-    if (args.includes('Door03')) { reinstate_Door03() };
-    if (args.includes('Railing01')) {  reinstate_Railing01() };
-    if (args.includes('Stairs01')) { reinstate_Stairs01() };
-}
-function reinstate_volume() {
-    meshVolumeTrans.visible = false;
-    meshVolumeDel.visible = false;
-    pos_meshVolume = null;
+    if (args.includes('PartitionWall')) {
+        reinstate_PartWall()
+    }
+    if (args.includes('Window01')) {
+        reinstate_Window01()
+    }
+    if (args.includes('Window02')) {
+        reinstate_Window02()
+    }
+    if (args.includes('Door01')) {
+        reinstate_Door01()
+    }
+    if (args.includes('Door02')) {
+        reinstate_Door02()
+    }
+    if (args.includes('Door03')) {
+        reinstate_Door03()
+    }
+    if (args.includes('Railing01')) {
+        reinstate_Railing01()
+    }
+    if (args.includes('Stairs01')) {
+        reinstate_Stairs01()
+    }
 }
 function reinstate_floor() {
     meshFloorTrans.visible = false;
     meshFloorDel.visible = false;
-    pos_grpFloor = null;
-}
-function reinstate_floorfrac() {
-    meshFloorFracTrans.visible = false;
-    meshFloorFracDel.visible = false;
-    pos_FloorFrac = null;
-}
-function reinstate_ceiling () {
-    meshCeilingTrans.visible = false;
-    meshCeilingDel.visible = false;
-    pos_grpCeiling = null;
-}
-function reinstate_ceilingfrac () {
-    meshCeilingFracTrans.visible = false;
-    meshCeilingFracDel.visible = false;
-    pos_CeilingFrac = null;
+    pos_meshFloor = null;
 }
 function reinstate_PartWall() {
     meshPartWallTrans.visible = false;
@@ -3879,18 +3471,6 @@ function MouseUpDisplay_onHybridMod(name_HybridMesh, pos_HybridMesh, bool_delHyb
     }
 }
 
-function getPos_grpFloor_MathGrid ( pos ) {
-    pos_grpFloor = new THREE.Vector3();
-    if (num_cells % 2 == 1) {// odd number of cells
-        pos_grpFloor.x = Math.round(pos.x / floor_width) * floor_width;
-        pos_grpFloor.y = Math.round(pos.y / floor_width) * floor_width;
-    } else { // even number of cells
-        pos_grpFloor.x = Math.round((floor_width_half + pos.x) / floor_width) * floor_width - floor_width_half;
-        pos_grpFloor.y = Math.round((pos.y + floor_width_half) / floor_width) * floor_width - floor_width_half;
-    }
-    pos_grpFloor.z = groundHeight + floor_thickness/2 ; // move meshFloor up to align it with grid
-}
-
 // ====================================================
 // { Keys and Dictionary } 
 // ====================================================
@@ -3913,24 +3493,6 @@ function posfromKey( key ){
 }
 
 // --------------------------------
-//    Get Key of Value
-// --------------------------------
-function getKeyByValue(dict, value) {
-    return Object.keys(dict).find(key => dict[key] === value);
-}
-
-/* incomplete
-function getbool_valueExistance(Value) {
-    var bool_valueExistance = false;
-    const list_values = getValueList(dictFloorFrac, valueIndex)
-    // for (var i = 0; i < dictAll.length; i++) {
-    //     bool_keyExistance = bool_keyExistance || dictAll[i][key_mesh] !=undefined ;
-    // }
-    return bool_valueExistance
-}
-*/
-
-// --------------------------------
 //    All Values From Dictionary
 // --------------------------------
 function getValueList(dict, valueIndex) {
@@ -3946,17 +3508,6 @@ function getValueList(dict, valueIndex) {
     return list_value
 }
 
-// --------------------------------
-//    All Values From List of Groups
-// --------------------------------
-function getChildList(list_grp, index=0) {
-    var list_child = []
-    list_grp.forEach(function(grp){
-        const child = grp.children[index]
-        list_child.push(child);
-    });
-    return list_child
-}
 
 
 
@@ -4076,9 +3627,9 @@ function dispHelperAndReplaceHover_wallModRule_adjCheck (func_replaceHoverDisp, 
     // var list_args = Array.from(arguments);
     // const args_adjacency = list_args.slice(3) // remove the first 3 parameters
     if (AttrLine.adjacency == 'neighbour') { // check attribute
-        showHelper("Only wall modules are allowed along the boundaries against neighbours. To place a hybrid module, please purchase the adjacent volume.")
+        showHelper("Only wall modules can be placed against the boundaries along neighouring volumes.")
     } else if (AttrLine.adjacency == 'extent') {
-        showHelper("Only wall modules are allowed along the boundaries against neighbours. Please purchase the adjacent volume, please purchase the adjacent volume.")
+        showHelper("Only wall modules can be placed against the boundaries along neighouring volumes.")
     } else {
         func_replaceHoverDisp( meshtoReplace );
     }
@@ -4156,36 +3707,6 @@ function delAttr_interior (pos, start_pt, end_pt) { // edit below to customise d
 }
 
 // --------------------------------
-//    Opening
-// --------------------------------
-
-function addAttr_opening (pos, start_pt, end_pt) { // edit below to customise display appearance
-
-    const key = keyGen(pos);
-    const bool_keyExistance = getbool_keyExistance(key);
-    if ( bool_keyExistance ) { // if key already exist
-        const AttrLine = dictAttrLine[key];
-        const adjacency = AttrLine.adjacency;
-        // OVERWRITE
-        if (adjacency == 'interior') {
-            deleteAttrLineUnit (pos);
-            const attrSet = ['', 'opening'];
-            addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet, hideAttrLine);
-        }
-        /*
-        if (adjacency == 'opening')  {
-            deleteAttrLineUnit (pos);
-            const attrSet = ['', 'interior']; // replace with attr of 1 lower hierarchy
-            addAttrLineUnit (start_pt, end_pt, matDashedLine, matAttrDot, attrSet, hideAttrLine);
-        } else 
-        */
-    } else { // if key does not exist
-        const attrSet = ['', 'opening']
-        addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
-    }
-}
-
-// --------------------------------
 //    boundary
 // --------------------------------
 
@@ -4248,14 +3769,9 @@ function addAttr_extent (pos, start_pt, end_pt) { // edit below to customise dis
         // OVERWRITE
         if (adjacency == 'extent')  {
             deleteAttrLineUnit (pos);
-
-            const bool_BdyWallSittingOnExtentAttr = checkBdyWallPresenseOnExtentAttrLine(pos, AttrLine)
-            if (bool_BdyWallSittingOnExtentAttr) {
-                const attrSet = ['', 'boundary'];
-                addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet, hideAttrLine);
-            }
-
-        } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
+            // const attrSet = ['', 'boundary'] // replace with attr of 1 lower hierarchy
+            // addAttrLineUnit (start_pt, end_pt, matAttrLine, matAttrDot, attrSet);
+            } // Do nothing if adjacency == 'corridor' or 'buildingedge' or 'neighbour'
     } else { // if key does not exist
         const attrSet = ['', 'extent']
         addAttrLineUnit (start_pt, end_pt, matInvisibleLine, matAttrDot, attrSet, hideAttrLine);
@@ -4335,7 +3851,6 @@ function getAttriLine_atBdyMesh( meshBdyWall ) {
 }
 
 function getPos_AttrLine_atBdy (pos_BdyWall, angle_BdyWall) { 
-    // console.log(zpos_AttrLine)
     var pos_intAttrLine = null; // to be overwritten
     if (angle_BdyWall == Math.PI / 2 ) { // left boundary wall
         pos_intAttrLine = new THREE.Vector3 ( (pos_BdyWall.x - offsetValue_BdyWall) , pos_BdyWall.y, zpos_AttrLine );
@@ -4354,34 +3869,12 @@ function getPos_AttrLine_atBdy (pos_BdyWall, angle_BdyWall) {
 }
 
 // --------------------------------
-//    Get BdyWall at AttrLine
-// --------------------------------
-
-function checkBdyWallPresenseOnExtentAttrLine(pos, AttrLine) {
-    var bool_BdyWallSittingOnExtentAttr = false;
-    if ( AttrLine.angle == 0 ){ // addition along Y axis
-        const pos_BdyWall_possibility1 = pos.clone().add( new THREE.Vector3(0,  offsetValue_BdyWall, groundHeight+offsetHeight_posVerMod_fromAttLine) );
-        const key_BdyWall_possibility1 = keyGen (pos_BdyWall_possibility1)
-        const pos_BdyWall_possibility2 = pos.clone().add( new THREE.Vector3(0, -offsetValue_BdyWall, groundHeight+offsetHeight_posVerMod_fromAttLine) );
-        const key_BdyWall_possibility2 = keyGen (pos_BdyWall_possibility2)
-        bool_BdyWallSittingOnExtentAttr = (key_BdyWall_possibility1 in dictBdyWall) || (key_BdyWall_possibility2 in dictBdyWall )
-    } else {// addition along X axis
-        const pos_BdyWall_possibility1 = pos.clone().add( new THREE.Vector3( offsetValue_BdyWall, 0, groundHeight+offsetHeight_posVerMod_fromAttLine) );
-        const key_BdyWall_possibility1 = keyGen (pos_BdyWall_possibility1)
-        const pos_BdyWall_possibility2 = pos.clone().add( new THREE.Vector3(-offsetValue_BdyWall, 0, groundHeight+offsetHeight_posVerMod_fromAttLine) );
-        const key_BdyWall_possibility2 = keyGen (pos_BdyWall_possibility2)
-        bool_BdyWallSittingOnExtentAttr = (key_BdyWall_possibility1 in dictBdyWall) || (key_BdyWall_possibility2 in dictBdyWall )
-    }
-    return bool_BdyWallSittingOnExtentAttr
-}
-
-// --------------------------------
 //    Add/Del AttrLine on Floor
 // --------------------------------
 
 function addAttrLinesOnFloor() {
         // console.log(  Object.keys(dictAttrLine).length  )
-    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_grpFloor);
+    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_meshFloor);
         // list_posOfDivCen = list_posOfDivCen.slice(0,2)
 
     list_posOfDivCen.forEach(function(cen) {
@@ -4403,7 +3896,7 @@ function addAttrLinesOnFloor() {
 
 
 function delAttrLinesOnFloor() {
-    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_grpFloor);
+    const list_posOfDivCen = getListofDivCen_fromFloorPos (pos_meshFloor);
 
     list_posOfDivCen.forEach(function(cen) {
         const list_CoordOfCorner = getCoordsOfBaseCorners( cen, PartWall_width, 0 );
@@ -4416,8 +3909,8 @@ function delAttrLinesOnFloor() {
     })
 }
 
-function getListofDivCen_fromFloorPos (pos_grpFloor) {
-    const cen_middle = pos_grpFloor.clone().add(offsetHeight_AttrLine_fromFloorPos);
+function getListofDivCen_fromFloorPos (pos_meshFloor) {
+    const cen_middle = pos_meshFloor.clone().add(offsetHeight_AttrLine_fromFloorPos);
     const cen_starting = cen_middle.clone().sub(offsetValue_hor_PartWall).add(offsetValue_ver_PartWall);
     const list_posOfDivCen = getPointArr( num_div_onFloor, num_div_row_onFloor, cen_starting, PartWall_width );
     // console.log(offsetValue_hor_PartWall)
@@ -4527,7 +4020,6 @@ function addAttrLineUnit (starting_pt, ending_pt, matAttrLine, matAttrDot, attrS
 
     // Adding Attributes
     AttrLineUnit.name = "attribute_line";
-    AttrLineUnit.storey = storeyNum;
     AttrLineUnit.adjacency = attrSet[1];
     AttrLineUnit.key = key;
     if ( starting_pt.x == ending_pt.x ) { // VERT
@@ -4570,7 +4062,7 @@ function posaddAttrLine_availBdy (first_pt, ...args) { // 'RRR DDD LLL UUUU'
 
     list_attrSet.forEach ( function(attrSet) { // e.g. attrSet = ['R', 'corridor']
 
-        [start_pt, AttrLine] = drawCmd_AttrLines ( start_pt, attrSet ); // input: start_point, command; output: next start_point, added line with dots to the scene
+        // [start_pt, AttrLine] = drawCmd_AttrLines ( start_pt, attrSet ); // input: start_point, command; output: next start_point, added line with dots to the scene
 
     } )
 }
@@ -4624,7 +4116,6 @@ function displayText (string, pos, size = 0.1) {
     const textMesh = new THREE.Mesh(textgeometry, matAttrText);
     textMesh.position.copy(pos);
     scene.add(textMesh);
-    textMesh.storey = storeyNum;
 
     // UPDATE GLOBAL VARIABLES
     const key_textMesh = keyGen(pos);
@@ -4658,18 +4149,8 @@ function truncNumTo3dp(num) {
     return trunc
 }
 function truncPosTo3dp(pos) {
-    const trunc_pos = new THREE.Vector3( truncNumTo3dp(pos.x), truncNumTo3dp(pos.y), truncNumTo3dp(pos.z));
-    return trunc_pos
-}
-
-function truncNumTo2dp(num) {
-	const exp = new RegExp(/^-?\d+(?:\.\d{0,2})?/);
-    const trunc = Number(num.toString().match(exp)[0])
-    return trunc
-}
-function truncPosTo2dp(pos) {
-    const trunc_pos = new THREE.Vector3( truncNumTo2dp(pos.x), truncNumTo2dp(pos.y), truncNumTo2dp(pos.z));
-    return trunc_pos
+    const rounded_pos = new THREE.Vector3( truncNumTo3dp(pos.x), truncNumTo3dp(pos.y), truncNumTo3dp(pos.z));
+    return rounded_pos
 }
 
 function round(num, dp) {
@@ -4764,24 +4245,12 @@ function arrLinearPoints ( num_pt, start_pt, translation_x, translation_y ) {
     return list_pt
 }
 
-// ====================================================
-// { Volume ID } 
-// ====================================================
-
-// --------------------------------
-//    Storey ID
-// --------------------------------
-
-
-
-
-
 // --------------------------------
 //    Volume ID
 // --------------------------------
 
-function deleteAllInteriorMesh(pos_grpFloor) {
-    const vol_id = calcVolumeID (pos_grpFloor)
+function deleteAllInteriorMesh(pos_meshFloor) {
+    const vol_id = calcVolumeID (pos_meshFloor)
     dictInterior.forEach( function(dict){
         const list_mesh = getValueList(dict); // [Mesh]
             // console.log( list_mesh );
@@ -4822,9 +4291,8 @@ function calcVolumeID (pos) { // pos_interiorMesh
             }           
         }
     }) 
-    id_values.push(storeyNum)
     // console.log(id_values)
-    return id_values // e.g. [1,1,1]; [3,1,2]
+    return id_values // e.g. [1,1]; [3,1]
 }
 
 
@@ -4874,7 +4342,6 @@ function hideHelper() {
     const helper = document.getElementById('helper');
     helper.style.visibility = "hidden";
 }
-
 
 
 // --------------------------------
@@ -4928,7 +4395,6 @@ const link = document.createElement('a');
 link.style.display = 'none';
 document.body.appendChild(link); 
 
-var dictMergedMesh = {};
 // --------------------------------
 //    Merge Meshes
 // --------------------------------
@@ -4936,37 +4402,37 @@ function mergeMeshes(list_mesh, mat, meshMerged, meshMergedName) { // meshMerge 
     var geomMerged = new THREE.Geometry();
     list_mesh.forEach( 
         function(mesh) {
-            // if (meshMerged.storey = storeyNum){
-                mesh.updateMatrix(); // as needed
-                geomMerged.merge(mesh.geometry, mesh.matrix);
-                meshMerged = new THREE.Mesh(geomMerged, mat);
-            // }
+            mesh.updateMatrix(); // as needed
+            geomMerged.merge(mesh.geometry, mesh.matrix);
+            meshMerged = new THREE.Mesh(geomMerged, mat);
         }
     )
-    scene.add(meshMerged)
-    meshMerged.name = meshMergedName;
+    meshMerged.name = meshMergedName
     meshMerged.visible = false;
-    meshMerged.storey = storeyNum;
-
-    dictMergedMesh[storeyNum] = meshMerged;
-
-    const list = getValueList(dictMergedMesh); // [Mesh]
-    list.forEach( function(mesh) {
-        if (typeof(mesh.storey)!="undefined") {
-            const bool_idMatch = String(mesh.storey)==2;
-            // console.log(bool_idMatch)
-            if ( bool_idMatch ) { // if id match, delete
-                mesh.visible = false; // toggle a boolean in JavaScript: !true = false, !false = true
-            }
-        }
-    } );
-
+    scene.add(meshMerged)
     return meshMerged
 }
+
 //////////////////// -------------SPARE FUNCTION------------------------------------------------------ //////////////////// 
 
 
+
+
+
+
 /*
+
+// --------------------------------
+//       ( - futurework - ) changeGridPos, autoGenBdyWalls 
+// --------------------------------
+
+changeGridPos(newHeight);
+function changeGridPos(newHeight) {
+    gridGround.position.z = newHeight;
+}
+document.getElementById("radiobuttonFloor").addEventListener("click", changeGridPos(0));
+document.getElementById("radiobuttonBoundaryWall").addEventListener("click", changeGridPos(10));
+
 // --------------------------------
 //    Draw Line From Command
 // --------------------------------
@@ -5070,14 +4536,14 @@ function XSdeleteAttrLine_BdyWall (meshBdyWall) {
 //    Add/Del Bdy Wall to Floor
 // --------------------------------
 
-function XgenBdyWallEnclosure(pos_grpFloor) { // overwrite any existing hybrid mod
+function XgenBdyWallEnclosure(pos_meshFloor) { // overwrite any existing hybrid mod
 
     // LEFT BOUNDARY WALL
     var angle_mesh = Math.PI / 2;
-    var pos_mesh = new THREE.Vector3(pos_grpFloor.x - floor_width_half + offsetValue_BdyWall, pos_grpFloor.y, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var pos_mesh = new THREE.Vector3(pos_meshFloor.x - floor_width_half + offsetValue_BdyWall, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var key_mesh = keyGen(pos_mesh);
 
-    var pos_adjacent_mesh = new THREE.Vector3(pos_grpFloor.x - floor_width_half - offsetValue_BdyWall, pos_grpFloor.y, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_adjacent_mesh = new THREE.Vector3(pos_meshFloor.x - floor_width_half - offsetValue_BdyWall, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_adjacent_mesh = keyGen(pos_adjacent_mesh);
     var bool_keyExistance = getbool_keyExistance(key_adjacent_mesh);
 
@@ -5090,10 +4556,10 @@ function XgenBdyWallEnclosure(pos_grpFloor) { // overwrite any existing hybrid m
 
     // RIGHT BOUNDARY WALL
     var angle_mesh = - Math.PI / 2;
-    var pos_mesh = new THREE.Vector3(pos_grpFloor.x + floor_width_half - offsetValue_BdyWall, pos_grpFloor.y, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var pos_mesh = new THREE.Vector3(pos_meshFloor.x + floor_width_half - offsetValue_BdyWall, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var key_mesh = keyGen(pos_mesh);
 
-    var pos_adjacent_mesh = new THREE.Vector3(pos_grpFloor.x + floor_width_half + offsetValue_BdyWall, pos_grpFloor.y, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_adjacent_mesh = new THREE.Vector3(pos_meshFloor.x + floor_width_half + offsetValue_BdyWall, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_adjacent_mesh = keyGen(pos_adjacent_mesh);
 
     var bool_keyExistance = getbool_keyExistance(key_adjacent_mesh);
@@ -5106,10 +4572,10 @@ function XgenBdyWallEnclosure(pos_grpFloor) { // overwrite any existing hybrid m
 
     // FRONT BOUNDARY WALL
     var angle_mesh = 0;
-    var pos_mesh = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y + floor_width_half - offsetValue_BdyWall, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var pos_mesh = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y + floor_width_half - offsetValue_BdyWall, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var key_mesh = keyGen(pos_mesh);
 
-    var pos_adjacent_mesh = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y + floor_width_half + offsetValue_BdyWall, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_adjacent_mesh = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y + floor_width_half + offsetValue_BdyWall, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_adjacent_mesh = keyGen(pos_adjacent_mesh);
 
     var bool_keyExistance = getbool_keyExistance(key_adjacent_mesh);
@@ -5122,10 +4588,10 @@ function XgenBdyWallEnclosure(pos_grpFloor) { // overwrite any existing hybrid m
 
     // BACK BOUNDARY WALL
     var angle_mesh = - Math.PI;
-    var pos_mesh = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y - floor_width_half + offsetValue_BdyWall, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var pos_mesh = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y - floor_width_half + offsetValue_BdyWall, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var key_mesh = keyGen(pos_mesh);
     
-    var pos_adjacent_mesh = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y - floor_width_half - offsetValue_BdyWall, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_adjacent_mesh = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y - floor_width_half - offsetValue_BdyWall, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_adjacent_mesh = keyGen(pos_adjacent_mesh);
 
     var bool_keyExistance = getbool_keyExistance(key_adjacent_mesh);
@@ -5139,18 +4605,18 @@ function XgenBdyWallEnclosure(pos_grpFloor) { // overwrite any existing hybrid m
     // pos_meshBdyWall = null // restore to initialisation state
 }
 
-function XdeleteMeshEnclosure(pos_grpFloor) { // overwrite any existing hybrid module
+function XdeleteMeshEnclosure(pos_meshFloor) { // overwrite any existing hybrid module
 
     // LEFT BOUNDARY MESH
-    var pos_mesh = new THREE.Vector3(pos_grpFloor.x - floor_width_half + offsetValue_BdyWall, pos_grpFloor.y, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var pos_mesh = new THREE.Vector3(pos_meshFloor.x - floor_width_half + offsetValue_BdyWall, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var key_mesh = keyGen(pos_mesh);
 
     var angle_adjacent_mesh = - Math.PI / 2;
-    var pos_adjacent_mesh = new THREE.Vector3(pos_grpFloor.x - floor_width_half - offsetValue_BdyWall, pos_grpFloor.y, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_adjacent_mesh = new THREE.Vector3(pos_meshFloor.x - floor_width_half - offsetValue_BdyWall, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_adjacent_mesh = keyGen(pos_adjacent_mesh);
     var bool_keyExistance = getbool_keyExistance(key_mesh);
 
-    var pos_partMesh = new THREE.Vector3(pos_grpFloor.x - floor_width_half, pos_grpFloor.y, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_partMesh = new THREE.Vector3(pos_meshFloor.x - floor_width_half, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_partMesh = keyGen(pos_partMesh);
     var bool_keyExistance_partMesh = getbool_keyExistance(key_partMesh);
 
@@ -5164,15 +4630,15 @@ function XdeleteMeshEnclosure(pos_grpFloor) { // overwrite any existing hybrid m
     }
 
     // RIGHT BOUNDARY WALL
-    var pos_mesh = new THREE.Vector3(pos_grpFloor.x + floor_width_half - offsetValue_BdyWall, pos_grpFloor.y, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var pos_mesh = new THREE.Vector3(pos_meshFloor.x + floor_width_half - offsetValue_BdyWall, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var key_mesh = keyGen(pos_mesh);
 
     var angle_adjacent_mesh = Math.PI / 2;
-    var pos_adjacent_mesh = new THREE.Vector3(pos_grpFloor.x + floor_width_half + offsetValue_BdyWall, pos_grpFloor.y, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_adjacent_mesh = new THREE.Vector3(pos_meshFloor.x + floor_width_half + offsetValue_BdyWall, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_adjacent_mesh = keyGen(pos_adjacent_mesh);
     var bool_keyExistance = getbool_keyExistance(key_mesh);
 
-    var pos_partMesh = new THREE.Vector3(pos_grpFloor.x + floor_width_half, pos_grpFloor.y, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_partMesh = new THREE.Vector3(pos_meshFloor.x + floor_width_half, pos_meshFloor.y, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_partMesh = keyGen(pos_partMesh);
     var bool_keyExistance_partMesh = getbool_keyExistance(key_partMesh);
 
@@ -5186,15 +4652,15 @@ function XdeleteMeshEnclosure(pos_grpFloor) { // overwrite any existing hybrid m
     }
 
     // FRONT BOUNDARY WALL
-    var pos_mesh = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y + floor_width_half - offsetValue_BdyWall, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var pos_mesh = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y + floor_width_half - offsetValue_BdyWall, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var key_mesh = keyGen(pos_mesh);
 
     var angle_adjacent_mesh = - Math.PI;
-    var pos_adjacent_mesh = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y + floor_width_half + offsetValue_BdyWall, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_adjacent_mesh = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y + floor_width_half + offsetValue_BdyWall, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_adjacent_mesh = keyGen(pos_adjacent_mesh);
     var bool_keyExistance = getbool_keyExistance(key_mesh);
 
-    var pos_partMesh = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y + floor_width_half, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_partMesh = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y + floor_width_half, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_partMesh = keyGen(pos_partMesh);
     var bool_keyExistance_partMesh = getbool_keyExistance(key_partMesh);
 
@@ -5208,15 +4674,15 @@ function XdeleteMeshEnclosure(pos_grpFloor) { // overwrite any existing hybrid m
     }
 
     // BACK BOUNDARY WALL
-    var pos_mesh = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y - floor_width_half + offsetValue_BdyWall, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    var pos_mesh = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y - floor_width_half + offsetValue_BdyWall, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
     var key_mesh = keyGen(pos_mesh);
 
     var angle_adjacent_mesh = 0;
-    var pos_adjacent_mesh = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y - floor_width_half - offsetValue_BdyWall, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_adjacent_mesh = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y - floor_width_half - offsetValue_BdyWall, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_adjacent_mesh = keyGen(pos_adjacent_mesh);
     var bool_keyExistance = getbool_keyExistance(key_mesh);
 
-    var pos_partMesh = new THREE.Vector3(pos_grpFloor.x, pos_grpFloor.y - floor_width_half, pos_grpFloor.z - floor_thickness/2 + BdyWall_height_half);
+    var pos_partMesh = new THREE.Vector3(pos_meshFloor.x, pos_meshFloor.y - floor_width_half, pos_meshFloor.z - floor_thickness/2 + BdyWall_height_half);
     var key_partMesh = keyGen(pos_partMesh);
     var bool_keyExistance_partMesh = getbool_keyExistance(key_partMesh);
 
@@ -5422,23 +4888,6 @@ function mergeBufferGeometry(list_bufferGeom, mat, meshMerged, meshMergedName) {
     return meshMerged
 }
 
-// --------------------------------
-//    Merge Buffer Geometry
-// --------------------------------
-
-function getPos_FloorFrac_MathGrid ( pos ) {
-    pos_FloorFrac = new THREE.Vector3();
-    if (num_cells % 2 == 1) {// odd number of cells
-        pos_FloorFrac.x = Math.round(pos.x / FloorFrac_width) * FloorFrac_width;
-        pos_FloorFrac.y = Math.round(pos.y / FloorFrac_width) * FloorFrac_width;
-    } else { // even number of cells
-        pos_FloorFrac.x = Math.round((FloorFrac_width_half + pos.x) / FloorFrac_width) * FloorFrac_width - FloorFrac_width_half;
-        pos_FloorFrac.y = Math.round((pos.y + FloorFrac_width_half) / FloorFrac_width) * FloorFrac_width - FloorFrac_width_half;
-    }
-    pos_FloorFrac.z = groundHeight + floor_thickness/2 ; // move meshFloor up to align it with grid
-    pos_FloorFrac = roundPos(pos_FloorFrac, 3)
-}
-
 // __________________________
 //    	　_ * HYBRID MOD *
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -5466,93 +4915,5 @@ if ( bool_delGrpHybrid == true) { // if shift is pressed
 
 }
 
-
-
-
-    // __________________________
-    //    	　_ * CEILING *
-    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-    if ( id_buttonPressed == 'buttonCeiling' ) {
-        raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
-        const list_meshScene = Object.values(dictCeiling); // get the meshes in the scene to check for intersections
-        list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
-        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
-
-        if ( list_meshInt.length > 0 ) { // if intersect with any meshes
-
-            if (meshInt0.object.name == 'ceiling') { //if the first mesh that the cursor intersects has the name " "
-
-                const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                pos_grpCeiling = new THREE.Vector3(cen_meshInt0.x, cen_meshInt0.y, cen_meshInt0.z); // update global variable _pos, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                
-                if (!bool_delCeiling) { // if shift button is not pressed, show nothing
-                    meshCeilingTrans.visible = false;
-                    meshCeilingDel.visible = false;
-                    pos_grpCeiling = null;
-                }
-
-                else { // if shift button is pressed, show geom_trans_del
-                    meshCeilingDel.position.set(pos_grpCeiling.x, pos_grpCeiling.y, pos_grpCeiling.z);
-                    meshCeilingDel.visible = true;
-                    meshCeilingTrans.visible = false;
-                } 
-
-            } else { // if the first mesh that the cursor intersects does not has the name " ", i.e. intersect with ground
-                
-                if (!bool_delCeiling) { // if shift button is not pressed, update pos and show geom_trans 
-                    pos_grpCeiling = new THREE.Vector3();
-                    if (num_cells % 2 == 1) {// odd number of cells
-                        pos_grpCeiling.x = Math.round(meshInt0.point.x / ceiling_width) * ceiling_width;
-                        pos_grpCeiling.y = Math.round(meshInt0.point.y / ceiling_width) * ceiling_width;
-                    } else { // even number of cells
-                        pos_grpCeiling.x = Math.round((ceiling_width_half + meshInt0.point.x) / ceiling_width) * ceiling_width - ceiling_width_half;
-                        pos_grpCeiling.y = Math.round((meshInt0.point.y + ceiling_width_half) / ceiling_width) * ceiling_width  - ceiling_width_half;
-                    }
-                    pos_grpCeiling.z = truncNumTo3dp(groundHeight + BdyWall_height - ceiling_thickness_half - overlapOffset) ; // move meshCeiling up to align it with grid
-                    meshCeilingTrans.position.set(pos_grpCeiling.x, pos_grpCeiling.y, pos_grpCeiling.z);
-                    meshCeilingDel.visible = false;
-                    meshCeilingTrans.visible = true;
-                }
-            }    
-
-        } else { // if do not intersect with anything, show nothing
-            meshCeilingTrans.visible = false;
-            meshCeilingDel.visible = false;
-            pos_grpCeiling = null;
-        }
-   }
-
-    // __________________________
-    //    	　_ * BOUNDARY WALL * ★
-    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    if ( id_buttonPressed == 'buttonBoundaryWall' ) {
-        raycaster.setFromCamera( mouse, camera );
-        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
-        list_meshScene.push(meshFloorZone);
-        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
-        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
-        
-        if ( list_meshInt.length > 0 ) { // if intersect with any meshes
-
-            if (meshInt0.object.name == 'BoundaryWall') { // if the first mesh that the cursor intersects has the name ' '
-                if (!bool_delBdyWall) { // if shift button is not pressed, update trans pos and show geom_trans 
-                    // orientVertMeshToFaceOfIntMesh( meshInt0, pos_meshBdyWall, meshBdyWallTrans, meshBdyWallDel );
-                }
-                else { // if shift button is pressed, show geom_trans_del
-                    // delHoverDisp_BdyWall( meshInt0.object )
-                } 
-            } 
-            
-        } else { // if do not intersect with anything, show nothing
-            meshBdyWallTrans.visible = false;
-            meshBdyWallDel.visible = false;
-            pos_meshBdyWall = null;
-        }
-        // console.log('~~pos_meshBdyWall~~', pos_meshBdyWall)
-    }	
-
-    
 
 */
