@@ -1225,14 +1225,19 @@ function render() {
 
         } 
    }
-
-   // __________________________
+function pushMergedFloorMesh (list_meshScene) {
+    if (dictMergedMesh[storeyNum] !== undefined) {
+        list_meshScene.push(dictMergedMesh[storeyNum]);
+    }
+}
+    // __________________________
     //    	　_ * FLOOR *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonFloor' ) {
         raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
         const list_meshScene = getMeshInScene(); // get the meshes in the scene to check for intersections
         pushMergedFloorMesh (list_meshScene);
+
         const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
         const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
 
@@ -1352,15 +1357,15 @@ function render() {
     //    	　_ * PARTITION WALL * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonPartitionWall' ) {
-        const list_meshInt = getListofMeshInt();
+        raycaster.setFromCamera( mouse, camera );
+        const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
+        pushMergedFloorMesh (list_meshScene);
+        const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
         const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
-        const bool_meshInt0IsOnCurrentStorey = checkIfMeshInt0IsOnCurrentStorey(list_meshInt, meshInt0);
 
         reinstate_mods('PartitionWall'); // if do not intersect with anything, show nothing
 
-        // if ( bool_meshInt0IsOnCurrentStorey ) { // if intersect with any meshes
         if ( list_meshInt.length > 0 ) { // if intersect with any meshes
-
 
             if (meshInt0.object.name == 'PartitionWall') { // if the first mesh that the cursor intersects has the name ' '
 
@@ -1390,7 +1395,7 @@ function render() {
     if ( id_buttonPressed == 'buttonStairs01' ) {
         raycaster.setFromCamera( mouse, camera );
         const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
-        pushMergedFloorMesh (list_meshScene);
+        list_meshScene.push(meshFloorZone);
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
         
@@ -1428,7 +1433,7 @@ function render() {
     if ( id_buttonPressed == 'buttonWindow01' ) {
         raycaster.setFromCamera( mouse, camera );
         const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
-        pushMergedFloorMesh (list_meshScene);
+        list_meshScene.push(meshFloorZone);
         const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of intersected items, e.g. (3) [{…}, {…}, {…}] 
         const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
         
@@ -1528,7 +1533,7 @@ function render() {
     if ( id_buttonPressed == 'buttonWindow02' ) {
         raycaster.setFromCamera( mouse, camera );
         const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
-        pushMergedFloorMesh (list_meshScene);
+        list_meshScene.push(meshFloorZone);
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
 
@@ -1630,7 +1635,7 @@ function render() {
     if ( id_buttonPressed == 'buttonDoor01' ) {
         raycaster.setFromCamera( mouse, camera );
         const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
-        pushMergedFloorMesh (list_meshScene);
+        list_meshScene.push(meshFloorZone);
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
         
@@ -1735,7 +1740,7 @@ function render() {
     if ( id_buttonPressed == 'buttonDoor02' ) {
         raycaster.setFromCamera( mouse, camera );
         const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
-        pushMergedFloorMesh (list_meshScene);
+        list_meshScene.push(meshFloorZone);
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
         
@@ -1835,7 +1840,7 @@ function render() {
     if ( id_buttonPressed == 'buttonDoor03' ) {
         raycaster.setFromCamera( mouse, camera );
         const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
-        pushMergedFloorMesh (list_meshScene);
+        list_meshScene.push(meshFloorZone);
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
         
@@ -1941,7 +1946,7 @@ function render() {
     if ( id_buttonPressed == 'buttonRailing01' ) {
         raycaster.setFromCamera( mouse, camera );
         const list_meshScene = getMeshInScene(); // get the mesh in the scene to check for intersections
-        pushMergedFloorMesh (list_meshScene);
+        list_meshScene.push(meshFloorZone);
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
         
@@ -2832,6 +2837,7 @@ function addFloorFrac(key) {
     // ADD MESH TO DICTFLOOR
     const key_parent = keyGen(pos_grpFloor);
     const grp_FloorFrac = dictFloor[key_parent] // Group {uuid: ...}
+    console.log(grp_FloorFrac)
     grp_FloorFrac.add(mesh) // since key is alw in dictFloor, add child to value(parent)
 }
 
@@ -3443,33 +3449,6 @@ function addNeighbourtoGroup(mesh) {
 // --------------------------------
 //    Get Meshes In Scene ★
 // --------------------------------
-function getListofMeshInt() {
-    raycaster.setFromCamera( mouse, camera ); // create a ray from the camera and intersect it with objects in the scene
-    const list_meshScene = getMeshInScene(); // get the meshes in the scene to check for intersections
-    pushMergedFloorMesh (list_meshScene);
-    const list_meshInt = raycaster.intersectObjects( list_meshScene ); // returns an array of cursor-intersected items, e.g. (3) [{…}, {…}, {…}] 
-    return list_meshInt
-}
-function checkIfMeshInt0IsOnCurrentStorey(list_meshInt, meshInt0) {
-    if ( list_meshInt.length > 0) { // if intersect with any meshes
-        const pos_mouse = meshInt0.point;
-        const bool_meshInt0IsOnCurrentStorey = (groundHeight - volume_height_half) < pos_mouse.z && pos_mouse.z <= (groundHeight + volume_height_half) // if intersected on 'Floor_Zone' on the current storey
-        // console.log(bool_meshInt0IsOnCurrentStorey, pos_mouse.z, (groundHeight + volume_height_half), meshInt0.object)
-
-        return bool_meshInt0IsOnCurrentStorey
-    } else {
-        return false
-    }
-}
-
-// --------------------------------
-//    Get Meshes In Scene ★
-// --------------------------------
-function pushMergedFloorMesh (list_meshScene) {
-    if (dictMergedMesh[storeyNum] !== undefined) {
-        list_meshScene.push(dictMergedMesh[storeyNum]);
-    }
-}
 
 function getMeshInScene() {
     
@@ -3484,17 +3463,7 @@ function getMeshInScene() {
         // console.log(i.children) // e.g. (9) [Mesh, Mesh, Mesh, Mesh..]
         list_meshScene = list_meshScene.concat(i.children)
     })
-    // list_meshScene = list_meshScene.concat(Object.values(dictFloorFrac));
-    const list = []
-
-    // Object.values(dictFloorFrac).forEach(i => {
-    //     if ( i.parent.storey == storeyNum ){
-    //         list_meshScene.concat(i)
-    //         list.push( i )
-    //     }
-    // } )
-    // console.log( list )
-
+    list_meshScene = list_meshScene.concat(Object.values(dictFloorFrac));
 
     // console.log('~~~Object.values(dictWindow01)~~~', Object.values(dictWindow01)) // e.g. (3) [Group, Group, Group] (i.e. 3 windows in the scene)
     Object.values(dictWindow01).forEach(i => { // for each group in the scene
