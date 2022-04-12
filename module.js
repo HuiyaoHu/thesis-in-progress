@@ -1220,6 +1220,59 @@ posaddAttrLine_availBdy ( // Add Attribute line
     ['U', 'neighbour'],
     ['U', 'neighbour'],
 );
+
+const top_left_corner2 = new THREE.Vector3( -volume_width*2, volume_width*2, floor_thickness+volume_height*1 );
+    // dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
+// /*
+posaddAttrLine_availBdy ( // Add Attribute line
+    top_left_corner2,
+    ['R', 'corridor'],
+    ['R', 'corridor'],
+    ['R', 'corridor'],
+    ['R', 'corridor'],
+
+    ['D', 'neighbour'],
+    ['D', 'neighbour'],
+    ['D', 'neighbour'],
+    ['D', 'neighbour'],
+    
+    ['L', 'buildingedge'],
+    ['L', 'buildingedge'],
+    ['L', 'buildingedge'],
+    ['L', 'buildingedge'],
+
+    ['U', 'garden'],
+    ['U', 'garden'],
+    ['U', 'garden'],
+    ['U', 'garden'],
+);
+
+
+const top_left_corner3 = new THREE.Vector3( -volume_width*2, volume_width*2, floor_thickness+volume_height*2 );
+    // dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
+// /*
+posaddAttrLine_availBdy ( // Add Attribute line
+    top_left_corner3,
+    ['R', 'buildingedge'],
+    ['R', 'buildingedge'],
+    ['R', 'buildingedge'],
+    ['R', 'buildingedge'],
+
+    ['D', 'neighbour'],
+    ['D', 'neighbour'],
+    ['D', 'neighbour'],
+    ['D', 'neighbour'],
+    
+    ['L', 'buildingedge'],
+    ['L', 'buildingedge'],
+    ['L', 'buildingedge'],
+    ['L', 'buildingedge'],
+
+    ['U', 'neighbour'],
+    ['U', 'neighbour'],
+    ['U', 'neighbour'],
+    ['U', 'neighbour'],
+);
 // */
 
 // __________________________
@@ -6230,7 +6283,7 @@ function displayText (string, pos, size = 0.1) {
     });
     const textMesh = new THREE.Mesh(textgeometry, matAttrText);
     textMesh.position.copy(pos);
-    scene.add(textMesh);
+    // scene.add(textMesh);
     textMesh.storey = storeyNum;
 
     // UPDATE GLOBAL VARIABLES
