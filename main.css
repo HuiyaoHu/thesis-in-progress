@@ -435,7 +435,6 @@ body {
     position:absolute; 
 }
 .module {
-
     margin: 0;
     position: absolute;
     padding: 0;
@@ -448,6 +447,110 @@ body {
 :focus { 
     outline: #fa0 solid 0px; 
 }
+
+/* // ====================================================
+//   Loading Screen
+// ==================================================== */
+.box{  /* https://codepen.io/sudeepgumaste/pen/abdrorB */
+
+    /* DISPLAY */ 
+    display: grid;
+
+    /* MASSING */
+    /* background: #1a227e34; */
+
+    /* POSITION */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+    /* box-shadow: 4px 4px 20px rgba(0,0,0,0.3); */
+
+    animation: hideAnimation 0s ease-in 9s;
+    animation-fill-mode: forwards;
+  }
+  .loadingText{
+    /* DISPLAY */ 
+    grid-row: 1;
+
+    /* POSITION */
+    position: relative;
+    left: 3%;
+    top: 60%;
+
+    /* TEXT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 3500; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 30px;
+    color: rgba(0, 170, 255, 0.585);
+    text-align: center;
+
+  }
+  .loading{
+    /* DISPLAY */ 
+    grid-row: 2;
+
+    height: 15px;
+    width: 105px;
+    display: flex;
+
+    /* POSITION */
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+  }
+  @keyframes hideAnimation {
+    to {
+      visibility: hidden;
+      width: 0;
+      height: 0;
+    }
+  }
+  .circle{
+    width: 15px;
+    height: 15px;
+    /* // border-radius: 50%; */
+    background-color: rgba(0, 170, 255, 0.585); /*rgba(255, 170, 0, 0.585);*/
+    animation: move 1000ms linear 0ms infinite;
+    margin-right: 30px;
+    
+
+  }
+  .circle:first-child{
+    position: absolute;
+    top:0;
+    left:0;
+    animation: grow 1000ms linear 0ms infinite;
+  }
+  
+  .circle:last-child{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 0;
+    animation: grow 1000ms linear 0s infinite reverse;
+  }
+  @keyframes grow {
+    from {transform: scale(0,0); opacity: 0;}
+    to {transform: scale(1,1); opacity: 1;}
+  }
+  
+  @keyframes move {
+    from {transform: translateX(0px)}
+    to {transform: translateX(45px)}
+  }
+
+
+
+/* // ====================================================
+//   Popup 
+// ==================================================== */
 
 .popup { /* Popup container - can be anything you want */
     /* DISPLAY */ 

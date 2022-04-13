@@ -149,7 +149,6 @@ displayFont = await displayFont;
 const gltfExporter = new GLTFExporter(); // https://threejs.org/docs/#examples/en/exporters/GLTFExporter
 
 
-
 // ====================================================
 // Materials
 // ====================================================
@@ -1197,7 +1196,53 @@ var angle_grpAttrLine = 0;
 // GEOMETRIES
 const top_left_corner = new THREE.Vector3( -volume_width*2, volume_width*2, floor_thickness );
     // dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
+
+
+// __________________________
+//    	　_ * TEST * ★
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 // /*
+var  test = null
+
+loader.load( // Load a glTF resource
+    'models/scene.gltf', // resource URL
+    function ( gltf ) { // called when the resource is loaded
+        test = gltf.scene;
+    },
+    function ( xhr ) { // called while loading is progressing
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+    function ( error ) { // called when loading has errors
+        console.log( 'An error happened' );
+    }
+);
+var dictTest = {};
+
+
+        
+
+// */dictTest, 
+
+
+// EXECUTE FUNCTIONS
+const dictAll = [dictVolume, dictAttrLine, dictTextMesh, dictFloor, dictBdyWall, dictOpeningWall, dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
+    // dictGrid, , dictCeiling
+const list_dictInterior = [dictOpeningWall, dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
+const list_dictVertSIP = [dictBdyWall, dictOpeningWall, dictPartWall, dictAttrLine];
+const list_dictHybrid = [dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
+
+const list_Bdy = [ dictBdyWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01 ]
+const list_Part = [ dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01 ]
+
+const list_dictVert = [dictBdyWall, dictPartWall, dictOpeningWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01]
+const list_3Unit = [dictWindow03, dictDoor03];
+const list_2Unit = [dictWindow04];
+
+const tol_01 = 0.01 // spacing between 2 vertical mesh = tol_01 + PartWall_width
+
+var meshFloorZone;
+animate();
+
 posaddAttrLine_availBdy ( // Add Attribute line
     top_left_corner,
     ['R', 'corridor'],
@@ -1273,52 +1318,7 @@ posaddAttrLine_availBdy ( // Add Attribute line
     ['U', 'neighbour'],
     ['U', 'neighbour'],
 );
-// */
 
-// __________________________
-//    	　_ * TEST * ★
-// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-// /*
-var  test = null
-
-loader.load( // Load a glTF resource
-    'models/scene.gltf', // resource URL
-    function ( gltf ) { // called when the resource is loaded
-        test = gltf.scene;
-    },
-    function ( xhr ) { // called while loading is progressing
-		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-	},
-    function ( error ) { // called when loading has errors
-        console.log( 'An error happened' );
-    }
-);
-var dictTest = {};
-
-
-        
-
-// */dictTest, 
-
-
-// EXECUTE FUNCTIONS
-const dictAll = [dictVolume, dictAttrLine, dictTextMesh, dictFloor, dictBdyWall, dictOpeningWall, dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
-    // dictGrid, , dictCeiling
-const list_dictInterior = [dictOpeningWall, dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
-const list_dictVertSIP = [dictBdyWall, dictOpeningWall, dictPartWall, dictAttrLine];
-const list_dictHybrid = [dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
-
-const list_Bdy = [ dictBdyWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01 ]
-const list_Part = [ dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01 ]
-
-const list_dictVert = [dictBdyWall, dictPartWall, dictOpeningWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01]
-const list_3Unit = [dictWindow03, dictDoor03];
-const list_2Unit = [dictWindow04];
-
-const tol_01 = 0.01 // spacing between 2 vertical mesh = tol_01 + PartWall_width
-
-var meshFloorZone;
-animate();
 
 
 //////////////////// -------------MAIN FUNCTIONS------------------------------------------------------ //////////////////// 
