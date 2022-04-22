@@ -31,15 +31,18 @@ document.getElementById("buttonWindow01").addEventListener("click", onClickbutto
 document.getElementById("buttonWindow02").addEventListener("click", onClickbuttonWindow02);
 document.getElementById("buttonWindow03").addEventListener("click", onClickbuttonWindow03);
 document.getElementById("buttonWindow04").addEventListener("click", onClickbuttonWindow04);
+document.getElementById("buttonWindow05").addEventListener("click", onClickbuttonWindow05);
 document.getElementById("buttonDoor01").addEventListener("click", onClickbuttonDoor01);
 document.getElementById("buttonDoor02").addEventListener("click", onClickbuttonDoor02);
 document.getElementById("buttonDoor03").addEventListener("click", onClickbuttonDoor03);
 document.getElementById("buttonRailing01").addEventListener("click", onClickbuttonRailing01);
 document.getElementById("buttonStairs01").addEventListener("click", onClickbuttonStairs01);
 document.getElementById('export_scene').addEventListener('click', function() {exportGLTF(scene)});
+const eyeIcons = document.getElementsByClassName("fa-eye"); // HTMLCollection;  
 
-const button_ids = ['buttonVolume', 'buttonFloor', 'buttonBoundaryWall', 'buttonPartitionWall', 'buttonWindow01', 'buttonWindow02', 'buttonWindow03', 'buttonWindow04', 'buttonDoor01', 'buttonDoor02', 'buttonRailing01', 'buttonStairs01'];
-const list_meshMod = ['BoundaryWall', 'OpeningWall', 'PartitionWall', 'Window01', 'Window02', 'Window03', 'Window04', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'];
+
+const button_ids = ['buttonVolume', 'buttonFloor', 'buttonBoundaryWall', 'buttonPartitionWall', 'buttonWindow01', 'buttonWindow02', 'buttonWindow03', 'buttonWindow04', 'buttonWindow05', 'buttonDoor01', 'buttonDoor02', 'buttonRailing01', 'buttonStairs01'];
+const list_meshMod = ['BoundaryWall', 'OpeningWall', 'PartitionWall', 'Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01'];
 var id_buttonPressed = 'buttonVolume';
 
 
@@ -187,8 +190,8 @@ const matHybridTrans = new THREE.MeshStandardMaterial({color: 'green', opacity: 
 const matBdyWallTrans = new THREE.MeshStandardMaterial({color: 'burlywood', opacity: 0.5, transparent: true});
 const matBdyWallDel = new THREE.MeshStandardMaterial({color: 'red', opacity: 0.2, transparent: true});
 
-const plaster = new THREE.MeshStandardMaterial({color: 0xe7e6e6});
-const concrete = new THREE.MeshStandardMaterial({color: 0xb4b4b4, side: THREE.DoubleSide}) ;
+const plaster = new THREE.MeshStandardMaterial({color: 0xe7e6e6, opacity: 0.4, transparent: true});
+const concrete = new THREE.MeshStandardMaterial({color: 0xe1e1e1, side: THREE.DoubleSide}) ;
 const particleboard  = new THREE.MeshStandardMaterial({color: 0xddd1b4}); //0xD3C8AD, 0xAB9F82, 0xD3C8AD, 0xE5DCC7 //floor
 const glass = new THREE.MeshStandardMaterial({color: 'turquoise', opacity: 0.1, transparent: true, side: THREE.DoubleSide});
 const obs = new THREE.MeshStandardMaterial({color: 'burlywood', side: THREE.DoubleSide});	
@@ -242,6 +245,7 @@ var dictPoints = {}; // each key carries 2 value items: point coordinates, point
 var pos_meshVolume = null;
 var bool_delVolume = false;
 var cnt_meshVolume = 0;
+var dictMergedMesh = {};
 
 
 // __________________________
@@ -372,7 +376,7 @@ loader.load( // Load a glTF resource
         meshChassis = gltf.scene;
         meshChassis.getObjectByName("Frame").material = plaster;
         meshChassis.getObjectByName("Corridors").material = concrete;
-        meshChassis.getObjectByName("Cores").material = plaster;
+        meshChassis.getObjectByName("Cores").material = concrete;
         meshChassis.getObjectByName("Texts").material = matText;
         scene.add( meshChassis );
         meshChassis.visible = true;
@@ -506,6 +510,26 @@ loader.load( // Load a glTF resource
         // scene.add( Neighbour04 );
         // Neighbour04.visible = false;
         addNeighbourtoGroup(Neighbour04);
+    },
+    function ( xhr ) { // called while loading is progressing
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+    function ( error ) { // called when loading has errors
+        console.log( 'An error happened' );
+    }
+);
+
+//    	　_ * NEIGHBOUR04 *
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+// GEOMETRIES
+var  Neighbour05 = null
+loader.load( // Load a glTF resource
+    'models/Neighbour05.gltf', // resource URL
+    function ( gltf ) { // called when the resource is loaded
+        Neighbour05 = gltf.scene;
+        Neighbour05.name = "Neighbour05";
+        addNeighbourtoGroup(Neighbour05);
     },
     function ( xhr ) { // called while loading is progressing
 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -908,6 +932,52 @@ var bool_delWindow04 = false;
 var cnt_grpWindow04 = 0;
 var angle_grpWindow04 = 0;
 
+// __________________________
+//    	　_ * WINDOW05*
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+// DIMENSIONS
+const Window05_width = PartWall_width*3; const Window05_width_half = Window05_width / 2;
+const Window05_height = 3.5; const Window05_height_half = Window05_height / 2;
+const Window05_thickness = 0.5;
+
+const geomWindow05Hover = new THREE.BoxBufferGeometry( Window05_width * 1, BdyWall_thickness* 2, BdyWall_height * 1 );
+const geomWindow05Del = new THREE.BoxBufferGeometry( Window05_width * 1.1, BdyWall_thickness* 3, BdyWall_height * 1.1 );
+
+const meshWindow05Trans = new THREE.Mesh( geomWindow05Hover, matHybridTrans );
+meshWindow05Trans.visible = false;
+const meshWindow05Del = new THREE.Mesh( geomWindow05Del, matBdyWallDel );
+meshWindow05Del.visible = false;
+
+scene.add(meshWindow05Trans);
+scene.add(meshWindow05Del);
+
+// GEOMETRIES
+var  meshWindow05 = null
+loader.load( // Load a glTF resource
+    'models/Window05.gltf', // resource URL
+    function ( gltf ) { // called when the resource is loaded
+        meshWindow05 = gltf.scene;
+        meshWindow05.getObjectByName("SIP").material = obs;
+        meshWindow05.getObjectByName("Glass").material = glass;
+        meshWindow05.getObjectByName("WindowFrame").material = brass;
+        meshWindow05.getObjectByName("WindowCasement").material = alloy;
+        meshWindow05.getObjectByName("SlidingWindowHandle").material = brass;
+    },
+    function ( xhr ) { // called while loading is progressing
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+    function ( error ) { // called when loading has errors
+        console.log( 'An error happened' );
+    }
+);
+
+// INITIALISATION
+var dictWindow05 = {};
+var pos_grpWindow05 = null;
+var bool_delWindow05 = false;
+var cnt_grpWindow05 = 0;
+var angle_grpWindow05 = 0;
 
 
 // __________________________
@@ -1193,9 +1263,6 @@ var bool_delAttrLine = false;
 var cnt_grpAttrLine = 0;
 var angle_grpAttrLine = 0;
 
-// GEOMETRIES
-const top_left_corner = new THREE.Vector3( -volume_width*2, volume_width*2, floor_thickness );
-    // dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
 
 
 // __________________________
@@ -1225,23 +1292,29 @@ var dictTest = {};
 
 
 // EXECUTE FUNCTIONS
-const dictAll = [dictVolume, dictAttrLine, dictTextMesh, dictFloor, dictBdyWall, dictOpeningWall, dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
+const dictAll = [dictVolume, dictAttrLine, dictTextMesh, dictFloor, dictBdyWall, dictOpeningWall, dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictWindow05, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
     // dictGrid, , dictCeiling
-const list_dictInterior = [dictOpeningWall, dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
+const list_dictInterior = [dictOpeningWall, dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictWindow05, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
 const list_dictVertSIP = [dictBdyWall, dictOpeningWall, dictPartWall, dictAttrLine];
-const list_dictHybrid = [dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
+const list_dictHybrid = [dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictWindow05, dictDoor01, dictDoor02, dictDoor03, dictRailing01, dictStairs01];
 
-const list_Bdy = [ dictBdyWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01 ]
-const list_Part = [ dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01 ]
+const list_Bdy = [ dictBdyWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictWindow05, dictDoor01, dictDoor02, dictDoor03, dictRailing01 ]
+const list_Part = [ dictPartWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictWindow05, dictDoor01, dictDoor02, dictDoor03, dictRailing01 ]
 
-const list_dictVert = [dictBdyWall, dictPartWall, dictOpeningWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictDoor01, dictDoor02, dictDoor03, dictRailing01]
-const list_3Unit = [dictWindow03, dictDoor03];
+const list_dictVert = [dictBdyWall, dictPartWall, dictOpeningWall, dictWindow01, dictWindow02, dictWindow03, dictWindow04, dictWindow05, dictDoor01, dictDoor02, dictDoor03, dictRailing01]
+const list_MultipleUnit = [dictWindow04, dictWindow03, dictWindow05, dictDoor03];
+const list_3Unit = [dictWindow03, dictWindow05, dictDoor03];
 const list_2Unit = [dictWindow04];
 
 const tol_01 = 0.01 // spacing between 2 vertical mesh = tol_01 + PartWall_width
 
 var meshFloorZone;
 animate();
+eyeIconObjectTgl();
+
+// GEOMETRIES
+const top_left_corner = new THREE.Vector3( -volume_width*2, volume_width*2, floor_thickness );
+    // dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
 
 posaddAttrLine_availBdy ( // Add Attribute line
     top_left_corner,
@@ -1298,6 +1371,32 @@ const top_left_corner3 = new THREE.Vector3( -volume_width*2, volume_width*2, flo
 // /*
 posaddAttrLine_availBdy ( // Add Attribute line
     top_left_corner3,
+    ['R', 'corridor'],
+    ['R', 'corridor'],
+    ['R', 'corridor'],
+    ['R', 'corridor'],
+
+    ['D', 'garden'],
+    ['D', 'garden'],
+    ['D', 'garden'],
+    ['D', 'garden'],
+    
+    ['L', 'buildingedge'],
+    ['L', 'buildingedge'],
+    ['L', 'buildingedge'],
+    ['L', 'buildingedge'],
+
+    ['U', 'neighbour'],
+    ['U', 'neighbour'],
+    ['U', 'neighbour'],
+    ['U', 'neighbour'],
+);
+
+const top_left_corner4 = new THREE.Vector3( -volume_width*2, volume_width*2, floor_thickness+volume_height*3 );
+    // dispDotsfromCoords (matAttrDot_Large, [top_left_corner]); // Display Starting Point
+// /*
+top_left_corner4 ( // Add Attribute line
+    top_left_corner4,
     ['R', 'buildingedge'],
     ['R', 'buildingedge'],
     ['R', 'buildingedge'],
@@ -1419,7 +1518,7 @@ function render() {
             }    
 
         } 
-   }
+    }
    // __________________________
     //    	　_ * FLOOR *
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -1439,7 +1538,7 @@ function render() {
                 // console.log( groundHeight - volume_height_half, groundHeight + volume_height_half )
              
             // if (bool_meshIntIsOnCurrentStorey) { // if intersected on 'Floor_Zone' on the current storey
-
+            console.log( meshInt0.object.name)
 
                 if (meshInt0.object.parent.name == 'floor') { //if the first mesh that the cursor intersects has the name " "
                     // const cen_meshInt0 = meshInt0.object.position; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
@@ -1550,7 +1649,7 @@ function render() {
         const list_meshInt = getListofMeshInt();
         const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
 
-        reinstate_mods('PartitionWall', 'Window01', 'Window02', 'Window03', 'Window04', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01') // if do not intersect with anything, show nothing
+        reinstate_mods('PartitionWall', 'Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01') // if do not intersect with anything, show nothing
         
         if ( list_meshInt.length > 0 ) { // if intersect with any meshes
 
@@ -1620,6 +1719,15 @@ function render() {
                 }
             }	
 
+            else if (meshInt0.object.parent.name == 'Window05') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window05( grpInt );
+                }
+            }	
+
             else if (meshInt0.object.parent.name == 'Door01') { 
                 const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
@@ -1678,7 +1786,7 @@ function render() {
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
 
-        reinstate_mods('Stairs01', 'volume', 'floor_fraction', 'floor', 'ceiling_fraction', 'ceiling', 'Window01', 'Window02', 'Window03', 'Window04', 'Door01', 'Door02', 'Door03', 'Railing01'); // if do not intersect with anything, show nothing
+        reinstate_mods('Stairs01', 'volume', 'floor_fraction', 'floor', 'ceiling_fraction', 'ceiling', 'Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01'); // if do not intersect with anything, show nothing
 
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
@@ -1724,7 +1832,7 @@ function render() {
 
             else if (meshInt0.object.parent.name == 'Window02') { 
                 const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
-                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window02( grpInt );
@@ -1737,6 +1845,24 @@ function render() {
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window03( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Window04') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window04( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Window05') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delStairs01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window05( grpInt );
                 }
             }	
 
@@ -1853,6 +1979,16 @@ function render() {
                 }
             }	
 
+            else if (meshInt0.object.parent.name == 'Window05') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window05( grpInt );
+                }
+            }	
+
             else if (meshInt0.object.parent.name == 'Door01') { 
                 const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
@@ -1915,7 +2051,7 @@ function render() {
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
 
-        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
+        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
         
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
@@ -1975,6 +2111,16 @@ function render() {
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window04( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Window05') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window02( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window05( grpInt );
                 }
             }	
             
@@ -2039,7 +2185,7 @@ function render() {
         const list_meshInt = getListofMeshInt();
         const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
 
-        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
+        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
         
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
             if (meshInt0.object.parent.name == 'Window03') { // if the first mesh that the cursor intersects has the name ' '
@@ -2098,6 +2244,16 @@ function render() {
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window04( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Window05') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window03( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window05( grpInt );
                 }
             }
             
@@ -2163,7 +2319,7 @@ function render() {
         const list_meshInt = getListofMeshInt();
         const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
 
-        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01')
+        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01')
         
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
@@ -2226,6 +2382,16 @@ function render() {
                 }
             }	
 
+            else if (meshInt0.object.parent.name == 'Window05') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow04) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window04( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window05( grpInt );
+                }
+            }	
+
             else if (meshInt0.object.parent.name == 'Door01') { 
                 const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delWindow04) { // if shift button is not pressed, update global variable of geom & geom_trans
@@ -2281,6 +2447,142 @@ function render() {
     }	
 
     // __________________________
+    //    	　_ * WINDOW05* ★
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    if ( id_buttonPressed == 'buttonWindow05' ) {
+        const list_meshInt = getListofMeshInt();
+        const meshInt0 = list_meshInt[ 0 ]; // get the first mesh that the cursor intersects e.g. {distance: 29.318, point: Vector3, object: Mesh, face: Face3, faceIndex: 5}
+
+        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01')
+
+        if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
+
+            if (meshInt0.object.parent.name == 'Window05') { // if the first mesh that the cursor intersects has the name ' '
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow05) {
+                    // if shift button is not pressed, do nothing
+                } 
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window05( grpInt );
+                }
+            } 
+            
+            else if (meshInt0.object.name == 'BoundaryWall' ) { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delWindow05) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    const meshInt = meshInt0.object
+                    dispHelperAndReplaceHover_wallModRule (replaceHoverDisp_Window05, meshInt);
+                }
+            }
+
+            else if (meshInt0.object.name == 'OpeningWall' ) { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delWindow05) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window05( meshInt0.object );
+                }
+            }
+
+            else if (meshInt0.object.name == 'PartitionWall') { // if the first mesh that the cursor intersects has the name ' '
+                if (!bool_delWindow05) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window05( meshInt0.object );
+                }
+            }
+            
+            else if (meshInt0.object.parent.name == 'Window01') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window05( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window01( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Window02') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window05( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window02( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Window03') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window05( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window03( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Window04') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window05( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window04( grpInt );
+                }
+            }	
+
+            else if (meshInt0.object.parent.name == 'Door01') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window05( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Door01( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Door02') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window05( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Door02( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Door03') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window05( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Door03( grpInt );
+                }
+            }
+
+            
+            else if (meshInt0.object.parent.name == 'Railing01') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Window05( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Railing01( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Stairs01') { // if the first mesh that the cursor intersects has the name ' '
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delWindow01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Stairs01( grpInt );
+                }
+            }				
+           
+
+
+        } 
+    }	
+
+
+    // __________________________
     //    	　_ * DOOR01 * ★
     // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     if ( id_buttonPressed == 'buttonDoor01' ) {
@@ -2290,7 +2592,7 @@ function render() {
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
         
-        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
+        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
         
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
@@ -2362,6 +2664,17 @@ function render() {
                 }
             }
 
+            else if (meshInt0.object.parent.name == 'Window05') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door01, grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window05( grpInt );
+                }
+            }
+
+
             else if (meshInt0.object.parent.name == 'Door02') { 
                 const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
                 if (!bool_delDoor01) { // if shift button is not pressed, update global variable of geom & geom_trans
@@ -2419,7 +2732,7 @@ function render() {
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
         
-        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
+        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
 
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
             
@@ -2488,6 +2801,16 @@ function render() {
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window04( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Window05') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delDoor02) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    dispHelperAndReplaceHover_doorModRule ( replaceHoverDisp_Door02, grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window05( grpInt );
                 }
             }
 
@@ -2676,7 +2999,7 @@ function render() {
         const list_meshInt = raycaster.intersectObjects( list_meshScene );
         const meshInt0 = list_meshInt[ 0 ];
         
-        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
+        reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
         
         if ( list_meshInt.length > 0 ) {  // if intersect with any meshes
 
@@ -2746,6 +3069,16 @@ function render() {
                 }
                 else { // if shift button is pressed, show geom_trans_del
                     delHoverDisp_Window04( grpInt );
+                }
+            }
+
+            else if (meshInt0.object.parent.name == 'Window05') { 
+                const grpInt = meshInt0.object.parent.parent; // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+                if (!bool_delRailing01) { // if shift button is not pressed, update global variable of geom & geom_trans
+                    replaceHoverDisp_Railing01( grpInt );
+                }
+                else { // if shift button is pressed, show geom_trans_del
+                    delHoverDisp_Window05( grpInt );
                 }
             }
 
@@ -2819,7 +3152,7 @@ function render() {
 // --------------------------------
 
 function onWindowResize() { // Resize browser window
-    const w = window.innerWidth - 440; // minus width of css parts
+    const w = window.innerWidth - 450; // minus width of css parts
     const h = window.innerHeight - 50; // minus height of css parts
     camera.aspect = w / h;
     // camera.aspect = container.clientWidth / container.clientHeight;
@@ -2917,6 +3250,15 @@ function onClickbuttonWindow04() {
     id_buttonPressed = 'buttonWindow04';
     document.getElementById(id_buttonPressed).classList.add("pressed");
 };
+
+//    	　_ * WINDOW05 * 
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+function onClickbuttonWindow05() {
+    document.getElementById(id_buttonPressed).classList.remove("pressed");
+    id_buttonPressed = 'buttonWindow05';
+    document.getElementById(id_buttonPressed).classList.add("pressed");
+};
+
 
 //    	　_ * DOOR01 * 
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -3047,6 +3389,14 @@ function onMouseMove( event ) {
         bool_delWindow04 = true;
     } else {
         bool_delWindow04 = false;
+    }
+
+    //    	　_ * WINDOW05 * 
+    // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    if (event.shiftKey) {
+        bool_delWindow05 = true;
+    } else {
+        bool_delWindow05 = false;
     }
 
     //    	　_ * DOOR01 * 
@@ -3256,6 +3606,9 @@ function onMouseUp(event) { // Mouse up: do nothing, create mesh or delete mesh
     else if (pos_grpWindow04 != null) {
         MouseUpDisplay_onHybridMod_2unit('Window04', pos_grpWindow04, angle_grpWindow04, bool_delWindow04, dictWindow04, deleteWindow04, addWindow04);
     }
+    else if (pos_grpWindow05 != null) {
+        MouseUpDisplay_onHybridMod_3unit('Window05', pos_grpWindow05, angle_grpWindow05, bool_delWindow05, dictWindow05, deleteWindow05, addWindow05);
+    } 
     else if (pos_grpDoor01 != null) {
         MouseUpDisplay_onHybridMod_1unit('Door01', pos_grpDoor01, angle_grpDoor01, bool_delDoor01, dictDoor01, deleteDoor01, addDoor01);
     }
@@ -4075,7 +4428,7 @@ function addWindow02(key) {
     dictWindow02[key] = mesh;
     mesh.rotation.z = angle_grpWindow02;
     cnt_grpWindow02 += 1; 
-    document.getElementById('buttonWindow02').innerHTML = "Sliding Window: " + cnt_grpWindow02;
+    document.getElementById('buttonWindow02').innerHTML = "Awning Window: " + cnt_grpWindow02;
 };
 
 // Delete a Window02
@@ -4083,7 +4436,7 @@ function deleteWindow02(mesh) {
     scene.remove( mesh );
     delete dictWindow02[ mesh.key ];
     cnt_grpWindow02 -= 1; 
-    document.getElementById('buttonWindow02').innerHTML = "Sliding Window: " + cnt_grpWindow02;
+    document.getElementById('buttonWindow02').innerHTML = "Awning Window: " + cnt_grpWindow02;
 };
 
 // __________________________
@@ -4164,6 +4517,48 @@ function deleteWindow04(mesh) {
         delete dictWindow04[adj_key];
     cnt_grpWindow04 -= 1; 
     document.getElementById('buttonWindow04').innerHTML = "Sliding Window: " + cnt_grpWindow04;
+};
+
+// __________________________
+//    	　_ * WINDOW05 * 
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+function addWindow05(key) {
+
+    // ADD MESH
+    const mesh = meshWindow05.clone();
+    mesh.position.set(pos_grpWindow05.x, pos_grpWindow05.y, pos_grpWindow05.z);
+    scene.add( mesh );
+    
+    // ADD MESH PROPERTIES
+    mesh.name = "Window05"
+    mesh.key = key;
+    mesh.storey = storeyNum;
+
+    const vol_id = calcVolumeID (mesh.position);
+    mesh.volume_id = vol_id;
+
+    // UPDATE GLOBAL VARIABLES, HTML
+    dictWindow05[key] = mesh;
+    const list_2AdjKeys = get2AdjKeys(angle_grpWindow05, pos_grpWindow05)
+    list_2AdjKeys.forEach(function(adj_key){ 
+        dictWindow05[adj_key] = mesh;
+    })
+    mesh.rotation.z = angle_grpWindow05;
+    cnt_grpWindow05 += 1; 
+    document.getElementById('buttonWindow05').innerHTML = "Large Sliding Window: " + cnt_grpWindow05;
+};
+
+// Delete a Window05
+function deleteWindow05(mesh) {
+    scene.remove( mesh );
+    delete dictWindow05[ mesh.key ];
+    const list_2AdjKeys = get2AdjKeys(mesh.rotation.z, mesh.position)
+    list_2AdjKeys.forEach(function(adj_key){ 
+        delete dictWindow05[adj_key];
+    })
+    cnt_grpWindow05 -= 1; 
+    document.getElementById('buttonWindow05').innerHTML = "Large Sliding Window: " + cnt_grpWindow05;
 };
 
 
@@ -4549,14 +4944,14 @@ function toggleDisp_Ceiling (storeylvl, bool_visibility) {
 //    Toggle Object Display
 // --------------------------------
 
-eyeIconObjectTgl();
+// eyeIconObjectTgl();
 
 function eyeIconObjectTgl(){ // https://www.csestack.org/hide-show-password-eye-icon-html-javascript/
-    const eyeIcons = document.getElementsByClassName("fa-eye"); // HTMLCollection;  
 
     for (const eyeIcon of eyeIcons) { // cannot interate through a collection using forEach
         eyeIcon.addEventListener('click', function () { // when clicked
             const id = eyeIcon.id;
+
             if (id !== "") { // if id exist, i.e. not an emptry string
                 toggleDisp_Object(id);
                 eyeIcon.classList.toggle('fa-eye-slash'); // toggle the eye slash icon. 
@@ -5014,6 +5409,19 @@ function replaceHoverDisp_Window04( mesh ) { // copy pos, angle, show meshTrans
 
 }
 
+function replaceHoverDisp_Window05( mesh ) { // copy pos, angle, show meshTrans
+    pos_grpWindow05 = new THREE.Vector3(mesh.position.x, mesh.position.y, mesh.position.z);
+    angle_grpWindow05 = mesh.rotation.z;
+
+    const bool_PresenceOf2AdjacentMeshes = checkPresenceOf2AdjacentMeshes(pos_grpWindow05, angle_grpWindow05)
+    if (bool_PresenceOf2AdjacentMeshes) {
+        meshWindow05Trans.position.copy(pos_grpWindow05);
+        meshWindow05Trans.rotation.z = angle_grpWindow05
+        meshWindow05Trans.visible = true;
+        meshWindow05Del.visible = false;
+    }
+
+}
 
 function replaceHoverDisp_Door01( mesh ) { // copy pos, angle, show meshTrans
     pos_grpDoor01 = new THREE.Vector3(mesh.position.x, mesh.position.y, mesh.position.z);
@@ -5126,6 +5534,16 @@ function delHoverDisp_Window04( mesh ) { // copy pos, angle, show meshTrans
     GrpWindow04Trans.visible = false;
 }
 
+function delHoverDisp_Window05( mesh ) { // copy pos, angle, show meshTrans
+    pos_grpWindow05 = new THREE.Vector3(mesh.position.x, mesh.position.y, mesh.position.z); // centre of the first mesh that the cursor intersects, e.g. Vector3 {x: -1.5, y: 3, z: 0.25}
+    angle_grpWindow05 = mesh.rotation.z;
+
+    meshWindow05Del.position.copy(pos_grpWindow05);
+    meshWindow05Del.rotation.z = angle_grpWindow05;
+    meshWindow05Del.visible = true;
+    meshWindow05Trans.visible = false;
+}
+
 function delHoverDisp_Door01( mesh ) { // copy pos, angle, show meshTrans
     pos_grpDoor01 = new THREE.Vector3(mesh.position.x, mesh.position.y, mesh.position.z);
     angle_grpDoor01 = mesh.rotation.z;
@@ -5181,7 +5599,7 @@ function delHoverDisp_Stairs01( mesh ) { // copy pos, angle, show meshTrans
 // --------------------------------
 
 function reinstate_mods() { //  no display of trans or del mesh, clear position
-    // reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
+    // reinstate_mods('Window01', 'Window02', 'Window03', 'Window04', 'Window05', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01');
     const args = Array.from(arguments) // arguments is an Array-like object, it doesn't have Array's built-in methods
     if (args.includes('floor')) { reinstate_floor() };
     if (args.includes('floor_fraction')) { reinstate_floorfrac() };
@@ -5195,6 +5613,7 @@ function reinstate_mods() { //  no display of trans or del mesh, clear position
     if (args.includes('Window02')) { reinstate_Window02() };
     if (args.includes('Window03')) { reinstate_Window03() };
     if (args.includes('Window04')) { reinstate_Window04() };
+    if (args.includes('Window05')) { reinstate_Window05() };
     if (args.includes('Door01')) { reinstate_Door01() };
     if (args.includes('Door02')) { reinstate_Door02() };
     if (args.includes('Door03')) { reinstate_Door03() };
@@ -5257,6 +5676,11 @@ function reinstate_Window04() {
     GrpWindow04Del.visible = false;
     pos_grpWindow04 = null;
 }
+function reinstate_Window05() {
+    meshWindow05Trans.visible = false;
+    meshWindow05Del.visible = false;
+    pos_grpWindow05 = null;
+}
 function reinstate_Door01() {
     meshDoor01Trans.visible = false;
     meshDoor01Del.visible = false;
@@ -5299,8 +5723,7 @@ function MouseUpDisplay_onHybridMod_1unit(name_HybridMesh, pos_HybridMesh, angle
         }
         deleteHybridMesh(dictHybridMesh[key]);
     } else if (!bool_delHybridMesh && dictHybridMesh[key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new mesh to the scene and add its key to dict
-        addWalls_replacingMultipleUnitHybridMod_With1Unit(key, list_3Unit, pos_HybridMesh, angle_HybridMesh)
-        addWalls_replacingMultipleUnitHybridMod_With1Unit(key, list_2Unit, pos_HybridMesh, angle_HybridMesh)
+        addWalls_replacingMultipleUnitHybridMod_With1Unit(key, list_MultipleUnit, pos_HybridMesh, angle_HybridMesh)
         addHybridMesh(key);
         const list_meshMod_spliced = removeSingleArrayItem(list_meshMod, name_HybridMesh); // e.g. ['BoundaryWall', 'PartitionWall', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01']
         ifMatchKey_deleteMesh.apply(this, [key, list_meshMod_spliced].flat()); // .apply: Passing an array as function parameters in JavaScript. e.g. 0_-5.25_1.75 BoundaryWall PartitionWall Window01 Window02 Door01 Door03 Railing01 Stairs01
@@ -5326,6 +5749,7 @@ function MouseUpDisplay_onHybridMod_3unit(name_HybridMesh, pos_HybridMesh, angle
         }
         deleteHybridMesh(dictHybridMesh[mesh_key]);
     } else if (!bool_delHybridMesh && dictHybridMesh[mesh_key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new mesh to the scene and add its key to dict
+        // addWalls_replacingMultipleUnitHybridMod_With1Unit(mesh_key, list_MultipleUnit, pos_HybridMesh, angle_HybridMesh)
         addHybridMesh(mesh_key);
         const list_meshMod_spliced = removeSingleArrayItem(list_meshMod, name_HybridMesh);//e.g. ['BoundaryWall', 'PartitionWall', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01']
         list_keys.forEach(function(key){
@@ -5354,6 +5778,7 @@ function MouseUpDisplay_onHybridMod_2unit(name_HybridMesh, pos_HybridMesh, angle
         }
         deleteHybridMesh(dictHybridMesh[mesh_key]);
     } else if (!bool_delHybridMesh && dictHybridMesh[mesh_key]==undefined) { //if shift is not pressed and there is no exisitng key, add a new mesh to the scene and add its key to dict
+        addWalls_replacingMultipleUnitHybridMod_With1Unit(mesh_key, list_MultipleUnit, pos_HybridMesh, angle_HybridMesh)
         addHybridMesh(mesh_key);
         const list_meshMod_spliced = removeSingleArrayItem(list_meshMod, name_HybridMesh);//e.g. ['BoundaryWall', 'PartitionWall', 'Window02', 'Door01', 'Door02', 'Door03', 'Railing01', 'Stairs01']
         list_keys.forEach(function(key){
@@ -5617,6 +6042,9 @@ function ifMatchKey_deleteMesh(key, ...args) { // Perform action to value (delet
     if (args.includes('Window04')) {
         ifMatchKey_deleteWindow04(key)
     }
+    if (args.includes('Window05')) {
+        ifMatchKey_deleteWindow05(key)
+    }
     if (args.includes('Door01')) {
         ifMatchKey_deleteDoor01(key)
     }
@@ -5671,6 +6099,11 @@ function ifMatchKey_deleteWindow04(key) {
         deleteWindow04(dictWindow04[key])
     }
 }
+function ifMatchKey_deleteWindow05(key) {
+    if (key in dictWindow05) {
+        deleteWindow05(dictWindow05[key])
+    }
+}
 function ifMatchKey_deleteDoor01(key) {
     if (key in dictDoor01) {
         deleteDoor01(dictDoor01[key])
@@ -5708,6 +6141,7 @@ function ifMatchKey_deleteStairs01(key) {
 function dispHelperAndReplaceHover_wallModRule (func_replaceHoverDisp, grpInt) {
     const AttrLine = getAttriLine_atBdyMesh( grpInt );
     if (AttrLine != undefined) { // if boundary-positioned attribute line exist
+        // func_replaceHoverDisp( grpInt );
         dispHelperAndReplaceHover_wallModRule_adjCheck ( func_replaceHoverDisp, AttrLine, grpInt );
     } else { // if boundary-positioned attribute line do not exist
         func_replaceHoverDisp( grpInt );
@@ -5733,6 +6167,7 @@ function dispHelperAndReplaceHover_wallModRule_adjCheck (func_replaceHoverDisp, 
 function dispHelperAndReplaceHover_doorModRule (func_replaceHoverDisp, grpInt) {
     const AttrLine = getAttriLine_atBdyMesh( grpInt );
     if (AttrLine != undefined) { // if boundary-positioned attribute line exist
+        // func_replaceHoverDisp( grpInt );
         dispHelperAndReplaceHover_doorModRule_adjCheck ( func_replaceHoverDisp, AttrLine, grpInt );
     } else { // if boundary-positioned attribute line do not exist
         func_replaceHoverDisp( grpInt );
@@ -6588,7 +7023,6 @@ const link = document.createElement('a');
 link.style.display = 'none';
 document.body.appendChild(link); 
 
-var dictMergedMesh = {};
 // --------------------------------
 //    Merge Meshes
 // --------------------------------
@@ -6601,18 +7035,21 @@ function mergeMeshes(list_mesh, mat, meshMerged, meshMergedName) { // meshMerge 
                 geomMerged.merge(mesh.geometry, mesh.matrix);
                 meshMerged = new THREE.Mesh(geomMerged, mat);
             }
+
         }
+
     )
     scene.add(meshMerged)
     meshMerged.name = meshMergedName;
     meshMerged.visible = false;
     meshMerged.storey = storeyNum;
-
+    console.log(dictMergedMesh)
     dictMergedMesh[storeyNum] = meshMerged;
-
 
     return meshMerged
 }
+
+
 //////////////////// -------------SPARE FUNCTION------------------------------------------------------ //////////////////// 
 
 

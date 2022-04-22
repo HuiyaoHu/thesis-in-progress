@@ -1,0 +1,236 @@
+<!--HOTKEYS
+    toggle word wrap: Alt + z 
+    toggle minimap: Ctrl + m
+    fold region: Ctrl + Shift + [
+    unfold region: Ctrl + Shift + ]
+    previous position: Alt + ←
+    go to line: Ctrl + g + line number
+-->
+<!--CODES
+    console.log('~~~~~~', ) 
+-->
+<!--TERMINAL
+    terminal: Ctrl + Shift + `
+    cd C:\Users\huiya\Documents\GitHub\thesis-in-progress
+    py -m http.server 8000
+-->
+<!--OPTIMISE glTF ASSESTS
+    gltf-pipeline -i C:\Users\huiya\Documents\GitHub\thesis-in-progress\models_220209\Railing01.gltf -o C:\Users\huiya\Documents\GitHub\thesis-in-progress\models_220209\Railing01.gltf -d
+        Cesium glTF Pipeline https://github.com/CesiumGS/gltf-pipeline
+        Enable script running https://www.roelpeters.be/solved-running-scripts-is-disabled-on-this-system-in-powershell/
+ -->
+<!--NAMING CONVENTION
+    geomName
+    meshName
+    dictName
+    cnt_name
+    list_name
+    ctr_name
+    pos_name
+    bool_name
+    angle_name
+--> 
+<!--COMMENTS
+    // CAN BE OPTIMISED
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>220409</title>
+        <meta charset="utf-8">
+		<meta name="viewport"  ent="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <!-- <link rel="stylesheet" type="text/css" href="reset.css"> -->
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <script src="https://kit.fontawesome.com/f846d0f5a8.js" crossorigin="anonymous"></script>
+    </head>
+
+	<body>
+
+        <div id="body_top">
+            <div id = "titlebar">
+                <h1>Configure Your Apartment |　Workspace</h1> <!-- https://en.wikipedia.org/wiki/Whitespace_character  |　-->
+            </div> 
+
+            <div id = "menubar">
+                <div class="export" id="export_scene">Export</div>
+            </div> 
+        </div>
+        
+        <div id="body_center">
+            <!--====================================================
+            // { LEFT_PANEL }
+            // ====================================================-->
+                
+            <div id="left_panel"> 
+                <div class="help">
+                    <h2>—　TIPS　—</h2>
+                    <h4>Display</h4>               
+                    <p>Toggle off display to improve workspace clarity and reduce cpu usage.</p>
+                    <br>
+
+                    <h2>—　CONTROLS　—</h2>
+                    <h4>Workspace Actions</h4>               
+                    <p>Rotate: left click + drag</p>
+                    <p>Pan: righ click + drag</p>
+                    <p>Zoom: scroll</p>
+                    
+                    <h4>Module Actions</h4>               
+                    <p>Place: left click</p>
+                    <p>Delete: shift + left click</p>   
+                    <br>
+
+                    <h2>—　INSTRUCTIONS　—</h2>
+                    <h4>1. Purchase Volume</h4>               
+                    <p>Place volume modules on the grid to define space for purchase.</p>
+
+                    <h4>2. Module Placement</h4>               
+                    <p>Step 1: Place floor modules to define apartment boundary.</p>
+                    <p>Step 2: Add partition wall modules to configure internal walls.</p>
+                    <p>Step 3: Replace wall modules with hybrid modules to add functional components.</p>
+                    
+    
+                </div>
+                
+            </div> 
+        
+            <!--====================================================
+            // { CENTRE_PANEL }
+            // ====================================================-->
+
+            <div id="centre_panel">
+                <div id = "viewport">
+                    <script type="module" src="module.js"></script>
+                </div>
+                <!--  
+                <div class="box">
+                    <div class="loadingText">L O A D I N G</div>
+                    <br></br>
+                    <div class="loading">
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                        <span class="circle"></span>
+                    </div>
+                </div>
+                -->
+                <div class="popup">
+                    <span class="popuptext" id="helper">A Simple Popup! This is a paragraph of text that should be as long as possible. The text should always be shown in full. The text box should automatically adjust in height according to the text length. There should be padding around the text.</span>
+                </div>
+            </div>
+
+
+            <!--====================================================
+            // { RIGHT_PANEL }
+            // ====================================================-->
+            
+            <div id="right_panel">
+
+                <div id="checkboxes"> 
+                    <h5>DISPLAY TOGGLE</h5> <!-- https://www.csestack.org/hide-show-password-eye-icon-html-javascript/-->
+                    <i class="fa-solid fa-eye" id="Chassis"></i>  Structure frame <br>
+                    <i class="fa-solid fa-eye" id="GrpMeshNeighbours"></i>  Neighbours <br>
+                    <h6>　</h6>
+                    <h6> ----------------------------------------</h6>
+                    <h6>　</h6>
+                    <!-- <p> ------------------------------</p> -->
+                    <!-- <p>──────────────</p> -->
+                    <!-- <i class="fa-solid fa-eye" id="ceiling"></i>  Ceiling (Ignore) <br> -->
+
+                    <!-- <label class="checkboxText">Volume units
+                        <input type="checkbox" id="checkboxVolume">
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <label class="checkboxText">Neighbours' houses
+                        <input type="checkbox" id="checkboxNeighbours">
+                        <span class="checkmark"></span>
+                    </label> -->
+
+                    <i class="fa-solid fa-eye" value = "1"></i>
+                    <label class="container"> Storey 1
+                        <input type="radio" class ="visibility" name="storeyNum" value="1"> <!-- id="Storey1"  -->
+                        <span class="checkmark"></span>
+                    </label>
+                    <br>
+
+                    <i class="fa-solid fa-eye" value = "2"></i> 
+                    <label class="container"> Storey 2
+                        <input type="radio" class ="visibility" name="storeyNum" value="2"> <!-- id="Storey2"  -->
+                        <span class="checkmark"></span>
+                    </label>
+                    <br>
+
+                    <i class="fa-solid fa-eye" value = "3"></i> 
+                    <label class="container"> Storey 3
+                        <input type="radio" class ="visibility" name="storeyNum" value="3"> <!-- id="Storey2"  -->
+                        <span class="checkmark"></span>
+                    </label>
+                    <br>
+
+                    <i class="fa-solid fa-eye" value = "4"></i> 
+                    <label class="container"> Storey 4
+                        <input type="radio" class ="visibility" name="storeyNum" value="4"> <!-- id="Storey2"  -->
+                        <span class="checkmark"></span>
+                    </label>
+                    <br>
+                                        
+                    <i class="fa-solid fa-eye" value = "100"></i> 
+                    <label class="container"> Storeys View Mode
+                        <input type="radio" class ="visibility" name="storeyNum" value="100"> <!-- id="Storey2"  -->
+                        <!-- <span class="checkmark"></span> -->
+                    </label>
+                    <br>
+                </div>
+
+
+                <div id="additions"> 
+                    <div id="volume">
+                        <h5>1. PURCHASE VOLUME</h5>
+                        <div class="button pressed" id="buttonVolume">Volume</div>
+                        <!-- <div class="button" id="export_object">Export Sphere</div>
+                        <div class="button" id="export_objects">Export Sphere and Grid</div> -->
+                
+                    </div>
+        
+                    <div id="modules"> 
+                        <h2>2. MODULE PLACEMENT</h2>
+                        <!-- <label class="checkboxText"> Visibility
+                        <input type="checkbox" id="Storey2_Visibility" >
+                        <span class="checkmark"></span> -->
+                        <!-- <br> -->
+
+                        <h3>　SIP Modules　</h3>   
+                        <div class="button" id="buttonFloor">Floor</div>
+                        <div class="button" id="buttonBoundaryWall">Exterior Wall</div>
+                        <div class="button" id="buttonPartitionWall">Interior Wall</div>
+                        <div class="button" id="buttonFloorFrac">Floor Opening</div>
+                        <!-- <div class="button" id="buttonCeiling">Ceiling</div> -->
+                        <h6>-</h6>
+
+                        <h3>　Hybrid Modules　</h3> 
+                        <div class="button" id="buttonStairs01">Stairs</div>
+                        <div class="button" id="buttonRailing01">Railing</div>
+                        <h6>　</h6>
+                        <div class="button" id="buttonDoor01">Timber Door</div>
+                        <div class="button" id="buttonDoor02">Glass Door</div>
+                        <div class="button" id="buttonDoor03">Sliding Glass Door</div>
+                        <h6>　</h6>
+                        <div class="button" id="buttonWindow01">Fixed Window</div>
+                        <div class="button" id="buttonWindow02">Awning Window</div>
+                        <div class="button" id="buttonWindow03">Large Fixed Window</div>
+                        <div class="button" id="buttonWindow04">Sliding Window</div>
+
+                </div>
+
+
+            </div>
+            
+
+
+        </div>
+
+	</body>
+    
+</html>

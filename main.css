@@ -2,7 +2,7 @@
 
 html {
     padding: 0;
-    /* color: #499eff; */
+    /* color: #e1e1e1; */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 3500; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
     font-size: 15px;
@@ -13,12 +13,15 @@ html {
 h1{ /* Titlebar */
     /* FONT */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 450; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
-    font-size: 19px;
+    font-weight: 150; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 10px;
+    color: rgb(0, 0, 0);
+
 
     /* POSITION */
-    margin: 0 20px;
-    line-height: 42px;
+    text-align: left;
+    margin: 0px; 
+    line-height: 0.3;
 }
 h2 { /* Section Headings 1 */
     /* FONT */
@@ -30,7 +33,7 @@ h2 { /* Section Headings 1 */
     /* POSITION */
     text-align: center;
     font-size: 15px;
-    margin: 13px 0px -1px 0px;
+    margin: 20px 0px -1px 0px;
 }
 h5 { /* Section Headings 1 */
     /* FONT */
@@ -65,7 +68,7 @@ h4 { /* Paragraph Headings 2 */
 
     /* POSITION */
     text-align: left;
-    margin: 15px 0px 5px 0px;
+    margin: 7px 0px 5px 0px;
 }
 p {
     /* FONT */
@@ -92,6 +95,32 @@ h6 {
     text-align: left;
     margin: 0px; 
     line-height: 0.3;
+}
+.span1{
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 550; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 13px;
+    color: rgb(187, 131, 0);
+
+
+    /* POSITION */
+    text-align: left;
+    margin: 0px; 
+    line-height: 0.3;
+}
+.span2{
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 490; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+
+
+    /* POSITION */
+    text-align: left;
+    margin: 0px 0px 5px 0px; 
+    line-height: 1.2;
 }
 /* //////////////////// ----------WEBKIT------------------------------------------------------ ///////////////////  */
 
@@ -262,7 +291,17 @@ body {
     /* MASSING */
     background-color: white;
     padding: 0;
-    margin: 0;
+    /* margin: 0; */
+
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 450; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 19px;
+    
+        /* POSITION */
+        margin: 0 20px;
+        line-height: 42px;
+    
 }
 
 /* // ====================================================
@@ -306,7 +345,7 @@ body {
     grid-row: 2;
     
     display: grid;
-    grid-template-columns: 230px auto 210px;
+    grid-template-columns: 240px auto 210px;
     grid-gap: 0px;
 
     /* MASSING */
@@ -338,80 +377,34 @@ body {
 
 }
 
-#checkboxes { 
+
+
+
+/* // ====================================================
+//   Help 
+// ==================================================== */
+
+.help { /* Defining a class. Type of property tag that can be used multiple times. */
+    
     /* GRID */
     grid-row: 1;
 
     /* MASSING */
-    background-color: white;
+    background-color: bisque;
     position: relative;
-    width: calc(100%-8%);
-    margin: 5%;
-    padding: 4%;
-}
+    margin: 0 1% 10% 2%;
+    padding: 0 4%;
 
-#additions {
-    /* GRID */
-    grid-row: 2;
+    font-weight: 400;
 
-    display: grid;
-    grid-template-rows: auto auto;
-    /* grid-gap: 2px; */
-
-    /* MASSING */
-    background-color: white;
-    position: relative;
-    width: calc(100%-8%);
-    margin: 0 5% 8% 5%;
-    padding: 4% 4% 0% 4%;
-
-    /* MISC */
-    overflow-y: scroll;
-}
-/* // --------------------------------
-//    Volume
-// -------------------------------- */
-
-#volume { /* Define an ID. Unlike class, ID can only be applied to one element. */
-    /* GRID */
-    grid-row: 1;
-}
-
-/* // --------------------------------
-//    Modules
-// -------------------------------- */
-
-#modules { /* Define an ID. Unlike class, ID can only be applied to one element. */
     
-    /* GRID */
-    grid-row: 2;
-}
-.button { /* Defining a class. Type of property tag that can be used multiple times. */
-    /* MASSING */
-    position: relative;
-    margin: 2% 0;
-    height: 40px;
-    background-color: burlywood;
 
-    /* TEXT */
-    font-size: 15px;
-    text-align: center;
-    line-height: 40px; /* vertical alignment */
-    
-    /* MISC */
-    cursor: pointer;
 }
-.button.pressed{
-    border: 2px solid black;
+.help em{
+  font-size: 14px;
+  color:#218ee7;
 }
-.button:hover {
-    background-color: rgb(240, 218, 189);
-    color: black;
-}
-.disabled {
-    background-color: rgb(240, 218, 189);
-    cursor: not-allowed;
-}
+
 
 
 /* // ====================================================
@@ -424,7 +417,7 @@ body {
 
     /* width: 70%; https://www.w3schools.com/css/css_dimension.asp */
     /* height: 97vh; 1vh is equal to 1% of the viewport's height, 100vh is equal to the height of the browser window */
-    background-color: transparent;
+    background-color: white;
     outline: none;
 
     /* POSITION */
@@ -440,7 +433,7 @@ body {
     padding: 0;
 
     border: 0px solid gainsboro;
-    background-color: transparent;
+    background-color: white;
     outline: none;
     float: left;
 }  
@@ -448,103 +441,265 @@ body {
     outline: #fa0 solid 0px; 
 }
 
-/* // ====================================================
-//   Loading Screen
-// ==================================================== */
-.box{  /* https://codepen.io/sudeepgumaste/pen/abdrorB */
-
-    /* DISPLAY */ 
-    display: grid;
-
-    /* MASSING */
-    /* background: #1a227e34; */
-
+.loadingCubes{ /* https://codepen.io/jh3y/pen/abNveXb */
     /* POSITION */
     position: absolute;
+    /* left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); */
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 300px;
-    height: 300px;
+    /* width: 10px;
+    height: 10px; */
     justify-content: center;
     align-items: center;
-    /* box-shadow: 4px 4px 20px rgba(0,0,0,0.3); */
-
-    animation: hideAnimation 0s ease-in 9s;
-    animation-fill-mode: forwards;
-  }
-  .loadingText{
-    /* DISPLAY */ 
-    grid-row: 1;
-
-    /* POSITION */
-    position: relative;
-    left: 3%;
-    top: 60%;
-
-    /* TEXT */
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 3500; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
-    font-size: 30px;
-    color: rgba(0, 170, 255, 0.585);
-    text-align: center;
-
-  }
-  .loading{
-    /* DISPLAY */ 
-    grid-row: 2;
-
-    height: 15px;
-    width: 105px;
-    display: flex;
-
-    /* POSITION */
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
-  }
-  @keyframes hideAnimation {
-    to {
-      visibility: hidden;
-      width: 0;
-      height: 0;
-    }
-  }
-  .circle{
-    width: 15px;
-    height: 15px;
-    /* // border-radius: 50%; */
-    background-color: rgba(0, 170, 255, 0.585); /*rgba(255, 170, 0, 0.585);*/
-    animation: move 1000ms linear 0ms infinite;
-    margin-right: 30px;
     
+    /* background: hsl(var(--hue), 20%, 70%); */
+    animation: hideAnimation 0s ease-in 10.5s;
+    animation-fill-mode: forwards;
+} 
+@keyframes hideAnimation {
+  to {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+:root {
+  --hue: 180;
+  --radius: 5;
+  --size: 5;
+}
+[type='checkbox'] {
+  position: absolute;
+  left: 100%;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+.screen {
+  perspective: 800px;
+  transform-style: preserve-3d;
+  height: 10%;
+  width: 10%;
+  left: 150%;
+  top: 150%;
 
+  display: relative;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+.plane {
+  height: 3vmin;
+  width: 3vmin;
+  transform-style: preserve-3d;
+  transform: rotateX(-40deg) rotateY(-45deg) rotateX(90deg);
+}
+.cube,
+.shadow {
+  animation-iteration-count: 1;
+  --width: var(--size);
+  --height: var(--size);
+  --depth: var(--size);
+  height: calc(var(--depth) * 1vmin);
+  width: calc(var(--width) * 1vmin);
+  transform-style: preserve-3d;
+  position: absolute;
+  font-size: 1rem;
+  animation: jump 0.8s calc(var(--d) * 1s) infinite;
+  transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 0);
+}
+.cube > div:nth-of-type(1),
+.shadow > div:nth-of-type(1) {
+  background: hsl(var(--hue), 60%, 50%);
+  height: calc(var(--height) * 1vmin);
+  width: 100%;
+  transform-origin: 50% 50%;
+  transform: rotateX(-90deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin));
+}
+.cube > div:nth-of-type(2),
+.shadow > div:nth-of-type(2) {
+  background: hsl(var(--hue), 60%, 60%);
+  height: calc(var(--height) * 1vmin);
+  width: 100%;
+  transform-origin: 50% 50%;
+  transform: translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cube > div:nth-of-type(3),
+.shadow > div:nth-of-type(3) {
+  background: hsl(var(--hue), 60%, 60%);
+  height: calc(var(--height) * 1vmin);
+  width: calc(var(--depth) * 1vmin);
+  transform: translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cube > div:nth-of-type(4),
+.shadow > div:nth-of-type(4) {
+  background: hsl(var(--hue), 60%, 55%);
+  height: calc(var(--height) * 1vmin);
+  width: calc(var(--depth) * 1vmin);
+  transform: translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cube > div:nth-of-type(5),
+.shadow > div:nth-of-type(5) {
+  background: hsl(var(--hue), 60%, 45%);
+  height: calc(var(--depth) * 1vmin);
+  width: calc(var(--width) * 1vmin);
+  transform: translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cube > div:nth-of-type(6),
+.shadow > div:nth-of-type(6) {
+  background: hsl(var(--hue), 60%, 65%);
+  height: calc(var(--depth) * 1vmin);
+  width: calc(var(--width) * 1vmin);
+  transform: translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.shadow {
+  animation: none;
+  background: radial-gradient(#000, transparent);
+  transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(1);
+  animation: shadow 0.8s calc(var(--d) * 1s) infinite;
+}
+.cube--0,
+.shadow--0 {
+  --x: 1;
+  --y: 0;
+  --d: -0.7;
+}
+.cube--1,
+.shadow--1 {
+  --x: 1;
+  --y: -1;
+  --d: -0.6;
+}
+.cube--2,
+.shadow--2 {
+  --x: 0;
+  --y: -1;
+  --d: -0.5;
+}
+.cube--3,
+.shadow--3 {
+  --x: -1;
+  --y: -1;
+  --d: -0.4;
+}
+.cube--4,
+.shadow--4 {
+  --x: -1;
+  --y: 0;
+  --d: -0.3;
+}
+.cube--5,
+.shadow--5 {
+  --x: -1;
+  --y: 1;
+  --d: -0.2;
+}
+.cube--6,
+.shadow--6 {
+  --x: 0;
+  --y: 1;
+  --d: -0.1;
+}
+.cube--7,
+.shadow--7 {
+  --x: 1;
+  --y: 1;
+  --d: 0;
+}
+@-moz-keyframes jump {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 0);
   }
-  .circle:first-child{
-    position: absolute;
-    top:0;
-    left:0;
-    animation: grow 1000ms linear 0ms infinite;
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 3.5vmin);
   }
-  
-  .circle:last-child{
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-right: 0;
-    animation: grow 1000ms linear 0s infinite reverse;
+}
+@-webkit-keyframes jump {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 0);
   }
-  @keyframes grow {
-    from {transform: scale(0,0); opacity: 0;}
-    to {transform: scale(1,1); opacity: 1;}
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 3.5vmin);
   }
-  
-  @keyframes move {
-    from {transform: translateX(0px)}
-    to {transform: translateX(45px)}
+}
+@-o-keyframes jump {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 0);
   }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 3.5vmin);
+  }
+}
+@keyframes jump {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 0);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 3.5vmin);
+  }
+}
+@-moz-keyframes shadow {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(1);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(0.85);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes shadow {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(1);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(0.85);
+    opacity: 0.2;
+  }
+}
+@-o-keyframes shadow {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(1);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(0.85);
+    opacity: 0.2;
+  }
+}
+@keyframes shadow {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(1);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(0.85);
+    opacity: 0.2;
+  }
+}
 
 
 
@@ -632,19 +787,80 @@ body {
     overflow-y: auto;
 }
 
-/* // ====================================================
-//   Help 
-// ==================================================== */
-
-.help { /* Defining a class. Type of property tag that can be used multiple times. */
-    
+#checkboxes { 
     /* GRID */
     grid-row: 1;
 
     /* MASSING */
-    background-color: bisque;
+    background-color: white;
     position: relative;
+    width: calc(100%-8%);
     margin: 5%;
-    padding: 0 4%;
+    padding: 4%;
 
+    /* MISC */
+    overflow-y: scroll;
+}
+
+#additions {
+    /* GRID */
+    grid-row: 2;
+
+    display: grid;
+    grid-template-rows: auto auto;
+    /* grid-gap: 2px; */
+
+    /* MASSING */
+    background-color: white;
+    position: relative;
+    width: calc(100%-8%);
+    margin: 0 5% 8% 5%;
+    padding: 4% 4% 0% 4%;
+
+    /* MISC */
+    overflow-y: scroll;
+}
+/* // --------------------------------
+//    Volume
+// -------------------------------- */
+
+#volume { /* Define an ID. Unlike class, ID can only be applied to one element. */
+    /* GRID */
+    grid-row: 1;
+}
+
+/* // --------------------------------
+//    Modules
+// -------------------------------- */
+
+#modules { /* Define an ID. Unlike class, ID can only be applied to one element. */
+    
+    /* GRID */
+    grid-row: 2;
+}
+.button { /* Defining a class. Type of property tag that can be used multiple times. */
+    /* MASSING */
+    position: relative;
+    margin: 2% 0;
+    height: 40px;
+    background-color: burlywood;
+
+    /* TEXT */
+    font-size: 15px;
+    text-align: center;
+    line-height: 40px; /* vertical alignment */
+    
+    /* MISC */
+    cursor: pointer;
+}
+.button.pressed{
+    border: 2px solid black;
+}
+.button:hover {
+    background-color: rgb(240, 218, 189);
+    color: black;
+}
+.disabled {
+    background-color: rgb(240, 218, 189);
+    cursor: not-allowed;
 }
