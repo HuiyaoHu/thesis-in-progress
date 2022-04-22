@@ -1,0 +1,866 @@
+/* //////////////////// ----------FONT------------------------------------------------------ ///////////////////  */
+
+html {
+    padding: 0;
+    /* color: #e1e1e1; */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 3500; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+    line-height: 25px;
+
+}
+h1{ /* Titlebar */
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 150; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 10px;
+    color: rgb(0, 0, 0);
+
+
+    /* POSITION */
+    text-align: left;
+    margin: 0px; 
+    line-height: 0.3;
+}
+h2 { /* Section Headings 1 */
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 15px;
+    color: rgb(131, 61, 61);
+    
+    /* POSITION */
+    text-align: center;
+    font-size: 15px;
+    margin: 20px 0px -1px 0px;
+}
+h5 { /* Section Headings 1 */
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 15px;
+    color: rgb(131, 61, 61);
+    
+    /* POSITION */
+    text-align: center;
+    font-size: 15px;
+    margin: 2px 0px 5px 0px;
+}
+h3 { /* Section Headings 2 */
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 14px;
+    text-decoration: underline;    
+    color: rgb(71, 71, 71);
+
+    /* POSITION */
+    text-align: center;
+    margin: 4px 0px 4px 0px;
+}
+h4 { /* Paragraph Headings 2 */
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 700; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    color: rgb(71, 71, 71);
+    font-size: 14px;
+
+    /* POSITION */
+    text-align: left;
+    margin: 7px 0px 5px 0px;
+}
+p {
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 350; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+
+
+    /* POSITION */
+    text-align: left;
+    margin: 0px 0px 5px 0px; 
+    line-height: 1.2;
+}
+h6 {
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 100; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 10px;
+    color: rgb(0, 0, 0);
+
+
+    /* POSITION */
+    text-align: left;
+    margin: 0px; 
+    line-height: 0.3;
+}
+.span1{
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 550; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 13px;
+    color: rgb(187, 131, 0);
+
+
+    /* POSITION */
+    text-align: left;
+    margin: 0px; 
+    line-height: 0.3;
+}
+.span2{
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 490; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+
+
+    /* POSITION */
+    text-align: left;
+    margin: 0px 0px 5px 0px; 
+    line-height: 1.2;
+}
+/* //////////////////// ----------WEBKIT------------------------------------------------------ ///////////////////  */
+
+
+/* // --------------------------------
+//    :: scrollbar
+// -------------------------------- */
+
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(180, 180, 180); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #888; 
+}
+
+/* // --------------------------------
+//    eye
+// -------------------------------- */
+.fa-solid{
+    position: block;
+    /* padding-top: -5px; */
+
+    /* MISC */
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+.fa-solid:hover {
+    color: rgb(98, 176, 254); 
+}
+.fa-eye {
+
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 3500; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 17px;
+
+    color: DodgerBlue; 
+    margin: 0 7px; 
+
+}
+.fa-eye-slash {
+    color: Silver; 
+    margin: 0 6px; 
+}
+
+/* // --------------------------------
+//    radio button
+// -------------------------------- */
+.container { /* The container */
+    /* display: block; */
+    position: relative;
+    /* padding-left: 35px; */
+    /* margin-bottom: 12px; */
+    cursor: pointer;
+    /* font-size: 22px; */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.container:hover {
+    background-color: rgb(240, 218, 189);
+    /* color: DodgerBlue; */
+}
+.container input { /* Hide the browser's default radio button */
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.checkmark { /* Create a custom radio button */
+    position: absolute;
+    top: 4px;
+    left: 65px;
+    height: 15px;
+    width: 15px;
+    background-color: #eee;
+    border-radius: 50%;
+  }
+.container:hover input ~ .checkmark { /* On mouse-over, add a grey background color */
+    background-color: #ccc;
+}
+.container input:checked ~ .checkmark { /* When the radio button is checked, add a blue background */
+    background-color: #2196F3;
+}
+.checkmark:after { /* Create the indicator (the dot/circle - hidden when not checked) */
+    content: "";
+    position: absolute;
+    display: none;
+}
+.container input:checked ~ .checkmark:after { /* Show the indicator (dot/circle) when checked */
+    display: block;
+}
+.container .checkmark:after { /* Style the indicator (dot/circle) */
+    top: 4.65px;
+    left: 4.65px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+}
+/* //////////////////// ----------BODY------------------------------------------------------ ///////////////////  */
+
+body {
+
+    /* GRID */
+    display: grid;
+    grid-template-rows: 50px auto;
+    grid-gap: 0;
+
+    /* MASSING */
+        /* background-color: yellow; */
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+
+    /* MISC */
+    overflow: hidden;
+}
+
+/* //////////////////// ----------BODY TOP------------------------------------------------------ ///////////////////  */
+
+#body_top{
+    /* GRID */
+    grid-row: 1;
+
+    display: grid;
+    grid-template-columns: auto 7%;
+    grid-gap: 0;
+
+    /* MASSING */
+    background-color: white;
+        border: white;
+        border-bottom: grey;
+        border-style: solid;
+        border-width: 2px;
+    padding: 0;
+    margin: 0;
+
+    /* MISC */
+    overflow: hidden;
+}
+
+/* // ====================================================
+// { TITLEBAR }
+// ==================================================== */
+
+#titlebar {
+    /* GRID */
+    grid-column: 1;
+
+    /* MASSING */
+    background-color: white;
+    padding: 0;
+    /* margin: 0; */
+
+    /* FONT */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 450; /* 100-900 Defines from thin to thick characters. 400 is the same as normal, and 700 is the same as bold*/
+    font-size: 19px;
+    
+        /* POSITION */
+        margin: 0 20px;
+        line-height: 42px;
+    
+}
+
+/* // ====================================================
+// { MENUBAR }
+// ==================================================== */
+
+#menubar {
+    /* GRID */
+    grid-column: 2;
+
+    /* MASSING */
+        /* background-color: purple; */
+    padding: 0;
+    margin: 0;
+}
+
+.export { /* Defining a class. Type of property tag that can be used multiple times. */
+    /* MASSING */
+    background-color: burlywood;
+    width: 70px;
+    height: 35px;
+
+    /* POSITION */
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* centralise div */
+
+    /* TEXT */
+    text-align: center;
+    line-height: 35px; /* vertical alignment */
+    
+    /* MISC */
+    cursor: pointer;
+}
+
+/* //////////////////// ----------BODY MIDDLE------------------------------------------------------ ///////////////////  */
+
+#body_center{
+    /* GRID */
+    grid-row: 2;
+    
+    display: grid;
+    grid-template-columns: 240px auto 210px;
+    grid-gap: 0px;
+
+    /* MASSING */
+        /* background-color: pink; */
+    padding: 0;
+    margin: 0;
+
+    /* MISC */
+    overflow: hidden;
+}
+
+/* // ====================================================
+// { LEFT_PANEL }
+// ==================================================== */
+
+#left_panel { /* Define an ID. Unlike class, ID can only be applied to one element. */
+    /* GRID */
+    grid-column: 1;
+
+    display: grid;
+    grid-template-rows: auto auto;
+    /* grid-gap: 2px; */
+
+    /* MASSING */
+    background-color: bisque;
+    position: relative;
+    /* MISC */
+    overflow-y: scroll;
+
+}
+
+
+
+
+/* // ====================================================
+//   Help 
+// ==================================================== */
+
+.help { /* Defining a class. Type of property tag that can be used multiple times. */
+    
+    /* GRID */
+    grid-row: 1;
+
+    /* MASSING */
+    background-color: bisque;
+    position: relative;
+    margin: 0 1% 10% 2%;
+    padding: 0 4%;
+
+    font-weight: 400;
+
+    
+
+}
+.help em{
+  font-size: 14px;
+  color:#218ee7;
+}
+
+
+
+/* // ====================================================
+// { CENTRE_PANEL }
+// ==================================================== */
+
+#centre_panel {/* Define an ID. Unlike class, ID can only be applied to one element. */
+    /* display: block; */
+    grid-column: 2;
+
+    /* width: 70%; https://www.w3schools.com/css/css_dimension.asp */
+    /* height: 97vh; 1vh is equal to 1% of the viewport's height, 100vh is equal to the height of the browser window */
+    background-color: white;
+    outline: none;
+
+    /* POSITION */
+    position: relative;
+}
+#viewport{
+    /* POSITION */
+    position:absolute; 
+}
+.module {
+    margin: 0;
+    position: absolute;
+    padding: 0;
+
+    border: 0px solid gainsboro;
+    background-color: white;
+    outline: none;
+    float: left;
+}  
+:focus { 
+    outline: #fa0 solid 0px; 
+}
+
+.loadingCubes{ /* https://codepen.io/jh3y/pen/abNveXb */
+    /* POSITION */
+    position: absolute;
+    /* left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* width: 10px;
+    height: 10px; */
+    justify-content: center;
+    align-items: center;
+    
+    /* background: hsl(var(--hue), 20%, 70%); */
+    animation: hideAnimation 0s ease-in 10.5s;
+    animation-fill-mode: forwards;
+} 
+@keyframes hideAnimation {
+  to {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+:root {
+  --hue: 180;
+  --radius: 5;
+  --size: 5;
+}
+[type='checkbox'] {
+  position: absolute;
+  left: 100%;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+.screen {
+  perspective: 800px;
+  transform-style: preserve-3d;
+  height: 10%;
+  width: 10%;
+  left: 150%;
+  top: 150%;
+
+  display: relative;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+.plane {
+  height: 3vmin;
+  width: 3vmin;
+  transform-style: preserve-3d;
+  transform: rotateX(-40deg) rotateY(-45deg) rotateX(90deg);
+}
+.cube,
+.shadow {
+  animation-iteration-count: 1;
+  --width: var(--size);
+  --height: var(--size);
+  --depth: var(--size);
+  height: calc(var(--depth) * 1vmin);
+  width: calc(var(--width) * 1vmin);
+  transform-style: preserve-3d;
+  position: absolute;
+  font-size: 1rem;
+  animation: jump 0.8s calc(var(--d) * 1s) infinite;
+  transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 0);
+}
+.cube > div:nth-of-type(1),
+.shadow > div:nth-of-type(1) {
+  background: hsl(var(--hue), 60%, 50%);
+  height: calc(var(--height) * 1vmin);
+  width: 100%;
+  transform-origin: 50% 50%;
+  transform: rotateX(-90deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin));
+}
+.cube > div:nth-of-type(2),
+.shadow > div:nth-of-type(2) {
+  background: hsl(var(--hue), 60%, 60%);
+  height: calc(var(--height) * 1vmin);
+  width: 100%;
+  transform-origin: 50% 50%;
+  transform: translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cube > div:nth-of-type(3),
+.shadow > div:nth-of-type(3) {
+  background: hsl(var(--hue), 60%, 60%);
+  height: calc(var(--height) * 1vmin);
+  width: calc(var(--depth) * 1vmin);
+  transform: translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cube > div:nth-of-type(4),
+.shadow > div:nth-of-type(4) {
+  background: hsl(var(--hue), 60%, 55%);
+  height: calc(var(--height) * 1vmin);
+  width: calc(var(--depth) * 1vmin);
+  transform: translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cube > div:nth-of-type(5),
+.shadow > div:nth-of-type(5) {
+  background: hsl(var(--hue), 60%, 45%);
+  height: calc(var(--depth) * 1vmin);
+  width: calc(var(--width) * 1vmin);
+  transform: translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cube > div:nth-of-type(6),
+.shadow > div:nth-of-type(6) {
+  background: hsl(var(--hue), 60%, 65%);
+  height: calc(var(--depth) * 1vmin);
+  width: calc(var(--width) * 1vmin);
+  transform: translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.shadow {
+  animation: none;
+  background: radial-gradient(#000, transparent);
+  transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(1);
+  animation: shadow 0.8s calc(var(--d) * 1s) infinite;
+}
+.cube--0,
+.shadow--0 {
+  --x: 1;
+  --y: 0;
+  --d: -0.7;
+}
+.cube--1,
+.shadow--1 {
+  --x: 1;
+  --y: -1;
+  --d: -0.6;
+}
+.cube--2,
+.shadow--2 {
+  --x: 0;
+  --y: -1;
+  --d: -0.5;
+}
+.cube--3,
+.shadow--3 {
+  --x: -1;
+  --y: -1;
+  --d: -0.4;
+}
+.cube--4,
+.shadow--4 {
+  --x: -1;
+  --y: 0;
+  --d: -0.3;
+}
+.cube--5,
+.shadow--5 {
+  --x: -1;
+  --y: 1;
+  --d: -0.2;
+}
+.cube--6,
+.shadow--6 {
+  --x: 0;
+  --y: 1;
+  --d: -0.1;
+}
+.cube--7,
+.shadow--7 {
+  --x: 1;
+  --y: 1;
+  --d: 0;
+}
+@-moz-keyframes jump {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 0);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 3.5vmin);
+  }
+}
+@-webkit-keyframes jump {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 0);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 3.5vmin);
+  }
+}
+@-o-keyframes jump {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 0);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 3.5vmin);
+  }
+}
+@keyframes jump {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 0);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), 3.5vmin);
+  }
+}
+@-moz-keyframes shadow {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(1);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(0.85);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes shadow {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(1);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(0.85);
+    opacity: 0.2;
+  }
+}
+@-o-keyframes shadow {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(1);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(0.85);
+    opacity: 0.2;
+  }
+}
+@keyframes shadow {
+  0%, 30%, 100% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(1);
+  }
+  15% {
+    transform: translate3d(calc((var(--x) * var(--radius)) * 1vmin), calc((var(--y) * var(--radius)) * -1vmin), calc(var(--size) * -0.5vmin)) scale(0.85);
+    opacity: 0.2;
+  }
+}
+
+
+
+/* // ====================================================
+//   Popup 
+// ==================================================== */
+
+.popup { /* Popup container - can be anything you want */
+    /* DISPLAY */ 
+    display: inline-block;
+
+    /* MASSING */
+    background-color: yellow;
+
+    /* POSITION */
+    position: absolute;
+
+    /* MISC */
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+/* The actual popup */
+.popup .popuptext {
+
+    /* MASSING */
+    background-color: rgba(255, 228, 196, 0.438);
+        border-radius: 6px;
+    width: 160px;
+    padding: 8px;
+    margin: 8px;
+
+    /* POSITION */
+    position: absolute;
+
+    /* TEXT */
+    font-size: 12px;
+    color: grey;
+    text-align: center;
+
+    /* MISC */
+    visibility: hidden;
+    z-index: 1; /* The z-index property specifies the stack order of an element. An element with greater stack order is always in front of an element with a lower stack order.*/
+    overflow: hidden;
+  }
+
+  .popup .show { /* Toggle this class - hide and show the popup */
+    visibility: visible;
+  }
+  /* The actual popup
+.popup .popuptext {
+    visibility: visible;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+ */
+/* // ====================================================
+// { RIGHT_PANEL }
+// ==================================================== */
+
+#right_panel {
+    /* GRID */
+    grid-column: 3;
+
+    display: grid;
+    grid-template-rows: auto;
+
+    /* MASSING */
+    background-color: bisque;
+    position: relative;
+
+    /* MISC */
+    overflow-y: auto;
+}
+
+#checkboxes { 
+    /* GRID */
+    grid-row: 1;
+
+    /* MASSING */
+    background-color: white;
+    position: relative;
+    width: calc(100%-8%);
+    margin: 5%;
+    padding: 4%;
+
+    /* MISC */
+    overflow-y: scroll;
+}
+
+#additions {
+    /* GRID */
+    grid-row: 2;
+
+    display: grid;
+    grid-template-rows: auto auto;
+    /* grid-gap: 2px; */
+
+    /* MASSING */
+    background-color: white;
+    position: relative;
+    width: calc(100%-8%);
+    margin: 0 5% 8% 5%;
+    padding: 4% 4% 0% 4%;
+
+    /* MISC */
+    overflow-y: scroll;
+}
+/* // --------------------------------
+//    Volume
+// -------------------------------- */
+
+#volume { /* Define an ID. Unlike class, ID can only be applied to one element. */
+    /* GRID */
+    grid-row: 1;
+}
+
+/* // --------------------------------
+//    Modules
+// -------------------------------- */
+
+#modules { /* Define an ID. Unlike class, ID can only be applied to one element. */
+    
+    /* GRID */
+    grid-row: 2;
+}
+.button { /* Defining a class. Type of property tag that can be used multiple times. */
+    /* MASSING */
+    position: relative;
+    margin: 2% 0;
+    height: 40px;
+    background-color: burlywood;
+
+    /* TEXT */
+    font-size: 15px;
+    text-align: center;
+    line-height: 40px; /* vertical alignment */
+    
+    /* MISC */
+    cursor: pointer;
+}
+.button.pressed{
+    border: 2px solid black;
+}
+.button:hover {
+    background-color: rgb(240, 218, 189);
+    color: black;
+}
+.disabled {
+    background-color: rgb(240, 218, 189);
+    cursor: not-allowed;
+}
