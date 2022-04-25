@@ -456,7 +456,7 @@ body {
     align-items: center;
     
     /* background: hsl(var(--hue), 20%, 70%); */
-    animation: hideAnimation 0s ease-in 10.5s;
+    animation: hideAnimation 0s ease-in 10s;
     animation-fill-mode: forwards;
 } 
 @keyframes hideAnimation {
