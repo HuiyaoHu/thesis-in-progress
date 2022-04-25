@@ -18,6 +18,7 @@ document.addEventListener('mouseup', onMouseUp, false);
 document.addEventListener( 'mousemove', onMouseMove, false );
 
 const checkboxCeiling = document.getElementById("checkboxCeiling");   
+const link = document.createElement('a');
 
 // IDS
 document.getElementById("buttonVolume").addEventListener("click", onClickbuttonVolume );
@@ -6978,6 +6979,7 @@ function hideHelper() {
 
 function exportGLTF(scene) {
 
+    console.log('yes')
     const options = {
         trs: true,
         onlyVisible: true,
@@ -7019,7 +7021,6 @@ function save(blob, filename) {
     link.download = filename;
     link.click();
 }
-const link = document.createElement('a');
 link.style.display = 'none';
 document.body.appendChild(link); 
 
