@@ -6979,7 +6979,6 @@ function hideHelper() {
 
 function exportGLTF(scene) {
 
-    console.log('yes')
     const options = {
         trs: true,
         onlyVisible: true,
